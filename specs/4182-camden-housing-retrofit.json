@@ -23,13 +23,13 @@
       "type": "video_with_figure",
       "durationSeconds": 9.0,
       "visualAsset": {
-        "type": "video",
-        "source": "assets/generative/gemini_generated_video_535e3482.mp4",
-        "cropMode": "full",
+        "type": "image",
+        "source": "assets/generative/camden_town_hall_bg.jpg",
+        "cropMode": "pan_zoom",
         "trimStart": 0.0,
         "isIllustrative": true,
-        "mandatoryDisclaimer": "AI ILLUSTRATIVE FOOTAGE",
-        "prompt": "Cinematic 35mm documentary shot of Camden Town Hall stone entrance steps in Judd Street, London. Councillors walking into chamber, overcast daylight, 24fps, 9:16 vertical."
+        "mandatoryDisclaimer": "AI ILLUSTRATIVE B-ROLL",
+        "prompt": "Cinematic 35mm documentary shot of Camden Town Hall and Euston Road in North London, overcast grey British sky, Victorian red-brick municipal facade."
       },
       "figure": {
         "type": "vote_tally",
@@ -69,12 +69,12 @@
       "durationSeconds": 9.5,
       "visualAsset": {
         "type": "image",
-        "source": "assets/generative/westminster_street_bg.jpg",
+        "source": "assets/generative/camden_estate_bg.jpg",
         "cropMode": "pan_zoom",
         "trimStart": 0.0,
         "isIllustrative": true,
         "mandatoryDisclaimer": "AI ILLUSTRATIVE B-ROLL",
-        "prompt": "High-contrast 35mm monochrome documentary photography of London municipal architecture and streetscape, 9:16 vertical."
+        "prompt": "High-contrast 35mm documentary photography of Gospel Oak and Somers Town council housing estates in Camden."
       },
       "figure": {
         "type": "motion_document",
@@ -151,13 +151,13 @@
       "type": "video_with_figure",
       "durationSeconds": 8.5,
       "visualAsset": {
-        "type": "video",
-        "source": "assets/generative/gemini_generated_video_535e3482.mp4",
-        "cropMode": "architectural_upper",
-        "trimStart": 2.5,
+        "type": "image",
+        "source": "assets/generative/camden_estate_bg.jpg",
+        "cropMode": "pan_zoom",
+        "trimStart": 0.0,
         "isIllustrative": true,
-        "mandatoryDisclaimer": "AI ILLUSTRATIVE FOOTAGE",
-        "prompt": "Architectural close-up of municipal stone columns and entrance frieze, 24fps, 9:16 vertical."
+        "mandatoryDisclaimer": "AI ILLUSTRATIVE B-ROLL",
+        "prompt": "Architectural view of Camden council housing estate blocks and residential balconies."
       },
       "figure": {
         "type": "action_matrix",

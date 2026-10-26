@@ -23,13 +23,13 @@
       "type": "video_with_figure",
       "durationSeconds": 9.0,
       "visualAsset": {
-        "type": "video",
-        "source": "assets/generative/gemini_generated_video_535e3482.mp4",
-        "cropMode": "full",
+        "type": "image",
+        "source": "assets/generative/southwark_civic_bg.jpg",
+        "cropMode": "pan_zoom",
         "trimStart": 0.0,
         "isIllustrative": true,
-        "mandatoryDisclaimer": "AI ILLUSTRATIVE FOOTAGE",
-        "prompt": "Cinematic 35mm documentary shot of Southwark municipal entrance steps, councillors walking into chamber, overcast daylight, 24fps, 9:16 vertical."
+        "mandatoryDisclaimer": "AI ILLUSTRATIVE B-ROLL",
+        "prompt": "Cinematic 35mm documentary shot of Southwark modern civic municipal entrance on Tooley Street, London Bridge, overcast daylight, 9:16 vertical."
       },
       "figure": {
         "type": "vote_tally",
@@ -69,12 +69,12 @@
       "durationSeconds": 9.5,
       "visualAsset": {
         "type": "image",
-        "source": "assets/generative/westminster_street_bg.jpg",
+        "source": "assets/generative/southwark_school_street_bg.jpg",
         "cropMode": "pan_zoom",
         "trimStart": 0.0,
         "isIllustrative": true,
         "mandatoryDisclaimer": "AI ILLUSTRATIVE B-ROLL",
-        "prompt": "High-contrast 35mm monochrome documentary photography of London streetscape and municipal buildings, 9:16 vertical."
+        "prompt": "High-contrast 35mm documentary photography of a London School Street in Southwark with pedestrian walking zone, 9:16 vertical."
       },
       "figure": {
         "type": "motion_document",
@@ -151,13 +151,13 @@
       "type": "video_with_figure",
       "durationSeconds": 8.5,
       "visualAsset": {
-        "type": "video",
-        "source": "assets/generative/gemini_generated_video_535e3482.mp4",
-        "cropMode": "architectural_upper",
-        "trimStart": 2.5,
+        "type": "image",
+        "source": "assets/generative/southwark_school_street_bg.jpg",
+        "cropMode": "pan_zoom",
+        "trimStart": 0.0,
         "isIllustrative": true,
-        "mandatoryDisclaimer": "AI ILLUSTRATIVE FOOTAGE",
-        "prompt": "Architectural close-up of municipal stone columns and entrance frieze, 24fps, 9:16 vertical."
+        "mandatoryDisclaimer": "AI ILLUSTRATIVE B-ROLL",
+        "prompt": "Architectural close-up of London School Street pedestrian zone."
       },
       "figure": {
         "type": "action_matrix",
