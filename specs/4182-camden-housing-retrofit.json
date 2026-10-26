@@ -6,7 +6,11 @@
   "meetingDate": "2025-11-18",
   "meetingDateDisplay": "18 NOV 2025",
   "totalDuration": 41.5,
-  "targetPlatform": ["tiktok", "reels", "reddit"],
+  "targetPlatform": [
+    "tiktok",
+    "reels",
+    "reddit"
+  ],
   "editorialGate": {
     "status": "approved",
     "editorApproved": true,
@@ -23,44 +27,51 @@
       "type": "video_with_figure",
       "durationSeconds": 9.0,
       "visualAsset": {
-        "type": "image",
-        "source": "assets/generative/camden_town_hall_bg.jpg",
-        "cropMode": "pan_zoom",
+        "type": "video",
+        "source": "assets/generative/camden_town_hall_omni.mp4",
+        "cropMode": "full",
         "trimStart": 0.0,
         "isIllustrative": true,
-        "mandatoryDisclaimer": "AI ILLUSTRATIVE B-ROLL",
-        "prompt": "Cinematic 35mm documentary shot of Camden Town Hall and Euston Road in North London, overcast grey British sky, Victorian red-brick municipal facade."
+        "mandatoryDisclaimer": "AI ILLUSTRATIVE FOOTAGE"
       },
       "figure": {
         "type": "vote_tally",
         "data": {
           "headerLeft": "CABINET CAPITAL VOTE",
-          "headerRight": "✓ APPROVED (52–3)",
+          "headerRight": "\u2713 APPROVED (52\u20133)",
           "parties": [
             {
               "name": "LABOUR & LIB DEM",
               "seats": 52,
-              "status": "52 AYE · RETROFIT",
-              "color": [225, 29, 72]
+              "status": "52 AYE \u00b7 RETROFIT",
+              "color": [
+                225,
+                29,
+                72
+              ]
             },
             {
               "name": "OPPOSITION",
               "seats": 3,
               "status": "3 ABSTAINED",
-              "color": [120, 120, 130]
+              "color": [
+                120,
+                120,
+                130
+              ]
             }
           ]
         }
       },
       "onScreenGraphic": {
         "kicker": "HOUSING CAPITAL BUDGET",
-        "headline": "£4.2M Council Estate\nRetrofit Approved",
+        "headline": "\u00a34.2M Council Estate\nRetrofit Approved",
         "body": "Camden Council has authorised urgent insulation and heat-pump upgrades across 320 post-war social homes."
       },
       "voiceoverText": "Camden Council has approved a four point two million pound capital budget to retrofit three hundred and twenty council homes across three priority estates.",
-      "citationFooter": "SOURCE: Camden Cabinet Housing Report · 18 Nov 2025 · Item 4",
+      "citationFooter": "SOURCE: Camden Cabinet Housing Report \u00b7 18 Nov 2025 \u00b7 Item 4",
       "citations": [
-        "Camden Cabinet Housing Retrofit Report, Para 1: '£4.2m capital allocation for 320 homes'"
+        "Camden Cabinet Housing Retrofit Report, Para 1: '\u00a34.2m capital allocation for 320 homes'"
       ]
     },
     {
@@ -68,20 +79,19 @@
       "type": "document_highlight",
       "durationSeconds": 9.5,
       "visualAsset": {
-        "type": "image",
-        "source": "assets/generative/camden_estate_bg.jpg",
-        "cropMode": "pan_zoom",
-        "trimStart": 0.0,
+        "type": "video",
+        "source": "assets/generative/camden_town_hall_omni.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 2.0,
         "isIllustrative": true,
-        "mandatoryDisclaimer": "AI ILLUSTRATIVE B-ROLL",
-        "prompt": "High-contrast 35mm documentary photography of Gospel Oak and Somers Town council housing estates in Camden."
+        "mandatoryDisclaimer": "AI ILLUSTRATIVE FOOTAGE"
       },
       "figure": {
         "type": "motion_document",
         "data": {
-          "docHeaderLeft": "LONDON BOROUGH OF CAMDEN · CABINET",
-          "docHeaderRight": "ITEM 4 · HOUSING",
-          "excerptPrefix": "\"The Authority hereby releases £4.2m in ring-fenced capital to ",
+          "docHeaderLeft": "LONDON BOROUGH OF CAMDEN \u00b7 CABINET",
+          "docHeaderRight": "ITEM 4 \u00b7 HOUSING",
+          "excerptPrefix": "\"The Authority hereby releases \u00a34.2m in ring-fenced capital to ",
           "highlightPhrase": "eliminate damp, mould and cold-bridging",
           "excerptSuffix": " across Gospel Oak and Somers Town estates.\"",
           "mover": "Portfolio: Housing & Climate",
@@ -94,7 +104,7 @@
         "body": "Works prioritise double-glazing, external wall insulation, and ventilation before spring."
       },
       "voiceoverText": "The resolution ring-fences capital to eliminate damp and mould, targeting estates in Gospel Oak and Somers Town before next spring.",
-      "citationFooter": "SOURCE: Camden Housing Capital Programme · Section 2.4",
+      "citationFooter": "SOURCE: Camden Housing Capital Programme \u00b7 Section 2.4",
       "citations": [
         "Section 2.4: 'ring-fenced capital to eliminate damp, mould and cold-bridging'"
       ]
@@ -109,8 +119,7 @@
         "cropMode": "full",
         "trimStart": 0.0,
         "isIllustrative": true,
-        "mandatoryDisclaimer": "AI ILLUSTRATIVE FOOTAGE",
-        "prompt": "Authentic 35mm street-level documentary footage of London red bus and autumn street life, 24fps, 9:16 vertical."
+        "mandatoryDisclaimer": "AI ILLUSTRATIVE FOOTAGE"
       },
       "figure": {
         "type": "stat_comparison",
@@ -118,11 +127,15 @@
           "cards": [
             {
               "kicker": "HOUSEHOLD SAVINGS",
-              "value": "£480",
+              "value": "\u00a3480",
               "label": "Annual Energy Bill Cut",
               "subtext": "Estimated per retrofitted flat",
               "barRatio": 0.85,
-              "barColor": [52, 211, 153]
+              "barColor": [
+                52,
+                211,
+                153
+              ]
             },
             {
               "kicker": "CARBON REDUCTION",
@@ -130,20 +143,24 @@
               "label": "Heat Loss Reduction",
               "subtext": "EPC Rating upgraded to Band B",
               "barRatio": 0.62,
-              "barColor": [245, 158, 11]
+              "barColor": [
+                245,
+                158,
+                11
+              ]
             }
           ]
         }
       },
       "onScreenGraphic": {
         "kicker": "TENANT IMPACT METRICS",
-        "headline": "£480 Annual Bill Cut\nPer Council Household",
+        "headline": "\u00a3480 Annual Bill Cut\nPer Council Household",
         "body": "Upgrading homes to Energy Performance Band B slashes heat loss by over sixty percent."
       },
       "voiceoverText": "Council engineers project the upgrades will cut tenant heating bills by four hundred and eighty pounds a year while reducing heat loss by sixty-two percent.",
-      "citationFooter": "SOURCE: Camden Climate & Tenant Impact Assessment · Table 3",
+      "citationFooter": "SOURCE: Camden Climate & Tenant Impact Assessment \u00b7 Table 3",
       "citations": [
-        "Table 3: 'Projected £480 annual saving per household; 62% thermal loss reduction'"
+        "Table 3: 'Projected \u00a3480 annual saving per household; 62% thermal loss reduction'"
       ]
     },
     {
@@ -151,18 +168,17 @@
       "type": "video_with_figure",
       "durationSeconds": 8.5,
       "visualAsset": {
-        "type": "image",
-        "source": "assets/generative/camden_estate_bg.jpg",
-        "cropMode": "pan_zoom",
+        "type": "video",
+        "source": "assets/generative/camden_estate_omni.mp4",
+        "cropMode": "full",
         "trimStart": 0.0,
         "isIllustrative": true,
-        "mandatoryDisclaimer": "AI ILLUSTRATIVE B-ROLL",
-        "prompt": "Architectural view of Camden council housing estate blocks and residential balconies."
+        "mandatoryDisclaimer": "AI ILLUSTRATIVE FOOTAGE"
       },
       "figure": {
         "type": "action_matrix",
         "data": {
-          "matrixHeader": "RETROFIT DELIVERY SCHEDULE · 4 PHASES",
+          "matrixHeader": "RETROFIT DELIVERY SCHEDULE \u00b7 4 PHASES",
           "pillars": [
             {
               "code": "01 / THERMAL GLAZING",
@@ -189,7 +205,7 @@
         "body": "Contractors will install glazing, heat pumps, and damp sensors with zero rent increases for tenants."
       },
       "voiceoverText": "Works begin in January across four phases, combining thermal glazing, communal heat pumps, and smart damp sensors with zero rent increases for tenants.",
-      "citationFooter": "SOURCE: Camden Procurement & Tenant Charter · Para 5",
+      "citationFooter": "SOURCE: Camden Procurement & Tenant Charter \u00b7 Para 5",
       "citations": [
         "Para 5: 'Four-phase delivery starting January; tenant charter guarantees zero rent uplift'"
       ]
@@ -209,25 +225,37 @@
         "type": "outro_archive",
         "data": {
           "tagline": "Independent civic intelligence across London's 33 councils.",
-          "auditHeader": "PUBLIC RECORD AUDIT TRAIL · STORY #4182",
+          "auditHeader": "PUBLIC RECORD AUDIT TRAIL \u00b7 STORY #4182",
           "records": [
             {
               "code": "DOC 01",
-              "title": "Camden Cabinet Capital Allocation: £4.2M Estate Retrofit (18 Nov 2025)",
+              "title": "Camden Cabinet Capital Allocation: \u00a34.2M Estate Retrofit (18 Nov 2025)",
               "badge": "VERIFIED",
-              "badgeColor": [52, 211, 153]
+              "badgeColor": [
+                52,
+                211,
+                153
+              ]
             },
             {
               "code": "DOC 02",
               "title": "Thermal Impact & Tenant Energy Saving Modelling (Table 3)",
               "badge": "VERIFIED",
-              "badgeColor": [52, 211, 153]
+              "badgeColor": [
+                52,
+                211,
+                153
+              ]
             },
             {
               "code": "DOC 03",
               "title": "Gospel Oak & Somers Town Procurement Schedule (Item 4)",
               "badge": "ON RECORD",
-              "badgeColor": [245, 158, 11]
+              "badgeColor": [
+                245,
+                158,
+                11
+              ]
             }
           ],
           "ctaKicker": "READ THE FULL VERIFIED COUNCIL RECORD",
@@ -240,7 +268,7 @@
         "body": "Read the verified council record"
       },
       "voiceoverText": "Full cabinet reports and estate schedules are available on London Local dot news.",
-      "citationFooter": "SOURCE: London Local Civic Archive · londonlocal.news/stories/4182",
+      "citationFooter": "SOURCE: London Local Civic Archive \u00b7 londonlocal.news/stories/4182",
       "citations": [
         "SOURCE DOCUMENTS: Camden 18 November 2025 Cabinet Agenda and Minutes"
       ]
