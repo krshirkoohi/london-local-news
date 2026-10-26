@@ -267,6 +267,11 @@ def draw_lower_third_text(draw, graphic, citation_footer, top_y=1355):
 # ==============================================================================
 
 
+def ease_out_cubic(t):
+    t_clamped = max(0.0, min(1.0, float(t)))
+    return 1.0 - ((1.0 - t_clamped) ** 3)
+
+
 def draw_vector_check(draw, x, y, color, size=14):
     """Draws a crisp anti-aliased vector checkmark so fonts never render missing glyph boxes."""
     p1 = (x, y + int(size * 0.55))
@@ -275,8 +280,8 @@ def draw_vector_check(draw, x, y, color, size=14):
     draw.line([p1, p2, p3], fill=color, width=3)
 
 
-def render_figure_vote_tally(draw, fig_data):
-    """Renders proportional parliamentary division bar & party breakdown HUD."""
+def render_figure_vote_tally(draw, fig_data, t=10.0):
+    """Renders proportional parliamentary division bar & party breakdown HUD with counting animation."""
     fig_y1, fig_y2 = 1090, 1315
     draw.rounded_rectangle(
         [(MARGIN_X, fig_y1), (1080 - MARGIN_X, fig_y2)],
@@ -291,11 +296,13 @@ def render_figure_vote_tally(draw, fig_data):
     raw_right = fig_data.get("headerRight", "MOTION CARRIED").replace("✓", "").strip()
     draw.text((MARGIN_X + 26, fig_y1 + 20), hdr_left, font=f_hdr, fill=(245, 158, 11, 255))
 
-    rw = draw.textlength(raw_right, font=f_hdr)
-    rx = int(1080 - MARGIN_X - 26 - rw)
-    chk_col = (52, 211, 153, 255)
-    draw_vector_check(draw, rx - 22, fig_y1 + 22, chk_col, size=14)
-    draw.text((rx, fig_y1 + 20), raw_right, font=f_hdr, fill=chk_col)
+    # Badge pops in with scale/opacity after vote bar fills (t >= 0.75s)
+    if t >= 0.75:
+        rw = draw.textlength(raw_right, font=f_hdr)
+        rx = int(1080 - MARGIN_X - 26 - rw)
+        chk_col = (52, 211, 153, 255)
+        draw_vector_check(draw, rx - 22, fig_y1 + 22, chk_col, size=14)
+        draw.text((rx, fig_y1 + 20), raw_right, font=f_hdr, fill=chk_col)
 
     parties = fig_data.get("parties", [])
     total_seats = sum(max(1, p.get("seats", 1)) for p in parties) or 1
@@ -304,20 +311,25 @@ def render_figure_vote_tally(draw, fig_data):
     bar_total_w = bar_x2 - bar_x1
     bar_y1, bar_y2 = fig_y1 + 56, fig_y1 + 72
 
+    # Animated bar fill (0.0s -> 0.85s)
+    bar_anim = ease_out_cubic(t / 0.85)
+    anim_total_w = int(bar_total_w * bar_anim)
+
     # Proportional segmented bar
     curr_x = bar_x1
     for idx, p in enumerate(parties):
         seats = max(1, p.get("seats", 1))
         col = tuple(p.get("color", [52, 211, 153])) + (255,)
-        seg_w = int(bar_total_w * (seats / total_seats))
+        seg_w = int(anim_total_w * (seats / total_seats))
         if idx == len(parties) - 1:
-            seg_end = bar_x2
+            seg_end = bar_x1 + anim_total_w
         else:
             seg_end = curr_x + seg_w - 4
-        draw.rounded_rectangle([(curr_x, bar_y1), (max(curr_x + 8, seg_end), bar_y2)], radius=6, fill=col)
+        if seg_end > curr_x + 4:
+            draw.rounded_rectangle([(curr_x, bar_y1), (seg_end, bar_y2)], radius=6, fill=col)
         curr_x = seg_end + 6
 
-    # Party breakdown cards
+    # Party breakdown cards (count up seats in sync with bar)
     card_w = (bar_total_w - 20) // 2
     for idx, p in enumerate(parties[:2]):
         px = bar_x1 + idx * (card_w + 20)
@@ -330,20 +342,33 @@ def render_figure_vote_tally(draw, fig_data):
             outline=(255, 255, 255, 35),
             width=1,
         )
-        # Left colour accent stripe
         draw.rounded_rectangle([(px, py1), (px + 8, py2)], radius=4, fill=col)
         draw.text((px + 22, py1 + 14), p.get("name", ""), font=get_font(FONT_SANS_BOLD, 17), fill=col)
+        
+        # Counting numbers
+        final_seats = p.get("seats", 0)
+        display_seats = int(final_seats * bar_anim)
+        status_txt = p.get("status", "")
+        if "AYE" in status_txt:
+            status_display = f"{display_seats} AYE · {status_txt.split('·')[-1].strip()}"
+        else:
+            status_display = status_txt
+            
         draw.text(
             (px + 22, py1 + 42),
-            f"{p.get('seats', 0)} Seats  •  {p.get('status', '')}",
+            f"{display_seats} Seats  •  {status_display}",
             font=get_font(FONT_SANS_BOLD, 21),
             fill=(240, 240, 245, 255),
         )
 
 
-def render_figure_motion_document(draw, fig_data):
-    """Renders an authentic 'Paper-on-Glass' municipal order paper card with inline yellow highlight."""
-    fig_y1, fig_y2 = 1040, 1325
+def render_figure_motion_document(draw, fig_data, t=10.0):
+    """Renders an authentic 'Paper-on-Glass' municipal order paper card with live-drawing yellow highlight."""
+    # Smooth subtle entrance slide (0.0s -> 0.4s)
+    slide_p = ease_out_cubic(t / 0.4)
+    y_offset = int((1.0 - slide_p) * 40)
+    fig_y1, fig_y2 = 1040 + y_offset, 1325 + y_offset
+
     # Subtle drop shadow
     draw.rounded_rectangle(
         [(MARGIN_X + 6, fig_y1 + 8), (1080 - MARGIN_X + 6, fig_y2 + 8)],
@@ -374,7 +399,7 @@ def render_figure_motion_document(draw, fig_data):
     draw.line([(MARGIN_X + 28, fig_y1 + 46), (1080 - MARGIN_X - 28, fig_y1 + 46)], fill=(40, 40, 45, 220), width=2)
     draw.line([(MARGIN_X + 28, fig_y1 + 51), (1080 - MARGIN_X - 28, fig_y1 + 51)], fill=(40, 40, 45, 120), width=1)
 
-    # Excerpt with highlighted phrase
+    # Excerpt with live-drawing highlighted phrase (starts at t=1.0s, sweeps across over 1.6s)
     prefix = fig_data.get("excerptPrefix", "")
     highlight = fig_data.get("highlightPhrase", "")
     suffix = fig_data.get("excerptSuffix", "")
@@ -384,18 +409,22 @@ def render_figure_motion_document(draw, fig_data):
     max_qw = SAFE_WIDTH - 56
     q_lines = wrap_text_to_width(draw, full_quote, f_quote, max_qw)
 
+    # Calculate live highlight sweep progress
+    hl_progress = ease_out_cubic(max(0.0, min(1.0, (t - 0.9) / 1.7))) if t >= 0.9 else 0.0
+
     qy = fig_y1 + 66
     for ql in q_lines[:3]:
-        # Check if any words of highlightPhrase appear on this line
-        # Draw warm yellow marker highlight behind matching substring or line
         hl_words = [w for w in highlight.split(" ") if len(w) > 3]
         if any(hw in ql for hw in hl_words):
             lw = draw.textlength(ql, font=f_quote)
-            draw.rounded_rectangle(
-                [(MARGIN_X + 24, qy - 2), (MARGIN_X + 32 + int(lw), qy + 32)],
-                radius=4,
-                fill=(253, 224, 71, 235),
-            )
+            # Sweeping highlight rectangle
+            current_hl_w = int(lw * hl_progress)
+            if current_hl_w > 4:
+                draw.rounded_rectangle(
+                    [(MARGIN_X + 24, qy - 2), (MARGIN_X + 28 + current_hl_w, qy + 32)],
+                    radius=4,
+                    fill=(253, 224, 71, 235),
+                )
         draw.text((MARGIN_X + 28, qy), ql, font=f_quote, fill=ink_dark)
         qy += 38
 
@@ -409,49 +438,62 @@ def render_figure_motion_document(draw, fig_data):
     draw.text((MARGIN_X + 28, sig_y + 4), sig_line, font=f_sig, fill=(45, 45, 55, 255))
 
 
-def render_figure_stat_comparison(draw, fig_data):
-    """Renders dual floating glassmorphic metric cards with benchmark progress bars."""
+def render_figure_stat_comparison(draw, fig_data, t=10.0):
+    """Renders dual floating glassmorphic metric cards with staggered entry and progressive bar fills."""
     fig_y1, fig_y2 = 1055, 1320
     cards = fig_data.get("cards", [])
     card_w = (SAFE_WIDTH - 24) // 2
 
     for idx, c in enumerate(cards[:2]):
+        # Staggered slide in: card 0 at t=0.0..0.4s, card 1 at t=0.3..0.7s
+        card_t = t - (idx * 0.28)
+        card_p = ease_out_cubic(card_t / 0.45) if card_t > 0 else 0.0
+        if card_p <= 0.01:
+            continue
+
         cx = MARGIN_X + idx * (card_w + 24)
+        y_slide = int((1.0 - card_p) * 60)
+        py1, py2 = fig_y1 + y_slide, fig_y2 + y_slide
+
         draw.rounded_rectangle(
-            [(cx, fig_y1), (cx + card_w, fig_y2)],
+            [(cx, py1), (cx + card_w, py2)],
             radius=16,
             fill=(14, 14, 20, 232),
             outline=(255, 255, 255, 65),
             width=1,
         )
         bar_col = tuple(c.get("barColor", [245, 158, 11])) + (255,)
-        draw.text((cx + 26, fig_y1 + 20), c.get("kicker", ""), font=get_font(FONT_SANS_BOLD, 16), fill=bar_col)
-        draw.text((cx + 26, fig_y1 + 44), c.get("value", ""), font=get_font(FONT_SERIF_BOLD, 70), fill=(255, 255, 255, 255))
-        draw.text((cx + 26, fig_y1 + 132), c.get("label", ""), font=get_font(FONT_SANS_BOLD, 22), fill=(235, 235, 240, 255))
+        draw.text((cx + 26, py1 + 20), c.get("kicker", ""), font=get_font(FONT_SANS_BOLD, 16), fill=bar_col)
+        draw.text((cx + 26, py1 + 44), c.get("value", ""), font=get_font(FONT_SERIF_BOLD, 70), fill=(255, 255, 255, 255))
+        draw.text((cx + 26, py1 + 132), c.get("label", ""), font=get_font(FONT_SANS_BOLD, 22), fill=(235, 235, 240, 255))
 
-        # Benchmark bar
+        # Benchmark bar fills progressively
+        bar_p = ease_out_cubic((card_t - 0.2) / 0.7) if card_t > 0.2 else 0.0
         bx1, bx2 = cx + 26, cx + card_w - 26
-        by1, by2 = fig_y1 + 174, fig_y1 + 184
+        by1, by2 = py1 + 174, py1 + 184
         draw.rounded_rectangle([(bx1, by1), (bx2, by2)], radius=5, fill=(45, 45, 55, 255))
-        ratio = max(0.1, min(1.0, float(c.get("barRatio", 0.85))))
+        ratio = max(0.1, min(1.0, float(c.get("barRatio", 0.85)))) * bar_p
         fill_w = int((bx2 - bx1) * ratio)
-        draw.rounded_rectangle([(bx1, by1), (bx1 + fill_w, by2)], radius=5, fill=bar_col)
+        if fill_w > 4:
+            draw.rounded_rectangle([(bx1, by1), (bx1 + fill_w, by2)], radius=5, fill=bar_col)
 
-        draw.text((cx + 26, fig_y1 + 198), c.get("subtext", ""), font=get_font(FONT_SANS, 17), fill=(175, 175, 185, 255))
+        draw.text((cx + 26, py1 + 198), c.get("subtext", ""), font=get_font(FONT_SANS, 17), fill=(175, 175, 185, 255))
 
 
-def render_figure_action_matrix(draw, fig_data):
-    """Renders a 2x2 connected civic governance grid with header banner."""
+def render_figure_action_matrix(draw, fig_data, t=10.0):
+    """Renders a 2x2 connected civic governance grid with staggered pillar entrances."""
+    hdr_p = ease_out_cubic(t / 0.35)
     hdr_y1, hdr_y2 = 1005, 1052
     draw.rounded_rectangle(
-        [(MARGIN_X, hdr_y1), (1080 - MARGIN_X, hdr_y2)],
+        [(MARGIN_X, hdr_y1), (MARGIN_X + int((SAFE_WIDTH) * hdr_p), hdr_y2)],
         radius=10,
         fill=(245, 158, 11, 230),
     )
-    f_mhdr = get_font(FONT_SANS_BOLD, 18)
-    m_title = fig_data.get("matrixHeader", "MANDATED COALITION · 4 OPERATIONAL PILLARS")
-    mw = draw.textlength(m_title, font=f_mhdr)
-    draw.text(((1080 - mw) // 2, hdr_y1 + 13), m_title, font=f_mhdr, fill=(12, 12, 16, 255))
+    if hdr_p > 0.6:
+        f_mhdr = get_font(FONT_SANS_BOLD, 18)
+        m_title = fig_data.get("matrixHeader", "MANDATED COALITION · 4 OPERATIONAL PILLARS")
+        mw = draw.textlength(m_title, font=f_mhdr)
+        draw.text(((1080 - mw) // 2, hdr_y1 + 13), m_title, font=f_mhdr, fill=(12, 12, 16, 255))
 
     grid_y = 1066
     gw = (SAFE_WIDTH - 20) // 2
@@ -459,10 +501,17 @@ def render_figure_action_matrix(draw, fig_data):
     pillars = fig_data.get("pillars", [])
 
     for idx, p in enumerate(pillars[:4]):
+        # Staggered entry every 0.18s
+        pil_t = t - (0.2 + idx * 0.18)
+        pil_p = ease_out_cubic(pil_t / 0.35) if pil_t > 0 else 0.0
+        if pil_p <= 0.01:
+            continue
+
         col_idx = idx % 2
         row_idx = idx // 2
         px = MARGIN_X + col_idx * (gw + 20)
-        py = grid_y + row_idx * (gh + 14)
+        y_slide = int((1.0 - pil_p) * 35)
+        py = grid_y + row_idx * (gh + 14) + y_slide
 
         draw.rounded_rectangle(
             [(px, py), (px + gw, py + gh)],
@@ -479,8 +528,8 @@ def render_figure_action_matrix(draw, fig_data):
             dy += 26
 
 
-def create_scene_overlay(out_path, spec, scene, total_scenes=5, show_logo=True):
-    """Generates the complete broadcast overlay PNG for a timeline scene."""
+def create_scene_overlay_image(spec, scene, total_scenes=5, show_logo=True, t=10.0):
+    """Generates a complete broadcast overlay PIL Image for a timeline scene at time t."""
     overlay = Image.new("RGBA", (1080, 1920), (0, 0, 0, 0))
     draw = ImageDraw.Draw(overlay)
 
@@ -507,13 +556,13 @@ def create_scene_overlay(out_path, spec, scene, total_scenes=5, show_logo=True):
     fig_data = fig.get("data", {})
 
     if fig_type == "vote_tally":
-        render_figure_vote_tally(draw, fig_data)
+        render_figure_vote_tally(draw, fig_data, t=t)
     elif fig_type == "motion_document":
-        render_figure_motion_document(draw, fig_data)
+        render_figure_motion_document(draw, fig_data, t=t)
     elif fig_type == "stat_comparison":
-        render_figure_stat_comparison(draw, fig_data)
+        render_figure_stat_comparison(draw, fig_data, t=t)
     elif fig_type == "action_matrix":
-        render_figure_action_matrix(draw, fig_data)
+        render_figure_action_matrix(draw, fig_data, t=t)
 
     draw_lower_third_text(
         draw,
@@ -521,12 +570,17 @@ def create_scene_overlay(out_path, spec, scene, total_scenes=5, show_logo=True):
         scene.get("citationFooter", ""),
         top_y=1350,
     )
+    return overlay
 
-    overlay.save(out_path)
+
+def create_scene_overlay(out_path, spec, scene, total_scenes=5, show_logo=True):
+    """Generates the static broadcast overlay PNG for fallback / testing."""
+    img = create_scene_overlay_image(spec, scene, total_scenes=total_scenes, show_logo=show_logo, t=10.0)
+    img.save(out_path)
 
 
-def create_outro_archive_card(out_path, spec, scene, total_scenes=5, show_logo=True):
-    """Renders the Scene 5 Broadsheet Audit Trail & Endplate card."""
+def create_outro_archive_card_image(spec, scene, total_scenes=5, show_logo=True, t=10.0):
+    """Renders the Scene 5 Broadsheet Audit Trail & Endplate card with sequential row entrances."""
     img = Image.new("RGBA", (1080, 1920), (10, 10, 14, 255))
     draw = ImageDraw.Draw(img)
 
@@ -568,10 +622,18 @@ def create_outro_archive_card(out_path, spec, scene, total_scenes=5, show_logo=T
 
     records = fig_data.get("records", [])
     ry = 600
-    for rec in records[:3]:
+    for idx, rec in enumerate(records[:3]):
+        row_t = t - (0.15 + idx * 0.22)
+        row_p = ease_out_cubic(row_t / 0.35) if row_t > 0 else 0.0
+        if row_p <= 0.01:
+            continue
+
         card_h = 155
+        y_slide = int((1.0 - row_p) * 40)
+        cy1, cy2 = ry + y_slide, ry + card_h + y_slide
+
         draw.rounded_rectangle(
-            [(ox, ry), (1080 - ox, ry + card_h)],
+            [(ox, cy1), (1080 - ox, cy2)],
             radius=14,
             fill=(20, 20, 28, 255),
             outline=(255, 255, 255, 50),
@@ -579,7 +641,7 @@ def create_outro_archive_card(out_path, spec, scene, total_scenes=5, show_logo=T
         )
         # Code pill
         code_txt = rec.get("code", "DOC")
-        draw.text((ox + 26, ry + 22), code_txt, font=get_font(FONT_SANS_BOLD, 17), fill=(160, 160, 175, 255))
+        draw.text((ox + 26, cy1 + 22), code_txt, font=get_font(FONT_SANS_BOLD, 17), fill=(160, 160, 175, 255))
 
         # Status badge on right (with vector checkmark so fonts never render missing glyph boxes)
         badge_label = rec.get("badge", "VERIFIED").replace("✓", "").strip()
@@ -588,38 +650,47 @@ def create_outro_archive_card(out_path, spec, scene, total_scenes=5, show_logo=T
         bw = int(draw.textlength(badge_label, font=f_badge) + 52)
         bx2 = 1080 - ox - 24
         bx1 = bx2 - bw
-        draw.rounded_rectangle([(bx1, ry + 16), (bx2, ry + 50)], radius=17, fill=(12, 12, 16, 255), outline=b_col, width=1)
-        draw_vector_check(draw, bx1 + 15, ry + 26, b_col, size=12)
-        draw.text((bx1 + 33, ry + 24), badge_label, font=f_badge, fill=b_col)
+        draw.rounded_rectangle([(bx1, cy1 + 16), (bx2, cy1 + 50)], radius=17, fill=(12, 12, 16, 255), outline=b_col, width=1)
+        draw_vector_check(draw, bx1 + 15, cy1 + 26, b_col, size=12)
+        draw.text((bx1 + 33, cy1 + 24), badge_label, font=f_badge, fill=b_col)
 
         # Document Title (Wrapped cleanly inside card)
         f_title = get_font(FONT_SERIF, 27)
         t_lines = wrap_text_to_width(draw, rec.get("title", ""), f_title, SAFE_WIDTH - 52)
-        ty = ry + 62
+        ty = cy1 + 62
         for tl in t_lines[:2]:
             draw.text((ox + 26, ty), tl, font=f_title, fill=(240, 240, 245, 255))
             ty += 36
 
         ry += card_h + 24
 
-    # Elevated CTA Pill Button (safely above mobile player controls)
-    by = 1210
-    pill_h = 140
-    draw.rounded_rectangle([(ox, by), (1080 - ox, by + pill_h)], radius=18, fill=(255, 255, 255, 255))
-    f_kicker = get_font(FONT_SANS_BOLD, 19)
-    f_url = get_font(FONT_SERIF_BOLD, 40)
+    # Elevated CTA Pill Button (slides in at t >= 0.8s)
+    cta_t = t - 0.75
+    cta_p = ease_out_cubic(cta_t / 0.45) if cta_t > 0 else 0.0
+    if cta_p > 0.01:
+        y_slide = int((1.0 - cta_p) * 50)
+        by = 1210 + y_slide
+        pill_h = 140
+        draw.rounded_rectangle([(ox, by), (1080 - ox, by + pill_h)], radius=18, fill=(255, 255, 255, 255))
+        f_kicker = get_font(FONT_SANS_BOLD, 19)
+        f_url = get_font(FONT_SERIF_BOLD, 40)
 
-    kicker_txt = fig_data.get("ctaKicker", "READ THE FULL VERIFIED COUNCIL RECORD")
-    k_w = draw.textlength(kicker_txt, font=f_kicker)
-    draw.text(((1080 - k_w) // 2, by + 28), kicker_txt, font=f_kicker, fill=(100, 100, 110, 255))
+        kicker_txt = fig_data.get("ctaKicker", "READ THE FULL VERIFIED COUNCIL RECORD")
+        k_w = draw.textlength(kicker_txt, font=f_kicker)
+        draw.text(((1080 - k_w) // 2, by + 28), kicker_txt, font=f_kicker, fill=(100, 100, 110, 255))
 
-    url_txt = fig_data.get("ctaUrl", "londonlocal.news")
-    u_w = draw.textlength(url_txt, font=f_url)
-    draw.text(((1080 - u_w) // 2, by + 66), url_txt, font=f_url, fill=(12, 12, 16, 255))
+        url_txt = fig_data.get("ctaUrl", "londonlocal.news")
+        u_w = draw.textlength(url_txt, font=f_url)
+        draw.text(((1080 - u_w) // 2, by + 66), url_txt, font=f_url, fill=(12, 12, 16, 255))
 
     # Footer citation
-    draw_lower_third_footer_only(draw, scene.get("citationFooter", "SOURCE: London Local Verified Civic Archive"))
+    draw_lower_third_footer_only(draw, scene.get("citationFooter", "SOURCE: London Local Civic Archive"))
+    return img
 
+
+def create_outro_archive_card(out_path, spec, scene, total_scenes=5, show_logo=True):
+    """Renders the static Scene 5 Broadsheet Audit Trail & Endplate card (fallback)."""
+    img = create_outro_archive_card_image(spec, scene, total_scenes=total_scenes, show_logo=show_logo, t=10.0)
     img.convert("RGB").save(out_path)
 
 
@@ -736,28 +807,28 @@ def render_story_from_spec(spec_path, show_logo=True, force_tts=False):
         trim_start = float(vis.get("trimStart", 0.0))
 
         if scene.get("type") == "outro_archive" or scene.get("figure", {}).get("type") == "outro_archive":
-            outro_png = os.path.join(story_build_dir, f"scene_{num}_outro.png")
-            create_outro_archive_card(outro_png, spec, scene, total_scenes=total_scenes, show_logo=show_logo)
+            total_frames = int(pad_dur * 30)
             cmd = [
                 "ffmpeg", "-y",
-                "-loop", "1", "-i", outro_png,
+                "-f", "rawvideo", "-pix_fmt", "rgba", "-s", "1080x1920", "-r", "30", "-i", "-",
                 "-i", mp3_path,
-                "-filter_complex",
-                "scale=1080:1920,zoompan=z='min(zoom+0.00025,1.025)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1080x1920:fps=30",
+                "-map", "0:v", "-map", "1:a",
                 "-r", "30",
                 "-c:v", "libx264", "-t", f"{pad_dur:.3f}",
                 "-pix_fmt", "yuv420p",
                 "-c:a", "aac", "-ar", "24000", "-ac", "1", "-b:a", "192k",
                 seg_out,
             ]
-            subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            for f_idx in range(total_frames):
+                t_sec = f_idx / 30.0
+                frame_img = create_outro_archive_card_image(spec, scene, total_scenes=total_scenes, show_logo=show_logo, t=t_sec)
+                proc.stdin.write(frame_img.tobytes())
+            proc.stdin.close()
+            proc.wait()
             segment_files.append(seg_out)
-            print(f"  ✓ Scene {num} [Outro Audit Archive] encoded ({pad_dur:.2f}s @ 30fps)")
+            print(f"  ✓ Scene {num} [Outro Archive - Animated Slide] encoded ({pad_dur:.2f}s @ 30fps)")
             continue
-
-        # Generate transparent overlay with scene figure
-        ov_png = os.path.join(story_build_dir, f"ov_scene_{num}.png")
-        create_scene_overlay(ov_png, spec, scene, total_scenes=total_scenes, show_logo=show_logo)
 
         if vis_type == "video" and os.path.exists(vis_src):
             if crop_mode == "architectural_upper":
@@ -783,7 +854,7 @@ def render_story_from_spec(spec_path, show_logo=True, force_tts=False):
                 "-stream_loop", "-1",
                 "-ss", f"{trim_start:.2f}",
                 "-i", vis_src,
-                "-i", ov_png,
+                "-f", "rawvideo", "-pix_fmt", "rgba", "-s", "1080x1920", "-r", "30", "-i", "-",
                 "-i", mp3_path,
                 "-filter_complex", vf_chain,
                 "-map", "[outv]", "-map", "2:a",
@@ -793,24 +864,36 @@ def render_story_from_spec(spec_path, show_logo=True, force_tts=False):
                 "-c:a", "aac", "-ar", "24000", "-ac", "1", "-b:a", "192k",
                 seg_out,
             ]
-            subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            total_frames = int(pad_dur * 30)
+            proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            for f_idx in range(total_frames):
+                t_sec = f_idx / 30.0
+                frame_img = create_scene_overlay_image(spec, scene, total_scenes=total_scenes, show_logo=show_logo, t=t_sec)
+                proc.stdin.write(frame_img.tobytes())
+            proc.stdin.close()
+            proc.wait()
             segment_files.append(seg_out)
             fig_label = scene.get("figure", {}).get("type", "overlay")
-            print(f"  ✓ Scene {num} [Video: {crop_mode} + Figure: {fig_label}] encoded ({pad_dur:.2f}s @ 30fps)")
+            print(f"  ✓ Scene {num} [Video: {crop_mode} + Animated Figure: {fig_label}] encoded ({pad_dur:.2f}s @ 30fps)")
 
         elif os.path.exists(vis_src):
-            # High-res still image with smooth 30fps Ken Burns pan-and-zoom + figure overlay
+            # Dynamic 35mm documentary camera drift + optical film grain + animated figure overlay
+            if num % 2 == 1:
+                pan_expr = "x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)-(on/120)*10'"
+            else:
+                pan_expr = "x='iw/2-(iw/zoom/2)+(on/120)*12':y='ih/2-(ih/zoom/2)'"
+
             vf_chain = (
-                "[0:v]scale=1080:1920:force_original_aspect_ratio=increase,"
-                "crop=1080:1920,"
-                "eq=brightness=-0.08:contrast=1.08,"
-                "zoompan=z='min(zoom+0.0005,1.06)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1080x1920:fps=30[bg];"
-                "[bg][1:v]overlay=0:0[outv]"
+                f"[0:v]scale=1200:2133:force_original_aspect_ratio=increase,"
+                f"zoompan=z='min(zoom+0.0005,1.06)':{pan_expr}:d=1:s=1080x1920:fps=30,"
+                f"eq=brightness=-0.05:contrast=1.07:saturation=0.92,"
+                f"noise=alls=8:allf=t+u[bg];"
+                f"[bg][1:v]overlay=0:0[outv]"
             )
             cmd = [
                 "ffmpeg", "-y",
                 "-loop", "1", "-i", vis_src,
-                "-i", ov_png,
+                "-f", "rawvideo", "-pix_fmt", "rgba", "-s", "1080x1920", "-r", "30", "-i", "-",
                 "-i", mp3_path,
                 "-filter_complex", vf_chain,
                 "-map", "[outv]", "-map", "2:a",
@@ -820,10 +903,17 @@ def render_story_from_spec(spec_path, show_logo=True, force_tts=False):
                 "-c:a", "aac", "-ar", "24000", "-ac", "1", "-b:a", "192k",
                 seg_out,
             ]
-            subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            total_frames = int(pad_dur * 30)
+            proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            for f_idx in range(total_frames):
+                t_sec = f_idx / 30.0
+                frame_img = create_scene_overlay_image(spec, scene, total_scenes=total_scenes, show_logo=show_logo, t=t_sec)
+                proc.stdin.write(frame_img.tobytes())
+            proc.stdin.close()
+            proc.wait()
             segment_files.append(seg_out)
             fig_label = scene.get("figure", {}).get("type", "overlay")
-            print(f"  ✓ Scene {num} [35mm Ken Burns + Figure: {fig_label}] encoded ({pad_dur:.2f}s @ 30fps)")
+            print(f"  ✓ Scene {num} [35mm Drift+Grain + Animated Figure: {fig_label}] encoded ({pad_dur:.2f}s @ 30fps)")
 
     print("=== 3. Concatenating Frame-Accurate 30fps Master MP4 ===")
     concat_list = os.path.join(story_build_dir, "concat_list.txt")
@@ -854,6 +944,32 @@ def render_story_from_spec(spec_path, show_logo=True, force_tts=False):
     res = subprocess.run(probe_cmd, capture_output=True, text=True, check=True)
     print(f"✅ Master Rendered: {story_output}")
     print(res.stdout.strip())
+
+    # Automatically update stream-optimized faststart MP4 in demos/
+    demo_map = {
+        "4178": "westminster_4178_broadcast.mp4",
+        "4182": "camden_4182_broadcast.mp4",
+        "4185": "southwark_4185_broadcast.mp4",
+    }
+    if story_id in demo_map:
+        demos_dir = os.path.join(BASE_DIR, "demos")
+        os.makedirs(demos_dir, exist_ok=True)
+        demo_target = os.path.join(demos_dir, demo_map[story_id])
+        tmp_target = os.path.join("/tmp", f"opt_{demo_map[story_id]}")
+        print(f"📦 Encoding web-stream faststart demo: {demo_map[story_id]}...")
+        opt_cmd = [
+            "ffmpeg", "-y",
+            "-i", story_output,
+            "-c:v", "libx264", "-crf", "26", "-preset", "medium",
+            "-c:a", "aac", "-b:a", "128k",
+            "-movflags", "+faststart",
+            tmp_target,
+        ]
+        subprocess.run(opt_cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        os.replace(tmp_target, demo_target)
+        d_size = os.path.getsize(demo_target) / (1024 * 1024)
+        print(f"  ✓ {demo_map[story_id]} ({d_size:.2f} MB, faststart ready)")
+
     return story_output
 
 
