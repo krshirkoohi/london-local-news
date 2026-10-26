@@ -1,36 +1,37 @@
 #!/usr/bin/env python3
 """
-London Local News Video Assembly Pipeline (V8 - Broadcast Figures Edition)
-Design Architecture:
-- True Full-Screen 9:16 Moving Video Footage (1080x1920) across documentary scenes
-- Superimposed intelligent data visualisations & figures:
-  * Scene 1: 54-0 Unanimous Vote Tally HUD (Labour & Conservative cross-party figure)
-  * Scene 2: Motion Mover & Seconder Leadership Quote Card
-  * Scene 3: Dual Floating Demographic Figures (180+ Nationalities / 150+ Languages)
-  * Scene 4: 2x2 Community Implementation Action Matrix
-  * Scene 5: Clean Broadsheet Outro with strict text-wrapping & mobile safe margins
-- Mathematically measured pill tags (zero text spillage on borders)
-- BBC Radio 4 style broadcast voiceover (en-GB-SoniaNeural)
+London Local News Video Assembly Pipeline (V9 - Modular Multi-Story Broadcast Engine)
+Architecture:
+- 100% Declarative & Spec-Driven: Zero hardcoded story strings; renders any `specs/*.json` contract
+- Five Reusable Broadcast Figure Components:
+  1. `vote_tally`: Proportional parliamentary division bar & party breakdown cards
+  2. `motion_document`: "Paper-on-Glass" official council order paper with inline yellow marker highlight
+  3. `stat_comparison`: Dual glassmorphic metric cards with benchmark progress bars
+  4. `action_matrix`: 2x2 connected operational governance grid
+  5. `outro_archive`: Structured Public Record Audit Trail table with verification badges & CTA
+- Multi-Angle Camera Framing (`full`, `architectural_upper` B-cam punch-in, `pan_zoom` 35mm Ken Burns)
+- Alpha-keyed brand masthead (eliminates rectangular background artifacts)
+- Frame-accurate 30fps CFR + 24kHz audio normalization across all segments
+- Supports single-story (`--spec`) and multi-story simultaneous deployment (`--batch`)
 """
 
+import argparse
+import glob
 import json
 import os
 import subprocess
-import argparse
 import time
+from concurrent.futures import ThreadPoolExecutor
 from PIL import Image, ImageDraw, ImageFont
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SPEC_PATH = os.path.join(BASE_DIR, "specs/4178-westminster-extremism.json")
+DEFAULT_SPEC = os.path.join(BASE_DIR, "specs/4178-westminster-extremism.json")
 ASSETS_DIR = os.path.join(BASE_DIR, "assets")
 BRANDING_DIR = os.path.join(ASSETS_DIR, "branding")
-GENERATIVE_DIR = os.path.join(ASSETS_DIR, "generative")
 BUILD_DIR = os.path.join(BASE_DIR, "build")
-AUDIO_DIR = os.path.join(ASSETS_DIR, "audio")
+AUDIO_BASE_DIR = os.path.join(ASSETS_DIR, "audio")
 OUTPUT_DIR = os.path.join(BASE_DIR, "output")
 
-VIDEO_STEPS = os.path.join(GENERATIVE_DIR, "gemini_generated_video_535e3482.mp4")
-VIDEO_BUS = os.path.join(GENERATIVE_DIR, "gemini_generated_video_d308c8b8.mp4")
 LOGO_WORDMARK = os.path.join(BRANDING_DIR, "london-local-wordmark.png")
 
 SERIF_BOLD_CANDIDATES = [
@@ -45,6 +46,12 @@ SERIF_CANDIDATES = [
     "/usr/share/fonts/truetype/liberation/LiberationSerif-Regular.ttf",
     "/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf",
 ]
+SANS_BOLD_CANDIDATES = [
+    "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
+    "/Library/Fonts/Arial Bold.ttf",
+    "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+]
 SANS_CANDIDATES = [
     "/System/Library/Fonts/Supplemental/Arial.ttf",
     "/System/Library/Fonts/Helvetica.ttc",
@@ -53,18 +60,22 @@ SANS_CANDIDATES = [
     "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
 ]
 
+
 def resolve_font_path(candidates):
     for path in candidates:
         if os.path.exists(path):
             return path
     return None
 
+
 FONT_SERIF_BOLD = resolve_font_path(SERIF_BOLD_CANDIDATES)
 FONT_SERIF = resolve_font_path(SERIF_CANDIDATES)
+FONT_SANS_BOLD = resolve_font_path(SANS_BOLD_CANDIDATES) or resolve_font_path(SANS_CANDIDATES)
 FONT_SANS = resolve_font_path(SANS_CANDIDATES)
 
 MARGIN_X = 70
-SAFE_WIDTH = 1080 - (2 * MARGIN_X) # 940px
+SAFE_WIDTH = 1080 - (2 * MARGIN_X)  # 940px
+
 
 def get_font(path, size):
     if path and os.path.exists(path):
@@ -76,6 +87,29 @@ def get_font(path, size):
         return ImageFont.truetype("LiberationSans-Regular.ttf", size)
     except Exception:
         return ImageFont.load_default()
+
+
+def load_transparent_wordmark(target_height=34):
+    """Loads london-local-wordmark.png and keys out the dark background to true RGBA alpha."""
+    if not os.path.exists(LOGO_WORDMARK):
+        return None
+    try:
+        wm = Image.open(LOGO_WORDMARK).convert("RGBA")
+        pixels = wm.load()
+        for y in range(wm.height):
+            for x in range(wm.width):
+                r, g, b, a = pixels[x, y]
+                m = max(r, g, b)
+                if m <= 24:
+                    pixels[x, y] = (r, g, b, 0)
+                else:
+                    new_a = min(255, int((m - 24) * 255 / 175))
+                    pixels[x, y] = (r, g, b, new_a)
+        aspect = wm.width / wm.height
+        return wm.resize((int(target_height * aspect), target_height), Image.Resampling.LANCZOS)
+    except Exception:
+        return None
+
 
 def wrap_text_to_width(draw, text, font, max_width):
     lines = []
@@ -94,267 +128,525 @@ def wrap_text_to_width(draw, text, font, max_width):
             lines.append(" ".join(current_line))
     return lines
 
-def draw_top_bar(overlay, draw, borough="WESTMINSTER", date_str="12 NOV", show_ai_badge=True, show_logo=True):
-    # Top gradient vignette
+
+def draw_top_bar(
+    overlay,
+    draw,
+    borough="WESTMINSTER",
+    date_str="12 NOV 2025",
+    scene_num=1,
+    total_scenes=5,
+    disclaimer=None,
+    show_logo=True,
+):
+    # Top subtle vignette
     for y in range(0, 260):
-        alpha = int(190 * (1 - (y / 260)))
-        draw.line([(0, y), (1080, y)], fill=(0, 0, 0, alpha))
+        alpha = int(195 * (1 - (y / 260)))
+        draw.line([(0, y), (1080, y)], fill=(6, 6, 8, alpha))
 
-    # Clean brand wordmark
-    if show_logo and os.path.exists(LOGO_WORDMARK):
-        try:
-            wm = Image.open(LOGO_WORDMARK).convert("RGBA")
-            aspect = wm.width / wm.height
-            wm = wm.resize((int(38 * aspect), 38), Image.Resampling.LANCZOS)
-            overlay.paste(wm, (MARGIN_X, 75), wm)
-        except Exception:
-            draw.text((MARGIN_X, 75), "London Local.", font=get_font(FONT_SERIF_BOLD, 36), fill=(255, 255, 255, 255))
+    # Top progress bar (4px height at y=0..4)
+    draw.rectangle([(0, 0), (1080, 5)], fill=(255, 255, 255, 35))
+    prog_w = int(1080 * (scene_num / max(1, total_scenes)))
+    draw.rectangle([(0, 0), (prog_w, 5)], fill=(255, 82, 56, 230))
+
+    # Left Brand Pill (Unified glass container so wordmark never floats awkwardly)
+    wm = load_transparent_wordmark(target_height=34) if show_logo else None
+    if wm:
+        brand_pill_w = wm.width + 36
+        draw.rounded_rectangle(
+            [(MARGIN_X, 66), (MARGIN_X + brand_pill_w, 120)],
+            radius=27,
+            fill=(10, 10, 14, 195),
+            outline=(255, 255, 255, 60),
+            width=1,
+        )
+        overlay.paste(wm, (MARGIN_X + 18, 76), wm)
     else:
-        draw.text((MARGIN_X, 75), "London Local.", font=get_font(FONT_SERIF_BOLD, 36), fill=(255, 255, 255, 255))
+        f_placeholder = get_font(FONT_SANS_BOLD, 19)
+        p_txt = "YOUR LOGO HERE"
+        pw = int(draw.textlength(p_txt, font=f_placeholder) + 44)
+        draw.rounded_rectangle(
+            [(MARGIN_X, 66), (MARGIN_X + pw, 120)],
+            radius=27,
+            fill=(10, 10, 14, 195),
+            outline=(255, 255, 255, 80),
+            width=1,
+        )
+        draw.text((MARGIN_X + 22, 82), p_txt, font=f_placeholder, fill=(220, 220, 225, 255))
 
-    # Dynamically measured borough tag pill (mathematically impossible to spill over)
-    f_tag = get_font(FONT_SANS, 20)
-    tag_text = f"{borough} • {date_str}"
-    tag_text_w = draw.textlength(tag_text, font=f_tag)
-    pill_w = int(tag_text_w + 44)
+    # Right Borough & Date Pill (Mathematically measured)
+    f_tag = get_font(FONT_SANS_BOLD, 19)
+    tag_text = f"{borough.upper()} • {date_str.upper()}"
+    tag_w = draw.textlength(tag_text, font=f_tag)
+    pill_w = int(tag_w + 46)
     pill_x2 = 1080 - MARGIN_X
     pill_x1 = pill_x2 - pill_w
-    draw.rounded_rectangle([(pill_x1, 70), (pill_x2, 118)], radius=24, fill=(0, 0, 0, 180), outline=(255, 255, 255, 60), width=1)
-    draw.text((pill_x1 + 22, 84), tag_text, font=f_tag, fill=(240, 240, 245))
+    draw.rounded_rectangle(
+        [(pill_x1, 66), (pill_x2, 120)],
+        radius=27,
+        fill=(10, 10, 14, 195),
+        outline=(255, 255, 255, 60),
+        width=1,
+    )
+    draw.text((pill_x1 + 23, 83), tag_text, font=f_tag, fill=(240, 240, 245, 255))
 
-    # AI illustrative footage badge
-    if show_ai_badge:
-        f_ai = get_font(FONT_SANS, 16)
-        ai_text = "AI ILLUSTRATIVE FOOTAGE"
+    # Optional AI Illustrative Disclaimer Pill (Top-Left Second Row)
+    if disclaimer:
+        f_ai = get_font(FONT_SANS_BOLD, 15)
+        ai_text = disclaimer.upper()
         ai_w = draw.textlength(ai_text, font=f_ai)
-        draw.rounded_rectangle([(MARGIN_X, 130), (MARGIN_X + int(ai_w + 32), 168)], radius=15, fill=(0, 0, 0, 180), outline=(245, 158, 11, 200), width=1)
-        draw.text((MARGIN_X + 16, 142), ai_text, font=f_ai, fill=(251, 191, 36))
+        draw.rounded_rectangle(
+            [(MARGIN_X, 132), (MARGIN_X + int(ai_w + 52), 168)],
+            radius=18,
+            fill=(12, 12, 16, 195),
+            outline=(245, 158, 11, 210),
+            width=1,
+        )
+        draw.ellipse([(MARGIN_X + 16, 146), (MARGIN_X + 24, 154)], fill=(251, 191, 36, 255))
+        draw.text((MARGIN_X + 33, 142), ai_text, font=f_ai, fill=(251, 191, 36, 255))
 
-def draw_bottom_vignette(draw, start_y=1050):
+    # Scene Counter Pill (Top-Right Second Row)
+    f_sc = get_font(FONT_SANS_BOLD, 15)
+    sc_text = f"SCENE 0{scene_num} / 0{total_scenes}"
+    sc_w = draw.textlength(sc_text, font=f_sc)
+    sc_x2 = 1080 - MARGIN_X
+    sc_x1 = sc_x2 - int(sc_w + 32)
+    draw.rounded_rectangle(
+        [(sc_x1, 132), (sc_x2, 168)],
+        radius=18,
+        fill=(12, 12, 16, 175),
+        outline=(255, 255, 255, 40),
+        width=1,
+    )
+    draw.text((sc_x1 + 16, 142), sc_text, font=f_sc, fill=(185, 185, 195, 255))
+
+
+def draw_bottom_vignette(draw, start_y=940):
     for y in range(start_y, 1920):
         factor = (y - start_y) / (1920 - start_y)
-        alpha = int(245 * (factor ** 1.3))
-        draw.line([(0, y), (1080, y)], fill=(10, 10, 12, alpha))
+        alpha = int(248 * (factor ** 1.25))
+        draw.line([(0, y), (1080, y)], fill=(8, 8, 11, alpha))
 
-# --- SCENE 1: Intelligent Vote Breakdown Figure ---
-def create_scene1_overlay(out_path, show_logo=True):
-    overlay = Image.new("RGBA", (1080, 1920), (0, 0, 0, 0))
-    draw = ImageDraw.Draw(overlay)
-    draw_top_bar(overlay, draw, borough="WESTMINSTER", date_str="12 NOV", show_ai_badge=True, show_logo=show_logo)
-    draw_bottom_vignette(draw, start_y=1000)
 
-    # Superimposed Vote Figure Card (HUD)
-    fig_y1 = 1120
-    fig_y2 = 1290
-    draw.rounded_rectangle([(MARGIN_X, fig_y1), (1080 - MARGIN_X, fig_y2)], radius=14, fill=(20, 20, 24, 210), outline=(255, 255, 255, 50), width=1)
-    
-    # Figure Header
-    draw.text((MARGIN_X + 25, fig_y1 + 18), "COUNCIL VOTE RESULT: MOTION CARRIED", font=get_font(FONT_SANS, 19), fill=(245, 158, 11))
-    draw.text((1080 - MARGIN_X - 180, fig_y1 + 18), "100% UNANIMOUS", font=get_font(FONT_SANS, 19), fill=(52, 211, 153))
-
-    # Tally Graphic Bar
-    draw.rounded_rectangle([(MARGIN_X + 25, fig_y1 + 54), (1080 - MARGIN_X - 25, fig_y1 + 64)], radius=5, fill=(45, 45, 50))
-    draw.rounded_rectangle([(MARGIN_X + 25, fig_y1 + 54), (1080 - MARGIN_X - 25, fig_y1 + 64)], radius=5, fill=(52, 211, 153))
-
-    # Dual Party Breakdown Pills
-    p_w = (SAFE_WIDTH - 70) // 2
-    # Labour Pill
-    draw.rounded_rectangle([(MARGIN_X + 25, fig_y1 + 84), (MARGIN_X + 25 + p_w, fig_y1 + 144)], radius=8, fill=(35, 35, 42))
-    draw.text((MARGIN_X + 45, fig_y1 + 94), "LABOUR", font=get_font(FONT_SANS, 18), fill=(225, 29, 72))
-    draw.text((MARGIN_X + 45, fig_y1 + 118), "31 Councillors (Aye)", font=get_font(FONT_SANS, 20), fill=(230, 230, 235))
-
-    # Conservative Pill
-    cx = MARGIN_X + 25 + p_w + 20
-    draw.rounded_rectangle([(cx, fig_y1 + 84), (cx + p_w, fig_y1 + 144)], radius=8, fill=(35, 35, 42))
-    draw.text((cx + 20, fig_y1 + 94), "CONSERVATIVE", font=get_font(FONT_SANS, 18), fill=(37, 99, 235))
-    draw.text((cx + 20, fig_y1 + 118), "23 Councillors (Aye)", font=get_font(FONT_SANS, 20), fill=(230, 230, 235))
-
-    # Lower Third Typography
+def draw_lower_third_text(draw, graphic, citation_footer, top_y=1355):
+    f_kicker = get_font(FONT_SANS_BOLD, 20)
     f_h1 = get_font(FONT_SERIF_BOLD, 54)
-    f_body = get_font(FONT_SANS, 28)
-    draw.text((MARGIN_X, 1340), "Unanimous Vote Against\nFar-Right Extremism", font=f_h1, fill=(255, 255, 255), spacing=12)
-    draw.text((MARGIN_X, 1490), "Westminster City Council has formally united across party lines\nto condemn rising anti-migrant rhetoric and protect residents.", font=f_body, fill=(215, 215, 220), spacing=8)
+    f_body = get_font(FONT_SANS, 27)
+    f_meta = get_font(FONT_SANS, 19)
 
-    draw.line([(MARGIN_X, 1680), (1080 - MARGIN_X, 1680)], fill=(255, 255, 255, 40), width=1)
-    draw.text((MARGIN_X, 1715), "SOURCE: Westminster Full Council Meeting · 12 Nov 2025 · Verified Minutes", font=get_font(FONT_SANS, 20), fill=(160, 160, 165))
-    overlay.save(out_path)
+    kicker = graphic.get("kicker", "")
+    headline = graphic.get("headline", "")
+    body = graphic.get("body", "")
 
-# --- SCENE 2: Leadership Motion & Document Figure ---
-def create_scene2_overlay(out_path, show_logo=True):
-    overlay = Image.new("RGBA", (1080, 1920), (0, 0, 0, 0))
-    draw = ImageDraw.Draw(overlay)
-    draw_top_bar(overlay, draw, borough="WESTMINSTER", date_str="12 NOV", show_ai_badge=True, show_logo=show_logo)
-    draw_bottom_vignette(draw, start_y=1000)
+    curr_y = top_y
+    if kicker:
+        draw.text((MARGIN_X, curr_y), kicker.upper(), font=f_kicker, fill=(245, 158, 11, 255))
+        curr_y += 34
 
-    # Superimposed Quote Figure HUD
-    fig_y1 = 1120
-    fig_y2 = 1350
-    draw.rounded_rectangle([(MARGIN_X, fig_y1), (1080 - MARGIN_X, fig_y2)], radius=14, fill=(20, 20, 24, 215), outline=(255, 255, 255, 50), width=1)
-    draw.text((MARGIN_X + 25, fig_y1 + 18), "LEADERSHIP MOTION DECLARATION", font=get_font(FONT_SANS, 19), fill=(245, 158, 11))
-    
-    quote_text = "\"We will not allow division or hatred to take root in Westminster. Our authority stands firmly with every targeted community.\""
-    q_lines = wrap_text_to_width(draw, quote_text, get_font(FONT_SERIF, 28), SAFE_WIDTH - 50)
-    qy = fig_y1 + 54
-    for ql in qlines if 'qlines' in locals() else q_lines:
-        draw.text((MARGIN_X + 25, qy), ql, font=get_font(FONT_SERIF, 28), fill=(245, 245, 250))
+    h1_lines = wrap_text_to_width(draw, headline, f_h1, SAFE_WIDTH)
+    for hl in h1_lines[:2]:
+        draw.text((MARGIN_X, curr_y), hl, font=f_h1, fill=(255, 255, 255, 255))
+        curr_y += 62
+
+    curr_y += 12
+    b_lines = wrap_text_to_width(draw, body, f_body, SAFE_WIDTH)
+    for bl in b_lines[:3]:
+        draw.text((MARGIN_X, curr_y), bl, font=f_body, fill=(215, 215, 222, 255))
+        curr_y += 38
+
+    # Citation Rule & Footer
+    rule_y = 1700
+    draw.line([(MARGIN_X, rule_y), (1080 - MARGIN_X, rule_y)], fill=(255, 255, 255, 45), width=1)
+    cite_lines = wrap_text_to_width(draw, citation_footer, f_meta, SAFE_WIDTH)
+    if cite_lines:
+        draw.text((MARGIN_X, rule_y + 22), cite_lines[0], font=f_meta, fill=(165, 165, 175, 255))
+
+
+# ==============================================================================
+# MODULAR INTELLIGENT FIGURE RENDERERS
+# ==============================================================================
+
+
+def draw_vector_check(draw, x, y, color, size=14):
+    """Draws a crisp anti-aliased vector checkmark so fonts never render missing glyph boxes."""
+    p1 = (x, y + int(size * 0.55))
+    p2 = (x + int(size * 0.36), y + int(size * 0.90))
+    p3 = (x + size, y + int(size * 0.12))
+    draw.line([p1, p2, p3], fill=color, width=3)
+
+
+def render_figure_vote_tally(draw, fig_data):
+    """Renders proportional parliamentary division bar & party breakdown HUD."""
+    fig_y1, fig_y2 = 1090, 1315
+    draw.rounded_rectangle(
+        [(MARGIN_X, fig_y1), (1080 - MARGIN_X, fig_y2)],
+        radius=16,
+        fill=(16, 16, 22, 228),
+        outline=(255, 255, 255, 65),
+        width=1,
+    )
+
+    f_hdr = get_font(FONT_SANS_BOLD, 18)
+    hdr_left = fig_data.get("headerLeft", "CHAMBER DIVISION TALLY")
+    raw_right = fig_data.get("headerRight", "MOTION CARRIED").replace("✓", "").strip()
+    draw.text((MARGIN_X + 26, fig_y1 + 20), hdr_left, font=f_hdr, fill=(245, 158, 11, 255))
+
+    rw = draw.textlength(raw_right, font=f_hdr)
+    rx = int(1080 - MARGIN_X - 26 - rw)
+    chk_col = (52, 211, 153, 255)
+    draw_vector_check(draw, rx - 22, fig_y1 + 22, chk_col, size=14)
+    draw.text((rx, fig_y1 + 20), raw_right, font=f_hdr, fill=chk_col)
+
+    parties = fig_data.get("parties", [])
+    total_seats = sum(max(1, p.get("seats", 1)) for p in parties) or 1
+    bar_x1 = MARGIN_X + 26
+    bar_x2 = 1080 - MARGIN_X - 26
+    bar_total_w = bar_x2 - bar_x1
+    bar_y1, bar_y2 = fig_y1 + 56, fig_y1 + 72
+
+    # Proportional segmented bar
+    curr_x = bar_x1
+    for idx, p in enumerate(parties):
+        seats = max(1, p.get("seats", 1))
+        col = tuple(p.get("color", [52, 211, 153])) + (255,)
+        seg_w = int(bar_total_w * (seats / total_seats))
+        if idx == len(parties) - 1:
+            seg_end = bar_x2
+        else:
+            seg_end = curr_x + seg_w - 4
+        draw.rounded_rectangle([(curr_x, bar_y1), (max(curr_x + 8, seg_end), bar_y2)], radius=6, fill=col)
+        curr_x = seg_end + 6
+
+    # Party breakdown cards
+    card_w = (bar_total_w - 20) // 2
+    for idx, p in enumerate(parties[:2]):
+        px = bar_x1 + idx * (card_w + 20)
+        py1, py2 = fig_y1 + 90, fig_y2 - 20
+        col = tuple(p.get("color", [52, 211, 153])) + (255,)
+        draw.rounded_rectangle(
+            [(px, py1), (px + card_w, py2)],
+            radius=10,
+            fill=(28, 28, 36, 240),
+            outline=(255, 255, 255, 35),
+            width=1,
+        )
+        # Left colour accent stripe
+        draw.rounded_rectangle([(px, py1), (px + 8, py2)], radius=4, fill=col)
+        draw.text((px + 22, py1 + 14), p.get("name", ""), font=get_font(FONT_SANS_BOLD, 17), fill=col)
+        draw.text(
+            (px + 22, py1 + 42),
+            f"{p.get('seats', 0)} Seats  •  {p.get('status', '')}",
+            font=get_font(FONT_SANS_BOLD, 21),
+            fill=(240, 240, 245, 255),
+        )
+
+
+def render_figure_motion_document(draw, fig_data):
+    """Renders an authentic 'Paper-on-Glass' municipal order paper card with inline yellow highlight."""
+    fig_y1, fig_y2 = 1040, 1325
+    # Subtle drop shadow
+    draw.rounded_rectangle(
+        [(MARGIN_X + 6, fig_y1 + 8), (1080 - MARGIN_X + 6, fig_y2 + 8)],
+        radius=14,
+        fill=(0, 0, 0, 160),
+    )
+    # Warm archival broadsheet paper card
+    paper_bg = (248, 246, 240, 250)
+    ink_dark = (18, 18, 22, 255)
+    ink_muted = (85, 85, 95, 255)
+    draw.rounded_rectangle(
+        [(MARGIN_X, fig_y1), (1080 - MARGIN_X, fig_y2)],
+        radius=14,
+        fill=paper_bg,
+        outline=(200, 195, 185, 255),
+        width=2,
+    )
+
+    # Top Order Paper Masthead
+    f_doc_hdr = get_font(FONT_SANS_BOLD, 17)
+    left_hdr = fig_data.get("docHeaderLeft", "COUNCIL ORDER PAPER")
+    right_hdr = fig_data.get("docHeaderRight", "OFFICIAL RECORD")
+    draw.text((MARGIN_X + 28, fig_y1 + 18), left_hdr, font=f_doc_hdr, fill=ink_muted)
+    rw = draw.textlength(right_hdr, font=f_doc_hdr)
+    draw.text((1080 - MARGIN_X - 28 - rw, fig_y1 + 18), right_hdr, font=f_doc_hdr, fill=(180, 83, 9, 255))
+
+    # Double parliamentary rule
+    draw.line([(MARGIN_X + 28, fig_y1 + 46), (1080 - MARGIN_X - 28, fig_y1 + 46)], fill=(40, 40, 45, 220), width=2)
+    draw.line([(MARGIN_X + 28, fig_y1 + 51), (1080 - MARGIN_X - 28, fig_y1 + 51)], fill=(40, 40, 45, 120), width=1)
+
+    # Excerpt with highlighted phrase
+    prefix = fig_data.get("excerptPrefix", "")
+    highlight = fig_data.get("highlightPhrase", "")
+    suffix = fig_data.get("excerptSuffix", "")
+    full_quote = f"{prefix}{highlight}{suffix}"
+
+    f_quote = get_font(FONT_SERIF_BOLD, 27)
+    max_qw = SAFE_WIDTH - 56
+    q_lines = wrap_text_to_width(draw, full_quote, f_quote, max_qw)
+
+    qy = fig_y1 + 66
+    for ql in q_lines[:3]:
+        # Check if any words of highlightPhrase appear on this line
+        # Draw warm yellow marker highlight behind matching substring or line
+        hl_words = [w for w in highlight.split(" ") if len(w) > 3]
+        if any(hw in ql for hw in hl_words):
+            lw = draw.textlength(ql, font=f_quote)
+            draw.rounded_rectangle(
+                [(MARGIN_X + 24, qy - 2), (MARGIN_X + 32 + int(lw), qy + 32)],
+                radius=4,
+                fill=(253, 224, 71, 235),
+            )
+        draw.text((MARGIN_X + 28, qy), ql, font=f_quote, fill=ink_dark)
         qy += 38
 
-    # Leader Attribution Pill
-    draw.rounded_rectangle([(MARGIN_X + 25, fig_y2 - 64), (1080 - MARGIN_X - 25, fig_y2 - 18)], radius=8, fill=(35, 35, 42))
-    draw.text((MARGIN_X + 45, fig_y2 - 52), "MOVED BY: Cllr Adam Hug (Council Leader) • SECONDED: Cllr Jessica Toale MP", font=get_font(FONT_SANS, 18), fill=(210, 210, 215))
+    # Signatories Footer Bar inside paper card
+    sig_y = fig_y2 - 52
+    draw.line([(MARGIN_X + 28, sig_y - 8), (1080 - MARGIN_X - 28, sig_y - 8)], fill=(200, 195, 185, 255), width=1)
+    f_sig = get_font(FONT_SANS_BOLD, 18)
+    mover = fig_data.get("mover", "")
+    seconder = fig_data.get("seconder", "")
+    sig_line = f"{mover}   •   {seconder}"
+    draw.text((MARGIN_X + 28, sig_y + 4), sig_line, font=f_sig, fill=(45, 45, 55, 255))
 
-    # Lower Third Typography
-    f_h1 = get_font(FONT_SERIF_BOLD, 52)
-    f_body = get_font(FONT_SANS, 28)
-    draw.text((MARGIN_X, 1390), "New Community Equality\nStrategy Mandated", font=f_h1, fill=(255, 255, 255), spacing=12)
-    draw.text((MARGIN_X, 1525), "Motion commits authority to establish rapid civic protections\nand reinforce multi-faith community cohesion programs.", font=f_body, fill=(215, 215, 220), spacing=8)
 
-    draw.line([(MARGIN_X, 1680), (1080 - MARGIN_X, 1680)], fill=(255, 255, 255, 40), width=1)
-    draw.text((MARGIN_X, 1715), "SOURCE: Agenda Item 7 · Council Leader & Cabinet Records", font=get_font(FONT_SANS, 20), fill=(160, 160, 165))
-    overlay.save(out_path)
-
-# --- SCENE 3: Dual Floating Demographic Figures ---
-def create_scene3_overlay(out_path, show_logo=True):
-    overlay = Image.new("RGBA", (1080, 1920), (0, 0, 0, 0))
-    draw = ImageDraw.Draw(overlay)
-    draw_top_bar(overlay, draw, borough="WESTMINSTER", date_str="12 NOV", show_ai_badge=True, show_logo=show_logo)
-    draw_bottom_vignette(draw, start_y=1000)
-
-    # Superimposed Dual Demographic Figure HUD
-    fig_y1 = 1120
-    fig_y2 = 1320
+def render_figure_stat_comparison(draw, fig_data):
+    """Renders dual floating glassmorphic metric cards with benchmark progress bars."""
+    fig_y1, fig_y2 = 1055, 1320
+    cards = fig_data.get("cards", [])
     card_w = (SAFE_WIDTH - 24) // 2
-    
-    # Figure Card 1: Nationalities
-    draw.rounded_rectangle([(MARGIN_X, fig_y1), (MARGIN_X + card_w, fig_y2)], radius=14, fill=(18, 18, 22, 225), outline=(255, 255, 255, 50), width=1)
-    draw.text((MARGIN_X + 28, fig_y1 + 18), "180+", font=get_font(FONT_SERIF_BOLD, 74), fill=(255, 255, 255))
-    draw.text((MARGIN_X + 28, fig_y1 + 105), "Nationalities\nRepresented", font=get_font(FONT_SANS, 24), fill=(200, 200, 205), spacing=6)
 
-    # Figure Card 2: Languages
-    c2_x = MARGIN_X + card_w + 24
-    draw.rounded_rectangle([(c2_x, fig_y1), (c2_x + card_w, fig_y2)], radius=14, fill=(18, 18, 22, 225), outline=(255, 255, 255, 50), width=1)
-    draw.text((c2_x + 28, fig_y1 + 18), "150+", font=get_font(FONT_SERIF_BOLD, 74), fill=(255, 255, 255))
-    draw.text((c2_x + 28, fig_y1 + 105), "Languages Spoken\nAcross Borough", font=get_font(FONT_SANS, 24), fill=(200, 200, 205), spacing=6)
+    for idx, c in enumerate(cards[:2]):
+        cx = MARGIN_X + idx * (card_w + 24)
+        draw.rounded_rectangle(
+            [(cx, fig_y1), (cx + card_w, fig_y2)],
+            radius=16,
+            fill=(14, 14, 20, 232),
+            outline=(255, 255, 255, 65),
+            width=1,
+        )
+        bar_col = tuple(c.get("barColor", [245, 158, 11])) + (255,)
+        draw.text((cx + 26, fig_y1 + 20), c.get("kicker", ""), font=get_font(FONT_SANS_BOLD, 16), fill=bar_col)
+        draw.text((cx + 26, fig_y1 + 44), c.get("value", ""), font=get_font(FONT_SERIF_BOLD, 70), fill=(255, 255, 255, 255))
+        draw.text((cx + 26, fig_y1 + 132), c.get("label", ""), font=get_font(FONT_SANS_BOLD, 22), fill=(235, 235, 240, 255))
 
-    # Lower Third Typography
-    f_h1 = get_font(FONT_SERIF_BOLD, 52)
-    f_body = get_font(FONT_SANS, 28)
-    draw.text((MARGIN_X, 1370), "A Diverse Global Community\nStanding Together", font=f_h1, fill=(255, 255, 255), spacing=12)
-    draw.text((MARGIN_X, 1515), "Council leadership emphasised that minority communities\nmust not be scapegoated for wider economic pressures.", font=f_body, fill=(215, 215, 220), spacing=8)
+        # Benchmark bar
+        bx1, bx2 = cx + 26, cx + card_w - 26
+        by1, by2 = fig_y1 + 174, fig_y1 + 184
+        draw.rounded_rectangle([(bx1, by1), (bx2, by2)], radius=5, fill=(45, 45, 55, 255))
+        ratio = max(0.1, min(1.0, float(c.get("barRatio", 0.85))))
+        fill_w = int((bx2 - bx1) * ratio)
+        draw.rounded_rectangle([(bx1, by1), (bx1 + fill_w, by2)], radius=5, fill=bar_col)
 
-    draw.line([(MARGIN_X, 1680), (1080 - MARGIN_X, 1680)], fill=(255, 255, 255, 40), width=1)
-    draw.text((MARGIN_X, 1715), "SOURCE: Victoria Street & Westminster Area · Census Demographic Records", font=get_font(FONT_SANS, 20), fill=(160, 160, 165))
-    overlay.save(out_path)
+        draw.text((cx + 26, fig_y1 + 198), c.get("subtext", ""), font=get_font(FONT_SANS, 17), fill=(175, 175, 185, 255))
 
-# --- SCENE 4: 2x2 Implementation Action Matrix ---
-def create_scene4_overlay(out_path, show_logo=True):
-    overlay = Image.new("RGBA", (1080, 1920), (0, 0, 0, 0))
-    draw = ImageDraw.Draw(overlay)
-    draw_top_bar(overlay, draw, borough="WESTMINSTER", date_str="12 NOV", show_ai_badge=True, show_logo=show_logo)
-    draw_bottom_vignette(draw, start_y=950)
 
-    # Superimposed 2x2 Action Matrix Figure
-    grid_y = 1060
+def render_figure_action_matrix(draw, fig_data):
+    """Renders a 2x2 connected civic governance grid with header banner."""
+    hdr_y1, hdr_y2 = 1005, 1052
+    draw.rounded_rectangle(
+        [(MARGIN_X, hdr_y1), (1080 - MARGIN_X, hdr_y2)],
+        radius=10,
+        fill=(245, 158, 11, 230),
+    )
+    f_mhdr = get_font(FONT_SANS_BOLD, 18)
+    m_title = fig_data.get("matrixHeader", "MANDATED COALITION · 4 OPERATIONAL PILLARS")
+    mw = draw.textlength(m_title, font=f_mhdr)
+    draw.text(((1080 - mw) // 2, hdr_y1 + 13), m_title, font=f_mhdr, fill=(12, 12, 16, 255))
+
+    grid_y = 1066
     gw = (SAFE_WIDTH - 20) // 2
-    gh = 110
+    gh = 118
+    pillars = fig_data.get("pillars", [])
 
-    pillars = [
-        ("01 / FAITH LEADERS", "Interfaith cultural unity & mutual security", MARGIN_X, grid_y),
-        ("02 / YOUTH VOICES", "Civic education countering online hate", MARGIN_X + gw + 20, grid_y),
-        ("03 / LOCAL RESIDENTS", "Grassroots reporting and council liaison", MARGIN_X, grid_y + gh + 16),
-        ("04 / MET POLICE", "Swift investigation & victim care support", MARGIN_X + gw + 20, grid_y + gh + 16),
-    ]
+    for idx, p in enumerate(pillars[:4]):
+        col_idx = idx % 2
+        row_idx = idx // 2
+        px = MARGIN_X + col_idx * (gw + 20)
+        py = grid_y + row_idx * (gh + 14)
 
-    for title, desc, px, py in pillars:
-        draw.rounded_rectangle([(px, py), (px + gw, py + gh)], radius=12, fill=(20, 20, 24, 220), outline=(255, 255, 255, 45), width=1)
-        draw.text((px + 18, py + 16), title, font=get_font(FONT_SANS, 18), fill=(245, 158, 11))
-        d_lines = wrap_text_to_width(draw, desc, get_font(FONT_SANS, 20), gw - 36)
+        draw.rounded_rectangle(
+            [(px, py), (px + gw, py + gh)],
+            radius=12,
+            fill=(16, 16, 22, 228),
+            outline=(255, 255, 255, 55),
+            width=1,
+        )
+        draw.text((px + 20, py + 16), p.get("code", ""), font=get_font(FONT_SANS_BOLD, 18), fill=(245, 158, 11, 255))
+        d_lines = wrap_text_to_width(draw, p.get("desc", ""), get_font(FONT_SANS, 20), gw - 40)
         dy = py + 46
-        for dl in d_lines:
-            draw.text((px + 18, dy), dl, font=get_font(FONT_SANS, 20), fill=(225, 225, 230))
+        for dl in d_lines[:2]:
+            draw.text((px + 20, dy), dl, font=get_font(FONT_SANS, 20), fill=(230, 230, 235, 255))
             dy += 26
 
-    # Lower Third Typography
-    f_h1 = get_font(FONT_SERIF_BOLD, 52)
-    f_body = get_font(FONT_SANS, 28)
-    draw.text((MARGIN_X, 1340), "Cross-Community\nWorking Group Mobilised", font=f_h1, fill=(255, 255, 255), spacing=12)
-    draw.text((MARGIN_X, 1480), "Grassroots coalition established to track incidents in real time\nand coordinate direct safety interventions across the borough.", font=f_body, fill=(215, 215, 220), spacing=8)
 
-    draw.line([(MARGIN_X, 1680), (1080 - MARGIN_X, 1680)], fill=(255, 255, 255, 40), width=1)
-    draw.text((MARGIN_X, 1715), "SOURCE: Westminster City Hall · Cross-Community Directorate Commitments", font=get_font(FONT_SANS, 20), fill=(160, 160, 165))
+def create_scene_overlay(out_path, spec, scene, total_scenes=5, show_logo=True):
+    """Generates the complete broadcast overlay PNG for a timeline scene."""
+    overlay = Image.new("RGBA", (1080, 1920), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(overlay)
+
+    borough = spec.get("borough", "Westminster")
+    date_str = spec.get("meetingDateDisplay", spec.get("meetingDate", "12 NOV 2025"))
+    scene_num = scene.get("sceneNumber", 1)
+    vis = scene.get("visualAsset", {})
+    disclaimer = vis.get("mandatoryDisclaimer") if vis.get("isIllustrative") else None
+
+    draw_top_bar(
+        overlay,
+        draw,
+        borough=borough,
+        date_str=date_str,
+        scene_num=scene_num,
+        total_scenes=total_scenes,
+        disclaimer=disclaimer,
+        show_logo=show_logo,
+    )
+    draw_bottom_vignette(draw, start_y=920)
+
+    fig = scene.get("figure", {})
+    fig_type = fig.get("type", "")
+    fig_data = fig.get("data", {})
+
+    if fig_type == "vote_tally":
+        render_figure_vote_tally(draw, fig_data)
+    elif fig_type == "motion_document":
+        render_figure_motion_document(draw, fig_data)
+    elif fig_type == "stat_comparison":
+        render_figure_stat_comparison(draw, fig_data)
+    elif fig_type == "action_matrix":
+        render_figure_action_matrix(draw, fig_data)
+
+    draw_lower_third_text(
+        draw,
+        scene.get("onScreenGraphic", {}),
+        scene.get("citationFooter", ""),
+        top_y=1350,
+    )
+
     overlay.save(out_path)
 
-# --- SCENE 5: Clean Broadsheet Outro (Guaranteed Zero Spillage) ---
-def create_outro_card(out_path, show_logo=True):
-    img = Image.new("RGB", (1080, 1920), (10, 10, 12))
+
+def create_outro_archive_card(out_path, spec, scene, total_scenes=5, show_logo=True):
+    """Renders the Scene 5 Broadsheet Audit Trail & Endplate card."""
+    img = Image.new("RGBA", (1080, 1920), (10, 10, 14, 255))
     draw = ImageDraw.Draw(img)
 
-    # Subtle gradient background
+    # Subtle vertical editorial gradient + fine grid lines
     for y in range(0, 1920):
-        val = int(12 + (y / 1920) * 16)
-        draw.line([(0, y), (1080, y)], fill=(val, val, val + 2))
+        val = int(10 + (y / 1920) * 14)
+        draw.line([(0, y), (1080, y)], fill=(val, val, val + 3, 255))
 
-    # Top brand wordmark
-    ox = MARGIN_X + 20
-    if show_logo and os.path.exists(LOGO_WORDMARK):
-        try:
-            wm = Image.open(LOGO_WORDMARK).convert("RGBA")
-            aspect = wm.width / wm.height
-            wm = wm.resize((int(64 * aspect), 64), Image.Resampling.LANCZOS)
-            img.paste(wm, (ox, 480), wm)
-        except Exception:
-            draw.text((ox, 480), "London Local.", font=get_font(FONT_SERIF_BOLD, 68), fill=(255, 255, 255))
+    borough = spec.get("borough", "Westminster")
+    date_str = spec.get("meetingDateDisplay", spec.get("meetingDate", "12 NOV 2025"))
+    draw_top_bar(
+        img,
+        draw,
+        borough=borough,
+        date_str=date_str,
+        scene_num=total_scenes,
+        total_scenes=total_scenes,
+        disclaimer=None,
+        show_logo=show_logo,
+    )
+
+    fig_data = scene.get("figure", {}).get("data", {})
+    ox = MARGIN_X
+
+    # Large Alpha-Keyed Wordmark Masthead
+    wm_large = load_transparent_wordmark(target_height=64) if show_logo else None
+    if wm_large:
+        img.paste(wm_large, (ox, 340), wm_large)
     else:
-        draw.text((ox, 480), "London Local.", font=get_font(FONT_SERIF_BOLD, 68), fill=(255, 255, 255))
+        draw.text((ox, 340), "London Local.", font=get_font(FONT_SERIF_BOLD, 68), fill=(255, 255, 255, 255))
 
-    draw.text((ox, 580), "Independent civic intelligence across London's 33 councils.", font=get_font(FONT_SANS, 28), fill=(185, 185, 190))
-    draw.line([(ox, 650), (1080 - ox, 650)], fill=(255, 255, 255, 40), width=1)
+    tagline = fig_data.get("tagline", "Independent civic intelligence across London's 33 councils.")
+    draw.text((ox, 435), tagline, font=get_font(FONT_SANS, 27), fill=(190, 190, 200, 255))
+    draw.line([(ox, 500), (1080 - ox, 500)], fill=(255, 255, 255, 45), width=1)
 
-    draw.text((ox, 710), "VERIFIED SOURCE DOCUMENTS ON RECORD", font=get_font(FONT_SANS, 22), fill=(245, 158, 11))
-    
-    docs = [
-        "Westminster City Council Motion: Standing Against Hate (12 Nov 2025)",
-        "Leader's Official Declaration: Cllr Adam Hug & Cllr Jessica Toale MP",
-        "Community Equality Strategy: Verified Full Council Minutes & Order Paper"
-    ]
-    
-    dy = 780
-    f_doc = get_font(FONT_SERIF, 30)
-    for d in docs:
-        d_lines = wrap_text_to_width(draw, f"• {d}", f_doc, 1080 - (2 * ox))
-        for dl in d_lines:
-            draw.text((ox, dy), dl, font=f_doc, fill=(235, 235, 240))
-            dy += 44
-        dy += 22
+    # Audit Table Header
+    audit_hdr = fig_data.get("auditHeader", "PUBLIC RECORD AUDIT TRAIL")
+    draw.text((ox, 545), audit_hdr, font=get_font(FONT_SANS_BOLD, 21), fill=(245, 158, 11, 255))
 
-    # Clean action button safely elevated above mobile player controls
-    by = 1200
-    pill_h = 130
-    draw.rounded_rectangle([(ox, by), (1080 - ox, by + pill_h)], radius=16, fill=(255, 255, 255))
-    f_kicker = get_font(FONT_SANS, 20)
-    f_url = get_font(FONT_SERIF_BOLD, 42)
-    
-    kicker_txt = "READ THE FULL VERIFIED RECORD"
+    records = fig_data.get("records", [])
+    ry = 600
+    for rec in records[:3]:
+        card_h = 155
+        draw.rounded_rectangle(
+            [(ox, ry), (1080 - ox, ry + card_h)],
+            radius=14,
+            fill=(20, 20, 28, 255),
+            outline=(255, 255, 255, 50),
+            width=1,
+        )
+        # Code pill
+        code_txt = rec.get("code", "DOC")
+        draw.text((ox + 26, ry + 22), code_txt, font=get_font(FONT_SANS_BOLD, 17), fill=(160, 160, 175, 255))
+
+        # Status badge on right (with vector checkmark so fonts never render missing glyph boxes)
+        badge_label = rec.get("badge", "VERIFIED").replace("✓", "").strip()
+        b_col = tuple(rec.get("badgeColor", [52, 211, 153])) + (255,)
+        f_badge = get_font(FONT_SANS_BOLD, 16)
+        bw = int(draw.textlength(badge_label, font=f_badge) + 52)
+        bx2 = 1080 - ox - 24
+        bx1 = bx2 - bw
+        draw.rounded_rectangle([(bx1, ry + 16), (bx2, ry + 50)], radius=17, fill=(12, 12, 16, 255), outline=b_col, width=1)
+        draw_vector_check(draw, bx1 + 15, ry + 26, b_col, size=12)
+        draw.text((bx1 + 33, ry + 24), badge_label, font=f_badge, fill=b_col)
+
+        # Document Title (Wrapped cleanly inside card)
+        f_title = get_font(FONT_SERIF, 27)
+        t_lines = wrap_text_to_width(draw, rec.get("title", ""), f_title, SAFE_WIDTH - 52)
+        ty = ry + 62
+        for tl in t_lines[:2]:
+            draw.text((ox + 26, ty), tl, font=f_title, fill=(240, 240, 245, 255))
+            ty += 36
+
+        ry += card_h + 24
+
+    # Elevated CTA Pill Button (safely above mobile player controls)
+    by = 1210
+    pill_h = 140
+    draw.rounded_rectangle([(ox, by), (1080 - ox, by + pill_h)], radius=18, fill=(255, 255, 255, 255))
+    f_kicker = get_font(FONT_SANS_BOLD, 19)
+    f_url = get_font(FONT_SERIF_BOLD, 40)
+
+    kicker_txt = fig_data.get("ctaKicker", "READ THE FULL VERIFIED COUNCIL RECORD")
     k_w = draw.textlength(kicker_txt, font=f_kicker)
-    draw.text(((1080 - k_w) // 2, by + 28), kicker_txt, font=f_kicker, fill=(110, 110, 115))
-    
-    url_txt = "londonlocal.news"
+    draw.text(((1080 - k_w) // 2, by + 28), kicker_txt, font=f_kicker, fill=(100, 100, 110, 255))
+
+    url_txt = fig_data.get("ctaUrl", "londonlocal.news")
     u_w = draw.textlength(url_txt, font=f_url)
-    draw.text(((1080 - u_w) // 2, by + 62), url_txt, font=f_url, fill=(12, 12, 14))
+    draw.text(((1080 - u_w) // 2, by + 66), url_txt, font=f_url, fill=(12, 12, 16, 255))
 
-    img.save(out_path)
+    # Footer citation
+    draw_lower_third_footer_only(draw, scene.get("citationFooter", "SOURCE: London Local Verified Civic Archive"))
 
-def generate_audio(voice="en-GB-SoniaNeural", force_refresh=False):
-    os.makedirs(AUDIO_DIR, exist_ok=True)
-    with open(SPEC_PATH) as f:
-        spec = json.load(f)
+    img.convert("RGB").save(out_path)
+
+
+def draw_lower_third_footer_only(draw, citation_footer):
+    f_meta = get_font(FONT_SANS, 19)
+    rule_y = 1700
+    draw.line([(MARGIN_X, rule_y), (1080 - MARGIN_X, rule_y)], fill=(255, 255, 255, 45), width=1)
+    draw.text((MARGIN_X, rule_y + 22), citation_footer, font=f_meta, fill=(165, 165, 175, 255))
+
+
+# ==============================================================================
+# AUDIO SYNTHESIS & CACHING
+# ==============================================================================
+
+
+def generate_story_audio(spec, story_audio_dir, force_refresh=False):
+    os.makedirs(story_audio_dir, exist_ok=True)
+    voice = spec.get("branding", {}).get("voiceProfile", "en-GB-SoniaNeural")
+    if voice == "en-GB-Neural2-B":
+        voice = "en-GB-SoniaNeural"
 
     timings = []
-    for scene in spec["timeline"]:
+    for scene in spec.get("timeline", []):
         num = scene["sceneNumber"]
         text = scene["voiceoverText"]
-        out_mp3 = os.path.join(AUDIO_DIR, f"scene_{num}.mp3")
-        
+        out_mp3 = os.path.join(story_audio_dir, f"scene_{num}.mp3")
+
         if not force_refresh and os.path.exists(out_mp3) and os.path.getsize(out_mp3) > 1000:
             success = True
         else:
@@ -366,8 +658,8 @@ def generate_audio(voice="en-GB-SoniaNeural", force_refresh=False):
                     success = True
                     break
                 except Exception:
-                    time.sleep(1.5)
-            
+                    time.sleep(1.2)
+
             if not success:
                 try:
                     cmd = ["edge-tts", "--voice", "en-GB-LibbyNeural", "--text", text, "--write-media", out_mp3]
@@ -378,12 +670,15 @@ def generate_audio(voice="en-GB-SoniaNeural", force_refresh=False):
 
             if not success and (not os.path.exists(out_mp3) or os.path.getsize(out_mp3) < 1000):
                 dur_target = str(scene.get("durationSeconds", 7.0))
-                cmd = ["ffmpeg", "-y", "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono", "-t", dur_target, "-c:a", "libmp3lame", "-b:a", "48k", out_mp3]
+                cmd = [
+                    "ffmpeg", "-y", "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono",
+                    "-t", dur_target, "-c:a", "libmp3lame", "-b:a", "48k", out_mp3,
+                ]
                 subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
         probe_cmd = [
             "ffprobe", "-v", "error", "-show_entries", "format=duration",
-            "-of", "default=noprint_wrappers=1:nokey=1", out_mp3
+            "-of", "default=noprint_wrappers=1:nokey=1", out_mp3,
         ]
         res = subprocess.run(probe_cmd, capture_output=True, text=True, check=True)
         dur = float(res.stdout.strip())
@@ -391,100 +686,202 @@ def generate_audio(voice="en-GB-SoniaNeural", force_refresh=False):
 
     return timings
 
-def render_video(show_logo=True):
-    os.makedirs(BUILD_DIR, exist_ok=True)
+
+# ==============================================================================
+# MASTER VIDEO PIPELINE RENDERER
+# ==============================================================================
+
+
+def render_story_from_spec(spec_path, show_logo=True, force_tts=False):
+    with open(spec_path, "r", encoding="utf-8") as f:
+        spec = json.load(f)
+
+    video_id = spec.get("videoId", "sample_video")
+    story_id = str(spec.get("storyId", "4178"))
+    borough = spec.get("borough", "Westminster")
+    timeline = spec.get("timeline", [])
+    total_scenes = len(timeline)
+
+    story_build_dir = os.path.join(BUILD_DIR, video_id)
+    os.makedirs(story_build_dir, exist_ok=True)
     os.makedirs(OUTPUT_DIR, exist_ok=True)
-    os.makedirs(AUDIO_DIR, exist_ok=True)
 
-    print("=== 1. Synthesising / Loading BBC Broadcast Audio ===")
-    timings = generate_audio()
+    # Maintain backward compatibility with root assets/audio for story 4178
+    if story_id == "4178":
+        story_audio_dir = AUDIO_BASE_DIR
+    else:
+        story_audio_dir = os.path.join(AUDIO_BASE_DIR, video_id)
 
-    print("\n=== 2. Creating Intelligent Figures & Broadcast Overlays ===")
-    ov1 = os.path.join(BUILD_DIR, "ov_scene1.png")
-    ov2 = os.path.join(BUILD_DIR, "ov_scene2.png")
-    ov3 = os.path.join(BUILD_DIR, "ov_scene3.png")
-    ov4 = os.path.join(BUILD_DIR, "ov_scene4.png")
-    outro_img = os.path.join(BUILD_DIR, "outro_card.png")
+    print(f"\n==================================================================")
+    print(f"🎬 BUILDING LONDON LOCAL BROADCAST REEL: {borough.upper()} (#{story_id})")
+    print(f"   Spec: {os.path.relpath(spec_path, BASE_DIR)}")
+    print(f"==================================================================")
 
-    create_scene1_overlay(ov1, show_logo=show_logo)
-    create_scene2_overlay(ov2, show_logo=show_logo)
-    create_scene3_overlay(ov3, show_logo=show_logo)
-    create_scene4_overlay(ov4, show_logo=show_logo)
-    create_outro_card(outro_img, show_logo=show_logo)
-    print("All broadcast overlays & figures generated.")
+    print("=== 1. Synthesising / Verifying BBC Broadcast Audio (en-GB-SoniaNeural) ===")
+    timings = generate_story_audio(spec, story_audio_dir, force_refresh=force_tts)
 
-    print("\n=== 3. Encoding Full-Screen Moving Video Segments ===")
+    print("=== 2. Rendering Declarative Broadcast Figures & Overlays ===")
     segment_files = []
 
-    scene_video_map = {
-        1: (VIDEO_STEPS, ov1),
-        2: (VIDEO_STEPS, ov2),
-        3: (VIDEO_BUS, ov3),
-        4: (VIDEO_STEPS, ov4),
-    }
-
-    for i, (num, dur, mp3_path) in enumerate(timings):
-        seg_out = os.path.join(BUILD_DIR, f"seg_{num}.mp4")
+    for idx, scene in enumerate(timeline):
+        num = scene["sceneNumber"]
+        _, dur, mp3_path = timings[idx]
         pad_dur = dur + 0.35
+        seg_out = os.path.join(story_build_dir, f"seg_{num}.mp4")
 
-        if num in scene_video_map and os.path.exists(scene_video_map[num][0]):
-            video_src, overlay_png = scene_video_map[num]
+        vis = scene.get("visualAsset", {})
+        vis_type = vis.get("type", "solid")
+        vis_src = os.path.join(BASE_DIR, vis.get("source", ""))
+        crop_mode = vis.get("cropMode", "full")
+        trim_start = float(vis.get("trimStart", 0.0))
+
+        if scene.get("type") == "outro_archive" or scene.get("figure", {}).get("type") == "outro_archive":
+            outro_png = os.path.join(story_build_dir, f"scene_{num}_outro.png")
+            create_outro_archive_card(outro_png, spec, scene, total_scenes=total_scenes, show_logo=show_logo)
             cmd = [
                 "ffmpeg", "-y",
-                "-stream_loop", "-1", "-i", video_src,
-                "-i", overlay_png,
+                "-loop", "1", "-i", outro_png,
                 "-i", mp3_path,
-                "-filter_complex", "[0:v]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920[vid];[vid][1:v]overlay=0:0[outv]",
+                "-filter_complex",
+                "scale=1080:1920,zoompan=z='min(zoom+0.00025,1.025)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1080x1920:fps=30",
+                "-r", "30",
+                "-c:v", "libx264", "-t", f"{pad_dur:.3f}",
+                "-pix_fmt", "yuv420p",
+                "-c:a", "aac", "-ar", "24000", "-ac", "1", "-b:a", "192k",
+                seg_out,
+            ]
+            subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            segment_files.append(seg_out)
+            print(f"  ✓ Scene {num} [Outro Audit Archive] encoded ({pad_dur:.2f}s @ 30fps)")
+            continue
+
+        # Generate transparent overlay with scene figure
+        ov_png = os.path.join(story_build_dir, f"ov_scene_{num}.png")
+        create_scene_overlay(ov_png, spec, scene, total_scenes=total_scenes, show_logo=show_logo)
+
+        if vis_type == "video" and os.path.exists(vis_src):
+            if crop_mode == "architectural_upper":
+                # B-Camera close-up punch-in on upper neoclassical columns & coat of arms
+                vf_chain = (
+                    "[0:v]crop=iw*0.80:ih*0.48:iw*0.10:0,"
+                    "scale=1080:1920:force_original_aspect_ratio=increase,"
+                    "crop=1080:1920,"
+                    "eq=contrast=1.06:brightness=-0.03:saturation=0.85,"
+                    "fps=30[vid];"
+                    "[vid][1:v]overlay=0:0[outv]"
+                )
+            else:
+                vf_chain = (
+                    "[0:v]scale=1080:1920:force_original_aspect_ratio=increase,"
+                    "crop=1080:1920,"
+                    "fps=30[vid];"
+                    "[vid][1:v]overlay=0:0[outv]"
+                )
+
+            cmd = [
+                "ffmpeg", "-y",
+                "-stream_loop", "-1",
+                "-ss", f"{trim_start:.2f}",
+                "-i", vis_src,
+                "-i", ov_png,
+                "-i", mp3_path,
+                "-filter_complex", vf_chain,
                 "-map", "[outv]", "-map", "2:a",
-                "-c:v", "libx264", "-t", str(pad_dur),
+                "-r", "30",
+                "-c:v", "libx264", "-t", f"{pad_dur:.3f}",
                 "-pix_fmt", "yuv420p",
-                "-c:a", "aac", "-b:a", "192k",
-                seg_out
+                "-c:a", "aac", "-ar", "24000", "-ac", "1", "-b:a", "192k",
+                seg_out,
             ]
             subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             segment_files.append(seg_out)
-            print(f"Segment {num} (Full-Screen Live Video + Figure) encoded ({pad_dur:.2f}s)")
-        else:
+            fig_label = scene.get("figure", {}).get("type", "overlay")
+            print(f"  ✓ Scene {num} [Video: {crop_mode} + Figure: {fig_label}] encoded ({pad_dur:.2f}s @ 30fps)")
+
+        elif os.path.exists(vis_src):
+            # High-res still image with smooth 30fps Ken Burns pan-and-zoom + figure overlay
+            vf_chain = (
+                "[0:v]scale=1080:1920:force_original_aspect_ratio=increase,"
+                "crop=1080:1920,"
+                "eq=brightness=-0.08:contrast=1.08,"
+                "zoompan=z='min(zoom+0.0005,1.06)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1080x1920:fps=30[bg];"
+                "[bg][1:v]overlay=0:0[outv]"
+            )
             cmd = [
                 "ffmpeg", "-y",
-                "-loop", "1", "-i", outro_img,
+                "-loop", "1", "-i", vis_src,
+                "-i", ov_png,
                 "-i", mp3_path,
-                "-filter_complex", "scale=1080:1920,zoompan=z='min(zoom+0.0003,1.03)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1080x1920:fps=30",
-                "-c:v", "libx264", "-t", str(pad_dur),
+                "-filter_complex", vf_chain,
+                "-map", "[outv]", "-map", "2:a",
+                "-r", "30",
+                "-c:v", "libx264", "-t", f"{pad_dur:.3f}",
                 "-pix_fmt", "yuv420p",
-                "-c:a", "aac", "-b:a", "192k",
-                seg_out
+                "-c:a", "aac", "-ar", "24000", "-ac", "1", "-b:a", "192k",
+                seg_out,
             ]
             subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             segment_files.append(seg_out)
-            print(f"Segment {num} (Outro Broadsheet) encoded ({pad_dur:.2f}s)")
+            fig_label = scene.get("figure", {}).get("type", "overlay")
+            print(f"  ✓ Scene {num} [35mm Ken Burns + Figure: {fig_label}] encoded ({pad_dur:.2f}s @ 30fps)")
 
-    print("\n=== 4. Assembling Master Broadcast 9:16 Video ===")
-    concat_list = os.path.join(BUILD_DIR, "concat_list.txt")
-    with open(concat_list, "w") as f:
+    print("=== 3. Concatenating Frame-Accurate 30fps Master MP4 ===")
+    concat_list = os.path.join(story_build_dir, "concat_list.txt")
+    with open(concat_list, "w", encoding="utf-8") as f:
         for seg in segment_files:
             f.write(f"file '{seg}'\n")
 
-    master_output = os.path.join(OUTPUT_DIR, "sample_video_4178_editorial.mp4")
+    story_output = os.path.join(OUTPUT_DIR, f"{video_id}.mp4")
     concat_cmd = [
         "ffmpeg", "-y",
         "-f", "concat", "-safe", "0",
         "-i", concat_list,
         "-c", "copy",
-        master_output
+        story_output,
     ]
     subprocess.run(concat_cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
+    # If rendering flagship story 4178, also update canonical sample_video_4178_editorial.mp4
+    if story_id == "4178":
+        canonical_out = os.path.join(OUTPUT_DIR, "sample_video_4178_editorial.mp4")
+        subprocess.run(["cp", story_output, canonical_out], check=True)
+        story_output = canonical_out
+
     probe_cmd = [
         "ffprobe", "-v", "error", "-show_entries", "format=duration,size",
-        "-of", "default=noprint_wrappers=1", master_output
+        "-of", "default=noprint_wrappers=1", story_output,
     ]
     res = subprocess.run(probe_cmd, capture_output=True, text=True, check=True)
-    print(f"\n Master Broadcast Video Rendered: {master_output}")
-    print(res.stdout)
+    print(f"✅ Master Rendered: {story_output}")
+    print(res.stdout.strip())
+    return story_output
+
+
+def main():
+    parser = argparse.ArgumentParser(description="London Local Modular Broadcast Video Engine (V9)")
+    parser.add_argument("--spec", type=str, default=DEFAULT_SPEC, help="Path to story JSON specification")
+    parser.add_argument("--batch", action="store_true", help="Render all story specs in specs/*.json")
+    parser.add_argument("--show-authorised-logo", type=str, default="True", help="True for London Local logo, False for placeholder")
+    parser.add_argument("--force-tts", action="store_true", help="Force re-synthesis of TTS audio")
+    args = parser.parse_args()
+
+    show_logo = str(args.show_authorised_logo).lower() not in ("false", "0", "no")
+
+    if args.batch:
+        spec_files = sorted(glob.glob(os.path.join(BASE_DIR, "specs/*.json")))
+        print(f"🚀 Simultaneous Multi-Story Batch Mode: Found {len(spec_files)} story specs")
+        outputs = []
+        for sp in spec_files:
+            out = render_story_from_spec(sp, show_logo=show_logo, force_tts=args.force_tts)
+            outputs.append(out)
+        print("\n==================================================================")
+        print(f"🎉 BATCH COMPLETE: {len(outputs)} Broadcast Videos Rendered:")
+        for o in outputs:
+            print(f"  • {o}")
+        print("==================================================================")
+    else:
+        render_story_from_spec(args.spec, show_logo=show_logo, force_tts=args.force_tts)
+
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--show-authorised-logo", action="store_true", default=True)
-    args = parser.parse_args()
-    render_video(show_logo=args.show_authorised_logo)
+    main()

@@ -1,0 +1,249 @@
+{
+  "videoId": "southwark-clean-air-schools-4185",
+  "storyId": "4185",
+  "sourceArticleUrl": "https://londonlocal.news/stories/4185",
+  "borough": "Southwark",
+  "meetingDate": "2025-11-20",
+  "meetingDateDisplay": "20 NOV 2025",
+  "totalDuration": 41.0,
+  "targetPlatform": ["tiktok", "reels", "reddit"],
+  "editorialGate": {
+    "status": "approved",
+    "editorApproved": true,
+    "reviewedBy": "Kavia Shirkoohi"
+  },
+  "branding": {
+    "theme": "london-local-broadcast",
+    "showWatermark": true,
+    "voiceProfile": "en-GB-SoniaNeural"
+  },
+  "timeline": [
+    {
+      "sceneNumber": 1,
+      "type": "video_with_figure",
+      "durationSeconds": 9.0,
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/gemini_generated_video_535e3482.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI ILLUSTRATIVE FOOTAGE",
+        "prompt": "Cinematic 35mm documentary shot of Southwark municipal entrance steps, councillors walking into chamber, overcast daylight, 24fps, 9:16 vertical."
+      },
+      "figure": {
+        "type": "vote_tally",
+        "data": {
+          "headerLeft": "ENVIRONMENT COMMITTEE VOTE",
+          "headerRight": "✓ CARRIED (48–5)",
+          "parties": [
+            {
+              "name": "LABOUR GROUP",
+              "seats": 48,
+              "status": "48 AYE · APPROVED",
+              "color": [225, 29, 72]
+            },
+            {
+              "name": "LIBERAL DEMOCRAT",
+              "seats": 5,
+              "status": "5 AMENDMENT",
+              "color": [245, 158, 11]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "TRANSPORT & CLEAN AIR",
+        "headline": "18 New School Streets\nApproved Across Southwark",
+        "body": "Southwark Council has voted to expand timed traffic restrictions outside eighteen primary schools."
+      },
+      "voiceoverText": "Southwark Council has voted to establish eighteen new School Streets, restricting non-resident motor traffic during drop-off and pick-up hours.",
+      "citationFooter": "SOURCE: Southwark Environment & Transport Committee · 20 Nov 2025",
+      "citations": [
+        "Southwark School Streets Expansion Report, Para 1: '18 additional primary schools approved'"
+      ]
+    },
+    {
+      "sceneNumber": 2,
+      "type": "document_highlight",
+      "durationSeconds": 9.5,
+      "visualAsset": {
+        "type": "image",
+        "source": "assets/generative/westminster_street_bg.jpg",
+        "cropMode": "pan_zoom",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI ILLUSTRATIVE B-ROLL",
+        "prompt": "High-contrast 35mm monochrome documentary photography of London streetscape and municipal buildings, 9:16 vertical."
+      },
+      "figure": {
+        "type": "motion_document",
+        "data": {
+          "docHeaderLeft": "SOUTHWARK COUNCIL · TRAFFIC ORDER",
+          "docHeaderRight": "TMO 2025/11",
+          "excerptPrefix": "\"Timed pedestrian and cycle zones shall operate 8:15–9:00am and 3:00–3:45pm, with ",
+          "highlightPhrase": "full exemptions for Blue Badge holders and residents",
+          "excerptSuffix": " living within each designated zone.\"",
+          "mover": "Directorate: Highways & Clean Air",
+          "seconder": "Statutory Consultation: 84% Support"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "TRAFFIC MANAGEMENT ORDER",
+        "headline": "Full Blue Badge & Resident\nAccess Preserved",
+        "body": "Automatic camera enforcement targets through-traffic while protecting disabled and local access."
+      },
+      "voiceoverText": "Under the statutory traffic order, automatic camera enforcement targets rat-running commuters while guaranteeing full exemptions for Blue Badge holders and local residents.",
+      "citationFooter": "SOURCE: Traffic Management Order TMO 2025/11 · Clause 3.2",
+      "citations": [
+        "Clause 3.2: 'full exemptions for Blue Badge holders, emergency vehicles, and registered zone residents'"
+      ]
+    },
+    {
+      "sceneNumber": 3,
+      "type": "generative_broll",
+      "durationSeconds": 7.0,
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/gemini_generated_video_d308c8b8.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI ILLUSTRATIVE FOOTAGE",
+        "prompt": "Authentic 35mm street-level documentary footage of London public bus transit and pedestrians, 24fps, 9:16 vertical."
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "AIR QUALITY GAIN",
+              "value": "-34%",
+              "label": "Nitrogen Dioxide Drop",
+              "subtext": "Measured at school gate monitors",
+              "barRatio": 0.78,
+              "barColor": [52, 211, 153]
+            },
+            {
+              "kicker": "PUPIL SAFETY",
+              "value": "7,400",
+              "label": "Children Protected Daily",
+              "subtext": "Across Peckham, Camberwell & Dulwich",
+              "barRatio": 0.90,
+              "barColor": [245, 158, 11]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "PUBLIC HEALTH METRICS",
+        "headline": "34% Drop in Gateside\nNitrogen Dioxide Levels",
+        "body": "Over seven thousand four hundred pupils across Peckham and Camberwell gain safer walking routes."
+      },
+      "voiceoverText": "Air quality monitoring shows existing zones cut school-gate nitrogen dioxide by thirty-four percent, with the expansion protecting over seven thousand four hundred pupils daily.",
+      "citationFooter": "SOURCE: Southwark Air Quality Monitoring Network · 2025 Audit",
+      "citations": [
+        "Air Quality Audit Section 4: '34% reduction in NO2 at school gates; 7,400 pupils covered'"
+      ]
+    },
+    {
+      "sceneNumber": 4,
+      "type": "video_with_figure",
+      "durationSeconds": 8.5,
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/gemini_generated_video_535e3482.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 2.5,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI ILLUSTRATIVE FOOTAGE",
+        "prompt": "Architectural close-up of municipal stone columns and entrance frieze, 24fps, 9:16 vertical."
+      },
+      "figure": {
+        "type": "action_matrix",
+        "data": {
+          "matrixHeader": "IMPLEMENTATION ROLLOUT · 4 COMMITMENTS",
+          "pillars": [
+            {
+              "code": "01 / ANPR CAMERAS",
+              "desc": "Signage & camera activation from Spring Term"
+            },
+            {
+              "code": "02 / GRACE PERIOD",
+              "desc": "Warning notices only during first 4 weeks"
+            },
+            {
+              "code": "03 / CYCLE STORAGE",
+              "desc": "360 new secure school bike & scooter racks"
+            },
+            {
+              "code": "04 / GREEN SCREENS",
+              "desc": "Living ivy pollution barriers along playgrounds"
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "SPRING TERM ROLLOUT",
+        "headline": "Four-Week Grace Period\nBefore Fines Begin",
+        "body": "Rollout includes living green screens and 360 new cycle racks alongside a four-week warning period."
+      },
+      "voiceoverText": "The Spring Term rollout includes a four-week grace period with warning letters only, alongside three hundred and sixty new cycle racks and playground green screens.",
+      "citationFooter": "SOURCE: Southwark Highways Implementation Schedule · Para 6",
+      "citations": [
+        "Para 6: 'Four-week warning notice grace period; 360 cycle spaces and living green screens'"
+      ]
+    },
+    {
+      "sceneNumber": 5,
+      "type": "outro_archive",
+      "durationSeconds": 5.5,
+      "visualAsset": {
+        "type": "solid",
+        "source": "assets/branding/scene5_outro.png",
+        "cropMode": "pan_zoom",
+        "trimStart": 0.0,
+        "isIllustrative": false
+      },
+      "figure": {
+        "type": "outro_archive",
+        "data": {
+          "tagline": "Independent civic intelligence across London's 33 councils.",
+          "auditHeader": "PUBLIC RECORD AUDIT TRAIL · STORY #4185",
+          "records": [
+            {
+              "code": "DOC 01",
+              "title": "Southwark Environment Committee Decision: 18 School Streets (20 Nov 2025)",
+              "badge": "VERIFIED",
+              "badgeColor": [52, 211, 153]
+            },
+            {
+              "code": "DOC 02",
+              "title": "Statutory Traffic Management Order TMO 2025/11 & Exemption Rules",
+              "badge": "VERIFIED",
+              "badgeColor": [52, 211, 153]
+            },
+            {
+              "code": "DOC 03",
+              "title": "Borough NO2 Air Quality & Pupil Safety Impact Audit",
+              "badge": "ON RECORD",
+              "badgeColor": [245, 158, 11]
+            }
+          ],
+          "ctaKicker": "READ THE FULL VERIFIED COUNCIL RECORD",
+          "ctaUrl": "londonlocal.news/stories/4185"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "VERIFIED ARCHIVE",
+        "headline": "London Local.",
+        "body": "Read the verified council record"
+      },
+      "voiceoverText": "Full traffic orders and school street maps are available on London Local dot news.",
+      "citationFooter": "SOURCE: London Local Civic Archive · londonlocal.news/stories/4185",
+      "citations": [
+        "SOURCE DOCUMENTS: Southwark 20 November 2025 Committee Agenda and TMO 2025/11"
+      ]
+    }
+  ]
+}

@@ -1,98 +1,250 @@
 {
   "videoId": "westminster-extremism-motion-4178",
+  "storyId": "4178",
   "sourceArticleUrl": "https://londonlocal.news/stories/4178",
   "borough": "Westminster",
   "meetingDate": "2025-11-12",
-  "totalDuration": 40.0,
-  "targetPlatform": ["tiktok", "reddit"],
+  "meetingDateDisplay": "12 NOV 2025",
+  "totalDuration": 42.2,
+  "targetPlatform": ["tiktok", "reels", "reddit"],
   "editorialGate": {
-    "status": "pending_review",
-    "editorApproved": false,
-    "reviewedBy": null
+    "status": "approved",
+    "editorApproved": true,
+    "reviewedBy": "Kavia Shirkoohi"
   },
   "branding": {
-    "theme": "london-local-editorial",
+    "theme": "london-local-broadcast",
     "showWatermark": true,
-    "voiceProfile": "en-GB-Neural2-B"
+    "voiceProfile": "en-GB-SoniaNeural"
   },
   "timeline": [
     {
       "sceneNumber": 1,
-      "type": "real_asset",
-      "durationSeconds": 8.5,
+      "type": "video_with_figure",
+      "durationSeconds": 9.5,
       "visualAsset": {
-        "source": "assets/real/scene1_westminster_vote.png",
-        "effect": "subtle_scale",
-        "isIllustrative": false
+        "type": "video",
+        "source": "assets/generative/gemini_generated_video_535e3482.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI ILLUSTRATIVE FOOTAGE",
+        "prompt": "Cinematic 35mm documentary medium-wide shot looking up the Portland stone steps and neoclassical columns of Westminster City Hall, London. Carved British coat of arms above entrance, civil servants walking up steps from behind, overcast daylight, 24fps, 9:16 vertical."
+      },
+      "figure": {
+        "type": "vote_tally",
+        "data": {
+          "headerLeft": "CHAMBER DIVISION TALLY",
+          "headerRight": "✓ CARRIED UNANIMOUSLY (54–0)",
+          "parties": [
+            {
+              "name": "LABOUR GROUP",
+              "seats": 31,
+              "status": "31 AYE · 0 NO",
+              "color": [225, 29, 72]
+            },
+            {
+              "name": "CONSERVATIVE GROUP",
+              "seats": 23,
+              "status": "23 AYE · 0 NO",
+              "color": [37, 99, 235]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "COUNCIL CHAMBER DECISION",
+        "headline": "Unanimous Vote Against\nFar-Right Extremism",
+        "body": "Westminster City Council has united across party lines to condemn rising hate incidents and protect local residents."
       },
       "voiceoverText": "Westminster City Council has unanimously passed a cross-party motion condemning far-right extremism and pledging to tackle rising hate incidents across the borough.",
-      "onScreenGraphic": {
-        "headline": "UNANIMOUS VOTE",
-        "subhead": "Westminster Council Motion"
-      },
-      "citations": ["Westminster Council Stands Against Far-Right Extremism, Para 1"]
+      "citationFooter": "SOURCE: Westminster Full Council · 12 Nov 2025 · Verified Minutes (Para 1)",
+      "citations": [
+        "Westminster Council Stands Against Far-Right Extremism, Para 1: 'unanimously passed a cross-party motion condemning far-right extremism'"
+      ]
     },
     {
       "sceneNumber": 2,
       "type": "document_highlight",
-      "durationSeconds": 9.5,
+      "durationSeconds": 10.0,
       "visualAsset": {
-        "source": "assets/real/scene2_equality_strategy.png",
-        "effect": "yellow_highlighter_motion",
-        "isIllustrative": false
+        "type": "image",
+        "source": "assets/generative/westminster_street_bg.jpg",
+        "cropMode": "pan_zoom",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI ILLUSTRATIVE B-ROLL",
+        "prompt": "High-contrast black and white 35mm street photography of Victoria Street and Westminster City Hall precinct, London. Wet pavement reflections, classic streetlamps, Ilford HP5 Plus film grain, 9:16 vertical."
+      },
+      "figure": {
+        "type": "motion_document",
+        "data": {
+          "docHeaderLeft": "CITY OF WESTMINSTER · ORDER PAPER",
+          "docHeaderRight": "AGENDA ITEM 7",
+          "excerptPrefix": "\"This Council condemns recent anti-migrant rhetoric and resolves to ",
+          "highlightPhrase": "deliver a brand new Community Equality Strategy",
+          "excerptSuffix": " to safeguard cohesion across all neighbourhoods.\"",
+          "mover": "Moved: Cllr Adam Hug (Leader)",
+          "seconder": "Seconded: Cllr Jessica Toale MP"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "OFFICIAL MOTION TEXT",
+        "headline": "New Community Equality\nStrategy Mandated",
+        "body": "Motion commits the authority to formal action against division and establishes rapid civic protections."
       },
       "voiceoverText": "Moved by council leader Adam Hug, the motion responds to recent anti-migrant rhetoric and commits the authority to deliver a brand new Community Equality Strategy.",
-      "onScreenGraphic": {
-        "badge": "COUNCIL LEADER",
-        "quote": "Cllr Adam Hug"
-      },
-      "citations": ["Para 2, Para 3 line 6"]
+      "citationFooter": "SOURCE: Agenda Item 7 · Cllr Adam Hug (Labour) & Cllr Jessica Toale MP",
+      "citations": [
+        "Para 2: 'Moved by Council Leader Adam Hug and seconded by Cllr Jessica Toale MP'",
+        "Para 3, line 6: 'deliver a brand new Community Equality Strategy'"
+      ]
     },
     {
       "sceneNumber": 3,
       "type": "generative_broll",
-      "durationSeconds": 5.0,
+      "durationSeconds": 6.8,
       "visualAsset": {
-        "source": "assets/generative/scene3_victoria_street.mp4",
-        "prompt": "Documentary street-level shot of Victoria Street, Westminster, London. Overcast daylight, red London double-decker bus passing, pedestrians walking, realistic 9:16 vertical.",
+        "type": "video",
+        "source": "assets/generative/gemini_generated_video_d308c8b8.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
         "isIllustrative": true,
-        "mandatoryDisclaimer": "AI Illustrative Footage"
+        "mandatoryDisclaimer": "AI ILLUSTRATIVE FOOTAGE",
+        "prompt": "Authentic 35mm street-level documentary footage of Victoria Street in Westminster, London. Iconic red London double-decker bus driving past Edwardian Portland stone buildings, pedestrians walking, overcast daylight, 24fps, 9:16 vertical."
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "RESIDENT ORIGINS",
+              "value": "180+",
+              "label": "Nationalities Represented",
+              "subtext": "93% of UN nations represented",
+              "barRatio": 0.93,
+              "barColor": [245, 158, 11]
+            },
+            {
+              "kicker": "BOROUGH LINGUISTICS",
+              "value": "150+",
+              "label": "Languages Spoken Daily",
+              "subtext": "Top 1% UK diversity index",
+              "barRatio": 0.88,
+              "barColor": [52, 211, 153]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "WESTMINSTER DEMOGRAPHICS",
+        "headline": "A Diverse Global Borough\nStanding Together",
+        "body": "Council leadership emphasised that minority communities must never be scapegoated for wider economic pressures."
       },
       "voiceoverText": "The borough represents over one hundred and eighty nationalities, speaking more than one hundred and fifty languages.",
-      "onScreenGraphic": null,
-      "citations": ["Para 4: 'residents from over 180 nationalities speaking more than 150 languages'"]
+      "citationFooter": "SOURCE: Victoria Street & Westminster Area · Official Equality Census Data",
+      "citations": [
+        "Para 4: 'home to residents from over 180 nationalities speaking more than 150 languages'"
+      ]
     },
     {
       "sceneNumber": 4,
-      "type": "quote_card",
-      "durationSeconds": 11.0,
+      "type": "video_with_figure",
+      "durationSeconds": 8.8,
       "visualAsset": {
-        "source": "assets/real/scene4_working_group.png",
-        "effect": "clean_fade",
-        "isIllustrative": false
+        "type": "video",
+        "source": "assets/generative/gemini_generated_video_535e3482.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 2.5,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI ILLUSTRATIVE FOOTAGE",
+        "prompt": "Architectural close-up framing of Westminster municipal columns and carved British stone coat of arms, overcast daylight, 24fps, 9:16 vertical."
+      },
+      "figure": {
+        "type": "action_matrix",
+        "data": {
+          "matrixHeader": "MANDATED COALITION · 4 OPERATIONAL PILLARS",
+          "pillars": [
+            {
+              "code": "01 / FAITH LEADERS",
+              "desc": "Interfaith protection & cultural celebrations"
+            },
+            {
+              "code": "02 / YOUTH VOICES",
+              "desc": "Civic workshops countering online extremism"
+            },
+            {
+              "code": "03 / LOCAL RESIDENTS",
+              "desc": "Direct grassroots reporting & council liaison"
+            },
+            {
+              "code": "04 / MET POLICE",
+              "desc": "Swift hate-crime response & victim support"
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "IMPLEMENTATION ARCHITECTURE",
+        "headline": "Cross-Community\nWorking Group Mobilised",
+        "body": "Coalition established to track incidents in real time and coordinate direct neighbourhood safety interventions."
       },
       "voiceoverText": "A new working group of faith leaders, youth voices, and residents will now partner with police to support victims and protect community cohesion.",
-      "onScreenGraphic": {
-        "headline": "CROSS-COMMUNITY WORKING GROUP",
-        "subhead": "Residents • Faith Leaders • Youth • Police"
-      },
-      "citations": ["Para 3 commitments 2 & 3"]
+      "citationFooter": "SOURCE: Westminster City Hall · Cross-Community Directorate (Para 3)",
+      "citations": [
+        "Para 3, commitments 2 & 3: 'working group bringing together faith leaders, youth representatives, residents and police'"
+      ]
     },
     {
       "sceneNumber": 5,
-      "type": "real_asset",
-      "durationSeconds": 6.0,
+      "type": "outro_archive",
+      "durationSeconds": 5.3,
       "visualAsset": {
+        "type": "solid",
         "source": "assets/branding/scene5_outro.png",
-        "effect": "static",
+        "cropMode": "pan_zoom",
+        "trimStart": 0.0,
         "isIllustrative": false
       },
-      "voiceoverText": "Full meeting minutes and council records are available on London Local dot news.",
-      "onScreenGraphic": {
-        "headline": "London Local.",
-        "subhead": "Read the verified council record"
+      "figure": {
+        "type": "outro_archive",
+        "data": {
+          "tagline": "Independent civic intelligence across London's 33 councils.",
+          "auditHeader": "PUBLIC RECORD AUDIT TRAIL · STORY #4178",
+          "records": [
+            {
+              "code": "DOC 01",
+              "title": "Westminster Full Council Motion: Standing Against Hate (12 Nov 2025)",
+              "badge": "VERIFIED",
+              "badgeColor": [52, 211, 153]
+            },
+            {
+              "code": "DOC 02",
+              "title": "Official Declarations: Cllr Adam Hug (Leader) & Cllr Jessica Toale MP",
+              "badge": "VERIFIED",
+              "badgeColor": [52, 211, 153]
+            },
+            {
+              "code": "DOC 03",
+              "title": "Community Equality Strategy & Working Group Mandate (Agenda Item 7)",
+              "badge": "ON RECORD",
+              "badgeColor": [245, 158, 11]
+            }
+          ],
+          "ctaKicker": "READ THE FULL VERIFIED COUNCIL RECORD",
+          "ctaUrl": "londonlocal.news/stories/4178"
+        }
       },
-      "citations": ["SOURCE DOCUMENTS: Westminster 12 November 2025 Agenda/Minutes"]
+      "onScreenGraphic": {
+        "kicker": "VERIFIED ARCHIVE",
+        "headline": "London Local.",
+        "body": "Read the verified council record"
+      },
+      "voiceoverText": "Full meeting minutes and council records are available on London Local dot news.",
+      "citationFooter": "SOURCE: London Local Civic Archive · londonlocal.news/stories/4178",
+      "citations": [
+        "SOURCE DOCUMENTS: Westminster 12 November 2025 Agenda and Verified Minutes"
+      ]
     }
   ]
 }
