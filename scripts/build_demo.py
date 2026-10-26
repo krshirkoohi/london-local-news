@@ -1024,13 +1024,14 @@ def render_template_scene4_facts_figures(spec, scene, t=10.0, total_dur=6.0):
                 draw.text((cx1 + 24, sub_y), sl, font=f_card_sub, fill=(185, 185, 195, 255))
                 sub_y += 24
 
-    # Middle: Map Container with Animated Zoom on London Borough Map
+    # Middle: Map Container with Calm, Stable London Borough Vector Map
     map_y = by1 + 355
     map_h = 720
     draw.rounded_rectangle([(bx1 + 20, map_y), (bx2 - 20, map_y + map_h)], radius=18, fill=(16, 17, 24, 255), outline=(255, 255, 255, 60), width=1)
 
     borough_name = spec.get("borough", "Camden")
-    zoom_factor = 1.0 + 0.12 * ease_out_cubic(min(1.0, max(0.0, t / max(1.0, total_dur))))
+    # Keep map steady and stable to prevent disorientation
+    zoom_factor = 1.0
     map_crop = rt.generate_borough_map_overlay(
         borough_name,
         width=bx2 - bx1 - 80,
@@ -1448,28 +1449,49 @@ def render_story_from_spec(spec_path, show_logo=True, force_tts=False):
             continue
 
         if vis_type == "video" and os.path.exists(vis_src):
+            # Probe source duration to prevent abrupt EOF looping or snapping
+            try:
+                probe_cmd = ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", vis_src]
+                src_dur = float(subprocess.check_output(probe_cmd).strip())
+            except Exception:
+                src_dur = 10.0
+
+            # Dynamic pacing: clamp trim_start and subtly stretch PTS if scene outlasts remaining clip
+            safe_trim = min(trim_start, max(0.0, src_dur - 2.0))
+            avail_dur = max(0.5, src_dur - safe_trim)
+            if pad_dur > avail_dur:
+                speed_scale = avail_dur / pad_dur
+                setpts_filter = f"setpts=(1/{speed_scale:.4f})*PTS,"
+            else:
+                setpts_filter = ""
+
             if crop_mode == "architectural_upper":
-                # B-Camera close-up punch-in on upper neoclassical columns & coat of arms
+                # Depth-of-field editorial backdrop: calm, soft focus blur, dark vignette
+                # Makes foreground documents and figures pop with zero dizzying 2x zoom-ins
                 vf_chain = (
-                    "[0:v]crop=iw*0.80:ih*0.48:iw*0.10:0,"
+                    f"[0:v]{setpts_filter}"
                     "scale=1080:1920:force_original_aspect_ratio=increase,"
                     "crop=1080:1920,"
-                    "eq=contrast=1.06:brightness=-0.03:saturation=0.85,"
+                    "gblur=sigma=12:steps=2,"
+                    "eq=contrast=1.10:brightness=-0.14:saturation=0.85,"
+                    "vignette=PI/4,"
                     "fps=30[vid];"
                     "[vid][1:v]overlay=0:0[outv]"
                 )
             else:
+                # Full 9:16 portrait documentary framing: grounded, smooth forward motion, no looping
                 vf_chain = (
-                    "[0:v]scale=1080:1920:force_original_aspect_ratio=increase,"
+                    f"[0:v]{setpts_filter}"
+                    "scale=1080:1920:force_original_aspect_ratio=increase,"
                     "crop=1080:1920,"
+                    "eq=contrast=1.06:brightness=-0.05:saturation=0.92,"
                     "fps=30[vid];"
                     "[vid][1:v]overlay=0:0[outv]"
                 )
 
             cmd = [
                 "ffmpeg", "-y",
-                "-stream_loop", "-1",
-                "-ss", f"{trim_start:.2f}",
+                "-ss", f"{safe_trim:.2f}",
                 "-i", vis_src,
                 "-f", "rawvideo", "-pix_fmt", "rgba", "-s", "1080x1920", "-r", "30", "-i", "-",
                 "-i", mp3_path,
@@ -1494,17 +1516,13 @@ def render_story_from_spec(spec_path, show_logo=True, force_tts=False):
             print(f"  ✓ Scene {num} [Video: {crop_mode} + Animated Figure: {fig_label}] encoded ({pad_dur:.2f}s @ 30fps)")
 
         elif os.path.exists(vis_src):
-            # Dynamic 35mm documentary camera drift + optical film grain + animated figure overlay
-            if num % 2 == 1:
-                pan_expr = "x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)-(on/120)*10'"
-            else:
-                pan_expr = "x='iw/2-(iw/zoom/2)+(on/120)*12':y='ih/2-(ih/zoom/2)'"
-
+            # Ultra-smooth subtle documentary camera drift (continuous subpixel pan, zero zoom resets)
             vf_chain = (
-                f"[0:v]scale=1200:2133:force_original_aspect_ratio=increase,"
-                f"zoompan=z='min(zoom+0.0005,1.06)':{pan_expr}:d=1:s=1080x1920:fps=30,"
-                f"eq=brightness=-0.05:contrast=1.07:saturation=0.92,"
-                f"noise=alls=8:allf=t+u[bg];"
+                f"[0:v]scale=1160:2062:force_original_aspect_ratio=increase,"
+                f"crop=1160:2062,"
+                f"crop=1080:1920:x='(1160-1080)*(t/{pad_dur:.3f})':y='(2062-1920)*0.5',"
+                f"eq=brightness=-0.06:contrast=1.08:saturation=0.90,"
+                f"noise=alls=6:allf=t+u[bg];"
                 f"[bg][1:v]overlay=0:0[outv]"
             )
             cmd = [

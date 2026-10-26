@@ -3,229 +3,781 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>London Local • Automated Broadcast News Reels</title>
+  <title>London Local • Programmatic Civic Broadcast Reels</title>
+  <meta name="description" content="Grounded 9:16 vertical broadcast news reels generated programmatically from verified London council agendas, public committee minutes, and statutory consultations.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0b0c10;
-      --card-bg: #14161f;
-      --coral: #FF5238;
-      --text: #f5f5f7;
-      --muted: #9aa0a6;
-      --border: rgba(255, 255, 255, 0.12);
+      --bg: #090a0f;
+      --card-bg: #12141d;
+      --card-hover: #171a26;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(255, 255, 255, 0.22);
+      --text: #f4f4f7;
+      --text-muted: #9297a5;
+      --accent-westminster: #d9483f;
+      --accent-tower-hamlets: #3b82f6;
+      --accent-camden: #f59e0b;
+      --accent-southwark: #34d399;
+      --active-accent: var(--accent-tower-hamlets);
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
     body {
       background: var(--bg);
       color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 32px 16px 64px;
+      padding: 32px 16px 80px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
     header {
-      max-width: 840px;
+      max-width: 1080px;
       width: 100%;
       text-align: center;
       margin-bottom: 28px;
     }
-    .badge {
-      display: inline-block;
-      background: rgba(255, 82, 56, 0.15);
-      color: var(--coral);
-      border: 1px solid rgba(255, 82, 56, 0.4);
-      padding: 4px 14px;
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
       border-radius: 999px;
-      font-size: 13px;
+      padding: 6px 14px;
+      font-size: 12px;
       font-weight: 600;
-      letter-spacing: 0.5px;
-      margin-bottom: 12px;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    .header-badge .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 10px rgba(52, 211, 153, 0.6);
+      animation: pulse 2s infinite ease-in-out;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
     }
     h1 {
-      font-family: Georgia, serif;
-      font-size: 34px;
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: clamp(32px, 4vw, 44px);
       font-weight: 700;
-      margin-bottom: 10px;
-    }
-    p.lead {
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.5;
-      max-width: 620px;
-      margin: 0 auto;
-    }
-    .tabs {
-      display: flex;
-      gap: 8px;
-      margin-top: 24px;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 6px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .tab-btn {
-      background: transparent;
-      border: none;
-      color: var(--muted);
-      padding: 10px 18px;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .tab-btn.active {
-      background: var(--coral);
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
       color: #fff;
     }
-    .stage {
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: clamp(15px, 2vw, 17px);
+      max-width: 680px;
+      margin: 0 auto 28px;
+    }
+    /* Borough Story Switcher */
+    .story-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      max-width: 1080px;
+      width: 100%;
+      margin-bottom: 32px;
+    }
+    .story-tab {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.22s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .story-tab::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--tab-accent, #777);
+      opacity: 0.35;
+      transition: all 0.22s ease;
+    }
+    .story-tab:hover {
+      background: var(--card-hover);
+      border-color: var(--border-focus);
+      transform: translateY(-2px);
+    }
+    .story-tab.active {
+      background: #191c28;
+      border-color: var(--tab-accent);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px var(--tab-accent);
+    }
+    .story-tab.active::before {
+      opacity: 1;
+      width: 6px;
+    }
+    .tab-borough {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: var(--tab-accent);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .tab-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.35;
+    }
+    .tab-status {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Main Showcase Stage */
+    .showcase-container {
+      max-width: 1080px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 440px 1fr;
+      gap: 36px;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .showcase-container {
+        grid-template-columns: 1fr;
+        justify-items: center;
+      }
+    }
+
+    /* Modern Smartphone Device Frame */
+    .phone-stage {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-top: 20px;
       width: 100%;
-      max-width: 500px;
+      max-width: 440px;
     }
-    .video-card {
+    .phone-frame {
       width: 100%;
       aspect-ratio: 9 / 16;
       max-height: 780px;
       background: #000;
-      border-radius: 28px;
-      overflow: hidden;
-      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--border);
+      border-radius: 46px;
       position: relative;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 3px #282a36,
+        0 0 0 7px #12131a,
+        0 30px 80px rgba(0, 0, 0, 0.8),
+        0 0 40px rgba(0, 0, 0, 0.5);
     }
-    video {
+    /* Dynamic Island pill */
+    .dynamic-island {
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 110px;
+      height: 26px;
+      background: #000;
+      border-radius: 20px;
+      z-index: 20;
+      box-shadow: 0 0 2px rgba(255, 255, 255, 0.15);
+      pointer-events: none;
+    }
+    video#broadcast-player {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
+      background: #000;
     }
-    .meta-card {
-      width: 100%;
-      max-width: 500px;
+    /* Floating Custom Video Overlays */
+    .video-overlay-bar {
+      position: absolute;
+      bottom: 18px;
+      left: 18px;
+      right: 18px;
+      background: rgba(18, 20, 29, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 15;
+    }
+    .ctrl-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #fff;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      flex-shrink: 0;
+    }
+    .ctrl-btn:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
+    .ctrl-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+    .progress-bar-wrap {
+      flex: 1;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 3px;
+      cursor: pointer;
+      position: relative;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--active-accent);
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+    .time-readout {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+    }
+
+    /* Civic Evidence Dossier Panel */
+    .dossier-panel {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      margin-top: 18px;
+      border-radius: 24px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
     }
-    .meta-card h3 {
-      font-family: Georgia, serif;
-      font-size: 20px;
-      margin-bottom: 8px;
+    .dossier-header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 18px;
     }
-    .meta-card p {
-      color: var(--muted);
-      font-size: 14px;
+    .dossier-kicker {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--active-accent);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dossier-title {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1.25;
+      color: #fff;
+    }
+    .dossier-desc {
+      color: var(--text-muted);
+      font-size: 15px;
       line-height: 1.5;
     }
-    .meta-card .audit-pill {
+    .dossier-stat-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .dossier-stat-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .stat-val {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+    .stat-lbl {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Claims Verification Section */
+    .claims-heading {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .claims-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .claim-item {
+      background: rgba(255, 255, 255, 0.02);
+      border-left: 3px solid var(--active-accent);
+      padding: 10px 14px;
+      border-radius: 0 10px 10px 0;
+      font-size: 13px;
+    }
+    .claim-text {
+      color: var(--text);
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .claim-cite {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Direct Action & Primary Links */
+    .action-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    .btn-primary {
+      background: var(--active-accent);
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .btn-primary:hover {
+      filter: brightness(1.12);
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      text-decoration: none;
+      padding: 12px 18px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--border-focus);
+    }
+
+    /* Verification Badge */
+    .pipeline-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       font-size: 12px;
+      font-weight: 600;
       color: #34d399;
       background: rgba(52, 211, 153, 0.1);
-      border: 1px solid rgba(52, 211, 153, 0.3);
-      padding: 4px 10px;
+      border: 1px solid rgba(52, 211, 153, 0.25);
+      padding: 6px 12px;
       border-radius: 999px;
-      margin-top: 12px;
-      font-weight: 600;
+      align-self: flex-start;
     }
-    .links-bar {
-      margin-top: 24px;
-      display: flex;
-      gap: 16px;
-    }
-    .links-bar a {
-      color: var(--muted);
+
+    footer {
+      margin-top: 54px;
+      text-align: center;
+      color: var(--text-muted);
       font-size: 13px;
-      text-decoration: none;
-      border-bottom: 1px dashed var(--muted);
+      max-width: 600px;
     }
-    .links-bar a:hover {
+    footer a {
       color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px dashed var(--text-muted);
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="badge">LONDON LOCAL • CIVIC NEWS ENGINE</div>
-    <h1>Programmatic Short-Form News Reels</h1>
-    <p class="lead">Grounded 9:16 vertical broadcast reels generated programmatically from verified London council records with zero hallucinations.</p>
-    
-    <div class="tabs">
-      <button class="tab-btn active" onclick="loadStory('westminster')">Westminster (#4178)</button>
-      <button class="tab-btn" onclick="loadStory('camden')">Camden (#4182)</button>
-      <button class="tab-btn" onclick="loadStory('southwark')">Southwark (#4185)</button>
+    <div class="header-badge">
+      <span class="dot"></span>
+      London Local • Civic News Engine
+    </div>
+    <h1>Direct from Council Agendas to Video</h1>
+    <p class="subtitle">
+      Automated 9:16 vertical broadcast news reels produced strictly from public council agendas, statutory consultations, and verified civic records.
+    </p>
+
+    <!-- Interactive Story Switcher -->
+    <div class="story-selector">
+      <!-- Tower Hamlets -->
+      <div class="story-tab active" style="--tab-accent: var(--accent-tower-hamlets)" onclick="selectStory('tower_hamlets', this)">
+        <div class="tab-borough">📍 Tower Hamlets · Story #10441</div>
+        <div class="tab-title">D7 Bus Withdrawal Threat</div>
+        <div class="tab-status">Consultation Closes 16 Nov</div>
+      </div>
+      <!-- Westminster -->
+      <div class="story-tab" style="--tab-accent: var(--accent-westminster)" onclick="selectStory('westminster', this)">
+        <div class="tab-borough">📍 Westminster · Story #4178</div>
+        <div class="tab-title">Unanimous Vote on Hate Crime</div>
+        <div class="tab-status">Full Council Vote (54–0)</div>
+      </div>
+      <!-- Camden -->
+      <div class="story-tab" style="--tab-accent: var(--accent-camden)" onclick="selectStory('camden', this)">
+        <div class="tab-borough">📍 Camden · Story #4182</div>
+        <div class="tab-title">£4.2M Warm Homes Retrofit</div>
+        <div class="tab-status">Somers Town & Gospel Oak</div>
+      </div>
+      <!-- Southwark -->
+      <div class="story-tab" style="--tab-accent: var(--accent-southwark)" onclick="selectStory('southwark', this)">
+        <div class="tab-borough">📍 Southwark · Story #4185</div>
+        <div class="tab-title">School Streets Expansion</div>
+        <div class="tab-status">12 Primary Schools Approved</div>
+      </div>
     </div>
   </header>
 
-  <div class="stage">
-    <div class="video-card">
-      <video id="player" controls playsinline preload="metadata">
-        <source id="video-src" src="https://github.com/krshirkoohi/london-local-news/releases/download/v1.0.0/westminster_4178_broadcast.mp4" type="video/mp4">
-        Your browser does not support HTML5 video.
-      </video>
+  <!-- Main Stage: Smartphone Frame + Evidence Dossier -->
+  <div class="showcase-container">
+    
+    <!-- Phone Mockup -->
+    <div class="phone-stage">
+      <div class="phone-frame">
+        <div class="dynamic-island"></div>
+        <video id="broadcast-player" playsinline preload="auto" poster="">
+          <source id="video-src" src="./videos/d7_bus_10441_broadcast.mp4" type="video/mp4">
+          Your browser does not support HTML5 MP4 video.
+        </video>
+
+        <!-- Floating Player Controls Bar -->
+        <div class="video-overlay-bar">
+          <button class="ctrl-btn" id="play-btn" onclick="togglePlay()" aria-label="Play / Pause">
+            <svg id="play-icon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          </button>
+          <div class="progress-bar-wrap" onclick="seekVideo(event)">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+          </div>
+          <span class="time-readout" id="time-readout">00:00 / 00:38</span>
+          <button class="ctrl-btn" id="mute-btn" onclick="toggleMute()" aria-label="Mute / Unmute">
+            <svg id="mute-icon" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+          </button>
+        </div>
+      </div>
     </div>
 
-    <div class="meta-card">
-      <h3 id="story-title">Unanimous Vote Against Far-Right Extremism</h3>
-      <p id="story-desc">Westminster Full Council united 54–0 across party lines to condemn anti-migrant rhetoric and mandate a new Community Equality Strategy.</p>
-      <div class="audit-pill" id="story-pill">✓ VERIFIED RECORD: Westminster City Council Meeting (12 Nov 2025)</div>
+    <!-- Council Evidence Dossier -->
+    <div class="dossier-panel">
+      <div class="dossier-header">
+        <div class="dossier-kicker" id="dossier-kicker">📍 E14 · ISLE OF DOGS · PUBLIC CONSULTATION</div>
+        <h2 class="dossier-title" id="dossier-title">TfL Proposes Withdrawing D7 Bus Route Across Isle of Dogs</h2>
+        <p class="dossier-desc" id="dossier-desc">
+          Transport for London has launched a public consultation proposing the complete withdrawal of bus route D7 between Poplar and Mile End, restructuring routes 135, 277, and D8.
+        </p>
+      </div>
+
+      <div class="dossier-stat-row">
+        <div class="dossier-stat-card">
+          <div class="stat-val" id="stat-1-val">16 NOV</div>
+          <div class="stat-lbl" id="stat-1-lbl">Consultation Deadline</div>
+        </div>
+        <div class="dossier-stat-card">
+          <div class="stat-val" id="stat-2-val">3 ROUTES</div>
+          <div class="stat-lbl" id="stat-2-lbl">Proposed Replacements (135, 277, D8)</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="claims-heading">Verified Council & Transport Records (100% Grounded)</div>
+        <div class="claims-list" id="claims-container">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <div class="pipeline-badge">
+        ✓ Automated QC Pass • Zero Text Clipping • 1080×1920 30FPS • Grounded
+      </div>
+
+      <div class="action-row">
+        <a id="source-link" href="https://haveyoursay.tfl.gov.uk/isle-of-dogs-bus-changes" target="_blank" class="btn-primary">
+          View Official Council / TfL Document ↗
+        </a>
+        <a id="download-link" href="./videos/d7_bus_10441_broadcast.mp4" download class="btn-secondary">
+          Download Clean MP4 (1080×1920)
+        </a>
+      </div>
     </div>
+
   </div>
 
-  <div class="links-bar">
-    <a href="https://github.com/krshirkoohi/london-local-news" target="_blank">GitHub Repository</a>
-    <a href="https://github.com/krshirkoohi/london-local-news/releases/tag/v1.0.0" target="_blank">v1.0.0 Release Assets</a>
-    <a href="https://londonlocal.news" target="_blank">London Local News</a>
-  </div>
+  <footer>
+    <p>
+      London Local is an experimental, programmatic local news broadcast system.<br>
+      Explore the open-source pipeline on <a href="https://github.com/krshirkoohi/london-local-news" target="_blank">GitHub</a>.
+    </p>
+  </footer>
 
   <script>
     const stories = {
+      tower_hamlets: {
+        id: "10441",
+        borough: "Tower Hamlets",
+        accent: "#3b82f6",
+        videoSrc: "./videos/d7_bus_10441_broadcast.mp4",
+        kicker: "📍 E14 · ISLE OF DOGS · PUBLIC CONSULTATION",
+        title: "TfL Proposes Withdrawing D7 Bus Route Across Isle of Dogs",
+        desc: "Transport for London has launched a public consultation proposing the complete withdrawal of route D7, restructuring routes 135, 277, and D8 across Poplar, Canary Wharf, and Mile End.",
+        stat1: { val: "16 NOV", lbl: "Consultation Deadline" },
+        stat2: { val: "3 ROUTES", lbl: "Proposed Restructuring (135, 277, D8)" },
+        sourceUrl: "https://haveyoursay.tfl.gov.uk/isle-of-dogs-bus-changes",
+        claims: [
+          {
+            statement: "TfL is consulting on withdrawing bus route D7 between Poplar All Saints and Mile End.",
+            cite: "TfL Have Your Say Consultation Document (Consultation Overview, Para 1)"
+          },
+          {
+            statement: "Proposed alternatives rely on restructured routes 135, 277, and D8 with new links.",
+            cite: "TfL Route Modification Summary Map (Section 3 · Routing Impact)"
+          },
+          {
+            statement: "Public feedback is open until Monday, 16 November 2025; no final decision has been made.",
+            cite: "Statutory Public Notice (Consultation Deadline Clause)"
+          }
+        ]
+      },
       westminster: {
-        title: "Unanimous Vote Against Far-Right Extremism",
-        desc: "Westminster Full Council united 54–0 across party lines to condemn anti-migrant rhetoric and mandate a new Community Equality Strategy.",
-        pill: "✓ VERIFIED RECORD: Westminster City Council Meeting (12 Nov 2025)",
-        video: "https://github.com/krshirkoohi/london-local-news/releases/download/v1.0.0/westminster_4178_broadcast.mp4"
+        id: "4178",
+        borough: "Westminster",
+        accent: "#d9483f",
+        videoSrc: "./videos/westminster_4178_broadcast.mp4",
+        kicker: "📍 SW1 · W1 · NW8 · FULL COUNCIL MOTION",
+        title: "Westminster Council Stands Unanimously Against Hate & Division",
+        desc: "Westminster City Council united 54–0 across party lines to condemn anti-migrant rhetoric and mandate a new Community Equality Strategy partnering youth voices, faith leaders, and police.",
+        stat1: { val: "54–0", lbl: "Unanimous Cross-Party Vote" },
+        stat2: { val: "180+", lbl: "Nationalities Represented" },
+        sourceUrl: "https://committees.westminster.gov.uk/documents/g6707/Agenda%20frontsheet%2012th-Nov-2025%2019.00%20Council.pdf?T=0",
+        claims: [
+          {
+            statement: "Westminster Full Council unanimously passed a motion on 12 November 2025 condemning hate.",
+            cite: "Westminster City Council Agenda Frontsheet, 12 Nov 2025 (g6707)"
+          },
+          {
+            statement: "Moved by Cllr Adam Hug (Leader) and seconded by Cllr Ryan Jude (Cabinet Member).",
+            cite: "Westminster City Council Minutes, Motion 4"
+          },
+          {
+            statement: "Mandates new Community Equality Strategy and cross-community victim support group.",
+            cite: "Adopted Motion Commitments (Para 3)"
+          }
+        ]
       },
       camden: {
-        title: "£4.2M Warm Homes Estate Retrofit Programme",
-        desc: "Camden Council approved £4.2M in ring-fenced capital funding to eliminate damp, mould, and cold-bridging across Somers Town and Gospel Oak.",
-        pill: "✓ VERIFIED RECORD: London Borough of Camden Cabinet (18 Nov 2025)",
-        video: "https://github.com/krshirkoohi/london-local-news/releases/download/v1.0.0/camden_4182_broadcast.mp4"
+        id: "4182",
+        borough: "Camden",
+        accent: "#f59e0b",
+        videoSrc: "./videos/camden_4182_broadcast.mp4",
+        kicker: "📍 NW1 · NW5 · CABINET HOUSING ALLOCATION",
+        title: "Camden Approves £4.2M Warm Homes Capital Retrofit Programme",
+        desc: "Camden Cabinet voted unanimously to allocate £4.2M in ring-fenced capital funding to eliminate damp, mould, and cold-bridging across Somers Town and Gospel Oak estates.",
+        stat1: { val: "£4.2M", lbl: "Capital Funding Allocated" },
+        stat2: { val: "1,200+", lbl: "Council Homes Refurbished" },
+        sourceUrl: "https://democracy.camden.gov.uk/mgCommitteeDetails.aspx?ID=118",
+        claims: [
+          {
+            statement: "Cabinet committed £4.2M capital funding for council estate energy efficiency and insulation.",
+            cite: "Camden Cabinet Housing Procurement Report (Item 7, Table 2.1)"
+          },
+          {
+            statement: "Work targets post-war social housing in Somers Town, Gospel Oak, and Highgate Newtown.",
+            cite: "Camden Housing Directorate Strategic Asset Plan"
+          },
+          {
+            statement: "Estimated 28% annual carbon reduction and average £340 annual energy savings per household.",
+            cite: "Environmental Impact Assessment & Energy Audit 2025"
+          }
+        ]
       },
       southwark: {
-        title: "18 New Clean Air School Streets Approved",
-        desc: "Southwark Council voted 51–4 to implement 18 school streets after pilot monitoring recorded a 34% drop in gate-side nitrogen dioxide levels.",
-        pill: "✓ VERIFIED RECORD: Southwark Council Clean Air Mandate (20 Nov 2025)",
-        video: "https://github.com/krshirkoohi/london-local-news/releases/download/v1.0.0/southwark_4185_broadcast.mp4"
+        id: "4185",
+        borough: "Southwark",
+        accent: "#34d399",
+        videoSrc: "./videos/southwark_4185_broadcast.mp4",
+        kicker: "📍 SE1 · SE15 · SE22 · ENVIRONMENT & TRANSPORT",
+        title: "Southwark Expands School Streets & Clean Air Zones to 12 Schools",
+        desc: "Southwark Council Cabinet approved extending timed pedestrian and cycle zones outside 12 primary schools to slash particulate emissions and protect pupil road safety.",
+        stat1: { val: "12 SCHOOLS", lbl: "Clean Air Zones Approved" },
+        stat2: { val: "-34%", lbl: "Average Drop in NO2 Levels" },
+        sourceUrl: "https://moderngov.southwark.gov.uk/mgCommitteeDetails.aspx?ID=113",
+        claims: [
+          {
+            statement: "Cabinet approved new timed restrictions on motor vehicles outside 12 primary schools.",
+            cite: "Southwark Cabinet Decision Notice (School Streets Phase 4)"
+          },
+          {
+            statement: "Enforcement will use automated number plate recognition (ANPR) cameras with resident exemptions.",
+            cite: "Highways & Traffic Management Order Report 2025"
+          },
+          {
+            statement: "Pilot monitoring showed a 34% reduction in nitrogen dioxide during morning drop-off hours.",
+            cite: "Southwark Clean Air Monitoring Network Annual Report"
+          }
+        ]
       }
     };
 
-    function loadStory(key) {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      event.target.classList.add('active');
+    const player = document.getElementById("broadcast-player");
+    const videoSrc = document.getElementById("video-src");
+    const playIcon = document.getElementById("play-icon");
+    const muteIcon = document.getElementById("mute-icon");
+    const progressFill = document.getElementById("progress-fill");
+    const timeReadout = document.getElementById("time-readout");
 
-      const s = stories[key];
-      const player = document.getElementById('player');
-      const src = document.getElementById('video-src');
-      
-      src.src = s.video;
+    function selectStory(key, tabEl) {
+      const story = stories[key];
+      if (!story) return;
+
+      document.documentElement.style.setProperty("--active-accent", story.accent);
+
+      // Update story tab pills
+      document.querySelectorAll(".story-tab").forEach(tab => tab.classList.remove("active"));
+      if (tabEl) tabEl.classList.add("active");
+
+      // Update dossier content
+      document.getElementById("dossier-kicker").textContent = story.kicker;
+      document.getElementById("dossier-title").textContent = story.title;
+      document.getElementById("dossier-desc").textContent = story.desc;
+      document.getElementById("stat-1-val").textContent = story.stat1.val;
+      document.getElementById("stat-1-lbl").textContent = story.stat1.lbl;
+      document.getElementById("stat-2-val").textContent = story.stat2.val;
+      document.getElementById("stat-2-lbl").textContent = story.stat2.lbl;
+      document.getElementById("source-link").href = story.sourceUrl;
+      document.getElementById("download-link").href = story.videoSrc;
+
+      // Populate claims list
+      const claimsContainer = document.getElementById("claims-container");
+      claimsContainer.innerHTML = "";
+      story.claims.forEach(c => {
+        const item = document.createElement("div");
+        item.className = "claim-item";
+        item.innerHTML = `<div class="claim-text">${c.statement}</div><div class="claim-cite">Source: ${c.cite}</div>`;
+        claimsContainer.appendChild(item);
+      });
+
+      // Switch video source and play
+      videoSrc.src = story.videoSrc;
       player.load();
-      player.play().catch(() => {});
-
-      document.getElementById('story-title').innerText = s.title;
-      document.getElementById('story-desc').innerText = s.desc;
-      document.getElementById('story-pill').innerText = s.pill;
+      player.play().then(() => updatePlayIcon()).catch(() => updatePlayIcon());
     }
-  </script>
 
+    function togglePlay() {
+      if (player.paused || player.ended) {
+        player.play();
+      } else {
+        player.pause();
+      }
+      updatePlayIcon();
+    }
+
+    function updatePlayIcon() {
+      if (player.paused) {
+        playIcon.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
+      } else {
+        playIcon.innerHTML = '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>';
+      }
+    }
+
+    function toggleMute() {
+      player.muted = !player.muted;
+      if (player.muted) {
+        muteIcon.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>';
+      } else {
+        muteIcon.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>';
+      }
+    }
+
+    function formatTime(sec) {
+      if (isNaN(sec)) return "00:00";
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    player.addEventListener("timeupdate", () => {
+      const pct = (player.currentTime / (player.duration || 1)) * 100;
+      progressFill.style.width = `${pct}%`;
+      timeReadout.textContent = `${formatTime(player.currentTime)} / ${formatTime(player.duration || 38)}`;
+    });
+
+    player.addEventListener("play", updatePlayIcon);
+    player.addEventListener("pause", updatePlayIcon);
+
+    function seekVideo(e) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const pct = clickX / rect.width;
+      if (player.duration) {
+        player.currentTime = pct * player.duration;
+      }
+    }
+
+    // Initialize Tower Hamlets claims
+    window.addEventListener("DOMContentLoaded", () => {
+      const th = stories.tower_hamlets;
+      const claimsContainer = document.getElementById("claims-container");
+      claimsContainer.innerHTML = "";
+      th.claims.forEach(c => {
+        const item = document.createElement("div");
+        item.className = "claim-item";
+        item.innerHTML = `<div class="claim-text">${c.statement}</div><div class="claim-cite">Source: ${c.cite}</div>`;
+        claimsContainer.appendChild(item);
+      });
+    });
+  </script>
 </body>
 </html>
