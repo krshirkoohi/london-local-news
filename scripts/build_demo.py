@@ -20,9 +20,13 @@ import glob
 import json
 import os
 import subprocess
+import sys
 import time
 from concurrent.futures import ThreadPoolExecutor
 from PIL import Image, ImageDraw, ImageFont
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import reusable_templates as rt
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_SPEC = os.path.join(BASE_DIR, "specs/4178-westminster-extremism.json")
@@ -90,7 +94,12 @@ def get_font(path, size):
 
 
 def load_transparent_wordmark(target_height=34):
-    """Loads london-local-wordmark.png and keys out the dark background to true RGBA alpha."""
+    """Loads the official London Local transparent wordmark from assets/templates/."""
+    tpl_wm = os.path.join(BASE_DIR, "assets", "templates", "logo_watermark.png")
+    if os.path.exists(tpl_wm):
+        wm = Image.open(tpl_wm).convert("RGBA")
+        aspect = wm.width / wm.height
+        return wm.resize((int(target_height * aspect), target_height), Image.Resampling.LANCZOS)
     if not os.path.exists(LOGO_WORDMARK):
         return None
     try:
@@ -597,50 +606,371 @@ def render_figure_action_matrix(draw, fig_data, t=10.0):
             dy += 26
 
 
-def create_scene_overlay_image(spec, scene, total_scenes=5, show_logo=True, t=10.0):
-    """Generates a complete broadcast overlay PIL Image for a timeline scene at time t."""
+def render_template_scene1_hook(spec, scene, t=10.0):
+    """Renders the official Scene 1 Hook overlay from Main headline.png over B-roll."""
     overlay = Image.new("RGBA", (1080, 1920), (0, 0, 0, 0))
+    rt.apply_persistent_watermark(overlay)
     draw = ImageDraw.Draw(overlay)
 
-    borough = spec.get("borough", "Westminster")
-    date_str = spec.get("meetingDateDisplay", spec.get("meetingDate", "12 NOV 2025"))
-    scene_num = scene.get("sceneNumber", 1)
-    vis = scene.get("visualAsset", {})
-    disclaimer = vis.get("mandatoryDisclaimer") if vis.get("isIllustrative") else None
+    # Scrim vignette behind text for maximum legibility over moving B-roll
+    for y in range(750, 1320):
+        dist = abs(y - 1035) / 285
+        a = int(210 * max(0.0, 1.0 - dist**2))
+        if a > 0:
+            draw.line([(0, y), (1080, y)], fill=(8, 8, 12, a))
 
-    draw_top_bar(
-        overlay,
-        draw,
-        borough=borough,
-        date_str=date_str,
-        scene_num=scene_num,
-        total_scenes=total_scenes,
-        disclaimer=disclaimer,
-        show_logo=show_logo,
-    )
-    draw_spatial_postcode_hud(draw, spec, scene_num=scene_num, t=t)
-    draw_bottom_vignette(draw, start_y=920)
+    # Optional Postcode Pill
+    pc = spec.get("postcodeTag", "")
+    if pc:
+        f_pc = rt.get_font(rt.FONT_SANS_BOLD, 19)
+        pw = draw.textlength(pc, font=f_pc)
+        draw.rounded_rectangle([((1080 - pw) // 2 - 18, 800), ((1080 + pw) // 2 + 18, 842)], radius=12, fill=(14, 14, 20, 220), outline=(245, 158, 11, 200), width=1)
+        draw.text(((1080 - pw) // 2, 812), pc, font=f_pc, fill=(245, 158, 11, 255))
+
+    # Headline and Subtitle
+    h_txt = scene.get("onScreenGraphic", {}).get("headline", spec.get("headline", ""))
+    b_txt = scene.get("onScreenGraphic", {}).get("body", "")
+
+    f_h1 = rt.get_font(rt.FONT_SERIF_BOLD, 74)
+    f_sub = rt.get_font(rt.FONT_SERIF_BOLD, 46)
+
+    # Animation ease-in: fade and 20px rise
+    p = ease_out_cubic(min(1.0, max(0.0, t / 0.4)))
+    y_off = int((1.0 - p) * 20)
+
+    hy = 870 + y_off
+    for line in h_txt.split("\n"):
+        lw = draw.textlength(line, font=f_h1)
+        draw.text(((1080 - lw) // 2, hy), line, font=f_h1, fill=(255, 255, 255, int(255 * p)))
+        hy += 86
+
+    hy += 16
+    for line in rt.wrap_text(draw, b_txt, f_sub, 880):
+        lw = draw.textlength(line, font=f_sub)
+        draw.text(((1080 - lw) // 2, hy), line, font=f_sub, fill=(230, 230, 240, int(255 * p)))
+        hy += 56
+
+    # AI disclaimer backing pill for crisp legibility over 35mm generative video
+    disc_w = 340
+    draw.rounded_rectangle([((1080 - disc_w) // 2 - 14, 1772), ((1080 + disc_w) // 2 + 14, 1812)], radius=10, fill=(12, 12, 18, 225), outline=(255, 255, 255, 45), width=1)
+    rt.apply_ai_disclaimer(overlay, show=True)
+    return overlay
+
+
+def render_template_scene2_receipt(spec, scene, t=10.0):
+    """Renders the official Council Order Paper Receipt with live yellow highlight & red audit bracket over 35mm B-roll."""
+    overlay = Image.new("RGBA", (1080, 1920), (0, 0, 0, 0))
+    rt.apply_persistent_watermark(overlay)
+    draw = ImageDraw.Draw(overlay)
+
+    # Scrim vignette behind receipt card
+    for y in range(400, 1400):
+        dist = abs(y - 900) / 500
+        a = int(180 * max(0.0, 1.0 - dist**2))
+        if a > 0:
+            draw.line([(0, y), (1080, y)], fill=(8, 8, 12, a))
 
     fig = scene.get("figure", {})
-    fig_type = fig.get("type", "")
     fig_data = fig.get("data", {})
 
-    if fig_type == "vote_tally":
-        render_figure_vote_tally(draw, fig_data, t=t)
-    elif fig_type == "motion_document":
-        render_figure_motion_document(draw, fig_data, t=t)
-    elif fig_type == "stat_comparison":
-        render_figure_stat_comparison(draw, fig_data, t=t)
-    elif fig_type == "action_matrix":
-        render_figure_action_matrix(draw, fig_data, t=t)
+    ox = MARGIN_X
+    card_w = 1080 - 2 * ox
+    fig_y1, fig_y2 = 560, 1180
+
+    p_card = ease_out_cubic(min(1.0, max(0.0, t / 0.4)))
+    y_slide = int((1.0 - p_card) * 35)
+    cy1, cy2 = fig_y1 + y_slide, fig_y2 + y_slide
+
+    draw.rounded_rectangle(
+        [(ox, cy1), (ox + card_w, cy2)],
+        radius=14,
+        fill=(250, 248, 242, 252),
+        outline=(255, 255, 255, 90),
+        width=2,
+    )
+
+    ink_dark = (22, 24, 29, 255)
+    ink_muted = (100, 105, 115, 255)
+
+    f_doc_hdr = get_font(FONT_SANS_BOLD, 17)
+    left_hdr = fig_data.get("docHeaderLeft", f"LONDON BOROUGH OF {spec.get('borough', '').upper()} · CABINET")
+    right_hdr = fig_data.get("docHeaderRight", "OFFICIAL ORDER PAPER")
+    draw.text((ox + 28, cy1 + 22), left_hdr, font=f_doc_hdr, fill=ink_muted)
+    rw = draw.textlength(right_hdr, font=f_doc_hdr)
+    draw.text((ox + card_w - 28 - rw, cy1 + 22), right_hdr, font=f_doc_hdr, fill=(180, 83, 9, 255))
+
+    draw.line([(ox + 28, cy1 + 54), (ox + card_w - 28, cy1 + 54)], fill=(40, 40, 45, 220), width=2)
+    draw.line([(ox + 28, cy1 + 59), (ox + card_w - 28, cy1 + 59)], fill=(40, 40, 45, 120), width=1)
+
+    prefix = fig_data.get("excerptPrefix", "")
+    highlight = fig_data.get("highlightPhrase", "")
+    suffix = fig_data.get("excerptSuffix", "")
+    full_quote = f"{prefix}{highlight}{suffix}"
+
+    f_quote = get_font(FONT_SERIF_BOLD, 28)
+    q_lines = wrap_text_to_width(draw, full_quote, f_quote, card_w - 60)
+
+    hl_progress = ease_out_cubic(max(0.0, min(1.0, (t - 0.6) / 1.6))) if t >= 0.6 else 0.0
+
+    if hl_progress > 0.05:
+        bracket_h = int(140 * hl_progress)
+        draw.line([(ox + 16, cy1 + 80), (ox + 16, cy1 + 80 + bracket_h)], fill=(220, 38, 38, 240), width=4)
+        draw.line([(ox + 16, cy1 + 80), (ox + 24, cy1 + 80)], fill=(220, 38, 38, 240), width=3)
+
+    qy = cy1 + 84
+    for ql in q_lines[:4]:
+        hl_words = [w for w in highlight.split(" ") if len(w) > 3]
+        if any(hw in ql for hw in hl_words):
+            lw = draw.textlength(ql, font=f_quote)
+            current_hl_w = int(lw * hl_progress)
+            if current_hl_w > 4:
+                draw.rounded_rectangle(
+                    [(ox + 26, qy - 2), (ox + 28 + current_hl_w, qy + 34)],
+                    radius=4,
+                    fill=(253, 224, 71, 235),
+                )
+        draw.text((ox + 28, qy), ql, font=f_quote, fill=ink_dark)
+        qy += 44
+
+    sig_y = cy2 - 70
+    draw.line([(ox + 28, sig_y - 12), (ox + card_w - 28, sig_y - 12)], fill=(200, 195, 185, 255), width=1)
+    f_sig = get_font(FONT_SANS_BOLD, 17)
+    draw.text((ox + 28, sig_y), fig_data.get("mover", "Statutory Mover: Cabinet Member"), font=f_sig, fill=ink_muted)
+    draw.text((ox + 28, sig_y + 26), fig_data.get("seconder", "Audit: Monitoring Officer"), font=get_font(FONT_SANS, 16), fill=(130, 135, 145, 255))
+
+    receipt_stamp = fig_data.get("receiptStamp", "STATUTORY COUNCIL RECORD")
+    f_stamp = get_font(FONT_SANS_BOLD, 17)
+    st_w = draw.textlength(receipt_stamp, font=f_stamp)
+    st_box_w = int(st_w + 32)
+    st_x2 = ox + card_w - 24
+    st_x1 = st_x2 - st_box_w
+    draw.rounded_rectangle([(st_x1, sig_y - 4), (st_x2, sig_y + 40)], radius=6, fill=(254, 242, 242, 245), outline=(220, 38, 38, 240), width=2)
+    draw.text((st_x1 + 16, sig_y + 10), receipt_stamp, font=f_stamp, fill=(220, 38, 38, 255))
 
     draw_lower_third_text(
         draw,
         scene.get("onScreenGraphic", {}),
         scene.get("citationFooter", ""),
-        top_y=1350,
+        top_y=1340,
     )
     return overlay
+
+
+def render_selling_point_slide_card(spec, t=10.0):
+    """Renders the official grand finale Selling Point slide from London Local.png."""
+    card = Image.new("RGBA", (1080, 1920), (14, 14, 20, 255))
+    draw = ImageDraw.Draw(card)
+
+    for y in range(0, 1920):
+        val = int(14 + (y / 1920) * 8)
+        draw.line([(0, y), (1080, y)], fill=(val, val, val + 2, 255))
+
+    rt.apply_persistent_watermark(card)
+
+    f_main = rt.get_font(rt.FONT_SERIF_BOLD, 78)
+    line1 = "Local news, from"
+    line2 = "your council."
+
+    p_title = ease_out_cubic(min(1.0, max(0.0, t / 0.3)))
+    draw.text((108, 770), line1, font=f_main, fill=(255, 255, 255, int(255 * p_title)))
+    draw.text((108, 870), line2, font=f_main, fill=(255, 255, 255, int(255 * p_title)))
+    l_yc = draw.textlength(line2, font=f_main)
+    draw.ellipse([(108 + l_yc + 6, 915), (108 + l_yc + 22, 931)], fill=(217, 72, 63, int(255 * p_title)))
+
+    draw.line([(108, 1010), (972, 1010)], fill=(255, 255, 255, 40), width=1)
+
+    pillars = spec.get("sellingPointPillars") or [
+        ("DIRECT FROM THE SOURCE", "Every story is anchored in verified council agendas, voting tallies, and financial order papers."),
+        ("ZERO SENSATIONALISM", "Politically non-partisan civic intelligence designed to explain decisions, not farm rage."),
+        ("HYPER-LOCAL IMPACT", "Focusing on the municipal policies that actually determine your rent, council tax, and neighbourhood."),
+    ]
+
+    f_pill_hdr = rt.get_font(rt.FONT_SANS_BOLD, 19)
+    f_pill_body = rt.get_font(rt.FONT_SERIF, 26)
+
+    py = 1070
+    for idx, (hdr, desc) in enumerate(pillars[:3]):
+        t_start = 0.1 + idx * 0.2
+        p_pill = ease_out_cubic(min(1.0, max(0.0, (t - t_start) / 0.3))) if t >= t_start else 0.0
+        if p_pill <= 0.01:
+            py += 130
+            continue
+
+        y_off = int((1.0 - p_pill) * 15)
+        draw.text((108, py + y_off), hdr, font=f_pill_hdr, fill=(245, 158, 11, int(255 * p_pill)))
+        py_b = py + 34 + y_off
+        lines = rt.wrap_text(draw=draw, text=desc, font=f_pill_body, max_width=860)
+        for l in lines:
+            draw.text((108, py_b), l, font=f_pill_body, fill=(230, 230, 240, int(255 * p_pill)))
+            py_b += 36
+        py += 130
+
+    f_bot = rt.get_font(rt.FONT_SERIF, 32)
+    bot_txt = "londonlocal.news  •  All 33 London Boroughs"
+    bw = draw.textlength(bot_txt, font=f_bot)
+    draw.text(((1080 - bw) // 2, 1720), bot_txt, font=f_bot, fill=(180, 180, 190, 255))
+
+    return card
+
+
+def render_template_scene3_key_points(spec, scene, t=10.0):
+    """Renders the official Scene 3 Key Points broadsheet slide from 4.png."""
+    card = Image.new("RGBA", (1080, 1920), (14, 14, 20, 255))
+    base_path = os.path.join(rt.TEMPLATES_DIR, "key_points_template_base.png")
+    if os.path.exists(base_path):
+        base = Image.open(base_path)
+        card.paste(base, (0, 0), base)
+    else:
+        draw = ImageDraw.Draw(card)
+        draw.text((109, 121), "Key points", font=rt.get_font(rt.FONT_SERIF_BOLD, 92), fill=(255, 255, 255, 255))
+        rt.apply_persistent_watermark(card)
+
+    draw = ImageDraw.Draw(card)
+    f_point = rt.get_font(rt.FONT_SERIF, 44)
+    f_cite = rt.get_font(rt.FONT_SERIF, 32)
+
+    points = spec.get("keyPoints")
+    if not points:
+        points = [
+            (scene.get("onScreenGraphic", {}).get("headline", ""), scene.get("citationFooter", "Council Agenda")),
+            (scene.get("onScreenGraphic", {}).get("body", ""), "Official Audit Report"),
+            ("Statutory enforcement under municipal governance code.", "Order Paper"),
+        ]
+
+    cur_y = 350
+    for idx, (pt_text, cite_text) in enumerate(points[:3]):
+        t_start = 0.15 + idx * 0.25
+        p_pt = ease_out_cubic(min(1.0, max(0.0, (t - t_start) / 0.3))) if t >= t_start else 0.0
+        if p_pt <= 0.01:
+            cur_y += 240
+            continue
+
+        y_off = int((1.0 - p_pt) * 15)
+        lines = rt.wrap_text(draw, pt_text, f_point, 860)
+        for line in lines[:3]:
+            draw.text((110, cur_y + y_off), line, font=f_point, fill=(255, 255, 255, int(255 * p_pt)))
+            cur_y += 60
+
+        cur_y += 10
+        cite_str = cite_text.strip().lstrip("<").rstrip(">")
+        draw.text((110, cur_y + y_off), cite_str, font=f_cite, fill=(216, 216, 216, int(255 * p_pt)))
+        cur_y += 110
+
+    return card
+
+
+def render_template_scene4_facts_figures(spec, scene, t=10.0):
+    """Renders the official Scene 4 Facts and figures frame from 5.png."""
+    overlay = Image.new("RGBA", (1080, 1920), (0, 0, 0, 0))
+    template_file = "facts_and_figures_frame_glass.png"
+    base_path = os.path.join(rt.TEMPLATES_DIR, template_file)
+    if os.path.exists(base_path):
+        base = Image.open(base_path)
+        overlay.paste(base, (0, 0), base)
+    else:
+        draw = ImageDraw.Draw(overlay)
+        draw.text((108, 119), "Facts and figures", font=rt.get_font(rt.FONT_SERIF_BOLD, 92), fill=(255, 255, 255, 255))
+        draw.rounded_rectangle([(108, 282), (971, 1741)], radius=18, fill=(12, 12, 18, 225), outline=(255, 255, 255, 55), width=2)
+        rt.apply_persistent_watermark(overlay)
+
+    draw = ImageDraw.Draw(overlay)
+    bx1, by1, bx2, by2 = 108, 282, 971, 1741
+
+    fig = scene.get("figure", {})
+    fig_type = fig.get("type", "")
+    fig_data = fig.get("data", {})
+
+    cards = []
+    if fig_type == "stat_comparison":
+        cards = fig_data.get("cards", [])
+    elif "stat_comparison" in [s.get("figure", {}).get("type") for s in spec.get("timeline", [])]:
+        for s in spec.get("timeline", []):
+            if s.get("figure", {}).get("type") == "stat_comparison":
+                cards = s.get("figure", {}).get("data", {}).get("cards", [])
+                break
+
+    if not cards:
+        cards = [
+            {"kicker": "COUNCIL ALLOCATION", "value": "100%", "label": "Full Capital Approval", "subtext": "Approved across parties", "barRatio": 1.0, "barColor": [245, 158, 11]},
+            {"kicker": "COMMUNITY IMPACT", "value": "Direct", "label": "Borough-Wide Delivery", "subtext": "Monitored execution", "barRatio": 0.85, "barColor": [52, 211, 153]},
+        ]
+
+    cw = (bx2 - bx1 - 60) // 2
+    c1_x1, c1_x2 = bx1 + 20, bx1 + 20 + cw
+    c2_x1, c2_x2 = c1_x2 + 20, c1_x2 + 20 + cw
+
+    for idx, (cx1, cx2, c) in enumerate([(c1_x1, c1_x2, cards[0]), (c2_x1, c2_x2, cards[1] if len(cards) > 1 else cards[0])]):
+        t_card = t - (0.1 + idx * 0.2)
+        p_c = ease_out_cubic(t_card / 0.4) if t_card > 0 else 0.0
+        if p_c <= 0.01:
+            continue
+        bar_col = tuple(c.get("barColor", [245, 158, 11])) + (255,)
+        draw.rounded_rectangle([(cx1, by1 + 40), (cx2, by1 + 380)], radius=16, fill=(18, 18, 26, 240), outline=(255, 255, 255, 60), width=1)
+        draw.text((cx1 + 24, by1 + 60), c.get("kicker", ""), font=rt.get_font(rt.FONT_SANS_BOLD, 16), fill=bar_col)
+        draw.text((cx1 + 24, by1 + 95), str(c.get("value", "")), font=rt.get_font(rt.FONT_SERIF_BOLD, 68), fill=(255, 255, 255, 255))
+        draw.text((cx1 + 24, by1 + 185), c.get("label", ""), font=rt.get_font(rt.FONT_SANS_BOLD, 22), fill=(230, 230, 235, 255))
+        draw.rounded_rectangle([(cx1 + 24, by1 + 230), (cx2 - 24, by1 + 242)], radius=6, fill=(45, 45, 55, 255))
+        ratio = max(0.1, min(1.0, float(c.get("barRatio", 0.85)))) * p_c
+        fill_w = int((cx2 - cx1 - 48) * ratio)
+        if fill_w > 4:
+            draw.rounded_rectangle([(cx1 + 24, by1 + 230), (cx1 + 24 + fill_w, by1 + 242)], radius=6, fill=bar_col)
+        draw.text((cx1 + 24, by1 + 265), c.get("subtext", ""), font=rt.get_font(rt.FONT_SANS, 18), fill=(180, 180, 190, 255))
+
+    vy1, vy2 = by1 + 430, by1 + 640
+    p_vote = ease_out_cubic((t - 0.35) / 0.4) if t > 0.35 else 0.0
+    if p_vote > 0.01:
+        draw.rounded_rectangle([(bx1 + 20, vy1), (bx2 - 20, vy2)], radius=16, fill=(18, 18, 26, 240), outline=(255, 255, 255, 60), width=1)
+        draw.text((bx1 + 44, vy1 + 24), "COUNCIL VOTE RECORD · MANDATE CONFIRMED", font=rt.get_font(rt.FONT_SANS_BOLD, 18), fill=(245, 158, 11, 255))
+        draw.rounded_rectangle([(bx1 + 44, vy1 + 65), (bx2 - 44, vy1 + 82)], radius=8, fill=(45, 45, 55, 255))
+        fill_bar = int((bx2 - bx1 - 88) * min(1.0, 0.92 * p_vote))
+        if fill_bar > 4:
+            draw.rounded_rectangle([(bx1 + 44, vy1 + 65), (bx1 + 44 + fill_bar, vy1 + 82)], radius=8, fill=(52, 211, 153, 255))
+        draw.text((bx1 + 44, vy1 + 105), f"{spec.get('borough', 'Council')} Statutory Allocation   •   Confirmed by Cabinet", font=rt.get_font(rt.FONT_SANS_BOLD, 20), fill=(240, 240, 245, 255))
+
+    draw.text((bx1 + 24, by1 + 710), "Operational Mandate & Phasing", font=rt.get_font(rt.FONT_SERIF_BOLD, 36), fill=(255, 255, 255, 255))
+    pillars = fig_data.get("pillars", [])
+    if not pillars:
+        pillars = [
+            {"code": "01", "desc": "Phase 1 immediate statutory commencement."},
+            {"code": "02", "desc": "Borough-wide operational oversight team deployed."},
+            {"code": "03", "desc": "Quarterly public audit reporting to full council."},
+        ]
+
+    sy = by1 + 770
+    for idx, p_item in enumerate(pillars[:4]):
+        t_pil = t - (0.5 + idx * 0.18)
+        p_p = ease_out_cubic(t_pil / 0.35) if t_pil > 0 else 0.0
+        if p_p <= 0.01:
+            sy += 65
+            continue
+        p_code = p_item.get("code", f"0{idx+1}")
+        p_desc = p_item.get("desc", "")
+        draw.text((bx1 + 24, sy), f"• {p_code}: {p_desc}", font=rt.get_font(rt.FONT_SANS, 22), fill=(220, 220, 230, int(255 * p_p)))
+        sy += 65
+
+    cite = scene.get("citationFooter", spec.get("meetingDateDisplay", "Council Public Record"))
+    cite_str = cite.strip().lstrip("<").rstrip(">")
+    f_cite = rt.get_font(rt.FONT_SERIF, 36)
+    cw = draw.textlength(cite_str, font=f_cite)
+    draw.text(((1080 - cw) // 2, 1774), cite_str, font=f_cite, fill=(216, 216, 216, 255))
+
+    return overlay
+
+
+def create_scene_overlay_image(spec, scene, total_scenes=5, show_logo=True, t=10.0):
+    """Generates the official template-based broadcast image for any scene at time t."""
+    scene_num = scene.get("sceneNumber", 1)
+
+    if scene_num == 1:
+        return render_template_scene1_hook(spec, scene, t=t)
+    elif scene_num == 2:
+        return render_template_scene2_receipt(spec, scene, t=t)
+    elif scene_num == 3:
+        return render_template_scene3_key_points(spec, scene, t=t)
+    elif scene_num == 4:
+        return render_template_scene4_facts_figures(spec, scene, t=t)
+    else:
+        return create_outro_archive_card_image(spec, scene, total_scenes=total_scenes, show_logo=show_logo, t=t)
 
 
 def create_scene_overlay(out_path, spec, scene, total_scenes=5, show_logo=True):
@@ -650,7 +980,37 @@ def create_scene_overlay(out_path, spec, scene, total_scenes=5, show_logo=True):
 
 
 def create_outro_archive_card_image(spec, scene, total_scenes=5, show_logo=True, t=10.0):
-    """Renders the Scene 5 Broadsheet Audit Trail & Endplate card with sequential row entrances."""
+    """Renders the official Scene 5 Outro card: Street sign (6.png) resolving into the Selling Point payoff (London Local.png)."""
+    fig_type = scene.get("figure", {}).get("type", "")
+    if fig_type == "broadsheet_audit":
+        return _render_legacy_audit_card(spec, scene, total_scenes=total_scenes, show_logo=show_logo, t=t)
+
+    story_id = str(spec.get("storyId", "4182"))
+    debate_prompt = spec.get("debatePrompt", "")
+    stakeholders = spec.get("stakeholderTags", [])
+
+    # Street sign outro card (6.png)
+    outro_sign = rt.render_outro_card(
+        story_id=story_id,
+        debate_prompt=debate_prompt if t >= 0.5 else None,
+        stakeholder_pills=stakeholders if t >= 0.5 else None,
+    )
+
+    # Selling point payoff (London Local.png: "Local news, from your council.")
+    selling_point = render_selling_point_slide_card(spec, t=t)
+
+    # Narrative resolution: Street sign holds 0..3.4s, then smoothly resolves to the selling point slide
+    if t < 3.4:
+        return outro_sign
+    elif t >= 4.2:
+        return selling_point
+    else:
+        alpha = (t - 3.4) / 0.8
+        return Image.blend(outro_sign, selling_point, alpha)
+
+
+def _render_legacy_audit_card(spec, scene, total_scenes=5, show_logo=True, t=10.0):
+    """Fallback: Renders the legacy Scene 5 Broadsheet Audit Trail table."""
     img = Image.new("RGBA", (1080, 1920), (10, 10, 14, 255))
     draw = ImageDraw.Draw(img)
 
@@ -931,6 +1291,31 @@ def render_story_from_spec(spec_path, show_logo=True, force_tts=False):
             proc.wait()
             segment_files.append(seg_out)
             print(f"  ✓ Scene {num} [Outro Archive - Animated Slide] encoded ({pad_dur:.2f}s @ 30fps)")
+            continue
+
+        if num == 3:
+            # Scene 3: Dedicated Key Points Broadsheet (4.png: "Key points" + 3 verified points & citations)
+            total_frames = int(pad_dur * 30)
+            cmd = [
+                "ffmpeg", "-y",
+                "-f", "rawvideo", "-pix_fmt", "rgba", "-s", "1080x1920", "-r", "30", "-i", "-",
+                "-i", mp3_path,
+                "-map", "0:v", "-map", "1:a",
+                "-r", "30",
+                "-c:v", "libx264", "-t", f"{pad_dur:.3f}",
+                "-pix_fmt", "yuv420p",
+                "-c:a", "aac", "-ar", "24000", "-ac", "1", "-b:a", "192k",
+                seg_out,
+            ]
+            proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            for f_idx in range(total_frames):
+                t_sec = f_idx / 30.0
+                frame_img = render_template_scene3_key_points(spec, scene, t=t_sec)
+                proc.stdin.write(frame_img.tobytes())
+            proc.stdin.close()
+            proc.wait()
+            segment_files.append(seg_out)
+            print(f"  ✓ Scene {num} [Key Points Slide: 4.png] encoded ({pad_dur:.2f}s @ 30fps)")
             continue
 
         if vis_type == "video" and os.path.exists(vis_src):

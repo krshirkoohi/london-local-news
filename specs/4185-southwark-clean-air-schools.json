@@ -284,5 +284,33 @@
     "#SchoolStreets",
     "#SouthwarkParents"
   ],
-  "debatePrompt": "SAFER FOR KIDS OR TOUGH ON DRIVERS? HAVE YOUR SAY BELOW"
+  "debatePrompt": "SAFER FOR KIDS OR TOUGH ON DRIVERS? HAVE YOUR SAY BELOW",
+  "sellingPointPillars": [
+    [
+      "VERIFIED CIVIC DATA",
+      "Sourced directly from Southwark Council climate assembly records and school zone audits."
+    ],
+    [
+      "ZERO NOISE",
+      "Unbiased reporting explaining real street closures, timings, and air quality benchmarks."
+    ],
+    [
+      "SERVED FOR 33 BOROUGHS",
+      "Independent reporting on the hyperlocal matters Westminster and City Hall overlook."
+    ]
+  ],
+  "keyPoints": [
+    [
+      "Cabinet approves 18 new timed car-free School Streets across Peckham, Camberwell, and Dulwich.",
+      "Southwark Cabinet Air Quality Report"
+    ],
+    [
+      "Automatic Number Plate Recognition (ANPR) cameras enforce 8:00\u20139:30 and 15:00\u201316:30 quiet zones.",
+      "Traffic Management Order 2026"
+    ],
+    [
+      "Early monitoring data indicates 28% drop in nitrogen dioxide particulate levels at school gates.",
+      "Clean Air Audit Benchmark"
+    ]
+  ]
 }

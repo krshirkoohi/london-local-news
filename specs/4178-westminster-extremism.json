@@ -28,7 +28,7 @@
       "durationSeconds": 9.5,
       "visualAsset": {
         "type": "video",
-        "source": "assets/generative/gemini_generated_video_535e3482.mp4",
+        "source": "assets/generative/westminster_civic_omni.mp4",
         "cropMode": "full",
         "trimStart": 0.0,
         "isIllustrative": true,
@@ -80,10 +80,10 @@
       "type": "document_highlight",
       "durationSeconds": 10.0,
       "visualAsset": {
-        "type": "image",
-        "source": "assets/generative/westminster_street_bg.jpg",
-        "cropMode": "pan_zoom",
-        "trimStart": 0.0,
+        "type": "video",
+        "source": "assets/generative/westminster_civic_omni.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 2.0,
         "isIllustrative": true,
         "mandatoryDisclaimer": "AI ILLUSTRATIVE B-ROLL",
         "prompt": "High-contrast black and white 35mm street photography of Victoria Street and Westminster City Hall precinct, London. Wet pavement reflections, classic streetlamps, Ilford HP5 Plus film grain, 9:16 vertical."
@@ -289,5 +289,33 @@
     "#MetPoliceCentral",
     "#54Councillors"
   ],
-  "debatePrompt": "WHAT SHOULD BE PRIORITY #1 FOR YOUR WARD? COMMENT BELOW"
+  "debatePrompt": "WHAT SHOULD BE PRIORITY #1 FOR YOUR WARD? COMMENT BELOW",
+  "sellingPointPillars": [
+    [
+      "UNANIMOUS DEMOCRATIC ACCORD",
+      "A binding 54-0 cross-party coalition uniting Labour and Conservatives against extremism."
+    ],
+    [
+      "ZERO SENSATIONALISM",
+      "Civic intelligence focused strictly on council resolutions and interfaith protection."
+    ],
+    [
+      "PUBLIC RECORD ARCHIVE",
+      "Verified against the official Order Paper of Westminster City Council."
+    ]
+  ],
+  "keyPoints": [
+    [
+      "Labour and Conservative groups vote unanimously for zero tolerance towards extremist groups.",
+      "Westminster Council Order Paper \u00b7 Item 7"
+    ],
+    [
+      "Special multi-agency taskforce established with Metropolitan Police and faith leaders.",
+      "Westminster Civic Action Plan 2026"
+    ],
+    [
+      "Policy prohibits hiring of public halls or municipal spaces by hate-preaching organisations.",
+      "Standing Orders Amendment \u00a714"
+    ]
+  ]
 }

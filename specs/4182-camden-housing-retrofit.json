@@ -284,5 +284,33 @@
     "#WarmHomes",
     "#RentFreeze"
   ],
-  "debatePrompt": "WHICH CAMDEN ESTATE NEEDS INSULATING NEXT? COMMENT BELOW"
+  "debatePrompt": "WHICH CAMDEN ESTATE NEEDS INSULATING NEXT? COMMENT BELOW",
+  "sellingPointPillars": [
+    [
+      "DIRECT FROM THE SOURCE",
+      "Every story is anchored in verified cabinet agendas, voting tallies, and financial order papers."
+    ],
+    [
+      "ZERO SENSATIONALISM",
+      "Politically non-partisan civic intelligence designed to explain decisions, not farm rage."
+    ],
+    [
+      "HYPER-LOCAL IMPACT",
+      "Focusing on the municipal policies that actually determine your rent, heating, and neighbourhood."
+    ]
+  ],
+  "keyPoints": [
+    [
+      "Somers Town and Gospel Oak estates prioritised for \u00a34.2m capital retrofit.",
+      "Camden Cabinet Housing Report \u00b7 Item 4"
+    ],
+    [
+      "Tenant energy bills projected to drop by \u00a3680 annually while eliminating persistent damp.",
+      "Thermal Impact Assessment Table 3"
+    ],
+    [
+      "Contract procurement schedule ring-fenced with contractor commencement in January.",
+      "Camden Procurement Schedule"
+    ]
+  ]
 }
