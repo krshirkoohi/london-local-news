@@ -23,9 +23,35 @@ BUILD_DIR = os.path.join(BASE_DIR, "build")
 AUDIO_DIR = os.path.join(BUILD_DIR, "audio")
 OUTPUT_DIR = os.path.join(BASE_DIR, "output")
 
-FONT_SERIF_BOLD = "/System/Library/Fonts/Supplemental/Georgia Bold.ttf"
-FONT_SERIF = "/System/Library/Fonts/Supplemental/Georgia.ttf"
-FONT_SANS = "/System/Library/Fonts/Supplemental/Arial.ttf"
+SERIF_BOLD_CANDIDATES = [
+    "/System/Library/Fonts/Supplemental/Georgia Bold.ttf",
+    "/Library/Fonts/Georgia Bold.ttf",
+    "/usr/share/fonts/truetype/liberation/LiberationSerif-Bold.ttf",
+    "/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf",
+]
+SERIF_CANDIDATES = [
+    "/System/Library/Fonts/Supplemental/Georgia.ttf",
+    "/Library/Fonts/Georgia.ttf",
+    "/usr/share/fonts/truetype/liberation/LiberationSerif-Regular.ttf",
+    "/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf",
+]
+SANS_CANDIDATES = [
+    "/System/Library/Fonts/Supplemental/Arial.ttf",
+    "/System/Library/Fonts/Helvetica.ttc",
+    "/Library/Fonts/Arial.ttf",
+    "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+]
+
+def resolve_font_path(candidates):
+    for path in candidates:
+        if os.path.exists(path):
+            return path
+    return None
+
+FONT_SERIF_BOLD = resolve_font_path(SERIF_BOLD_CANDIDATES)
+FONT_SERIF = resolve_font_path(SERIF_CANDIDATES)
+FONT_SANS = resolve_font_path(SANS_CANDIDATES)
 
 LOGO_WORDMARK = os.path.join(BRANDING_DIR, "london-local-wordmark.png")
 GEN_STREET_BG = os.path.join(GENERATIVE_DIR, "westminster_street_bg.jpg")
@@ -45,8 +71,13 @@ MARGIN_X = 80
 SAFE_WIDTH = 1080 - (2 * MARGIN_X) # 920px max content width
 
 def get_font(path, size):
+    if path and os.path.exists(path):
+        try:
+            return ImageFont.truetype(path, size)
+        except Exception:
+            pass
     try:
-        return ImageFont.truetype(path, size)
+        return ImageFont.truetype("LiberationSans-Regular.ttf", size)
     except Exception:
         return ImageFont.load_default()
 
