@@ -11,6 +11,18 @@ Engineered to scale newsroom throughput to **30+ verified stories per week with 
 
 ---
 
+## 📺 Live Broadcast Video Demos (Click to Watch in Browser)
+
+| Borough & Story | Council Focus | Direct In-Repo Player (1080×1920 @ 30fps) | Direct Download |
+| :--- | :--- | :--- | :--- |
+| **Westminster City Council (#4178)** | 54–0 Unanimous Motion Against Far-Right Extremism | [▶️ **Watch Westminster Reel**](https://github.com/krshirkoohi/london-local-news/blob/main/demos/westminster_4178_broadcast.mp4) | [Download MP4](https://github.com/krshirkoohi/london-local-news/releases/download/v1.0.0/westminster_4178_broadcast.mp4) |
+| **London Borough of Camden (#4182)** | £4.2M Warm Homes Council Estate Retrofit Programme | [▶️ **Watch Camden Reel**](https://github.com/krshirkoohi/london-local-news/blob/main/demos/camden_4182_broadcast.mp4) | [Download MP4](https://github.com/krshirkoohi/london-local-news/releases/download/v1.0.0/camden_4182_broadcast.mp4) |
+| **London Borough of Southwark (#4185)** | 18 New Clean Air School Streets Approved 51–4 | [▶️ **Watch Southwark Reel**](https://github.com/krshirkoohi/london-local-news/blob/main/demos/southwark_4185_broadcast.mp4) | [Download MP4](https://github.com/krshirkoohi/london-local-news/releases/download/v1.0.0/southwark_4185_broadcast.mp4) |
+
+> 💡 **Tip:** Clicking any **"Watch"** link opens GitHub's native video player with sound directly in your web browser. No download required.
+
+---
+
 ## 🏛️ Core Engineering Principle
 
 > **AI makes creative decisions within strict constraints (`temperature=0.0`); deterministic code handles typography, figure layout, compliance, and 30fps broadcast assembly.**
