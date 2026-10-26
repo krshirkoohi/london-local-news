@@ -101,8 +101,8 @@
         "CAM-C2"
       ],
       "visualAsset": {
-        "type": "video",
-        "source": "assets/generative/camden_town_hall_omni.mp4",
+        "type": "image",
+        "source": "assets/generative/camden_damp_flat.jpg",
         "cropMode": "full",
         "trimStart": 0.0,
         "isIllustrative": true,
@@ -126,10 +126,10 @@
         "CAM-C4"
       ],
       "visualAsset": {
-        "type": "video",
-        "source": "assets/generative/camden_town_hall_omni.mp4",
+        "type": "image",
+        "source": "assets/generative/camden_town_hall.jpg",
         "cropMode": "architectural_upper",
-        "trimStart": 2.0,
+        "trimStart": 0.0,
         "isIllustrative": true,
         "mandatoryDisclaimer": "AI-GENERATED MEDIA"
       },
@@ -164,8 +164,8 @@
         "CAM-C4"
       ],
       "visualAsset": {
-        "type": "video",
-        "source": "assets/generative/camden_estate_omni.mp4",
+        "type": "image",
+        "source": "assets/generative/camden_retrofit_workers.jpg",
         "cropMode": "full",
         "trimStart": 0.0,
         "isIllustrative": true,
@@ -219,10 +219,10 @@
         "CAM-C4"
       ],
       "visualAsset": {
-        "type": "video",
-        "source": "assets/generative/camden_estate_omni.mp4",
+        "type": "image",
+        "source": "assets/generative/camden_warm_home.jpg",
         "cropMode": "full",
-        "trimStart": 1.5,
+        "trimStart": 0.0,
         "isIllustrative": true,
         "mandatoryDisclaimer": "AI-GENERATED MEDIA"
       },
