@@ -463,6 +463,9 @@ def generate_audio(voice="en-GB-SoniaNeural", force_refresh=False):
     return timings
 
 def render_video(show_logo=True):
+    os.makedirs(BUILD_DIR, exist_ok=True)
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    os.makedirs(AUDIO_DIR, exist_ok=True)
     print("=== 1. Generating Cards with Mathematical Guardrails (V6) ===")
     img1 = os.path.join(ASSETS_DIR, "real/scene1_westminster_vote.png")
     img2 = os.path.join(ASSETS_DIR, "real/scene2_equality_strategy.png")
