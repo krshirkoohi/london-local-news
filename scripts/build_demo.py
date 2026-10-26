@@ -628,35 +628,41 @@ def render_template_scene1_hook(spec, scene, t=10.0, total_dur=6.0):
     archetype = rt.ARCHETYPE_CONFIG.get(spec.get("storyType", "council_decision"), rt.ARCHETYPE_CONFIG["council_decision"])
     accent_rgb = archetype["accent"]
 
-    # Optional Postcode / Area Kicker
+    # Optional Postcode / Area Kicker with high-contrast backing badge
     pc = spec.get("postcodeTag", "")
     if pc:
-        f_pc = rt.get_font(rt.FONT_SANS_BOLD, 22)
+        f_pc = rt.get_font(rt.FONT_SANS_BOLD, 20)
         pw = draw.textlength(pc, font=f_pc)
-        draw.text(((1080 - pw) // 2, 795), pc, font=f_pc, fill=accent_rgb + (255,))
+        pill_w = min(920, int(pw + 36))
+        px1 = (1080 - pill_w) // 2
+        px2 = px1 + pill_w
+        py1 = 770
+        py2 = py1 + 42
+        draw.rounded_rectangle([(px1, py1), (px2, py2)], radius=10, fill=(14, 15, 22, 225), outline=accent_rgb + (190,), width=1)
+        draw.text(((1080 - pw) // 2, py1 + 10), pc, font=f_pc, fill=accent_rgb + (255,))
 
-    # Headline and Subtitle
+    # Headline and Subtitle with dynamic bounds-checking and auto-fit
     h_txt = scene.get("onScreenGraphic", {}).get("headline", spec.get("headline", ""))
     b_txt = scene.get("onScreenGraphic", {}).get("body", "")
 
-    f_h1 = rt.get_font(rt.FONT_SERIF_BOLD, 78)
-    f_sub = rt.get_font(rt.FONT_SERIF_BOLD, 44)
+    f_h1, h_lines, h_spacing = rt.fit_text_to_bounds(draw, h_txt, rt.FONT_SERIF_BOLD, initial_size=72, max_width=864, max_lines=3, min_size=46)
+    f_sub, b_lines, b_spacing = rt.fit_text_to_bounds(draw, b_txt, rt.FONT_SERIF_BOLD, initial_size=40, max_width=864, max_lines=3, min_size=28)
 
     # Animation ease-in: fade and 20px rise
     p = ease_out_cubic(min(1.0, max(0.0, t / 0.4)))
     y_off = int((1.0 - p) * 20)
 
-    hy = 855 + y_off
-    for line in h_txt.split("\n"):
+    hy = 840 + y_off
+    for line in h_lines:
         lw = draw.textlength(line, font=f_h1)
         draw.text(((1080 - lw) // 2, hy), line, font=f_h1, fill=(255, 255, 255, int(255 * p)))
-        hy += 90
+        hy += h_spacing
 
-    hy += 16
-    for line in rt.wrap_text(draw, b_txt, f_sub, 880):
+    hy += 18
+    for line in b_lines:
         lw = draw.textlength(line, font=f_sub)
         draw.text(((1080 - lw) // 2, hy), line, font=f_sub, fill=(230, 230, 240, int(255 * p)))
-        hy += 56
+        hy += b_spacing
 
     if spec.get("branding", {}).get("showCaptions", False):
         rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1568)
@@ -865,10 +871,13 @@ def render_template_scene3_key_points(spec, scene, t=10.0, total_dur=6.0):
     archetype = rt.ARCHETYPE_CONFIG.get(spec.get("storyType", "council_decision"), rt.ARCHETYPE_CONFIG["council_decision"])
     accent_rgb = archetype["accent"]
 
-    # Section Heading (Configurable from spec, defaulting to 4.png "Key points")
+    # Section Heading with Quality Control dynamic fitting (never overflows 864px width)
     heading = spec.get("keyPointsHeading", scene.get("onScreenGraphic", {}).get("headline", "Key points")).replace("\n", " ")
-    f_title = rt.get_font(rt.FONT_SERIF_BOLD, 92)
-    draw.text((109, 135), heading, font=f_title, fill=(255, 255, 255, 255))
+    f_title, head_lines, head_spacing = rt.fit_text_to_bounds(draw, heading, rt.FONT_SERIF_BOLD, initial_size=82, max_width=864, max_lines=2, min_size=48)
+    hy = 120
+    for hl in head_lines:
+        draw.text((109, hy), hl, font=f_title, fill=(255, 255, 255, 255))
+        hy += head_spacing
 
     points = spec.get("keyPoints", [])
 
@@ -877,8 +886,8 @@ def render_template_scene3_key_points(spec, scene, t=10.0, total_dur=6.0):
     f_cite = rt.get_font(rt.FONT_SANS_BOLD, 21)
     f_step = rt.get_font(rt.FONT_SERIF_BOLD, 52)
 
-    start_y = 350
-    spacing = 365
+    start_y = max(330, hy + 25)
+    spacing = 355
 
     # Active spoken point index (0, 1, or 2) progresses across the scene duration
     active_idx = min(2, int((t / max(1.0, total_dur - 0.4)) * 3))
@@ -942,8 +951,6 @@ def render_template_scene3_key_points(spec, scene, t=10.0, total_dur=6.0):
     bot_txt = f"LONDON BOROUGH OF {spec.get('borough', 'Council').upper()} · VERIFIED PUBLIC RECORD"
     bw = draw.textlength(bot_txt, font=f_bot)
     draw.text(((1080 - bw) // 2, 1680), bot_txt, font=f_bot, fill=(205, 210, 225, 255))
-    bw = draw.textlength(bot_txt, font=f_bot)
-    draw.text(((1080 - bw) // 2, 1665), bot_txt, font=f_bot, fill=(175, 180, 190, 255))
 
     rt.apply_ai_disclaimer(overlay, show=True)
     return overlay
@@ -998,13 +1005,24 @@ def render_template_scene4_facts_figures(spec, scene, t=10.0, total_dur=6.0):
             draw.rounded_rectangle([(cx1, by1 + 24), (cx2, by1 + 335)], radius=16, fill=(16, 17, 24, 255), outline=(255, 255, 255, 60), width=1)
             draw.text((cx1 + 24, by1 + 46), c.get("kicker", ""), font=rt.get_font(rt.FONT_SANS_BOLD, 17), fill=bar_col)
             draw.text((cx1 + 24, by1 + 80), str(c.get("value", "")), font=rt.get_font(rt.FONT_SERIF_BOLD, 70), fill=(255, 255, 255, 255))
-            draw.text((cx1 + 24, by1 + 172), c.get("label", ""), font=rt.get_font(rt.FONT_SANS_BOLD, 21), fill=(230, 230, 235, 255))
-            draw.rounded_rectangle([(cx1 + 24, by1 + 220), (cx2 - 24, by1 + 232)], radius=6, fill=(45, 45, 55, 255))
+            card_inner_w = cx2 - cx1 - 48
+            f_lbl = rt.get_font(rt.FONT_SANS_BOLD, 20)
+            lbl_lines = rt.wrap_text(draw, c.get("label", ""), f_lbl, card_inner_w)
+            draw.text((cx1 + 24, by1 + 172), lbl_lines[0] if lbl_lines else "", font=f_lbl, fill=(230, 230, 235, 255))
+
+            draw.rounded_rectangle([(cx1 + 24, by1 + 218), (cx2 - 24, by1 + 230)], radius=6, fill=(45, 45, 55, 255))
             ratio = max(0.1, min(1.0, float(c.get("barRatio", 0.85)))) * p_c
-            fill_w = int((cx2 - cx1 - 48) * ratio)
+            fill_w = int(card_inner_w * ratio)
             if fill_w > 4:
-                draw.rounded_rectangle([(cx1 + 24, by1 + 220), (cx1 + 24 + fill_w, by1 + 232)], radius=6, fill=bar_col)
-            draw.text((cx1 + 24, by1 + 252), c.get("subtext", ""), font=rt.get_font(rt.FONT_SANS, 18), fill=(180, 180, 190, 255))
+                draw.rounded_rectangle([(cx1 + 24, by1 + 218), (cx1 + 24 + fill_w, by1 + 230)], radius=6, fill=bar_col)
+
+            # Auto-wrap subtext inside the card bounds so it never clips horizontally
+            f_card_sub = rt.get_font(rt.FONT_SANS, 17)
+            sub_lines = rt.wrap_text(draw, c.get("subtext", ""), f_card_sub, card_inner_w)
+            sub_y = by1 + 246
+            for sl in sub_lines[:2]:
+                draw.text((cx1 + 24, sub_y), sl, font=f_card_sub, fill=(185, 185, 195, 255))
+                sub_y += 24
 
     # Middle: Map Container with Animated Zoom on London Borough Map
     map_y = by1 + 355
@@ -1549,6 +1567,7 @@ def render_story_from_spec(spec_path, show_logo=True, force_tts=False):
         "4178": "westminster_4178_broadcast.mp4",
         "4182": "camden_4182_broadcast.mp4",
         "4185": "southwark_4185_broadcast.mp4",
+        "10441": "d7_bus_10441_broadcast.mp4",
     }
     if story_id in demo_map:
         demos_dir = os.path.join(BASE_DIR, "demos")

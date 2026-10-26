@@ -1,0 +1,283 @@
+{
+  "storyId": 10441,
+  "displayStoryId": "10441",
+  "videoId": "tower-hamlets-d7-bus-10441",
+  "borough": "Tower Hamlets",
+  "meetingDate": "07 OCT 2026",
+  "meetingDateDisplay": "Tower Hamlets Council · 7 Oct 2026",
+  "headline": "TAKE THE D7 BUS?\nYOUR ROUTE COULD DISAPPEAR",
+  "deck": "TfL proposes withdrawing the D7 bus route on the Isle of Dogs, sparking cross-party council opposition.",
+  "articleUrl": "https://londonlocal.news/stories/10441",
+  "sourceArticleUrl": "https://londonlocal.news/stories/10441",
+  "sourceUrl": "https://haveyoursay.tfl.gov.uk/isle-of-dogs-bus-restructure",
+  "committee": "Tower Hamlets Full Council Emergency Session",
+  "storyType": "transport",
+  "keyPointsHeading": "What would change for residents?",
+  "watchability": {
+    "targetAudience": "Isle of Dogs residents, bus commuters, parents, and George Green's School pupils",
+    "hookStyle": "Immediate personal question and route identification within 2 seconds",
+    "pacingStyle": "Punchy BBC Newsbeat / TikTok cadence (30-40s duration)",
+    "localRelevance": "Direct impact on public transport connectivity across Millwall, Cubitt Town, and Canary Wharf",
+    "suitability": "approved_for_video"
+  },
+  "editorialGate": {
+    "status": "approved",
+    "editorApproved": true,
+    "reviewedBy": "Kavia Shirkoohi"
+  },
+  "branding": {
+    "theme": "london-local-broadcast",
+    "showWatermark": true,
+    "showCaptions": false,
+    "voiceProfile": "en-GB-SoniaNeural"
+  },
+  "claims": [
+    {
+      "claimId": "D7-C1",
+      "statement": "TfL is consulting on proposals to withdraw bus route D7 entirely and restructure routes 135, 277, and D6 on the Isle of Dogs.",
+      "sourceQuote": "As part of this, we are proposing to withdraw route D7 and restructure routes 135, 277 and D6 to ensure most journeys can still be taken.",
+      "sourceDocument": "TfL Isle of Dogs Bus Restructure Consultation",
+      "sourceDocumentUrl": "https://haveyoursay.tfl.gov.uk/isle-of-dogs-bus-restructure",
+      "verified": true
+    },
+    {
+      "claimId": "D7-C2",
+      "statement": "Tower Hamlets Council debated an emergency motion on 7 October 2026 opposing the proposed withdrawal of the D7 bus route.",
+      "sourceQuote": "Tower Hamlets Council debated the proposed withdrawal of the D7 bus route on the Isle of Dogs in an emergency session on Wednesday, 7 October 2026, with councillors expressing significant concern.",
+      "sourceDocument": "London Local Story #10441, Para 1",
+      "sourceDocumentUrl": "https://londonlocal.news/stories/10441",
+      "verified": true
+    },
+    {
+      "claimId": "D7-C3",
+      "statement": "Councillors highlighted the D7's 120-year history and warned of impacts on school journeys to George Green's Secondary School.",
+      "sourceQuote": "Councillor Maium Talukdar, proposing the emergency motion, highlighted that the withdrawal of the D7 bus route was not a routine timetable adjustment but the removal of a 120-year-old transport link connecting Blackwall, Cubitt Town, and Millwall.",
+      "sourceDocument": "London Local Story #10441, Para 3",
+      "sourceDocumentUrl": "https://londonlocal.news/stories/10441",
+      "verified": true
+    },
+    {
+      "claimId": "D7-C4",
+      "statement": "TfL stated passenger demand has fallen, while the public consultation remains open until Monday 16 November 2026.",
+      "sourceQuote": "Demand for bus services has fallen and we want the service we provide to better match usage... The closing date for comments is Monday 16 November 2026.",
+      "sourceDocument": "TfL Consultation Key Dates & Rationale",
+      "sourceDocumentUrl": "https://haveyoursay.tfl.gov.uk/isle-of-dogs-bus-restructure",
+      "verified": true
+    }
+  ],
+  "postcodeTag": "E14 · ISLE OF DOGS · CANARY WHARF · CUBITT TOWN",
+  "coordinates": "51.4984° N, 0.0162° W · ISLE OF DOGS & POPLAR",
+  "takeawayCard": {
+    "kicker": "NOT DECIDED YET",
+    "title": "Public Consultation Closes 16 November",
+    "subtitle": "No final decision has been made. Passengers can submit feedback on TfL's website."
+  },
+  "keyPoints": [
+    [
+      "120-Year Transport Link",
+      "Vital service connecting Blackwall, Cubitt Town, and Millwall.",
+      "Tower Hamlets Emergency Motion · 7 Oct 2026"
+    ],
+    [
+      "School Journey Impact",
+      "Direct daily route for pupils attending George Green's Secondary School.",
+      "London Local Story #10441 · Para 3"
+    ],
+    [
+      "Community Lifeline",
+      "Essential connection for non-car owners accessing clinics and workplaces.",
+      "Councillor Debate · Open Council Network"
+    ]
+  ],
+  "timeline": [
+    {
+      "sceneNumber": 1,
+      "type": "video_with_figure",
+      "durationSeconds": 5.0,
+      "claimIds": [
+        "D7-C1"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/d7_bus_omni.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "onScreenGraphic": {
+        "kicker": "📍 E14 · ISLE OF DOGS BUS ALERT",
+        "headline": "TAKE THE D7 BUS?\nYOUR ROUTE COULD DISAPPEAR",
+        "body": "TfL is consulting on proposals to withdraw the D7 bus route on the Isle of Dogs."
+      },
+      "voiceoverText": "Do you use the D7 bus? Transport for London is proposing to withdraw the route entirely.",
+      "citationFooter": "SOURCE: TfL Isle of Dogs Bus Restructure Consultation"
+    },
+    {
+      "sceneNumber": 2,
+      "type": "document_highlight",
+      "durationSeconds": 7.0,
+      "claimIds": [
+        "D7-C1",
+        "D7-C4"
+      ],
+      "visualAsset": {
+        "type": "image",
+        "source": "assets/generative/d7_bus_isle_of_dogs.png",
+        "cropMode": "architectural_upper",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "motion_document",
+        "data": {
+          "docHeaderLeft": "TFL CONSULTATION · ISLE OF DOGS",
+          "docHeaderRight": "PROPOSED WITHDRAWAL",
+          "excerptPrefix": "\"Transport for London is ",
+          "highlightPhrase": "proposing to withdraw route D7 and restructure routes 135, 277 and D6",
+          "excerptSuffix": " while re-routing the SL4 into Wood Wharf.\"",
+          "mover": "Consultation: Isle of Dogs Bus Restructure",
+          "seconder": "Decision: In Consultation (Closes 16 Nov 2026)",
+          "receiptStamp": "TFL PROPOSAL"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "TFL CONSULTATION PROPOSAL",
+        "headline": "TfL Proposes Withdrawing the D7",
+        "body": "Part of wider proposed changes altering routes 135, 277, D6 and the Superloop SL4."
+      },
+      "voiceoverText": "The proposal forms part of wider changes to bus services across the Isle of Dogs, reorganising routes 135, 277, and D6.",
+      "citationFooter": "SOURCE: TfL Consultation (haveyoursay.tfl.gov.uk/isle-of-dogs-bus-restructure)"
+    },
+    {
+      "sceneNumber": 3,
+      "type": "generative_broll",
+      "durationSeconds": 8.0,
+      "claimIds": [
+        "D7-C2",
+        "D7-C3"
+      ],
+      "visualAsset": {
+        "type": "image",
+        "source": "assets/generative/d7_bus_isle_of_dogs.png",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "HISTORIC ROUTE",
+              "value": "120 yrs",
+              "label": "Transport Link",
+              "subtext": "Connecting Blackwall, Cubitt Town & Millwall",
+              "barRatio": 0.95,
+              "barColor": [
+                217,
+                72,
+                63
+              ]
+            },
+            {
+              "kicker": "SCHOOL ACCESS",
+              "value": "George Green's",
+              "label": "Pupil Journey Impact",
+              "subtext": "Direct route used daily by local school pupils",
+              "barRatio": 0.90,
+              "barColor": [
+                245,
+                158,
+                11
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "COMMUNITY OPPOSITION",
+        "headline": "What Would Change for Residents?",
+        "body": "Tower Hamlets councillors warn the withdrawal cuts an essential school and work lifeline."
+      },
+      "voiceoverText": "Local councillors warn that losing the service could make daily journeys harder, particularly for families and schoolchildren attending George Green's School.",
+      "citationFooter": "SOURCE: Tower Hamlets Emergency Motion · 7 Oct 2026"
+    },
+    {
+      "sceneNumber": 4,
+      "type": "broadsheet_split",
+      "durationSeconds": 7.5,
+      "claimIds": [
+        "D7-C1",
+        "D7-C2",
+        "D7-C4"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/d7_bus_omni.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 2.5,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "TFL: LOWER DEMAND",
+              "value": "Demand",
+              "label": "Capacity & Usage Match",
+              "subtext": "TfL states other routes cover most passenger journeys",
+              "barRatio": 0.85,
+              "barColor": [
+                217,
+                72,
+                63
+              ]
+            },
+            {
+              "kicker": "COUNCILLORS: ACCESS CONCERNS",
+              "value": "Access",
+              "label": "Island Connectivity",
+              "subtext": "Council cites growing population and extra interchanges",
+              "barRatio": 0.92,
+              "barColor": [
+                245,
+                158,
+                11
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "THE TWO ARGUMENTS",
+        "headline": "TfL: Lower Demand · Councillors: Access Concerns",
+        "body": "TfL argues usage has dropped, while councillors say the growing island population relies on it."
+      },
+      "voiceoverText": "TfL says passenger demand has fallen and other routes can cover journeys, but Tower Hamlets councillors strongly oppose the withdrawal.",
+      "citationFooter": "SOURCE: TfL Consultation Document & Council Meeting Records"
+    },
+    {
+      "sceneNumber": 5,
+      "type": "outro_archive",
+      "durationSeconds": 8.8,
+      "claimIds": [
+        "D7-C4"
+      ],
+      "visualAsset": {
+        "type": "solid"
+      },
+      "onScreenGraphic": {
+        "kicker": "CONSULTATION DEADLINE",
+        "headline": "Not Decided Yet · Consultation Closes 16 November",
+        "body": "No final decision has been taken. Residents can submit feedback on TfL's website."
+      },
+      "voiceoverText": "No final decision has been made. The consultation closes on Monday, sixteenth of November. Read the full story at London Local.",
+      "citationFooter": "SOURCE: Transport for London · haveyoursay.tfl.gov.uk/isle-of-dogs-bus-restructure"
+    }
+  ]
+}

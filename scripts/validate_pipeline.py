@@ -104,7 +104,8 @@ def validate_spec(spec_path):
     errors = []
     warnings = []
 
-    if not spec.get("sourceArticleUrl", "").startswith("https://londonlocal.news/stories/"):
+    article_url = spec.get("sourceArticleUrl") or spec.get("articleUrl") or ""
+    if not article_url.startswith("https://londonlocal.news/stories/"):
         errors.append("Missing or invalid sourceArticleUrl")
 
     suitability = spec.get("watchability", {}).get("suitability")
@@ -140,6 +141,7 @@ def validate_spec(spec_path):
         "4178": os.path.join(DEMOS_DIR, "westminster_4178_broadcast.mp4"),
         "4182": os.path.join(DEMOS_DIR, "camden_4182_broadcast.mp4"),
         "4185": os.path.join(DEMOS_DIR, "southwark_4185_broadcast.mp4"),
+        "10441": os.path.join(DEMOS_DIR, "d7_bus_10441_broadcast.mp4"),
     }
     master_mp4 = os.path.join(OUTPUT_DIR, f"{video_id}.mp4")
     demo_mp4 = demo_map.get(story_id)
@@ -155,7 +157,7 @@ def validate_spec(spec_path):
         "videoId": video_id,
         "storyId": story_id,
         "displayStoryId": spec.get("displayStoryId", story_id),
-        "sourceArticleUrl": spec.get("sourceArticleUrl"),
+        "sourceArticleUrl": article_url,
         "borough": spec.get("borough"),
         "storyType": spec.get("storyType"),
         "claimsVerifiedCount": len(claims),
