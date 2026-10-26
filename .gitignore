@@ -19,5 +19,5 @@ dist/
 
 # Media build artifacts & renders
 build/
-output/*.mp4
+output/
 !assets/audio/*.mp3

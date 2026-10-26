@@ -221,6 +221,56 @@ def draw_top_bar(
     draw.text((sc_x1 + 16, 142), sc_text, font=f_sc, fill=(185, 185, 195, 255))
 
 
+def draw_spatial_postcode_hud(draw, spec, scene_num=1, t=10.0):
+    """Renders Frame-1 OCR Postcode Geo-Routing Banner & Scene-1 Spatial Lock-On Reticle."""
+    postcode_tag = spec.get("postcodeTag", "")
+    coords = spec.get("coordinates", "")
+    if not postcode_tag:
+        return
+
+    # Top Frame-1 OCR Geo-Routing Bar (y=182..230) so platform vision models route to local postcodes
+    bar_y1, bar_y2 = 182, 230
+    draw.rounded_rectangle(
+        [(MARGIN_X, bar_y1), (1080 - MARGIN_X, bar_y2)],
+        radius=12,
+        fill=(14, 14, 20, 215),
+        outline=(255, 82, 56, 160),
+        width=1,
+    )
+
+    # Pulsing live location reticle on left
+    cx, cy = MARGIN_X + 26, (bar_y1 + bar_y2) // 2
+    pulse = (t * 2.2) % 1.0
+    p_rad = int(5 + 7 * pulse)
+    p_alpha = int(210 * (1.0 - pulse))
+    draw.ellipse([(cx - p_rad, cy - p_rad), (cx + p_rad, cy + p_rad)], outline=(255, 82, 56, p_alpha), width=2)
+    draw.ellipse([(cx - 5, cy - 5), (cx + 5, cy + 5)], fill=(255, 82, 56, 255))
+
+    f_pc = get_font(FONT_SANS_BOLD, 18)
+    draw.text((MARGIN_X + 46, bar_y1 + 13), postcode_tag.upper(), font=f_pc, fill=(255, 255, 255, 255))
+
+    # Right coordinate / citizen brief tag
+    f_rt = get_font(FONT_SANS_BOLD, 15)
+    rt_txt = "CITIZEN IMPACT BRIEF"
+    rw = draw.textlength(rt_txt, font=f_rt)
+    draw.text((1080 - MARGIN_X - 20 - rw, bar_y1 + 15), rt_txt, font=f_rt, fill=(251, 191, 36, 255))
+
+    # Scene 1 Spatial Lock-On Reticle in the first 1.8 seconds ("Wait, I know that place!" hook)
+    if scene_num == 1 and t <= 1.85 and coords:
+        fade = 1.0 if t < 1.35 else max(0.0, (1.85 - t) / 0.5)
+        al = int(235 * fade)
+        if al > 15:
+            rx1, ry1, rx2, ry2 = 180, 440, 900, 535
+            draw.rounded_rectangle([(rx1, ry1), (rx2, ry2)], radius=14, fill=(10, 10, 15, int(185 * fade)), outline=(251, 191, 36, al), width=2)
+            f_lock = get_font(FONT_SANS_BOLD, 16)
+            f_coord = get_font(FONT_SANS_BOLD, 21)
+            l_txt = "SPATIAL LOCK · VERIFIED BOROUGH LOCATION"
+            lw = draw.textlength(l_txt, font=f_lock)
+            draw.text(((1080 - lw) // 2, ry1 + 18), l_txt, font=f_lock, fill=(251, 191, 36, al))
+            cw = draw.textlength(coords, font=f_coord)
+            draw.text(((1080 - cw) // 2, ry1 + 48), coords, font=f_coord, fill=(255, 255, 255, al))
+
+
 def draw_bottom_vignette(draw, start_y=940):
     for y in range(start_y, 1920):
         factor = (y - start_y) / (1920 - start_y)
@@ -228,10 +278,10 @@ def draw_bottom_vignette(draw, start_y=940):
         draw.line([(0, y), (1080, y)], fill=(8, 8, 11, alpha))
 
 
-def draw_lower_third_text(draw, graphic, citation_footer, top_y=1355):
-    f_kicker = get_font(FONT_SANS_BOLD, 20)
-    f_h1 = get_font(FONT_SERIF_BOLD, 54)
-    f_body = get_font(FONT_SANS, 27)
+def draw_lower_third_text(draw, graphic, citation_footer, top_y=1350):
+    f_kicker = get_font(FONT_SANS_BOLD, 21)
+    f_h1 = get_font(FONT_SERIF_BOLD, 56)
+    f_body = get_font(FONT_SANS, 29)
     f_meta = get_font(FONT_SANS, 19)
 
     kicker = graphic.get("kicker", "")
@@ -240,19 +290,20 @@ def draw_lower_third_text(draw, graphic, citation_footer, top_y=1355):
 
     curr_y = top_y
     if kicker:
-        draw.text((MARGIN_X, curr_y), kicker.upper(), font=f_kicker, fill=(245, 158, 11, 255))
+        clean_kicker = kicker.replace("📍", "").strip()
+        draw.text((MARGIN_X, curr_y), clean_kicker.upper(), font=f_kicker, fill=(251, 191, 36, 255))
         curr_y += 34
 
     h1_lines = wrap_text_to_width(draw, headline, f_h1, SAFE_WIDTH)
     for hl in h1_lines[:2]:
         draw.text((MARGIN_X, curr_y), hl, font=f_h1, fill=(255, 255, 255, 255))
-        curr_y += 62
+        curr_y += 64
 
     curr_y += 12
     b_lines = wrap_text_to_width(draw, body, f_body, SAFE_WIDTH)
     for bl in b_lines[:3]:
-        draw.text((MARGIN_X, curr_y), bl, font=f_body, fill=(215, 215, 222, 255))
-        curr_y += 38
+        draw.text((MARGIN_X, curr_y), bl, font=f_body, fill=(225, 225, 232, 255))
+        curr_y += 39
 
     # Citation Rule & Footer
     rule_y = 1700
@@ -412,6 +463,12 @@ def render_figure_motion_document(draw, fig_data, t=10.0):
     # Calculate live highlight sweep progress
     hl_progress = ease_out_cubic(max(0.0, min(1.0, (t - 0.9) / 1.7))) if t >= 0.9 else 0.0
 
+    # Red-Pen Audit Bracket on the left margin of the excerpt
+    if hl_progress > 0.1:
+        bracket_h = int(105 * hl_progress)
+        draw.line([(MARGIN_X + 16, fig_y1 + 64), (MARGIN_X + 16, fig_y1 + 64 + bracket_h)], fill=(220, 38, 38, 240), width=4)
+        draw.line([(MARGIN_X + 16, fig_y1 + 64), (MARGIN_X + 24, fig_y1 + 64)], fill=(220, 38, 38, 240), width=3)
+
     qy = fig_y1 + 66
     for ql in q_lines[:3]:
         hl_words = [w for w in highlight.split(" ") if len(w) > 3]
@@ -436,6 +493,18 @@ def render_figure_motion_document(draw, fig_data, t=10.0):
     seconder = fig_data.get("seconder", "")
     sig_line = f"{mover}   •   {seconder}"
     draw.text((MARGIN_X + 28, sig_y + 4), sig_line, font=f_sig, fill=(45, 45, 55, 255))
+
+    # Receipts Journalism Stamp Badge (pops onto bottom-right of order paper at t >= 1.6s)
+    receipt_stamp = fig_data.get("receiptStamp", "")
+    if receipt_stamp and t >= 1.6:
+        f_stamp = get_font(FONT_SANS_BOLD, 16)
+        st_w = draw.textlength(receipt_stamp, font=f_stamp)
+        st_box_w = int(st_w + 32)
+        st_x2 = 1080 - MARGIN_X - 24
+        st_x1 = st_x2 - st_box_w
+        st_y = sig_y - 4
+        draw.rounded_rectangle([(st_x1, st_y), (st_x2, st_y + 36)], radius=6, fill=(254, 242, 242, 245), outline=(220, 38, 38, 240), width=2)
+        draw.text((st_x1 + 16, st_y + 9), receipt_stamp, font=f_stamp, fill=(220, 38, 38, 255))
 
 
 def render_figure_stat_comparison(draw, fig_data, t=10.0):
@@ -549,6 +618,7 @@ def create_scene_overlay_image(spec, scene, total_scenes=5, show_logo=True, t=10
         disclaimer=disclaimer,
         show_logo=show_logo,
     )
+    draw_spatial_postcode_hud(draw, spec, scene_num=scene_num, t=t)
     draw_bottom_vignette(draw, start_y=920)
 
     fig = scene.get("figure", {})
@@ -618,17 +688,17 @@ def create_outro_archive_card_image(spec, scene, total_scenes=5, show_logo=True,
 
     # Audit Table Header
     audit_hdr = fig_data.get("auditHeader", "PUBLIC RECORD AUDIT TRAIL")
-    draw.text((ox, 545), audit_hdr, font=get_font(FONT_SANS_BOLD, 21), fill=(245, 158, 11, 255))
+    draw.text((ox, 530), audit_hdr, font=get_font(FONT_SANS_BOLD, 21), fill=(245, 158, 11, 255))
 
     records = fig_data.get("records", [])
-    ry = 600
+    ry = 568
     for idx, rec in enumerate(records[:3]):
         row_t = t - (0.15 + idx * 0.22)
         row_p = ease_out_cubic(row_t / 0.35) if row_t > 0 else 0.0
         if row_p <= 0.01:
             continue
 
-        card_h = 155
+        card_h = 132
         y_slide = int((1.0 - row_p) * 40)
         cy1, cy2 = ry + y_slide, ry + card_h + y_slide
 
@@ -641,7 +711,7 @@ def create_outro_archive_card_image(spec, scene, total_scenes=5, show_logo=True,
         )
         # Code pill
         code_txt = rec.get("code", "DOC")
-        draw.text((ox + 26, cy1 + 22), code_txt, font=get_font(FONT_SANS_BOLD, 17), fill=(160, 160, 175, 255))
+        draw.text((ox + 26, cy1 + 18), code_txt, font=get_font(FONT_SANS_BOLD, 17), fill=(160, 160, 175, 255))
 
         # Status badge on right (with vector checkmark so fonts never render missing glyph boxes)
         badge_label = rec.get("badge", "VERIFIED").replace("✓", "").strip()
@@ -650,38 +720,71 @@ def create_outro_archive_card_image(spec, scene, total_scenes=5, show_logo=True,
         bw = int(draw.textlength(badge_label, font=f_badge) + 52)
         bx2 = 1080 - ox - 24
         bx1 = bx2 - bw
-        draw.rounded_rectangle([(bx1, cy1 + 16), (bx2, cy1 + 50)], radius=17, fill=(12, 12, 16, 255), outline=b_col, width=1)
-        draw_vector_check(draw, bx1 + 15, cy1 + 26, b_col, size=12)
-        draw.text((bx1 + 33, cy1 + 24), badge_label, font=f_badge, fill=b_col)
+        draw.rounded_rectangle([(bx1, cy1 + 14), (bx2, cy1 + 46)], radius=16, fill=(12, 12, 16, 255), outline=b_col, width=1)
+        draw_vector_check(draw, bx1 + 15, cy1 + 23, b_col, size=12)
+        draw.text((bx1 + 33, cy1 + 21), badge_label, font=f_badge, fill=b_col)
 
         # Document Title (Wrapped cleanly inside card)
-        f_title = get_font(FONT_SERIF, 27)
+        f_title = get_font(FONT_SERIF, 26)
         t_lines = wrap_text_to_width(draw, rec.get("title", ""), f_title, SAFE_WIDTH - 52)
-        ty = cy1 + 62
+        ty = cy1 + 54
         for tl in t_lines[:2]:
             draw.text((ox + 26, ty), tl, font=f_title, fill=(240, 240, 245, 255))
-            ty += 36
+            ty += 34
 
-        ry += card_h + 24
+        ry += card_h + 16
+
+    # Community Debate & Stakeholder Ping Box (y=1015..1175)
+    stakeholders = spec.get("stakeholderTags", [])
+    debate_prompt = spec.get("debatePrompt", "")
+    if stakeholders or debate_prompt:
+        box_y1, box_y2 = 1015, 1175
+        draw.rounded_rectangle([(ox, box_y1), (1080 - ox, box_y2)], radius=14, fill=(18, 18, 26, 255), outline=(251, 191, 36, 120), width=1)
+        
+        # Header / Label
+        f_deb_hdr = get_font(FONT_SANS_BOLD, 15)
+        draw.text((ox + 24, box_y1 + 16), "COMMUNITY DEBATE · REPOST & TAG YOUR COUNCILLORS", font=f_deb_hdr, fill=(251, 191, 36, 255))
+        
+        # Debate prompt question
+        if debate_prompt:
+            f_deb_q = get_font(FONT_SERIF_BOLD, 26)
+            q_lines = wrap_text_to_width(draw, debate_prompt, f_deb_q, SAFE_WIDTH - 48)
+            qy = box_y1 + 44
+            for ql in q_lines[:2]:
+                draw.text((ox + 24, qy), ql, font=f_deb_q, fill=(255, 255, 255, 255))
+                qy += 34
+                
+        # Stakeholder pills
+        if stakeholders:
+            px = ox + 24
+            pill_y = box_y2 - 42
+            f_pill = get_font(FONT_SANS_BOLD, 15)
+            for st in stakeholders[:3]:
+                pw = int(draw.textlength(st, font=f_pill) + 24)
+                if px + pw > 1080 - ox - 20:
+                    break
+                draw.rounded_rectangle([(px, pill_y), (px + pw, pill_y + 28)], radius=14, fill=(35, 35, 48, 255), outline=(255, 255, 255, 40), width=1)
+                draw.text((px + 12, pill_y + 6), st, font=f_pill, fill=(210, 210, 225, 255))
+                px += pw + 12
 
     # Elevated CTA Pill Button (slides in at t >= 0.8s)
     cta_t = t - 0.75
     cta_p = ease_out_cubic(cta_t / 0.45) if cta_t > 0 else 0.0
     if cta_p > 0.01:
         y_slide = int((1.0 - cta_p) * 50)
-        by = 1210 + y_slide
-        pill_h = 140
+        by = 1200 + y_slide
+        pill_h = 130
         draw.rounded_rectangle([(ox, by), (1080 - ox, by + pill_h)], radius=18, fill=(255, 255, 255, 255))
-        f_kicker = get_font(FONT_SANS_BOLD, 19)
-        f_url = get_font(FONT_SERIF_BOLD, 40)
+        f_kicker = get_font(FONT_SANS_BOLD, 18)
+        f_url = get_font(FONT_SERIF_BOLD, 38)
 
         kicker_txt = fig_data.get("ctaKicker", "READ THE FULL VERIFIED COUNCIL RECORD")
         k_w = draw.textlength(kicker_txt, font=f_kicker)
-        draw.text(((1080 - k_w) // 2, by + 28), kicker_txt, font=f_kicker, fill=(100, 100, 110, 255))
+        draw.text(((1080 - k_w) // 2, by + 26), kicker_txt, font=f_kicker, fill=(100, 100, 110, 255))
 
         url_txt = fig_data.get("ctaUrl", "londonlocal.news")
         u_w = draw.textlength(url_txt, font=f_url)
-        draw.text(((1080 - u_w) // 2, by + 66), url_txt, font=f_url, fill=(12, 12, 16, 255))
+        draw.text(((1080 - u_w) // 2, by + 62), url_txt, font=f_url, fill=(12, 12, 16, 255))
 
     # Footer citation
     draw_lower_third_footer_only(draw, scene.get("citationFooter", "SOURCE: London Local Civic Archive"))
@@ -960,8 +1063,8 @@ def render_story_from_spec(spec_path, show_logo=True, force_tts=False):
         opt_cmd = [
             "ffmpeg", "-y",
             "-i", story_output,
-            "-c:v", "libx264", "-crf", "26", "-preset", "medium",
-            "-c:a", "aac", "-b:a", "128k",
+            "-c:v", "libx264", "-crf", "28", "-preset", "medium",
+            "-c:a", "aac", "-b:a", "112k",
             "-movflags", "+faststart",
             tmp_target,
         ]

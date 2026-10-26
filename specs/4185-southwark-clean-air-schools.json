@@ -64,11 +64,11 @@
         }
       },
       "onScreenGraphic": {
-        "kicker": "TRANSPORT & CLEAN AIR",
-        "headline": "18 New School Streets\nApproved Across Southwark",
-        "body": "Southwark Council has voted to expand timed traffic restrictions outside eighteen primary schools."
+        "kicker": "\ud83d\udccd SE15 & SE22 \u00b7 COMMUTE CHANGE ALERT",
+        "headline": "18 New School Streets\nGo Live In January",
+        "body": "Through-traffic will be restricted at school drop-off and pick-up times across Peckham, Camberwell, and Dulwich."
       },
-      "voiceoverText": "Southwark Council has voted to establish eighteen new School Streets, restricting non-resident motor traffic during drop-off and pick-up hours.",
+      "voiceoverText": "If you drive or walk near eighteen primary schools in Peckham, Camberwell, or Dulwich, your morning commute changes in January as new Clean Air zones go live.",
       "citationFooter": "SOURCE: Southwark Environment & Transport Committee \u00b7 20 Nov 2025",
       "citations": [
         "Southwark School Streets Expansion Report, Para 1: '18 additional primary schools approved'"
@@ -95,15 +95,16 @@
           "highlightPhrase": "full exemptions for Blue Badge holders and residents",
           "excerptSuffix": " living within each designated zone.\"",
           "mover": "Directorate: Highways & Clean Air",
-          "seconder": "Statutory Consultation: 84% Support"
+          "seconder": "Statutory Consultation: 84% Support",
+          "receiptStamp": "CARRIED 48\u20136 \u00b7 STARTS JAN"
         }
       },
       "onScreenGraphic": {
-        "kicker": "TRAFFIC MANAGEMENT ORDER",
-        "headline": "Full Blue Badge & Resident\nAccess Preserved",
-        "body": "Automatic camera enforcement targets through-traffic while protecting disabled and local access."
+        "kicker": "THE TRAFFIC ORDER RECEIPT \u00b7 ITEM 9",
+        "headline": "8:15am & 3:00pm Gate\nClosures Enforced",
+        "body": "Approved by 48 votes to 6, ANPR cameras will enforce timed pedestrian zones at 18 school gates."
       },
-      "voiceoverText": "Under the statutory traffic order, automatic camera enforcement targets rat-running commuters while guaranteeing full exemptions for Blue Badge holders and local residents.",
+      "voiceoverText": "Approved by forty-eight votes to six, the official council traffic order bans non-resident through-traffic at school gates during morning drop-off and afternoon pick-up.",
       "citationFooter": "SOURCE: Traffic Management Order TMO 2025/11 \u00b7 Clause 3.2",
       "citations": [
         "Clause 3.2: 'full exemptions for Blue Badge holders, emergency vehicles, and registered zone residents'"
@@ -153,11 +154,11 @@
         }
       },
       "onScreenGraphic": {
-        "kicker": "PUBLIC HEALTH METRICS",
-        "headline": "34% Drop in Gateside\nNitrogen Dioxide Levels",
-        "body": "Over seven thousand four hundred pupils across Peckham and Camberwell gain safer walking routes."
+        "kicker": "THE AIR QUALITY EVIDENCE",
+        "headline": "34% Drop In Toxic Gate\nFumes Recorded",
+        "body": "Air sensors across 18 schools covering 9,400 pupils showed sharp drops in nitrogen dioxide during trials."
       },
-      "voiceoverText": "Air quality monitoring shows existing zones cut school-gate nitrogen dioxide by thirty-four percent, with the expansion protecting over seven thousand four hundred pupils daily.",
+      "voiceoverText": "Why did councillors vote for it? Because monitoring outside those eighteen schools covering nine thousand four hundred children showed a thirty-four per cent drop in toxic nitrogen dioxide.",
       "citationFooter": "SOURCE: Southwark Air Quality Monitoring Network \u00b7 2025 Audit",
       "citations": [
         "Air Quality Audit Section 4: '34% reduction in NO2 at school gates; 7,400 pupils covered'"
@@ -200,11 +201,11 @@
         }
       },
       "onScreenGraphic": {
-        "kicker": "SPRING TERM ROLLOUT",
-        "headline": "Four-Week Grace Period\nBefore Fines Begin",
-        "body": "Rollout includes living green screens and 360 new cycle racks alongside a four-week warning period."
+        "kicker": "EXEMPTIONS & \u00a31.1M PAVEMENT FUND",
+        "headline": "Residents & Blue Badges\nFully Exempt",
+        "body": "Residents living inside the zones and Blue Badge holders get automatic camera exemptions, plus wider crossings."
       },
-      "voiceoverText": "The Spring Term rollout includes a four-week grace period with warning letters only, alongside three hundred and sixty new cycle racks and playground green screens.",
+      "voiceoverText": "If you live on one of the streets or hold a Blue Badge, you get an automatic camera exemption\u2014while one point one million pounds goes into wider pavements and cycle racks.",
       "citationFooter": "SOURCE: Southwark Highways Implementation Schedule \u00b7 Para 6",
       "citations": [
         "Para 6: 'Four-week warning notice grace period; 360 cycle spaces and living green screens'"
@@ -267,11 +268,21 @@
         "headline": "London Local.",
         "body": "Read the verified council record"
       },
-      "voiceoverText": "Full traffic orders and school street maps are available on London Local dot news.",
+      "voiceoverText": "Good for children\u2019s lungs, or tough on local drivers? Drop your view below and check all eighteen streets on London Local dot news.",
       "citationFooter": "SOURCE: London Local Civic Archive \u00b7 londonlocal.news/stories/4185",
       "citations": [
         "SOURCE DOCUMENTS: Southwark 20 November 2025 Committee Agenda and TMO 2025/11"
       ]
     }
-  ]
+  ],
+  "postcodeTag": "SE15 \u00b7 SE22 \u00b7 PECKHAM & DULWICH",
+  "coordinates": "51.4740\u00b0 N, 0.0690\u00b0 W \u00b7 PECKHAM & DULWICH WARDS",
+  "stakeholderTags": [
+    "#PeckhamSE15",
+    "#DulwichSE22",
+    "#CamberwellSE5",
+    "#SchoolStreets",
+    "#SouthwarkParents"
+  ],
+  "debatePrompt": "SAFER FOR KIDS OR TOUGH ON DRIVERS? HAVE YOUR SAY BELOW"
 }

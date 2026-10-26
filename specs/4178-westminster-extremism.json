@@ -6,7 +6,11 @@
   "meetingDate": "2025-11-12",
   "meetingDateDisplay": "12 NOV 2025",
   "totalDuration": 42.2,
-  "targetPlatform": ["tiktok", "reels", "reddit"],
+  "targetPlatform": [
+    "tiktok",
+    "reels",
+    "reddit"
+  ],
   "editorialGate": {
     "status": "approved",
     "editorApproved": true,
@@ -35,30 +39,38 @@
         "type": "vote_tally",
         "data": {
           "headerLeft": "CHAMBER DIVISION TALLY",
-          "headerRight": "✓ CARRIED UNANIMOUSLY (54–0)",
+          "headerRight": "\u2713 CARRIED UNANIMOUSLY (54\u20130)",
           "parties": [
             {
               "name": "LABOUR GROUP",
               "seats": 31,
-              "status": "31 AYE · 0 NO",
-              "color": [225, 29, 72]
+              "status": "31 AYE \u00b7 0 NO",
+              "color": [
+                225,
+                29,
+                72
+              ]
             },
             {
               "name": "CONSERVATIVE GROUP",
               "seats": 23,
-              "status": "23 AYE · 0 NO",
-              "color": [37, 99, 235]
+              "status": "23 AYE \u00b7 0 NO",
+              "color": [
+                37,
+                99,
+                235
+              ]
             }
           ]
         }
       },
       "onScreenGraphic": {
-        "kicker": "COUNCIL CHAMBER DECISION",
-        "headline": "Unanimous Vote Against\nFar-Right Extremism",
-        "body": "Westminster City Council has united across party lines to condemn rising hate incidents and protect local residents."
+        "kicker": "\ud83d\udccd SW1 \u00b7 W1 \u00b7 NW8 \u00b7 LOCAL COUNCIL ALERT",
+        "headline": "Every Councillor Unites\nIn 54\u20130 Extremism Vote",
+        "body": "Labour and Conservative councillors voted unanimously to tackle rising street hate incidents across Westminster."
       },
-      "voiceoverText": "Westminster City Council has unanimously passed a cross-party motion condemning far-right extremism and pledging to tackle rising hate incidents across the borough.",
-      "citationFooter": "SOURCE: Westminster Full Council · 12 Nov 2025 · Verified Minutes (Para 1)",
+      "voiceoverText": "If you live or work in Westminster, every single councillor across both parties just united fifty-four to zero to pass an emergency motion against rising hate incidents on your streets.",
+      "citationFooter": "SOURCE: Westminster Full Council \u00b7 12 Nov 2025 \u00b7 Verified Minutes (Para 1)",
       "citations": [
         "Westminster Council Stands Against Far-Right Extremism, Para 1: 'unanimously passed a cross-party motion condemning far-right extremism'"
       ]
@@ -79,22 +91,23 @@
       "figure": {
         "type": "motion_document",
         "data": {
-          "docHeaderLeft": "CITY OF WESTMINSTER · ORDER PAPER",
+          "docHeaderLeft": "CITY OF WESTMINSTER \u00b7 ORDER PAPER",
           "docHeaderRight": "AGENDA ITEM 7",
           "excerptPrefix": "\"This Council condemns recent anti-migrant rhetoric and resolves to ",
           "highlightPhrase": "deliver a brand new Community Equality Strategy",
           "excerptSuffix": " to safeguard cohesion across all neighbourhoods.\"",
           "mover": "Moved: Cllr Adam Hug (Leader)",
-          "seconder": "Seconded: Cllr Jessica Toale MP"
+          "seconder": "Seconded: Cllr Jessica Toale MP",
+          "receiptStamp": "BINDING STRATEGY MANDATE"
         }
       },
       "onScreenGraphic": {
-        "kicker": "OFFICIAL MOTION TEXT",
-        "headline": "New Community Equality\nStrategy Mandated",
-        "body": "Motion commits the authority to formal action against division and establishes rapid civic protections."
+        "kicker": "THE COUNCIL RECEIPT \u00b7 AGENDA ITEM 7",
+        "headline": "New Community Equality\nStrategy Locked In",
+        "body": "The official Order Paper legally commits the council to rapid neighbourhood protections and hate-crime reporting."
       },
-      "voiceoverText": "Moved by council leader Adam Hug, the motion responds to recent anti-migrant rhetoric and commits the authority to deliver a brand new Community Equality Strategy.",
-      "citationFooter": "SOURCE: Agenda Item 7 · Cllr Adam Hug (Labour) & Cllr Jessica Toale MP",
+      "voiceoverText": "Here is the exact receipt on the Council Order Paper: moved by Leader Adam Hug, it legally commits the authority to deliver a brand new Community Equality Strategy.",
+      "citationFooter": "SOURCE: Agenda Item 7 \u00b7 Cllr Adam Hug (Labour) & Cllr Jessica Toale MP",
       "citations": [
         "Para 2: 'Moved by Council Leader Adam Hug and seconded by Cllr Jessica Toale MP'",
         "Para 3, line 6: 'deliver a brand new Community Equality Strategy'"
@@ -123,7 +136,11 @@
               "label": "Nationalities Represented",
               "subtext": "93% of UN nations represented",
               "barRatio": 0.93,
-              "barColor": [245, 158, 11]
+              "barColor": [
+                245,
+                158,
+                11
+              ]
             },
             {
               "kicker": "BOROUGH LINGUISTICS",
@@ -131,18 +148,22 @@
               "label": "Languages Spoken Daily",
               "subtext": "Top 1% UK diversity index",
               "barRatio": 0.88,
-              "barColor": [52, 211, 153]
+              "barColor": [
+                52,
+                211,
+                153
+              ]
             }
           ]
         }
       },
       "onScreenGraphic": {
-        "kicker": "WESTMINSTER DEMOGRAPHICS",
-        "headline": "A Diverse Global Borough\nStanding Together",
-        "body": "Council leadership emphasised that minority communities must never be scapegoated for wider economic pressures."
+        "kicker": "WHY YOUR POSTCODE MATTERS",
+        "headline": "180+ Nationalities Across\nWestminster Wards",
+        "body": "Over 150 languages are spoken daily across Westminster schools, high streets, and estates."
       },
-      "voiceoverText": "The borough represents over one hundred and eighty nationalities, speaking more than one hundred and fifty languages.",
-      "citationFooter": "SOURCE: Victoria Street & Westminster Area · Official Equality Census Data",
+      "voiceoverText": "Why does this matter here? Because Westminster is home to residents from over one hundred and eighty nationalities, speaking more than one hundred and fifty languages.",
+      "citationFooter": "SOURCE: Victoria Street & Westminster Area \u00b7 Official Equality Census Data",
       "citations": [
         "Para 4: 'home to residents from over 180 nationalities speaking more than 150 languages'"
       ]
@@ -163,7 +184,7 @@
       "figure": {
         "type": "action_matrix",
         "data": {
-          "matrixHeader": "MANDATED COALITION · 4 OPERATIONAL PILLARS",
+          "matrixHeader": "MANDATED COALITION \u00b7 4 OPERATIONAL PILLARS",
           "pillars": [
             {
               "code": "01 / FAITH LEADERS",
@@ -185,12 +206,12 @@
         }
       },
       "onScreenGraphic": {
-        "kicker": "IMPLEMENTATION ARCHITECTURE",
-        "headline": "Cross-Community\nWorking Group Mobilised",
-        "body": "Coalition established to track incidents in real time and coordinate direct neighbourhood safety interventions."
+        "kicker": "WHAT HAPPENS ON YOUR STREET NEXT",
+        "headline": "Police, Faith & Resident\nTaskforce Launched",
+        "body": "Four operational pillars will coordinate local police, youth voices, and faith leaders to protect victims."
       },
-      "voiceoverText": "A new working group of faith leaders, youth voices, and residents will now partner with police to support victims and protect community cohesion.",
-      "citationFooter": "SOURCE: Westminster City Hall · Cross-Community Directorate (Para 3)",
+      "voiceoverText": "Four immediate actions now take effect on the ground, including a cross-community working group partnering local residents, faith leaders, and police.",
+      "citationFooter": "SOURCE: Westminster City Hall \u00b7 Cross-Community Directorate (Para 3)",
       "citations": [
         "Para 3, commitments 2 & 3: 'working group bringing together faith leaders, youth representatives, residents and police'"
       ]
@@ -210,25 +231,37 @@
         "type": "outro_archive",
         "data": {
           "tagline": "Independent civic intelligence across London's 33 councils.",
-          "auditHeader": "PUBLIC RECORD AUDIT TRAIL · STORY #4178",
+          "auditHeader": "PUBLIC RECORD AUDIT TRAIL \u00b7 STORY #4178",
           "records": [
             {
               "code": "DOC 01",
               "title": "Westminster Full Council Motion: Standing Against Hate (12 Nov 2025)",
               "badge": "VERIFIED",
-              "badgeColor": [52, 211, 153]
+              "badgeColor": [
+                52,
+                211,
+                153
+              ]
             },
             {
               "code": "DOC 02",
               "title": "Official Declarations: Cllr Adam Hug (Leader) & Cllr Jessica Toale MP",
               "badge": "VERIFIED",
-              "badgeColor": [52, 211, 153]
+              "badgeColor": [
+                52,
+                211,
+                153
+              ]
             },
             {
               "code": "DOC 03",
               "title": "Community Equality Strategy & Working Group Mandate (Agenda Item 7)",
               "badge": "ON RECORD",
-              "badgeColor": [245, 158, 11]
+              "badgeColor": [
+                245,
+                158,
+                11
+              ]
             }
           ],
           "ctaKicker": "READ THE FULL VERIFIED COUNCIL RECORD",
@@ -240,11 +273,21 @@
         "headline": "London Local.",
         "body": "Read the verified council record"
       },
-      "voiceoverText": "Full meeting minutes and council records are available on London Local dot news.",
-      "citationFooter": "SOURCE: London Local Civic Archive · londonlocal.news/stories/4178",
+      "voiceoverText": "Affects your street or ward? Drop your view in the comments and check the verified council record at London Local dot news.",
+      "citationFooter": "SOURCE: London Local Civic Archive \u00b7 londonlocal.news/stories/4178",
       "citations": [
         "SOURCE DOCUMENTS: Westminster 12 November 2025 Agenda and Verified Minutes"
       ]
     }
-  ]
+  ],
+  "postcodeTag": "SW1 \u00b7 W1 \u00b7 NW8 \u00b7 WESTMINSTER",
+  "coordinates": "51.4975\u00b0 N, 0.1357\u00b0 W \u00b7 VICTORIA ST PRECINCT",
+  "stakeholderTags": [
+    "#WestminsterSW1",
+    "#SohoW1",
+    "#FaithExchange",
+    "#MetPoliceCentral",
+    "#54Councillors"
+  ],
+  "debatePrompt": "WHAT SHOULD BE PRIORITY #1 FOR YOUR WARD? COMMENT BELOW"
 }
