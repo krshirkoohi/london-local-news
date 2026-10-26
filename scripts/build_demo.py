@@ -9,7 +9,7 @@ import os
 import subprocess
 from PIL import Image, ImageDraw, ImageFont
 
-BASE_DIR = "/Users/krshirkoohi/github/london-local-news"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SPEC_PATH = os.path.join(BASE_DIR, "specs/4178-westminster-extremism.json")
 ASSETS_DIR = os.path.join(BASE_DIR, "assets")
 BUILD_DIR = os.path.join(BASE_DIR, "build")

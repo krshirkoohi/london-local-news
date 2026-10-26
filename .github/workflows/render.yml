@@ -1,0 +1,45 @@
+name: Build News Video Demo
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-video:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install pillow edge-tts
+
+      - name: Install Arial/Helvetica font
+        run: |
+          sudo apt-get install -y fonts-liberation
+          mkdir -p /System/Library/Fonts/Supplemental/
+          sudo cp /usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf /System/Library/Fonts/Supplemental/Arial.ttf || true
+
+      - name: Render Video
+        run: |
+          python3 scripts/build_demo.py
+
+      - name: Upload Video Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sample-video-4178
+          path: output/sample_video_4178.mp4
+          retention-days: 7
