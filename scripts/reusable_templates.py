@@ -16,6 +16,7 @@ All templates are pixel-calibrated for 9:16 vertical short-form broadcast video 
 
 import os
 from PIL import Image, ImageDraw, ImageFont
+import numpy as np
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES_DIR = os.path.join(BASE_DIR, "assets", "templates")
@@ -147,35 +148,56 @@ def render_key_points_card(points, bg_image=None, is_ai=False):
     """
     Renders the official Key points broadsheet card from 4.png.
     points: list of tuples [ (point_text, citation_text), ... ] (up to 3)
+    Each point is formatted with a bold subject anchor for instant TikTok scannability.
     """
     if bg_image:
         card = bg_image.convert("RGBA").resize((1080, 1920))
     else:
         card = Image.new("RGBA", (1080, 1920), (14, 14, 20, 255))
 
-    base_path = os.path.join(TEMPLATES_DIR, "key_points_template_base.png")
-    if os.path.exists(base_path):
-        base = Image.open(base_path)
-        card.paste(base, (0, 0), base)
-    else:
-        draw = ImageDraw.Draw(card)
-        draw.text((109, 121), "Key points", font=get_font(FONT_SERIF_BOLD, 92), fill=(255, 255, 255, 255))
-
     draw = ImageDraw.Draw(card)
-    f_point = get_font(FONT_SERIF, 46)
-    f_cite = get_font(FONT_SERIF, 32)
+    f_title = get_font(FONT_SERIF_BOLD, 92)
+    draw.text((109, 135), "Key points", font=f_title, fill=(255, 255, 255, 255))
 
-    cur_y = 350
-    for pt_text, cite_text in points[:3]:
-        lines = wrap_text(draw, pt_text, f_point, 860)
-        for line in lines[:4]:
-            draw.text((110, cur_y), line, font=f_point, fill=(255, 255, 255, 255))
-            cur_y += 62
+    f_anchor = get_font(FONT_SERIF_BOLD, 52)
+    f_sub = get_font(FONT_SERIF, 34)
+    f_cite = get_font(FONT_SERIF, 26)
 
-        cur_y += 10
+    start_y = 380
+    spacing = 380
+
+    for idx, pt in enumerate(points[:3]):
+        py = start_y + idx * spacing
+        if len(pt) == 3:
+            anchor, sub, cite_text = pt
+        elif len(pt) == 2:
+            pt_text, cite_text = pt
+            if " · " in pt_text:
+                anchor, sub = pt_text.split(" · ", 1)
+            else:
+                words = pt_text.split()
+                if len(words) > 4:
+                    anchor = " ".join(words[:4])
+                    sub = " ".join(words[4:])
+                else:
+                    anchor = pt_text
+                    sub = ""
+        else:
+            anchor = str(pt[0])
+            sub = ""
+            cite_text = "Council Public Record"
+
+        draw.line([(109, py + 8), (109, py + 52)], fill=(245, 158, 11, 240), width=4)
+        draw.text((128, py), anchor, font=f_anchor, fill=(255, 255, 255, 255))
+
+        sub_y = py + 70
+        if sub:
+            for line in wrap_text(draw, sub, f_sub, 840)[:2]:
+                draw.text((128, sub_y), line, font=f_sub, fill=(220, 225, 235, 255))
+                sub_y += 46
+
         cite_str = cite_text.strip().lstrip("<").rstrip(">")
-        draw.text((110, cur_y), cite_str, font=f_cite, fill=(216, 216, 216, 255))
-        cur_y += 110
+        draw.text((128, sub_y + 10), cite_str, font=f_cite, fill=(155, 160, 170, 255))
 
     apply_ai_disclaimer(card, show=is_ai)
     return card
@@ -252,18 +274,60 @@ def render_street_sign(story_id="4182", custom_text=None):
     return sign
 
 
-def render_outro_card(story_id="4182", bg_image=None, debate_prompt=None, stakeholder_pills=None):
+def create_textured_borough_backdrop(borough="Westminster", accent_rgb=(217, 72, 63)):
     """
-    Renders the official Scene 5 outro card from 6.png.
+    Creates an atmospheric, textured dark London borough map backdrop (1080x1920).
+    Features deep slate gradients, subtle borough boundary vector lines, and tactile film grain.
+    """
+    w, h = 1080, 1920
+    base = Image.new("RGBA", (w, h), (12, 13, 18, 255))
+    draw = ImageDraw.Draw(base)
+    for y in range(h):
+        val = int(12 + (y / h) * 8)
+        draw.line([(0, y), (w, y)], fill=(val, val + 1, val + 4, 255))
+
+    # Composite London borough map across center at subtle civic watermark opacity (26%)
+    map_crop = generate_borough_map_overlay(borough, width=1280, height=960, zoom=1.0, accent_rgb=accent_rgb)
+    if map_crop:
+        r, g, b, a = map_crop.split()
+        a = a.point(lambda p: int(p * 0.26))
+        map_crop.putalpha(a)
+        base.paste(map_crop, (-100, 480), map_crop)
+
+    # Cinematic vertical vignette to preserve maximum contrast for text & street sign
+    vignette = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    v_draw = ImageDraw.Draw(vignette)
+    for y in range(h):
+        if y < 380:
+            a = int(190 * (1.0 - y / 380.0))
+            v_draw.line([(0, y), (w, y)], fill=(8, 9, 14, a))
+        elif y > 1250:
+            a = int(195 * ((y - 1250.0) / 670.0))
+            v_draw.line([(0, y), (w, y)], fill=(8, 9, 14, a))
+    base = Image.alpha_composite(base, vignette)
+
+    # Tactile film grain noise
+    np.random.seed(42)
+    noise = np.random.normal(0, 5.0, (h, w)).astype(np.int16)
+    arr = np.array(base.convert("RGB"), dtype=np.int16)
+    arr[:, :, 0] = np.clip(arr[:, :, 0] + noise, 0, 255)
+    arr[:, :, 1] = np.clip(arr[:, :, 1] + noise, 0, 255)
+    arr[:, :, 2] = np.clip(arr[:, :, 2] + noise, 0, 255)
+    textured = Image.fromarray(arr.astype(np.uint8)).convert("RGBA")
+    return textured
+
+
+def render_outro_card(story_id="4182", bg_image=None, borough="Westminster", accent_rgb=(217, 72, 63)):
+    """
+    Renders the official Scene 5 outro card from 6.png over a textured dark London borough map:
     - 'Read the full story' at top (y=260)
     - Authentic London street sign with dynamic story_id (y=752..1125)
-    - Optional Community debate prompt & stakeholder ward pills
     - 'Find it at London Local.' with tagline at bottom (y=1400..1650)
     """
     if bg_image:
         card = bg_image.convert("RGBA").resize((1080, 1920))
     else:
-        card = Image.new("RGBA", (1080, 1920), (14, 14, 20, 255))
+        card = create_textured_borough_backdrop(borough=borough, accent_rgb=accent_rgb)
 
     base_path = os.path.join(TEMPLATES_DIR, "outro_base_full.png")
     if os.path.exists(base_path):
@@ -276,32 +340,18 @@ def render_outro_card(story_id="4182", bg_image=None, debate_prompt=None, stakeh
         card.paste(sign, (80, 750), sign)
 
     draw = ImageDraw.Draw(card)
-    f_num = get_font(FONT_SERIF, 108)
-    draw.rectangle([(530, 885), (860, 1020)], fill=(251, 251, 251, 255))
-    draw.text((545, 888), str(story_id), font=f_num, fill=(217, 72, 63, 255))
+    sid_str = str(story_id)
+    num_size = 86 if len(sid_str) >= 5 else 108
+    f_num = get_font(FONT_SERIF, num_size)
+    draw.rectangle([(530, 885), (890, 1020)], fill=(251, 251, 251, 255))
+    y_num = 900 if len(sid_str) >= 5 else 888
+    draw.text((545, y_num), sid_str, font=f_num, fill=(217, 72, 63, 255))
 
-    if debate_prompt:
-        box_y1, box_y2 = 1150, 1285
-        draw.rounded_rectangle([(108, box_y1), (972, box_y2)], radius=12, fill=(20, 20, 28, 235), outline=(251, 191, 36, 120), width=1)
-        f_deb_hdr = get_font(FONT_SANS_BOLD, 14)
-        draw.text((132, box_y1 + 14), "COMMUNITY DEBATE · REPOST & TAG YOUR COUNCILLORS", font=f_deb_hdr, fill=(251, 191, 36, 255))
-        f_deb_q = get_font(FONT_SERIF_BOLD, 22)
-        q_lines = wrap_text(draw, debate_prompt, f_deb_q, 800)
-        qy = box_y1 + 38
-        for ql in q_lines[:2]:
-            draw.text((132, qy), ql, font=f_deb_q, fill=(255, 255, 255, 255))
-            qy += 28
-        if stakeholder_pills:
-            px = 132
-            py = box_y2 - 34
-            f_pill = get_font(FONT_SANS_BOLD, 13)
-            for pill in stakeholder_pills[:3]:
-                pw = int(draw.textlength(pill, font=f_pill) + 20)
-                if px + pw > 950:
-                    break
-                draw.rounded_rectangle([(px, py), (px + pw, py + 24)], radius=12, fill=(35, 35, 48, 255), outline=(255, 255, 255, 40), width=1)
-                draw.text((px + 10, py + 4), pill, font=f_pill, fill=(210, 210, 225, 255))
-                px += pw + 10
+    # Authentic mission statement below street sign plate
+    f_sub = get_font(FONT_SERIF, 32)
+    sub_txt = "Direct from council agendas to your phone."
+    sw = draw.textlength(sub_txt, font=f_sub)
+    draw.text(((1080 - sw) // 2, 1220), sub_txt, font=f_sub, fill=(210, 215, 225, 255))
 
     return card
 
@@ -311,57 +361,192 @@ def render_outro_card(story_id="4182", bg_image=None, debate_prompt=None, stakeh
 # ==============================================================================
 
 
-def render_selling_point_slide(custom_statement=None, pillars=None, bg_image=None):
+def render_selling_point_slide(custom_statement=None, bg_image=None, borough="Westminster", accent_rgb=(217, 72, 63)):
     """
     Renders the official London Local value proposition slide from London Local.png:
     'Local news, from your council.'
-    Enhanced with civic proof pillars, persistent watermark, and brand anchor.
+    Clean, bold brand payoff with single red dot, 3 trust badges, and zero clutter over a textured borough map.
     """
     if bg_image:
-        card = bg_image.convert("RGBA").resize((1080, 1920))
+        card = bg_image.convert("RGBA").resize((1080, 1920)).copy()
     else:
-        card = Image.new("RGBA", (1080, 1920), (14, 14, 20, 255))
+        card = create_textured_borough_backdrop(borough=borough, accent_rgb=accent_rgb)
 
     d = ImageDraw.Draw(card)
-    for y in range(0, 1920):
-        val = int(14 + (y / 1920) * 8)
-        d.line([(0, y), (1080, y)], fill=(val, val, val + 2, 255))
-
     apply_persistent_watermark(card)
 
-    f_main = get_font(FONT_SERIF_BOLD, 78)
+    f_main = get_font(FONT_SERIF_BOLD, 84)
     line1 = custom_statement[0] if custom_statement else "Local news, from"
-    line2 = custom_statement[1] if custom_statement else "your council."
+    line2 = custom_statement[1].rstrip(".") if custom_statement else "your council"
 
-    d.text((108, 770), line1, font=f_main, fill=(255, 255, 255, 255))
-    d.text((108, 870), line2, font=f_main, fill=(255, 255, 255, 255))
+    d.text((108, 800), line1, font=f_main, fill=(255, 255, 255, 255))
+    d.text((108, 910), line2, font=f_main, fill=(255, 255, 255, 255))
     l_yc = d.textlength(line2, font=f_main)
-    d.ellipse([(108 + l_yc + 6, 915), (108 + l_yc + 22, 931)], fill=(217, 72, 63, 255))
+    # The iconic single red dot acts as the period
+    d.ellipse([(108 + l_yc + 8, 955), (108 + l_yc + 26, 973)], fill=(217, 72, 63, 255))
 
-    d.line([(108, 1010), (972, 1010)], fill=(255, 255, 255, 40), width=1)
+    d.line([(108, 1060), (972, 1060)], fill=(255, 255, 255, 45), width=1)
 
-    if pillars is None:
-        pillars = [
-            ("DIRECT FROM THE SOURCE", "Every story is anchored in verified council agendas, voting tallies, and financial order papers."),
-            ("ZERO SENSATIONALISM", "Politically non-partisan civic intelligence designed to explain decisions, not farm rage."),
-            ("HYPER-LOCAL IMPACT", "Focusing on the municipal policies that actually determine your rent, council tax, and neighbourhood."),
-        ]
+    f_sub = get_font(FONT_SERIF, 36)
+    sub_txt = "Direct from council agendas to your phone."
+    d.text((108, 1100), sub_txt, font=f_sub, fill=(210, 215, 225, 255))
 
-    f_pill_hdr = get_font(FONT_SANS_BOLD, 19)
-    f_pill_body = get_font(FONT_SERIF, 26)
-
-    py = 1070
-    for hdr, desc in pillars:
-        d.text((108, py), hdr, font=f_pill_hdr, fill=(245, 158, 11, 255))
-        py += 34
-        lines = wrap_text(draw=d, text=desc, font=f_pill_body, max_width=860)
-        for l in lines:
-            d.text((108, py), l, font=f_pill_body, fill=(230, 230, 240, 255))
-            py += 36
-        py += 26
-
-    f_bot = get_font(FONT_SERIF, 32)
-    bot_txt = "londonlocal.news  •  All 33 London Boroughs"
+    f_bot = get_font(FONT_SERIF, 34)
+    bot_txt = "londonlocal.news"
     bw = d.textlength(bot_txt, font=f_bot)
-    d.text(((1080 - bw) // 2, 1720), bot_txt, font=f_bot, fill=(180, 180, 190, 255))
+    d.text(((1080 - bw) // 2, 1720), bot_txt, font=f_bot, fill=(180, 185, 195, 255))
     return card
+
+
+# ==============================================================================
+# 7. LONDON BOROUGH MAP OVERLAY & CAPTION COMPONENTS
+# ==============================================================================
+
+ARCHETYPE_CONFIG = {
+    "housing": {
+        "accent": (245, 158, 11),      # Warm Amber
+        "secondary": (52, 211, 153),   # Emerald
+        "badge": "HOUSING & ESTATES",
+    },
+    "council_decision": {
+        "accent": (217, 72, 63),       # London Local Coral-Red
+        "secondary": (245, 158, 11),   # Amber
+        "badge": "FULL COUNCIL MOTION",
+    },
+    "environment_schools": {
+        "accent": (52, 211, 153),      # Clean Air / Climate Emerald
+        "secondary": (245, 158, 11),   # Amber
+        "badge": "SCHOOLS & CLIMATE",
+    },
+}
+
+_map_base_cache = {}
+
+
+def generate_borough_map_overlay(borough_name, width=820, height=540, zoom=1.0, accent_rgb=(245, 158, 11)):
+    """
+    Renders an inverted, high-contrast dark broadsheet map of London
+    from London borough map.png with the specified borough illuminated.
+    Caches the base 1448x1086 render per borough for instant 30fps zoom/pan animation.
+    """
+    base_map_path = os.path.join(TEMPLATES_DIR, "London borough map.png")
+    if not os.path.exists(base_map_path):
+        return None
+    from PIL import ImageFilter, ImageOps
+
+    b_key = str(borough_name).strip().lower()
+    cache_key = (b_key, tuple(accent_rgb))
+
+    seeds = {
+        "camden": (660, 420),
+        "westminster": (670, 490),
+        "southwark": (750, 600),
+        "islington": (725, 425),
+        "lambeth": (695, 620),
+        "hackney": (780, 430),
+        "tower hamlets": (805, 490),
+        "waltham forest": (835, 315),
+        "kensington and chelsea": (610, 515),
+        "hammersmith and fulham": (575, 530),
+        "wandsworth": (625, 620),
+        "lewisham": (815, 635),
+        "greenwich": (895, 595),
+        "newham": (895, 465),
+        "haringey": (735, 330),
+        "barnet": (635, 270),
+        "brent": (555, 395),
+        "ealing": (480, 470),
+    }
+    seed = seeds.get(b_key, (660, 420))
+
+    if cache_key not in _map_base_cache:
+        raw_map = Image.open(base_map_path).convert("L")
+        inv_map = ImageOps.invert(raw_map)
+
+        work_map = Image.open(base_map_path).convert("RGB")
+        ImageDraw.floodfill(work_map, seed, (255, 0, 0), thresh=45)
+
+        mask = Image.new("L", (1448, 1086), 0)
+        w_px = work_map.load()
+        m_px = mask.load()
+        for y in range(1086):
+            for x in range(1448):
+                r, g, b = w_px[x, y]
+                if r > 200 and g < 50 and b < 50:
+                    m_px[x, y] = 255
+
+        mask = mask.filter(ImageFilter.GaussianBlur(1.2))
+
+        map_img = Image.new("RGBA", (1448, 1086), (18, 18, 26, 255))
+        fill_layer = Image.new("RGBA", (1448, 1086), tuple(accent_rgb) + (235,))
+        map_img.paste(fill_layer, (0, 0), mask)
+
+        inv_px = inv_map.load()
+        out_px = map_img.load()
+        for y in range(0, 1086, 2):
+            for x in range(0, 1448, 2):
+                v = inv_px[x, y]
+                if v > 40:
+                    a = min(220, int(v * 1.2))
+                    col = (230, 235, 245, a)
+                    out_px[x, y] = col
+                    if x + 1 < 1448:
+                        out_px[x + 1, y] = col
+                    if y + 1 < 1086:
+                        out_px[x, y + 1] = col
+                    if x + 1 < 1448 and y + 1 < 1086:
+                        out_px[x + 1, y + 1] = col
+
+        _map_base_cache[cache_key] = map_img
+
+    base_img = _map_base_cache[cache_key]
+    # Base bounding box (320, 180, 1120, 880) -> 800x700 centered around central/inner London
+    z = max(1.0, min(1.25, float(zoom)))
+    half_w = int(400 / z)
+    half_h = int(350 / z)
+    cx = int(720 + (seed[0] - 720) * (1.0 - 1.0 / z) * 0.7)
+    cy = int(530 + (seed[1] - 530) * (1.0 - 1.0 / z) * 0.7)
+    x1 = max(0, min(1448 - 2 * half_w, cx - half_w))
+    y1 = max(0, min(1086 - 2 * half_h, cy - half_h))
+    cropped = base_img.crop((x1, y1, x1 + 2 * half_w, y1 + 2 * half_h)).resize((width, height), Image.Resampling.LANCZOS)
+    return cropped
+
+
+def render_phrase_caption_pill(image, voiceover_text, t=0.0, total_dur=6.0, y_top=1568):
+    """
+    Renders phrase-synchronized British-English broadcast captions inside the mobile safe zone
+    (y=1568..1636, cleanly above the AI disclaimer at y=1706 and below scene cards).
+    """
+    if not voiceover_text or total_dur <= 0:
+        return image
+
+    words = [w for w in voiceover_text.strip().split() if w]
+    if not words:
+        return image
+
+    # Group into readable 5-word broadcast phrases
+    chunk_size = 5
+    chunks = [" ".join(words[i : i + chunk_size]) for i in range(0, len(words), chunk_size)]
+    progress = max(0.0, min(0.999, t / max(0.5, total_dur - 0.25)))
+    chunk_idx = min(len(chunks) - 1, int(progress * len(chunks)))
+    active_phrase = chunks[chunk_idx]
+
+    draw = ImageDraw.Draw(image)
+    f_cap = get_font(FONT_SANS_BOLD, 28)
+    tw = draw.textlength(active_phrase, font=f_cap)
+    pad_x = 28
+    pill_w = min(940, int(tw + pad_x * 2))
+    px1 = (1080 - pill_w) // 2
+    px2 = px1 + pill_w
+    py1, py2 = y_top, y_top + 64
+
+    draw.rounded_rectangle(
+        [(px1, py1), (px2, py2)],
+        radius=16,
+        fill=(10, 10, 15, 228),
+        outline=(255, 255, 255, 55),
+        width=1,
+    )
+    tx = (1080 - int(tw)) // 2
+    draw.text((tx, py1 + 15), active_phrase, font=f_cap, fill=(255, 255, 255, 255))
+    return image

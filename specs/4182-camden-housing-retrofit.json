@@ -1,220 +1,277 @@
 {
   "videoId": "camden-housing-retrofit-4182",
   "storyId": "4182",
-  "sourceArticleUrl": "https://londonlocal.news/stories/4182",
+  "displayStoryId": "2576",
+  "sourceArticleUrl": "https://londonlocal.news/stories/2576",
+  "legacyStoryIdNote": "Replaces synthetic Notion schema placeholder (camden-housing-budget-2026-10 / 4182) with verified Camden Council housing damp, mould & M&E retrofit story #2576 on londonlocal.news (live /stories/4182 is a Westminster sub-station planning story).",
+  "storyTitle": "Camden Council Prepares for Awaab's Law with Rapid Response Team to Tackle Damp and Mould",
   "borough": "Camden",
-  "meetingDate": "2025-11-18",
-  "meetingDateDisplay": "18 NOV 2025",
-  "totalDuration": 41.5,
+  "articlePublishedDate": "2025-09-22",
+  "meetingDate": "2025-09-18",
+  "meetingDateDisplay": "18 SEP 2025",
+  "storyType": "housing",
+  "targetDurationSeconds": 33,
   "targetPlatform": [
     "tiktok",
     "reels",
     "reddit"
   ],
+  "watchability": {
+    "hook": "24-hour legal repair deadline for emergency damp and mould in Camden council homes",
+    "localRelevance": "Directly affects Camden council tenants in Hampstead, Gospel Oak, Somers Town, and estates in the M&E retrofit programme",
+    "suitability": "approved_for_video"
+  },
   "editorialGate": {
-    "status": "approved",
+    "status": "pending_review",
     "editorApproved": true,
     "reviewedBy": "Kavia Shirkoohi"
   },
   "branding": {
     "theme": "london-local-broadcast",
     "showWatermark": true,
+    "showCaptions": false,
     "voiceProfile": "en-GB-SoniaNeural"
   },
+  "claims": [
+    {
+      "claimId": "CAM-C1",
+      "statement": "Camden Council is implementing an integrated Rapid Response Team and Damp & Mould Delivery Model for council homes ahead of Awaab's Law.",
+      "sourceQuote": "Camden Council is preparing to implement Awaab's Law in October 2025 with a new Rapid Response Team to tackle damp and mould issues in council properties.",
+      "sourceDocument": "Preparation for Awaab's Law report (Hampstead DMC, 18 Sep 2025)",
+      "sourceDocumentUrl": "https://democracy.camden.gov.uk/documents/s127389/Preparation%20for%20Awaabs%20Law.pdf",
+      "verified": true
+    },
+    {
+      "claimId": "CAM-C2",
+      "statement": "Emergency Category 1 damp and mould hazards must be attended and made safe within 24 hours.",
+      "sourceQuote": "Provide a 'within in 24-hours' response to Category 1 hazards... Emergency hazards: attended and made safe within 24 hours.",
+      "sourceDocument": "Preparation for Awaab's Law report, Statutory Timeframes",
+      "sourceDocumentUrl": "https://democracy.camden.gov.uk/documents/s127389/Preparation%20for%20Awaabs%20Law.pdf",
+      "verified": true
+    },
+    {
+      "claimId": "CAM-C3",
+      "statement": "Significant hazards must be investigated within 10 working days, with a written summary to the tenant within 3 working days and safety works starting within 5 working days.",
+      "sourceQuote": "Significant hazards: Investigation: within 10 working days; Written summary to tenant: within 3 working days; Safety works start: within 5 working days (with a long stop of 12 weeks for complex cases).",
+      "sourceDocument": "Preparation for Awaab's Law report, Statutory Timeframes",
+      "sourceDocumentUrl": "https://democracy.camden.gov.uk/documents/s127389/Preparation%20for%20Awaabs%20Law.pdf",
+      "verified": true
+    },
+    {
+      "claimId": "CAM-C4",
+      "statement": "Camden is installing humidity, temperature, and condensation monitors across void properties, homes reporting damp, and units under Camden's M&E retrofit programme.",
+      "sourceQuote": "As part of its Damp & Mould Monitoring Strategy, the council plans to install monitors measuring humidity, temperature and condensation in all void properties at re-let inspection, homes reporting damp and mould issues, and additional units under Camden's M&E retrofit programme.",
+      "sourceDocument": "Preparation for Awaab's Law report, Damp & Mould Monitoring Strategy",
+      "sourceDocumentUrl": "https://democracy.camden.gov.uk/documents/s127389/Preparation%20for%20Awaabs%20Law.pdf",
+      "verified": true
+    }
+  ],
+  "postcodeTag": "NW3 · NW5 · NW1 · CAMDEN COUNCIL HOMES",
+  "coordinates": "51.5517° N, 0.1588° W · HAMPSTEAD DMC & CAMDEN ESTATES",
+  "keyPointsHeading": "Key points",
+  "takeawayCard": {
+    "kicker": "M&E RETROFIT & SENSOR ROLLOUT",
+    "title": "Smart Humidity & Condensation Monitors",
+    "subtitle": "Fitted across void properties, damp-reported flats & M&E retrofit estates"
+  },
+  "keyPoints": [
+    [
+      "24-Hour Emergency Fix",
+      "Category 1 damp and mould hazards attended and made safe within 24 hours.",
+      "Preparation for Awaab's Law · Statutory Deadlines"
+    ],
+    [
+      "5-Day Safety Works",
+      "10-day investigation limit and safety works starting within 5 working days.",
+      "Hampstead DMC Report · 18 Sep 2025"
+    ],
+    [
+      "M&E Retrofit Sensors",
+      "Humidity and temperature monitors fitted across void homes and retrofit estates.",
+      "Camden Damp & Mould Monitoring Strategy"
+    ]
+  ],
   "timeline": [
     {
       "sceneNumber": 1,
       "type": "video_with_figure",
-      "durationSeconds": 9.0,
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "CAM-C1",
+        "CAM-C2"
+      ],
       "visualAsset": {
         "type": "video",
         "source": "assets/generative/camden_town_hall_omni.mp4",
         "cropMode": "full",
         "trimStart": 0.0,
         "isIllustrative": true,
-        "mandatoryDisclaimer": "AI ILLUSTRATIVE FOOTAGE"
-      },
-      "figure": {
-        "type": "vote_tally",
-        "data": {
-          "headerLeft": "CABINET CAPITAL VOTE",
-          "headerRight": "\u2713 APPROVED (52\u20133)",
-          "parties": [
-            {
-              "name": "LABOUR & LIB DEM",
-              "seats": 52,
-              "status": "52 AYE \u00b7 RETROFIT",
-              "color": [
-                225,
-                29,
-                72
-              ]
-            },
-            {
-              "name": "OPPOSITION",
-              "seats": 3,
-              "status": "3 ABSTAINED",
-              "color": [
-                120,
-                120,
-                130
-              ]
-            }
-          ]
-        }
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
       },
       "onScreenGraphic": {
-        "kicker": "\ud83d\udccd NW1 & NW5 \u00b7 ESTATE IMPACT ALERT",
-        "headline": "\u00a34.2M Approved To Cut\nEstate Heating Bills",
-        "body": "350 council homes in Somers Town and Gospel Oak will get full insulation upgrades\u2014saving \u00a3680 a year."
+        "kicker": "📍 NW3 & NW5 · COUNCIL TENANT ALERT",
+        "headline": "24-Hour Damp Fix\nFor Council Homes",
+        "body": "Camden launches a Rapid Response Team and smart retrofit sensors under Awaab's Law."
       },
-      "voiceoverText": "If you live in Somers Town or Gospel Oak, Camden Council just approved four point two million pounds to insulate cold council estates\u2014cutting winter heating bills by six hundred and eighty pounds a year.",
-      "citationFooter": "SOURCE: Camden Cabinet Housing Report \u00b7 18 Nov 2025 \u00b7 Item 4",
-      "citations": [
-        "Camden Cabinet Housing Retrofit Report, Para 1: '\u00a34.2m capital allocation for 320 homes'"
-      ]
+      "voiceoverText": "If you rent a Camden council flat with damp or mould, emergency hazards must now be made safe within twenty-four hours.",
+      "citationFooter": "SOURCE: Camden Hampstead DMC · 18 Sep 2025 · Preparation for Awaab's Law"
     },
     {
       "sceneNumber": 2,
       "type": "document_highlight",
-      "durationSeconds": 9.5,
+      "durationSeconds": 6.8,
+      "claimIds": [
+        "CAM-C1",
+        "CAM-C2",
+        "CAM-C4"
+      ],
       "visualAsset": {
         "type": "video",
         "source": "assets/generative/camden_town_hall_omni.mp4",
         "cropMode": "architectural_upper",
         "trimStart": 2.0,
         "isIllustrative": true,
-        "mandatoryDisclaimer": "AI ILLUSTRATIVE FOOTAGE"
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
       },
       "figure": {
         "type": "motion_document",
         "data": {
-          "docHeaderLeft": "LONDON BOROUGH OF CAMDEN \u00b7 CABINET",
-          "docHeaderRight": "ITEM 4 \u00b7 HOUSING",
-          "excerptPrefix": "\"The Authority hereby releases \u00a34.2m in ring-fenced capital to ",
-          "highlightPhrase": "eliminate damp, mould and cold-bridging",
-          "excerptSuffix": " across Gospel Oak and Somers Town estates.\"",
-          "mover": "Portfolio: Housing & Climate",
-          "seconder": "Audit: Director of Property Management",
-          "receiptStamp": "\u00a34.2M RING-FENCED + RENT FREEZE"
+          "docHeaderLeft": "CAMDEN · HAMPSTEAD DMC · 18 SEP 2025",
+          "docHeaderRight": "AWAAB'S LAW REPORT",
+          "excerptPrefix": "\"Camden's Rapid Response model is designed to ",
+          "highlightPhrase": "provide a within 24-hours response to Category 1 hazards",
+          "excerptSuffix": " alongside monitors under the M&E retrofit programme.\"",
+          "mover": "Report: Preparation for Awaab's Law (s127389)",
+          "seconder": "Committee: Hampstead District Management Committee",
+          "receiptStamp": "VERIFIED REPORT"
         }
       },
       "onScreenGraphic": {
-        "kicker": "THE CABINET RECEIPT \u00b7 AGENDA ITEM 4",
-        "headline": "Worst-Hit Post-War Blocks\nPrioritised First",
-        "body": "Cabinet papers ring-fence the \u00a34.2M fund strictly for estates suffering severe damp and heat loss."
+        "kicker": "VERIFIED COMMITTEE REPORT",
+        "headline": "Rapid Response & M&E Retrofit Model",
+        "body": "Presented to Hampstead DMC, the delivery model enforces strict statutory repair deadlines."
       },
-      "voiceoverText": "Here is the exact clause in the Cabinet receipt: it ring-fences the four point two million pound fund strictly for post-war estates suffering the worst damp and heat loss.",
-      "citationFooter": "SOURCE: Camden Housing Capital Programme \u00b7 Section 2.4",
-      "citations": [
-        "Section 2.4: 'ring-fenced capital to eliminate damp, mould and cold-bridging'"
-      ]
+      "voiceoverText": "Presented to the Hampstead District Management Committee, the council's delivery model locks in strict legal repair deadlines under Awaab's Law.",
+      "citationFooter": "SOURCE: Preparation for Awaab's Law (democracy.camden.gov.uk/documents/s127389)"
     },
     {
       "sceneNumber": 3,
       "type": "generative_broll",
-      "durationSeconds": 7.0,
-      "visualAsset": {
-        "type": "video",
-        "source": "assets/generative/gemini_generated_video_d308c8b8.mp4",
-        "cropMode": "full",
-        "trimStart": 0.0,
-        "isIllustrative": true,
-        "mandatoryDisclaimer": "AI ILLUSTRATIVE FOOTAGE"
-      },
-      "figure": {
-        "type": "stat_comparison",
-        "data": {
-          "cards": [
-            {
-              "kicker": "HOUSEHOLD SAVINGS",
-              "value": "\u00a3480",
-              "label": "Annual Energy Bill Cut",
-              "subtext": "Estimated per retrofitted flat",
-              "barRatio": 0.85,
-              "barColor": [
-                52,
-                211,
-                153
-              ]
-            },
-            {
-              "kicker": "CARBON REDUCTION",
-              "value": "62%",
-              "label": "Heat Loss Reduction",
-              "subtext": "EPC Rating upgraded to Band B",
-              "barRatio": 0.62,
-              "barColor": [
-                245,
-                158,
-                11
-              ]
-            }
-          ]
-        }
-      },
-      "onScreenGraphic": {
-        "kicker": "FOLLOW THE MONEY \u00b7 HOUSEHOLD RECEIPT",
-        "headline": "350 Homes Upgraded\nBefore Next Winter",
-        "body": "Every targeted flat receives triple-glazed windows, external wall insulation, and clean heat pumps."
-      },
-      "voiceoverText": "In total, three hundred and fifty council flats will be fitted with triple glazing and clean air-source heat pumps, slashing household bills by an estimated six hundred and eighty pounds.",
-      "citationFooter": "SOURCE: Camden Climate & Tenant Impact Assessment \u00b7 Table 3",
-      "citations": [
-        "Table 3: 'Projected \u00a3480 annual saving per household; 62% thermal loss reduction'"
-      ]
-    },
-    {
-      "sceneNumber": 4,
-      "type": "video_with_figure",
-      "durationSeconds": 8.5,
+      "durationSeconds": 6.8,
+      "claimIds": [
+        "CAM-C2",
+        "CAM-C3",
+        "CAM-C4"
+      ],
       "visualAsset": {
         "type": "video",
         "source": "assets/generative/camden_estate_omni.mp4",
         "cropMode": "full",
         "trimStart": 0.0,
         "isIllustrative": true,
-        "mandatoryDisclaimer": "AI ILLUSTRATIVE FOOTAGE"
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
       },
       "figure": {
-        "type": "action_matrix",
+        "type": "stat_comparison",
         "data": {
-          "matrixHeader": "RETROFIT DELIVERY SCHEDULE \u00b7 4 PHASES",
-          "pillars": [
+          "cards": [
             {
-              "code": "01 / THERMAL GLAZING",
-              "desc": "Triple-glazed window installation across 14 blocks"
+              "kicker": "EMERGENCY HAZARDS",
+              "value": "24 hrs",
+              "label": "Category 1 Make-Safe",
+              "subtext": "Mandatory Rapid Response target",
+              "barRatio": 0.95,
+              "barColor": [
+                245,
+                158,
+                11
+              ]
             },
             {
-              "code": "02 / HEAT PUMPS",
-              "desc": "Communal air-source heat network replacement"
-            },
-            {
-              "code": "03 / DAMP SENSORS",
-              "desc": "Smart humidity monitoring & rapid-response teams"
-            },
-            {
-              "code": "04 / TENANT LIAISON",
-              "desc": "Zero rent increases resulting from capital works"
+              "kicker": "SAFETY REPAIRS",
+              "value": "5 days",
+              "label": "To Start Safety Works",
+              "subtext": "3-day written summary to tenant",
+              "barRatio": 0.82,
+              "barColor": [
+                52,
+                211,
+                153
+              ]
             }
           ]
         }
       },
       "onScreenGraphic": {
-        "kicker": "TENANT PROTECTION GUARANTEE",
-        "headline": "Zero Rent Hike Allowed\nFor Upgraded Estates",
-        "body": "A statutory tenant charter guarantees zero rent increases resulting from the \u00a34.2M refurbishment works."
+        "kicker": "STATUTORY TIMEFRAMES",
+        "headline": "24-Hour Emergency & 5-Day Safety Works",
+        "body": "Smart humidity and condensation monitors are being fitted across void homes and M&E retrofit estates."
       },
-      "voiceoverText": "Four works start on site in January, backed by a binding tenant guarantee that council rents cannot be raised a single penny to pay for the upgrades.",
-      "citationFooter": "SOURCE: Camden Procurement & Tenant Charter \u00b7 Para 5",
-      "citations": [
-        "Para 5: 'Four-phase delivery starting January; tenant charter guarantees zero rent uplift'"
-      ]
+      "voiceoverText": "That means twenty-four-hour emergency make-safe, safety works starting within five working days, and smart humidity sensors across M and E retrofit estates.",
+      "citationFooter": "SOURCE: Camden Damp & Mould Monitoring Strategy · Story #2576"
+    },
+    {
+      "sceneNumber": 4,
+      "type": "video_with_figure",
+      "durationSeconds": 6.5,
+      "claimIds": [
+        "CAM-C3",
+        "CAM-C4"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/camden_estate_omni.mp4",
+        "cropMode": "full",
+        "trimStart": 1.5,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "EMERGENCY HAZARDS",
+              "value": "24 hrs",
+              "label": "Category 1 Make-Safe",
+              "subtext": "Mandatory Rapid Response target",
+              "barRatio": 0.95,
+              "barColor": [
+                245,
+                158,
+                11
+              ]
+            },
+            {
+              "kicker": "SAFETY REPAIRS",
+              "value": "5 days",
+              "label": "To Start Safety Works",
+              "subtext": "3-day written summary to tenant",
+              "barRatio": 0.82,
+              "barColor": [
+                52,
+                211,
+                153
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "TENANT ACCOUNTABILITY",
+        "headline": "3-Day Written Summary To Every Tenant",
+        "body": "Inspectors must issue a written summary within 3 working days, tracked by repair KPIs."
+      },
+      "voiceoverText": "Tenants must receive a written summary within three working days of inspection, backed by KPI tracking on repair completion times.",
+      "citationFooter": "SOURCE: Hampstead District Management Committee · 18 Sep 2025"
     },
     {
       "sceneNumber": 5,
       "type": "outro_archive",
-      "durationSeconds": 5.5,
+      "durationSeconds": 5.2,
+      "claimIds": [
+        "CAM-C1"
+      ],
       "visualAsset": {
         "type": "solid",
         "source": "assets/branding/scene5_outro.png",
@@ -225,42 +282,8 @@
       "figure": {
         "type": "outro_archive",
         "data": {
-          "tagline": "Independent civic intelligence across London's 33 councils.",
-          "auditHeader": "PUBLIC RECORD AUDIT TRAIL \u00b7 STORY #4182",
-          "records": [
-            {
-              "code": "DOC 01",
-              "title": "Camden Cabinet Capital Allocation: \u00a34.2M Estate Retrofit (18 Nov 2025)",
-              "badge": "VERIFIED",
-              "badgeColor": [
-                52,
-                211,
-                153
-              ]
-            },
-            {
-              "code": "DOC 02",
-              "title": "Thermal Impact & Tenant Energy Saving Modelling (Table 3)",
-              "badge": "VERIFIED",
-              "badgeColor": [
-                52,
-                211,
-                153
-              ]
-            },
-            {
-              "code": "DOC 03",
-              "title": "Gospel Oak & Somers Town Procurement Schedule (Item 4)",
-              "badge": "ON RECORD",
-              "badgeColor": [
-                245,
-                158,
-                11
-              ]
-            }
-          ],
           "ctaKicker": "READ THE FULL VERIFIED COUNCIL RECORD",
-          "ctaUrl": "londonlocal.news/stories/4182"
+          "ctaUrl": "londonlocal.news/stories/2576"
         }
       },
       "onScreenGraphic": {
@@ -268,49 +291,8 @@
         "headline": "London Local.",
         "body": "Read the verified council record"
       },
-      "voiceoverText": "Does your block need upgrading next? Tag your estate below and read the full street schedule on London Local dot news.",
-      "citationFooter": "SOURCE: London Local Civic Archive \u00b7 londonlocal.news/stories/4182",
-      "citations": [
-        "SOURCE DOCUMENTS: Camden 18 November 2025 Cabinet Agenda and Minutes"
-      ]
+      "voiceoverText": "Reporting damp on your estate? Read the full Camden committee record at London Local dot news.",
+      "citationFooter": "SOURCE: London Local · londonlocal.news/stories/2576"
     }
-  ],
-  "postcodeTag": "NW1 \u00b7 NW5 \u00b7 SOMERS TOWN & GOSPEL OAK",
-  "coordinates": "51.5290\u00b0 N, 0.1255\u00b0 W \u00b7 EUSTON RD & NW5 ESTATES",
-  "stakeholderTags": [
-    "#SomersTownNW1",
-    "#GospelOakNW5",
-    "#CamdenTenants",
-    "#WarmHomes",
-    "#RentFreeze"
-  ],
-  "debatePrompt": "WHICH CAMDEN ESTATE NEEDS INSULATING NEXT? COMMENT BELOW",
-  "sellingPointPillars": [
-    [
-      "DIRECT FROM THE SOURCE",
-      "Every story is anchored in verified cabinet agendas, voting tallies, and financial order papers."
-    ],
-    [
-      "ZERO SENSATIONALISM",
-      "Politically non-partisan civic intelligence designed to explain decisions, not farm rage."
-    ],
-    [
-      "HYPER-LOCAL IMPACT",
-      "Focusing on the municipal policies that actually determine your rent, heating, and neighbourhood."
-    ]
-  ],
-  "keyPoints": [
-    [
-      "Somers Town and Gospel Oak estates prioritised for \u00a34.2m capital retrofit.",
-      "Camden Cabinet Housing Report \u00b7 Item 4"
-    ],
-    [
-      "Tenant energy bills projected to drop by \u00a3680 annually while eliminating persistent damp.",
-      "Thermal Impact Assessment Table 3"
-    ],
-    [
-      "Contract procurement schedule ring-fenced with contractor commencement in January.",
-      "Camden Procurement Schedule"
-    ]
   ]
 }

@@ -1,220 +1,275 @@
 {
   "videoId": "southwark-clean-air-schools-4185",
   "storyId": "4185",
-  "sourceArticleUrl": "https://londonlocal.news/stories/4185",
+  "displayStoryId": "10631",
+  "sourceArticleUrl": "https://londonlocal.news/stories/10631",
+  "legacyStoryIdNote": "Replaces synthetic Southwark placeholder (4185) with verified Southwark schools climate & air resilience scrutiny story #10631 on londonlocal.news (live /stories/4185 is a Waltham Forest smoke control area story).",
+  "storyTitle": "Southwark Council's Authority to Mandate School Climate Resilience Measures Questioned",
   "borough": "Southwark",
-  "meetingDate": "2025-11-20",
-  "meetingDateDisplay": "20 NOV 2025",
-  "totalDuration": 41.0,
+  "articlePublishedDate": "2026-10-15",
+  "meetingDate": "2026-10-14",
+  "meetingDateDisplay": "14 OCT 2026",
+  "storyType": "environment_schools",
+  "targetDurationSeconds": 33,
   "targetPlatform": [
     "tiktok",
     "reels",
     "reddit"
   ],
+  "watchability": {
+    "hook": "61 out of 116 Southwark schools assessed fall into the highest risk tier for urban heat and low shade",
+    "localRelevance": "Directly affects parents, pupils, and teachers across 116 Southwark primary, SEND, and secondary schools",
+    "suitability": "approved_for_video"
+  },
   "editorialGate": {
-    "status": "approved",
+    "status": "pending_review",
     "editorApproved": true,
     "reviewedBy": "Kavia Shirkoohi"
   },
   "branding": {
     "theme": "london-local-broadcast",
     "showWatermark": true,
+    "showCaptions": false,
     "voiceProfile": "en-GB-SoniaNeural"
   },
+  "claims": [
+    {
+      "claimId": "SOU-C1",
+      "statement": "Southwark Council assessed 116 schools for heat and climate vulnerability, finding 61 in the higher vulnerability tier, 37 in the moderate tier, and 18 in the lower tier.",
+      "sourceQuote": "Of the 116 schools assessed, 61 fall in the higher vulnerability tier, 37 in the moderate tier and 18 in the lower tier. The report notes that high urban heat, deprivation, large pupil numbers and a lack of shade often coincide at the same sites.",
+      "sourceDocument": "Southwark Environment Scrutiny Commission Public Reports Pack, 14 Oct 2026",
+      "sourceDocumentUrl": "https://moderngov.southwark.gov.uk/documents/g8599/Public%20reports%20pack%20Wednesday%2014-Oct-2026%2019.00%20Environment%20Scrutiny%20Commission.pdf?T=10",
+      "verified": true
+    },
+    {
+      "claimId": "SOU-C2",
+      "statement": "Over 40 Southwark schools have signed up to the council's Climate Action Schools Network for decarbonisation and adaptation workshops.",
+      "sourceQuote": "Southwark Council is working with schools on climate adaptation measures, including through its Climate Action Schools Network with over 40 schools signed up.",
+      "sourceDocument": "London Local Story #10631, Para 6",
+      "sourceDocumentUrl": "https://londonlocal.news/stories/10631",
+      "verified": true
+    },
+    {
+      "claimId": "SOU-C3",
+      "statement": "Councillors Catherine Dawkins and Graham Neale questioned the council's power to compel Multi-Academy Trusts to adapt school buildings and pressed for clear funding and targets.",
+      "sourceQuote": "Councillor Catherine Dawkins specifically inquired about the council's authority to compel schools to make necessary building adaptations to cope with extreme weather events... Councillor Graham Neale sought clarification on how success is measured.",
+      "sourceDocument": "London Local Story #10631, Para 2 & Para 4",
+      "sourceDocumentUrl": "https://londonlocal.news/stories/10631",
+      "verified": true
+    },
+    {
+      "claimId": "SOU-C4",
+      "statement": "High-risk schools are being ranked to prioritise capital programmes for shading, tree planting, window film, and cooling ventilation.",
+      "sourceQuote": "For schools identified as high-risk due to elevated urban heat, large numbers of young or vulnerable pupils, and limited shade, the council has a ranked basis to inform potential prioritization within schools' capital programs, assuming funding is available. This includes measures like shading, tree planting and cooling ventilation.",
+      "sourceDocument": "London Local Story #10631, Para 6",
+      "sourceDocumentUrl": "https://londonlocal.news/stories/10631",
+      "verified": true
+    }
+  ],
+  "postcodeTag": "SE15 · SE5 · SE22 · SOUTHWARK SCHOOLS",
+  "coordinates": "51.4740° N, 0.0690° W · PECKHAM, CAMBERWELL & DULWICH",
+  "keyPointsHeading": "Key points",
+  "takeawayCard": {
+    "kicker": "CAPITAL PRIORITY RANKING",
+    "title": "Shading, Tree Planting & Cooling Ventilation",
+    "subtitle": "Ranked risk data used to target school capital bids and Borough Action Plan"
+  },
+  "keyPoints": [
+    [
+      "61 High-Risk Schools",
+      "Out of 116 Southwark schools modelled for extreme urban heat and low shade.",
+      "Environment Scrutiny Report · 14 Oct 2026"
+    ],
+    [
+      "40+ Network Schools",
+      "Signed up to the Climate Action Schools Network for shading and ventilation.",
+      "Southwark Climate Adaptation Update"
+    ],
+    [
+      "Academy Trust Powers",
+      "Councillors questioned powers and funding gaps for multi-academy trust schools.",
+      "Cllr Catherine Dawkins · Scrutiny Commission"
+    ]
+  ],
   "timeline": [
     {
       "sceneNumber": 1,
       "type": "video_with_figure",
-      "durationSeconds": 9.0,
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "SOU-C1"
+      ],
       "visualAsset": {
         "type": "video",
         "source": "assets/generative/southwark_civic_omni.mp4",
         "cropMode": "full",
         "trimStart": 0.0,
         "isIllustrative": true,
-        "mandatoryDisclaimer": "AI ILLUSTRATIVE FOOTAGE"
-      },
-      "figure": {
-        "type": "vote_tally",
-        "data": {
-          "headerLeft": "ENVIRONMENT COMMITTEE VOTE",
-          "headerRight": "\u2713 CARRIED (48\u20135)",
-          "parties": [
-            {
-              "name": "LABOUR GROUP",
-              "seats": 48,
-              "status": "48 AYE \u00b7 APPROVED",
-              "color": [
-                225,
-                29,
-                72
-              ]
-            },
-            {
-              "name": "LIBERAL DEMOCRAT",
-              "seats": 5,
-              "status": "5 AMENDMENT",
-              "color": [
-                245,
-                158,
-                11
-              ]
-            }
-          ]
-        }
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
       },
       "onScreenGraphic": {
-        "kicker": "\ud83d\udccd SE15 & SE22 \u00b7 COMMUTE CHANGE ALERT",
-        "headline": "18 New School Streets\nGo Live In January",
-        "body": "Through-traffic will be restricted at school drop-off and pick-up times across Peckham, Camberwell, and Dulwich."
+        "kicker": "📍 SE15 & SE5 · SCHOOL CLIMATE AUDIT",
+        "headline": "61 Southwark Schools\nIn High Heat Risk Tier",
+        "body": "A council audit of 116 schools maps where urban heat and low playground shade hit hardest."
       },
-      "voiceoverText": "If you drive or walk near eighteen primary schools in Peckham, Camberwell, or Dulwich, your morning commute changes in January as new Clean Air zones go live.",
-      "citationFooter": "SOURCE: Southwark Environment & Transport Committee \u00b7 20 Nov 2025",
-      "citations": [
-        "Southwark School Streets Expansion Report, Para 1: '18 additional primary schools approved'"
-      ]
+      "voiceoverText": "Over half of Southwark's assessed schools—sixty-one out of one hundred and sixteen—now sit in the highest risk tier for urban heat.",
+      "citationFooter": "SOURCE: Southwark Environment Scrutiny Commission · 14 Oct 2026"
     },
     {
       "sceneNumber": 2,
       "type": "document_highlight",
-      "durationSeconds": 9.5,
+      "durationSeconds": 6.8,
+      "claimIds": [
+        "SOU-C1",
+        "SOU-C3"
+      ],
       "visualAsset": {
         "type": "video",
         "source": "assets/generative/southwark_civic_omni.mp4",
         "cropMode": "architectural_upper",
         "trimStart": 2.0,
         "isIllustrative": true,
-        "mandatoryDisclaimer": "AI ILLUSTRATIVE FOOTAGE"
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
       },
       "figure": {
         "type": "motion_document",
         "data": {
-          "docHeaderLeft": "SOUTHWARK COUNCIL \u00b7 TRAFFIC ORDER",
-          "docHeaderRight": "TMO 2025/11",
-          "excerptPrefix": "\"Timed pedestrian and cycle zones shall operate 8:15\u20139:00am and 3:00\u20133:45pm, with ",
-          "highlightPhrase": "full exemptions for Blue Badge holders and residents",
-          "excerptSuffix": " living within each designated zone.\"",
-          "mover": "Directorate: Highways & Clean Air",
-          "seconder": "Statutory Consultation: 84% Support",
-          "receiptStamp": "CARRIED 48\u20136 \u00b7 STARTS JAN"
+          "docHeaderLeft": "SOUTHWARK SCRUTINY · 14 OCT 2026",
+          "docHeaderRight": "SCHOOL RISK AUDIT",
+          "excerptPrefix": "\"Of the 116 schools assessed, ",
+          "highlightPhrase": "61 fall in the higher vulnerability tier",
+          "excerptSuffix": ", 37 in the moderate tier and 18 in the lower tier, where urban heat and lack of shade coincide.\"",
+          "mover": "Scrutiny: Cllr Catherine Dawkins & Cllr Graham Neale",
+          "seconder": "Source: Environment Scrutiny Commission Reports Pack",
+          "receiptStamp": "VERIFIED AUDIT"
         }
       },
       "onScreenGraphic": {
-        "kicker": "THE TRAFFIC ORDER RECEIPT \u00b7 ITEM 9",
-        "headline": "8:15am & 3:00pm Gate\nClosures Enforced",
-        "body": "Approved by 48 votes to 6, ANPR cameras will enforce timed pedestrian zones at 18 school gates."
+        "kicker": "ENVIRONMENT SCRUTINY REPORT",
+        "headline": "116 Schools Assessed For Heat Risk",
+        "body": "Primary and SEND pupils face the highest physiological risk from overheating classrooms."
       },
-      "voiceoverText": "Approved by forty-eight votes to six, the official council traffic order bans non-resident through-traffic at school gates during morning drop-off and afternoon pick-up.",
-      "citationFooter": "SOURCE: Traffic Management Order TMO 2025/11 \u00b7 Clause 3.2",
-      "citations": [
-        "Clause 3.2: 'full exemptions for Blue Badge holders, emergency vehicles, and registered zone residents'"
-      ]
+      "voiceoverText": "Presented to Southwark's Environment Scrutiny Commission, the audit warns that high urban heat and limited playground shade hit primary and SEND pupils hardest.",
+      "citationFooter": "SOURCE: Environment Scrutiny Commission Pack (14 Oct 2026)"
     },
     {
       "sceneNumber": 3,
       "type": "generative_broll",
-      "durationSeconds": 7.0,
-      "visualAsset": {
-        "type": "video",
-        "source": "assets/generative/gemini_generated_video_d308c8b8.mp4",
-        "cropMode": "full",
-        "trimStart": 0.0,
-        "isIllustrative": true,
-        "mandatoryDisclaimer": "AI ILLUSTRATIVE FOOTAGE"
-      },
-      "figure": {
-        "type": "stat_comparison",
-        "data": {
-          "cards": [
-            {
-              "kicker": "AIR QUALITY GAIN",
-              "value": "-34%",
-              "label": "Nitrogen Dioxide Drop",
-              "subtext": "Measured at school gate monitors",
-              "barRatio": 0.78,
-              "barColor": [
-                52,
-                211,
-                153
-              ]
-            },
-            {
-              "kicker": "PUPIL SAFETY",
-              "value": "7,400",
-              "label": "Children Protected Daily",
-              "subtext": "Across Peckham, Camberwell & Dulwich",
-              "barRatio": 0.9,
-              "barColor": [
-                245,
-                158,
-                11
-              ]
-            }
-          ]
-        }
-      },
-      "onScreenGraphic": {
-        "kicker": "THE AIR QUALITY EVIDENCE",
-        "headline": "34% Drop In Toxic Gate\nFumes Recorded",
-        "body": "Air sensors across 18 schools covering 9,400 pupils showed sharp drops in nitrogen dioxide during trials."
-      },
-      "voiceoverText": "Why did councillors vote for it? Because monitoring outside those eighteen schools covering nine thousand four hundred children showed a thirty-four per cent drop in toxic nitrogen dioxide.",
-      "citationFooter": "SOURCE: Southwark Air Quality Monitoring Network \u00b7 2025 Audit",
-      "citations": [
-        "Air Quality Audit Section 4: '34% reduction in NO2 at school gates; 7,400 pupils covered'"
-      ]
-    },
-    {
-      "sceneNumber": 4,
-      "type": "video_with_figure",
-      "durationSeconds": 8.5,
+      "durationSeconds": 6.8,
+      "claimIds": [
+        "SOU-C1",
+        "SOU-C2",
+        "SOU-C3"
+      ],
       "visualAsset": {
         "type": "video",
         "source": "assets/generative/southwark_school_street_omni.mp4",
         "cropMode": "full",
         "trimStart": 0.0,
         "isIllustrative": true,
-        "mandatoryDisclaimer": "AI ILLUSTRATIVE FOOTAGE"
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
       },
       "figure": {
-        "type": "action_matrix",
+        "type": "stat_comparison",
         "data": {
-          "matrixHeader": "IMPLEMENTATION ROLLOUT \u00b7 4 COMMITMENTS",
-          "pillars": [
+          "cards": [
             {
-              "code": "01 / ANPR CAMERAS",
-              "desc": "Signage & camera activation from Spring Term"
+              "kicker": "HIGH RISK TIER",
+              "value": "61/116",
+              "label": "Schools High Vulnerability",
+              "subtext": "37 moderate · 18 lower tier",
+              "barRatio": 0.53,
+              "barColor": [
+                245,
+                158,
+                11
+              ]
             },
             {
-              "code": "02 / GRACE PERIOD",
-              "desc": "Warning notices only during first 4 weeks"
-            },
-            {
-              "code": "03 / CYCLE STORAGE",
-              "desc": "360 new secure school bike & scooter racks"
-            },
-            {
-              "code": "04 / GREEN SCREENS",
-              "desc": "Living ivy pollution barriers along playgrounds"
+              "kicker": "CLIMATE NETWORK",
+              "value": "40+",
+              "label": "Schools Signed Up",
+              "subtext": "Adaptation & cooling workshops",
+              "barRatio": 0.78,
+              "barColor": [
+                52,
+                211,
+                153
+              ]
             }
           ]
         }
       },
       "onScreenGraphic": {
-        "kicker": "EXEMPTIONS & \u00a31.1M PAVEMENT FUND",
-        "headline": "Residents & Blue Badges\nFully Exempt",
-        "body": "Residents living inside the zones and Blue Badge holders get automatic camera exemptions, plus wider crossings."
+        "kicker": "KEY FINDINGS",
+        "headline": "40+ Schools In Climate Network",
+        "body": "Councillors questioned how to fund and mandate adaptations across multi-academy trusts."
       },
-      "voiceoverText": "If you live on one of the streets or hold a Blue Badge, you get an automatic camera exemption\u2014while one point one million pounds goes into wider pavements and cycle racks.",
-      "citationFooter": "SOURCE: Southwark Highways Implementation Schedule \u00b7 Para 6",
-      "citations": [
-        "Para 6: 'Four-week warning notice grace period; 360 cycle spaces and living green screens'"
-      ]
+      "voiceoverText": "Over forty schools have joined the Climate Action Network for shading and ventilation, but councillors questioned how to fund and mandate upgrades in academy trusts.",
+      "citationFooter": "SOURCE: Southwark Environment Scrutiny Commission · Story #10631"
+    },
+    {
+      "sceneNumber": 4,
+      "type": "video_with_figure",
+      "durationSeconds": 6.5,
+      "claimIds": [
+        "SOU-C1",
+        "SOU-C4"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/southwark_school_street_omni.mp4",
+        "cropMode": "full",
+        "trimStart": 1.5,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "HIGH RISK TIER",
+              "value": "61/116",
+              "label": "Schools High Vulnerability",
+              "subtext": "37 moderate · 18 lower tier",
+              "barRatio": 0.53,
+              "barColor": [
+                245,
+                158,
+                11
+              ]
+            },
+            {
+              "kicker": "CLIMATE NETWORK",
+              "value": "40+",
+              "label": "Schools Signed Up",
+              "subtext": "Adaptation & cooling workshops",
+              "barRatio": 0.78,
+              "barColor": [
+                52,
+                211,
+                153
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "CAPITAL PRIORITY RANKING",
+        "headline": "Shading, Trees & Cooling Ventilation",
+        "body": "Ranked school risk assessments will target capital funding bids where heat hits hardest."
+      },
+      "voiceoverText": "Southwark is now using this ranked risk map to prioritise school capital bids for tree planting, window film, and cooling ventilation.",
+      "citationFooter": "SOURCE: Southwark Environment Scrutiny Commission · 14 Oct 2026"
     },
     {
       "sceneNumber": 5,
       "type": "outro_archive",
-      "durationSeconds": 5.5,
+      "durationSeconds": 5.2,
+      "claimIds": [
+        "SOU-C1"
+      ],
       "visualAsset": {
         "type": "solid",
         "source": "assets/branding/scene5_outro.png",
@@ -225,42 +280,8 @@
       "figure": {
         "type": "outro_archive",
         "data": {
-          "tagline": "Independent civic intelligence across London's 33 councils.",
-          "auditHeader": "PUBLIC RECORD AUDIT TRAIL \u00b7 STORY #4185",
-          "records": [
-            {
-              "code": "DOC 01",
-              "title": "Southwark Environment Committee Decision: 18 School Streets (20 Nov 2025)",
-              "badge": "VERIFIED",
-              "badgeColor": [
-                52,
-                211,
-                153
-              ]
-            },
-            {
-              "code": "DOC 02",
-              "title": "Statutory Traffic Management Order TMO 2025/11 & Exemption Rules",
-              "badge": "VERIFIED",
-              "badgeColor": [
-                52,
-                211,
-                153
-              ]
-            },
-            {
-              "code": "DOC 03",
-              "title": "Borough NO2 Air Quality & Pupil Safety Impact Audit",
-              "badge": "ON RECORD",
-              "badgeColor": [
-                245,
-                158,
-                11
-              ]
-            }
-          ],
           "ctaKicker": "READ THE FULL VERIFIED COUNCIL RECORD",
-          "ctaUrl": "londonlocal.news/stories/4185"
+          "ctaUrl": "londonlocal.news/stories/10631"
         }
       },
       "onScreenGraphic": {
@@ -268,49 +289,8 @@
         "headline": "London Local.",
         "body": "Read the verified council record"
       },
-      "voiceoverText": "Good for children\u2019s lungs, or tough on local drivers? Drop your view below and check all eighteen streets on London Local dot news.",
-      "citationFooter": "SOURCE: London Local Civic Archive \u00b7 londonlocal.news/stories/4185",
-      "citations": [
-        "SOURCE DOCUMENTS: Southwark 20 November 2025 Committee Agenda and TMO 2025/11"
-      ]
+      "voiceoverText": "Is your child's school affected? Check the full Southwark scrutiny report on London Local dot news.",
+      "citationFooter": "SOURCE: London Local · londonlocal.news/stories/10631"
     }
-  ],
-  "postcodeTag": "SE15 \u00b7 SE22 \u00b7 PECKHAM & DULWICH",
-  "coordinates": "51.4740\u00b0 N, 0.0690\u00b0 W \u00b7 PECKHAM & DULWICH WARDS",
-  "stakeholderTags": [
-    "#PeckhamSE15",
-    "#DulwichSE22",
-    "#CamberwellSE5",
-    "#SchoolStreets",
-    "#SouthwarkParents"
-  ],
-  "debatePrompt": "SAFER FOR KIDS OR TOUGH ON DRIVERS? HAVE YOUR SAY BELOW",
-  "sellingPointPillars": [
-    [
-      "VERIFIED CIVIC DATA",
-      "Sourced directly from Southwark Council climate assembly records and school zone audits."
-    ],
-    [
-      "ZERO NOISE",
-      "Unbiased reporting explaining real street closures, timings, and air quality benchmarks."
-    ],
-    [
-      "SERVED FOR 33 BOROUGHS",
-      "Independent reporting on the hyperlocal matters Westminster and City Hall overlook."
-    ]
-  ],
-  "keyPoints": [
-    [
-      "Cabinet approves 18 new timed car-free School Streets across Peckham, Camberwell, and Dulwich.",
-      "Southwark Cabinet Air Quality Report"
-    ],
-    [
-      "Automatic Number Plate Recognition (ANPR) cameras enforce 8:00\u20139:30 and 15:00\u201316:30 quiet zones.",
-      "Traffic Management Order 2026"
-    ],
-    [
-      "Early monitoring data indicates 28% drop in nitrogen dioxide particulate levels at school gates.",
-      "Clean Air Audit Benchmark"
-    ]
   ]
 }
