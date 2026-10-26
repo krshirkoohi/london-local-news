@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-London Local News Video Assembly Pipeline (V3 - Clean Editorial Broadsheet)
-Improvements:
-- Removed distracting pipe-like lines; clean minimalist Swiss/broadsheet grid & texture
-- Fixed header alignment, removed awkward line collisions and artifacts
-- Replaced repetitive footer filler with authentic scene-specific journalistic source context
-- Programmatic generative image support via Google GenAI / Imagen 3
+London Local News Video Assembly Pipeline (V4 - Split Broadsheet Mobile Edition)
+Design Architecture:
+- Top Half (y: 0 - 860): Black editorial / media window (generative B-roll, badges, header)
+- Bottom Half (y: 860 - 1920): Crisp white newspaper broadsheet with large, high-contrast serif typography
+- Mobile-optimised readability for TikTok, Reels, and Reddit feeds
+- Neural TTS using en-GB-RyanNeural with millisecond audio synchronization
 """
 
 import json
@@ -30,13 +30,18 @@ FONT_SANS = "/System/Library/Fonts/Supplemental/Arial.ttf"
 LOGO_WORDMARK = os.path.join(BRANDING_DIR, "london-local-wordmark.png")
 GEN_STREET_BG = os.path.join(GENERATIVE_DIR, "westminster_street_bg.jpg")
 
-CORAL_RED = (255, 82, 56) # London Local brand red dot
-PURE_BLACK = (12, 12, 14)
-CARD_BG = (22, 22, 26)
-BORDER_GRAY = (45, 45, 50)
-GRID_COLOR = (26, 26, 30)
+CORAL_RED = (255, 82, 56)
+TOP_BLACK = (12, 12, 14)
+BOTTOM_WHITE = (255, 255, 255)
+DIVIDER_LINE = (225, 225, 230)
+TEXT_DARK = (15, 15, 18)
+TEXT_MUTED_DARK = (90, 90, 95)
 TEXT_WHITE = (255, 255, 255)
-TEXT_MUTED = (155, 155, 160)
+TEXT_MUTED_LIGHT = (160, 160, 165)
+BORDER_DARK = (45, 45, 50)
+BORDER_LIGHT = (230, 230, 235)
+
+SPLIT_Y = 820 # Top media window boundary
 
 def get_font(path, size):
     try:
@@ -44,236 +49,269 @@ def get_font(path, size):
     except Exception:
         return ImageFont.load_default()
 
-def draw_clean_broadsheet_bg(width=1080, height=1920):
-    """Draws a clean, elegant dark broadsheet background with minimal hairline grid."""
-    img = Image.new("RGBA", (width, height), (*PURE_BLACK, 255))
+def draw_split_base_canvas(width=1080, height=1920):
+    """Draws the split canvas: Top Black / Bottom White."""
+    img = Image.new("RGB", (width, height), BOTTOM_WHITE)
     draw = ImageDraw.Draw(img)
 
-    # Subtle 120px hairline grid (clean architectural drafting style, no thick pipes)
-    for x in range(80, width - 80, 115):
-        draw.line([(x, 180), (x, height - 160)], fill=(*GRID_COLOR, 255), width=1)
-    for y in range(200, height - 160, 120):
-        draw.line([(80, y), (width - 80, y)], fill=(*GRID_COLOR, 255), width=1)
+    # Top dark window
+    draw.rectangle([(0, 0), (width, SPLIT_Y)], fill=TOP_BLACK)
+    # Crisp hairline divider
+    draw.line([(0, SPLIT_Y), (width, SPLIT_Y)], fill=DIVIDER_LINE, width=2)
 
-    return img.convert("RGB")
+    return img
 
 def draw_header_bar(draw, img, show_authorised_logo=True, width=1080):
-    """Draws a clean, well-spaced top editorial header."""
-    # Top separator rule across safe width
-    draw.line([(80, 170), (width - 80, 170)], fill=BORDER_GRAY, width=1)
+    """Draws the top editorial bar in the dark window."""
+    draw.line([(70, 160), (width - 70, 160)], fill=BORDER_DARK, width=1)
 
     if show_authorised_logo and os.path.exists(LOGO_WORDMARK):
         try:
             wm = Image.open(LOGO_WORDMARK).convert("RGBA")
             aspect = wm.width / wm.height
-            wm = wm.resize((int(46 * aspect), 46), Image.Resampling.LANCZOS)
-            img.paste(wm, (80, 95), wm)
+            wm = wm.resize((int(44 * aspect), 44), Image.Resampling.LANCZOS)
+            img.paste(wm, (70, 90), wm)
         except Exception:
-            draw.text((80, 95), "London Local.", font=get_font(FONT_SERIF_BOLD, 40), fill=TEXT_WHITE)
+            draw.text((70, 90), "London Local.", font=get_font(FONT_SERIF_BOLD, 40), fill=TEXT_WHITE)
     else:
-        # Clean white-label box
-        draw.rounded_rectangle([(80, 90), (380, 152)], radius=6, outline=(100, 100, 105), width=1)
-        draw.text((105, 108), "YOUR LOGO HERE", font=get_font(FONT_SANS, 22), fill=(180, 180, 185))
+        draw.rounded_rectangle([(70, 85), (370, 145)], radius=6, outline=(100, 100, 105), width=1)
+        draw.text((95, 102), "YOUR LOGO HERE", font=get_font(FONT_SANS, 22), fill=(180, 180, 185))
 
-    # Right badge: Clean council tag with ample margin
+    # Right council badge
     f_meta = get_font(FONT_SANS, 22)
-    draw.rounded_rectangle([(width - 340, 98), (width - 80, 148)], radius=6, fill=CARD_BG, outline=BORDER_GRAY, width=1)
-    draw.text((width - 315, 112), "WESTMINSTER • 12 NOV", font=f_meta, fill=TEXT_MUTED)
+    draw.rounded_rectangle([(width - 340, 90), (width - 70, 142)], radius=6, fill=(24, 24, 28), outline=BORDER_DARK, width=1)
+    draw.text((width - 315, 105), "WESTMINSTER • 12 NOV", font=f_meta, fill=TEXT_MUTED_LIGHT)
 
-def draw_footer_bar(draw, context_text, width=1080, height=1920):
-    """Draws an informative, authentic journalistic source footer (no generic filler)."""
-    draw.line([(80, height - 140), (width - 80, height - 140)], fill=BORDER_GRAY, width=1)
+def draw_bottom_footer(draw, context_text, width=1080, height=1920):
+    """Draws a clean journalistic source footer on the white bottom half."""
+    draw.line([(70, height - 130), (width - 70, height - 130)], fill=BORDER_LIGHT, width=1)
     f_foot = get_font(FONT_SANS, 24)
-    draw.text((80, height - 105), context_text, font=f_foot, fill=TEXT_MUTED)
+    draw.text((70, height - 95), context_text, font=f_foot, fill=TEXT_MUTED_DARK)
 
 def create_scene1_card(out_path, show_logo=True):
-    img = draw_clean_broadsheet_bg()
+    img = draw_split_base_canvas()
     draw = ImageDraw.Draw(img)
     draw_header_bar(draw, img, show_authorised_logo=show_logo)
-    draw_footer_bar(draw, "Westminster City Council • Meeting of Wednesday 12 November 2025")
 
-    # Category Pill
-    draw.rounded_rectangle([(80, 230), (310, 280)], radius=4, fill=TEXT_WHITE)
-    draw.text((102, 246), "COUNCIL VOTE", font=get_font(FONT_SANS, 20), fill=PURE_BLACK)
+    # --- TOP BLACK SECTION: Large Visual Banner ---
+    draw.rounded_rectangle([(70, 210), (1010, 750)], radius=16, fill=(20, 20, 24), outline=BORDER_DARK, width=1)
+    draw.rectangle([(70, 210), (84, 750)], fill=TEXT_WHITE) # White accent bar
 
-    # Headline
-    f_h1 = get_font(FONT_SERIF_BOLD, 70)
+    draw.text((120, 260), "COUNCIL CHAMBER DECISION", font=get_font(FONT_SANS, 24), fill=TEXT_MUTED_LIGHT)
+    draw.text((120, 310), "UNANIMOUS VOTE", font=get_font(FONT_SERIF_BOLD, 80), fill=TEXT_WHITE)
+
+    # Badge in top half
+    draw.rounded_rectangle([(120, 440), (460, 500)], radius=6, fill=(245, 158, 11))
+    draw.text((145, 458), "CROSS-PARTY APPROVAL", font=get_font(FONT_SANS, 22), fill=TEXT_DARK)
+
+    stats_preview = "All 54 Councillors • Conservative & Labour support"
+    draw.text((120, 540), stats_preview, font=get_font(FONT_SERIF, 32), fill=(200, 200, 205))
+
+    # --- BOTTOM WHITE SECTION: Broadsheet Mobile Typography ---
+    draw_bottom_footer(draw, "Westminster City Council • Meeting of Wednesday 12 November 2025")
+
+    # Mobile Headline
+    f_h1 = get_font(FONT_SERIF_BOLD, 74)
     h_text = "Westminster Stands\nAgainst Far-Right\nExtremism"
-    draw.text((80, 320), h_text, font=f_h1, fill=TEXT_WHITE, spacing=16)
+    draw.text((70, 880), h_text, font=f_h1, fill=TEXT_DARK, spacing=16)
 
     # Red dot accent
-    draw.ellipse([(735, 475), (752, 492)], fill=CORAL_RED)
+    draw.ellipse([(770, 1050), (790, 1070)], fill=CORAL_RED)
 
-    # High-contrast data card
-    draw.rounded_rectangle([(80, 680), (1000, 1110)], radius=12, fill=CARD_BG, outline=BORDER_GRAY, width=1)
-    draw.rectangle([(80, 680), (92, 1110)], fill=TEXT_WHITE)
-
-    draw.text((130, 730), "VOTE OUTCOME", font=get_font(FONT_SANS, 24), fill=TEXT_MUTED)
-    draw.text((130, 780), "UNANIMOUS", font=get_font(FONT_SERIF_BOLD, 96), fill=TEXT_WHITE)
-
-    desc = (
-        "Councillors pass cross-party motion condemning all\n"
-        "forms of hate crime, anti-migrant rhetoric, and\n"
-        "far-right extremism across the borough."
+    # Large readable story body
+    f_body = get_font(FONT_SERIF, 40)
+    body_text = (
+        "Westminster City Council has unanimously passed\n"
+        "a cross-party motion condemning all forms of hate,\n"
+        "anti-migrant language, and far-right activity\n"
+        "across the city."
     )
-    draw.text((130, 930), desc, font=get_font(FONT_SERIF, 34), fill=(225, 225, 230), spacing=12)
+    draw.text((70, 1190), body_text, font=f_body, fill=(35, 35, 40), spacing=18)
 
-    # Source quote box
-    draw.rounded_rectangle([(80, 1170), (1000, 1440)], radius=12, fill=CARD_BG, outline=BORDER_GRAY, width=1)
+    # Highlighted quote card
+    draw.rounded_rectangle([(70, 1460), (1010, 1720)], radius=12, fill=(245, 245, 248), outline=BORDER_LIGHT, width=1)
+    draw.rectangle([(70, 1460), (80, 1720)], fill=TEXT_DARK)
+    f_quote = get_font(FONT_SERIF, 34)
     q = (
         "“Blaming migrants does not solve our challenges.\n"
-        "Westminster has always been, and must remain,\n"
-        "a safe and welcoming city for all residents.”"
+        "Westminster remains a safe, welcoming city\n"
+        "where everyone can feel proud.”"
     )
-    draw.text((120, 1220), q, font=get_font(FONT_SERIF, 34), fill=(195, 195, 200), spacing=14)
+    draw.text((110, 1500), q, font=f_quote, fill=TEXT_DARK, spacing=14)
 
     img.save(out_path)
 
 def create_scene2_card(out_path, show_logo=True):
-    img = draw_clean_broadsheet_bg()
+    img = draw_split_base_canvas()
     draw = ImageDraw.Draw(img)
     draw_header_bar(draw, img, show_authorised_logo=show_logo)
-    draw_footer_bar(draw, "Source: Council Agenda Frontsheet Item 8 • Motion Approved")
 
-    draw.rounded_rectangle([(80, 230), (350, 280)], radius=4, fill=TEXT_WHITE)
-    draw.text((102, 246), "POLICY MANDATE", font=get_font(FONT_SANS, 20), fill=PURE_BLACK)
+    # --- TOP BLACK SECTION: Leadership Card ---
+    draw.rounded_rectangle([(70, 210), (1010, 750)], radius=16, fill=(20, 20, 24), outline=BORDER_DARK, width=1)
+    draw.text((120, 260), "MOTION MOVER & SECONDER", font=get_font(FONT_SANS, 24), fill=TEXT_MUTED_LIGHT)
+    draw.text((120, 310), "Cllr Adam Hug", font=get_font(FONT_SERIF_BOLD, 68), fill=TEXT_WHITE)
+    draw.text((120, 405), "Leader of Westminster City Council (Labour & Co-operative)", font=get_font(FONT_SANS, 26), fill=TEXT_MUTED_LIGHT)
 
-    f_h1 = get_font(FONT_SERIF_BOLD, 64)
-    draw.text((80, 320), "New Community\nEquality Strategy", font=f_h1, fill=TEXT_WHITE, spacing=16)
+    draw.line([(120, 470), (960, 470)], fill=BORDER_DARK, width=1)
+    draw.text((120, 510), "Seconded by Cllr Ryan Jude (Cabinet Member for Culture & Air Quality)", font=get_font(FONT_SERIF, 30), fill=(210, 210, 215))
 
-    # Leader card
-    draw.rounded_rectangle([(80, 560), (1000, 730)], radius=12, fill=CARD_BG, outline=BORDER_GRAY, width=1)
-    draw.text((120, 595), "Cllr Adam Hug", font=get_font(FONT_SERIF_BOLD, 44), fill=TEXT_WHITE)
-    draw.text((120, 660), "Leader of Westminster City Council • Labour & Co-operative", font=get_font(FONT_SANS, 24), fill=TEXT_MUTED)
+    # --- BOTTOM WHITE SECTION: Document Extract ---
+    draw_bottom_footer(draw, "Source: Council Agenda Frontsheet Item 8 • Official Motion Extract")
 
-    # Clean Broadsheet Document Clipping
-    draw.rounded_rectangle([(80, 780), (1000, 1440)], radius=12, fill=(245, 245, 248))
-    draw.text((120, 820), "AGENDA PACK EXTRACT • WEDNESDAY 12 NOV 2025", font=get_font(FONT_SANS, 22), fill=(100, 100, 105))
+    f_h1 = get_font(FONT_SERIF_BOLD, 66)
+    draw.text((70, 880), "New Community\nEquality Strategy Approved", font=f_h1, fill=TEXT_DARK, spacing=14)
 
-    # Yellow highlighter box with proper padding
-    draw.rectangle([(110, 880), (970, 1130)], fill=(255, 243, 140))
+    # Yellow highlighter box on white background (newspaper clipping feel)
+    draw.rounded_rectangle([(70, 1100), (1010, 1400)], radius=8, fill=(255, 248, 180), outline=(235, 220, 130), width=1)
     
     quote_text = (
         "“Deliver a new Community Equality Strategy\n"
         "focused on improving council services and\n"
-        "promoting community cohesion, ensuring\n"
-        "earlier support is given to affected groups.”"
+        "promoting community cohesion, ensuring earlier\n"
+        "support is given to affected groups.”"
     )
-    draw.text((130, 905), quote_text, font=get_font(FONT_SERIF_BOLD, 34), fill=(18, 18, 22), spacing=12)
+    draw.text((110, 1130), quote_text, font=get_font(FONT_SERIF_BOLD, 38), fill=(20, 20, 25), spacing=14)
 
-    sub_commitments = (
-        "• Establish cross-community working group with faith leaders\n"
-        "• Partner with police for rapid response to hate incidents\n"
-        "• Champion cultural festivals and youth programmes"
+    # Bulleted implementation steps
+    f_list = get_font(FONT_SANS, 34)
+    bullets = (
+        "• Partner with police for rapid response to hate crime\n"
+        "• Establish cross-community strategy with faith leaders\n"
+        "• Expand youth anti-prejudice programmes in schools"
     )
-    draw.text((120, 1170), sub_commitments, font=get_font(FONT_SANS, 28), fill=(45, 45, 50), spacing=18)
+    draw.text((70, 1460), bullets, font=f_list, fill=(45, 45, 50), spacing=22)
 
     img.save(out_path)
 
 def create_scene3_card(out_path, show_logo=True):
-    """Scene 3 uses the photorealistic generative B-roll image of Victoria Street."""
-    if os.path.exists(GEN_STREET_BG):
-        base = Image.open(GEN_STREET_BG).convert("RGB")
-        base = base.resize((1080, 1920), Image.Resampling.LANCZOS)
-    else:
-        base = draw_clean_broadsheet_bg()
-
-    overlay = Image.new("RGBA", (1080, 1920), (0, 0, 0, 0))
-    d_ov = ImageDraw.Draw(overlay)
+    """Scene 3: Photorealistic Generative B-Roll in Top Half, Demographics in Bottom Half."""
+    img = draw_split_base_canvas()
     
-    for y in range(0, 360):
-        alpha = int(220 * (1 - (y / 360)))
-        d_ov.line([(0, y), (1080, y)], fill=(0, 0, 0, alpha))
-    for y in range(1200, 1920):
-        alpha = int(240 * ((y - 1200) / 720))
-        d_ov.line([(0, y), (1080, y)], fill=(0, 0, 0, alpha))
+    # 1. Paste the Generative 35mm Victoria Street photo in the top half window
+    if os.path.exists(GEN_STREET_BG):
+        gen_img = Image.open(GEN_STREET_BG).convert("RGB")
+        # Crop/scale to 1080x820
+        aspect = gen_img.width / gen_img.height
+        new_w = 1080
+        new_h = int(new_w / aspect)
+        gen_scaled = gen_img.resize((new_w, new_h), Image.Resampling.LANCZOS)
+        # Crop center
+        top_crop = int((new_h - SPLIT_Y) / 2)
+        gen_crop = gen_scaled.crop((0, max(0, top_crop), 1080, max(0, top_crop) + SPLIT_Y))
+        img.paste(gen_crop, (0, 0))
 
-    img = Image.alpha_composite(base.convert("RGBA"), overlay).convert("RGB")
+        # Top dark scrim for header readability
+        overlay = Image.new("RGBA", (1080, SPLIT_Y), (0, 0, 0, 0))
+        d_ov = ImageDraw.Draw(overlay)
+        for y in range(0, 220):
+            alpha = int(220 * (1 - (y / 220)))
+            d_ov.line([(0, y), (1080, y)], fill=(0, 0, 0, alpha))
+        img.paste(Image.alpha_composite(Image.new("RGBA", (1080, SPLIT_Y), (0, 0, 0, 0)), overlay).convert("RGB"), (0, 0), overlay)
+
     draw = ImageDraw.Draw(img)
     draw_header_bar(draw, img, show_authorised_logo=show_logo)
-    draw_footer_bar(draw, "Location: Victoria Street, SW1 • Met Police Central Area")
 
-    # High-contrast amber AI disclaimer badge
-    draw.rounded_rectangle([(80, 205), (460, 258)], radius=6, fill=(0, 0, 0, 230), outline=(245, 158, 11), width=1)
-    draw.rectangle([(80, 205), (90, 258)], fill=(245, 158, 11))
-    draw.text((105, 222), "AI ILLUSTRATIVE B-ROLL", font=get_font(FONT_SANS, 20), fill=(251, 191, 36))
+    # Amber AI Illustrative Badge in the top media window
+    draw.rounded_rectangle([(70, 200), (450, 255)], radius=6, fill=(0, 0, 0, 230), outline=(245, 158, 11), width=1)
+    draw.rectangle([(70, 200), (80, 255)], fill=(245, 158, 11))
+    draw.text((95, 218), "AI ILLUSTRATIVE B-ROLL", font=get_font(FONT_SANS, 20), fill=(251, 191, 36))
 
-    # Demographics card
-    draw.rounded_rectangle([(80, 1260), (1000, 1680)], radius=16, fill=(10, 10, 14, 235), outline=BORDER_GRAY, width=1)
-    draw.text((120, 1310), "WESTMINSTER DEMOGRAPHICS", font=get_font(FONT_SANS, 22), fill=TEXT_MUTED)
+    # --- BOTTOM WHITE SECTION: Big Demographic Numbers ---
+    draw_bottom_footer(draw, "Location: Victoria Street & Town Hall Precincts • Met Police Area")
 
-    draw.text((120, 1370), "180+", font=get_font(FONT_SERIF_BOLD, 84), fill=TEXT_WHITE)
-    draw.text((120, 1480), "Nationalities\nrepresented", font=get_font(FONT_SANS, 28), fill=(200, 200, 205), spacing=8)
+    f_h1 = get_font(FONT_SERIF_BOLD, 68)
+    draw.text((70, 880), "Westminster Demographics:\nA Global Community", font=f_h1, fill=TEXT_DARK, spacing=14)
 
-    draw.line([(520, 1370), (520, 1580)], fill=BORDER_GRAY, width=1)
+    # 2 Big Stat Cards on white broadsheet
+    draw.rounded_rectangle([(70, 1100), (510, 1420)], radius=12, fill=(245, 245, 248), outline=BORDER_LIGHT, width=1)
+    draw.text((110, 1140), "180+", font=get_font(FONT_SERIF_BOLD, 96), fill=TEXT_DARK)
+    draw.text((110, 1270), "Nationalities\nrepresented", font=get_font(FONT_SANS, 32), fill=TEXT_MUTED_DARK, spacing=8)
 
-    draw.text((560, 1370), "150+", font=get_font(FONT_SERIF_BOLD, 84), fill=TEXT_WHITE)
-    draw.text((560, 1480), "Languages spoken\nacross borough", font=get_font(FONT_SANS, 28), fill=(200, 200, 205), spacing=8)
+    draw.rounded_rectangle([(550, 1100), (1000, 1420)], radius=12, fill=(245, 245, 248), outline=BORDER_LIGHT, width=1)
+    draw.text((590, 1140), "150+", font=get_font(FONT_SERIF_BOLD, 96), fill=TEXT_DARK)
+    draw.text((590, 1270), "Languages spoken\nacross borough", font=get_font(FONT_SANS, 32), fill=TEXT_MUTED_DARK, spacing=8)
+
+    f_context = get_font(FONT_SERIF, 36)
+    ctx_text = (
+        "Council leaders emphasised that migrant and\n"
+        "minority communities must not be scapegoated\n"
+        "for wider economic pressures."
+    )
+    draw.text((70, 1490), ctx_text, font=f_context, fill=(40, 40, 45), spacing=14)
 
     img.save(out_path)
 
 def create_scene4_card(out_path, show_logo=True):
-    img = draw_clean_broadsheet_bg()
+    img = draw_split_base_canvas()
     draw = ImageDraw.Draw(img)
     draw_header_bar(draw, img, show_authorised_logo=show_logo)
-    draw_footer_bar(draw, "Implementation: Westminster Town Hall • Cross-Community Directorate")
 
-    draw.rounded_rectangle([(80, 230), (410, 280)], radius=4, fill=TEXT_WHITE)
-    draw.text((102, 246), "COMMUNITY ACTION", font=get_font(FONT_SANS, 20), fill=PURE_BLACK)
-
+    # --- TOP BLACK SECTION: Strategy Pillar Banner ---
+    draw.rounded_rectangle([(70, 210), (1010, 750)], radius=16, fill=(20, 20, 24), outline=BORDER_DARK, width=1)
+    draw.text((120, 260), "COUNCIL IMPLEMENTATION PLAN", font=get_font(FONT_SANS, 24), fill=TEXT_MUTED_LIGHT)
     f_h1 = get_font(FONT_SERIF_BOLD, 64)
-    draw.text((80, 320), "Cross-Community\nWorking Group", font=f_h1, fill=TEXT_WHITE, spacing=16)
+    draw.text((120, 310), "Cross-Community\nWorking Group", font=f_h1, fill=TEXT_WHITE, spacing=14)
+    draw.text((120, 520), "Established to unite community leaders, youth & police.", font=get_font(FONT_SERIF, 32), fill=(200, 200, 205))
+
+    # --- BOTTOM WHITE SECTION: Clean 4 Pillars ---
+    draw_bottom_footer(draw, "Implementation: Westminster Town Hall • Cross-Community Directorate")
+
+    draw.text((70, 880), "Four Core Pillars", font=get_font(FONT_SERIF_BOLD, 64), fill=TEXT_DARK)
 
     pillars = [
-        ("01 / FAITH LEADERS", "Interfaith dialogues, mutual support & cultural festivals"),
-        ("02 / YOUTH VOICES", "Civic education and school anti-prejudice initiatives"),
-        ("03 / LOCAL RESIDENTS", "Community-led monitoring of local tensions and safety"),
+        ("01 / FAITH LEADERS", "Interfaith gatherings, mutual protection and cultural festivals"),
+        ("02 / YOUTH VOICES", "Civic school workshops countering online hate narratives"),
+        ("03 / LOCAL RESIDENTS", "Grassroots reporting and direct council liaison channels"),
         ("04 / MET POLICE", "Swift investigation and dignifying care for hate crime victims")
     ]
 
-    top = 580
+    top = 990
     for title, desc in pillars:
-        draw.rounded_rectangle([(80, top), (1000, top + 165)], radius=10, fill=CARD_BG, outline=BORDER_GRAY, width=1)
-        draw.text((120, top + 32), title, font=get_font(FONT_SANS, 22), fill=TEXT_WHITE)
-        draw.text((120, top + 80), desc, font=get_font(FONT_SERIF, 30), fill=(210, 210, 215))
-        top += 195
+        draw.rounded_rectangle([(70, top), (1000, top + 145)], radius=10, fill=(245, 245, 248), outline=BORDER_LIGHT, width=1)
+        draw.text((110, top + 25), title, font=get_font(FONT_SANS, 24), fill=TEXT_DARK)
+        draw.text((110, top + 75), desc, font=get_font(FONT_SERIF, 30), fill=(70, 70, 75))
+        top += 170
 
     img.save(out_path)
 
 def create_scene5_card(out_path, show_logo=True):
-    img = draw_clean_broadsheet_bg()
+    img = draw_split_base_canvas()
     draw = ImageDraw.Draw(img)
     draw_header_bar(draw, img, show_authorised_logo=show_logo)
-    draw_footer_bar(draw, "Independent Civic Journalism Across Greater London's 33 Councils")
 
+    # --- TOP BLACK SECTION: Full Masthead ---
     if show_logo and os.path.exists(LOGO_WORDMARK):
         try:
             wm = Image.open(LOGO_WORDMARK).convert("RGBA")
             aspect = wm.width / wm.height
-            wm = wm.resize((int(85 * aspect), 85), Image.Resampling.LANCZOS)
-            img.paste(wm, (80, 520), wm)
+            wm = wm.resize((int(72 * aspect), 72), Image.Resampling.LANCZOS)
+            img.paste(wm, (70, 320), wm)
         except Exception:
-            draw.text((80, 520), "London Local.", font=get_font(FONT_SERIF_BOLD, 80), fill=TEXT_WHITE)
+            draw.text((70, 320), "London Local.", font=get_font(FONT_SERIF_BOLD, 76), fill=TEXT_WHITE)
     else:
-        draw.text((80, 520), "London Local.", font=get_font(FONT_SERIF_BOLD, 80), fill=TEXT_WHITE)
+        draw.text((70, 320), "London Local.", font=get_font(FONT_SERIF_BOLD, 76), fill=TEXT_WHITE)
 
-    draw.text((80, 645), "AI-first civic reporting across Greater London's 33 councils.", font=get_font(FONT_SANS, 32), fill=TEXT_MUTED)
+    draw.text((70, 430), "AI-first civic reporting across Greater London's 33 councils.", font=get_font(FONT_SANS, 30), fill=TEXT_MUTED_LIGHT)
 
-    # Document Verification Archive
-    draw.rounded_rectangle([(80, 770), (1000, 1260)], radius=12, fill=CARD_BG, outline=BORDER_GRAY, width=1)
-    draw.text((120, 820), "OFFICIAL DOCUMENT ARCHIVE", font=get_font(FONT_SANS, 22), fill=TEXT_MUTED)
+    # --- BOTTOM WHITE SECTION: Verification Archive & CTA ---
+    draw_bottom_footer(draw, "Independent Civic Journalism Across Greater London's 33 Councils")
+
+    draw.text((70, 880), "Verified Council Archive", font=get_font(FONT_SERIF_BOLD, 64), fill=TEXT_DARK)
+
+    draw.rounded_rectangle([(70, 990), (1000, 1440)], radius=12, fill=(245, 245, 248), outline=BORDER_LIGHT, width=1)
+    draw.text((110, 1040), "SOURCE DOCUMENTS ON RECORD", font=get_font(FONT_SANS, 22), fill=TEXT_MUTED_DARK)
 
     links = (
-        "• Full Council Meeting Minutes (12 November 2025)\n"
-        "• Westminster Motion Frontsheet & Voting Record\n"
-        "• Community Equality Strategy Briefing Paper\n"
-        "• Public Webcast Archive"
+        "• Full Committee Meeting Minutes (12 November 2025)\n"
+        "• Westminster Motion Frontsheet & Voting Tally\n"
+        "• Draft Community Equality Strategy Briefing Paper\n"
+        "• Public Webcast Recording"
     )
-    draw.text((120, 890), links, font=get_font(FONT_SERIF, 32), fill=(230, 230, 235), spacing=22)
+    draw.text((110, 1110), links, font=get_font(FONT_SERIF, 34), fill=(30, 30, 35), spacing=24)
 
-    # CTA Button
-    draw.rounded_rectangle([(80, 1340), (1000, 1460)], radius=8, fill=TEXT_WHITE)
-    draw.text((320, 1380), "londonlocal.news", font=get_font(FONT_SERIF_BOLD, 42), fill=PURE_BLACK)
+    # Full Width CTA
+    draw.rounded_rectangle([(70, 1530), (1000, 1660)], radius=10, fill=TEXT_DARK)
+    draw.text((320, 1575), "londonlocal.news", font=get_font(FONT_SERIF_BOLD, 46), fill=TEXT_WHITE)
 
     img.save(out_path)
 
@@ -301,7 +339,7 @@ def generate_audio(voice="en-GB-RyanNeural"):
     return timings
 
 def render_video(show_logo=True):
-    print("=== 1. Generating Clean Broadsheet Cards (V3) ===")
+    print("=== 1. Generating Split Mobile Broadsheet Cards (V4) ===")
     img1 = os.path.join(ASSETS_DIR, "real/scene1_westminster_vote.png")
     img2 = os.path.join(ASSETS_DIR, "real/scene2_equality_strategy.png")
     img3 = os.path.join(ASSETS_DIR, "generative/scene3_victoria_street.png")
@@ -313,7 +351,7 @@ def render_video(show_logo=True):
     create_scene3_card(img3, show_logo=show_logo)
     create_scene4_card(img4, show_logo=show_logo)
     create_scene5_card(img5, show_logo=show_logo)
-    print("All 5 clean broadsheet cards generated.")
+    print("All 5 split mobile cards generated.")
 
     print("\n=== 2. Synthesising British Neural Audio ===")
     timings = generate_audio()
