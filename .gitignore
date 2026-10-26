@@ -16,3 +16,8 @@ dist/
 .DS_Store
 .vscode/
 .idea/
+
+# Media build artifacts & renders
+build/
+output/*.mp4
+*.mp3

@@ -1,0 +1,98 @@
+{
+  "videoId": "westminster-extremism-motion-4178",
+  "sourceArticleUrl": "https://londonlocal.news/stories/4178",
+  "borough": "Westminster",
+  "meetingDate": "2025-11-12",
+  "totalDuration": 40.0,
+  "targetPlatform": ["tiktok", "reddit"],
+  "editorialGate": {
+    "status": "pending_review",
+    "editorApproved": false,
+    "reviewedBy": null
+  },
+  "branding": {
+    "theme": "london-local-editorial",
+    "showWatermark": true,
+    "voiceProfile": "en-GB-Neural2-B"
+  },
+  "timeline": [
+    {
+      "sceneNumber": 1,
+      "type": "real_asset",
+      "durationSeconds": 8.5,
+      "visualAsset": {
+        "source": "assets/real/scene1_westminster_vote.png",
+        "effect": "subtle_scale",
+        "isIllustrative": false
+      },
+      "voiceoverText": "Westminster City Council has unanimously passed a cross-party motion condemning far-right extremism and pledging to tackle rising hate incidents across the borough.",
+      "onScreenGraphic": {
+        "headline": "UNANIMOUS VOTE",
+        "subhead": "Westminster Council Motion"
+      },
+      "citations": ["Westminster Council Stands Against Far-Right Extremism, Para 1"]
+    },
+    {
+      "sceneNumber": 2,
+      "type": "document_highlight",
+      "durationSeconds": 9.5,
+      "visualAsset": {
+        "source": "assets/real/scene2_equality_strategy.png",
+        "effect": "yellow_highlighter_motion",
+        "isIllustrative": false
+      },
+      "voiceoverText": "Moved by council leader Adam Hug, the motion responds to recent anti-migrant rhetoric and commits the authority to deliver a brand new Community Equality Strategy.",
+      "onScreenGraphic": {
+        "badge": "COUNCIL LEADER",
+        "quote": "Cllr Adam Hug"
+      },
+      "citations": ["Para 2, Para 3 line 6"]
+    },
+    {
+      "sceneNumber": 3,
+      "type": "generative_broll",
+      "durationSeconds": 5.0,
+      "visualAsset": {
+        "source": "assets/generative/scene3_victoria_street.mp4",
+        "prompt": "Documentary street-level shot of Victoria Street, Westminster, London. Overcast daylight, red London double-decker bus passing, pedestrians walking, realistic 9:16 vertical.",
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI Illustrative Footage"
+      },
+      "voiceoverText": "The borough represents over one hundred and eighty nationalities, speaking more than one hundred and fifty languages.",
+      "onScreenGraphic": null,
+      "citations": ["Para 4: 'residents from over 180 nationalities speaking more than 150 languages'"]
+    },
+    {
+      "sceneNumber": 4,
+      "type": "quote_card",
+      "durationSeconds": 11.0,
+      "visualAsset": {
+        "source": "assets/real/scene4_working_group.png",
+        "effect": "clean_fade",
+        "isIllustrative": false
+      },
+      "voiceoverText": "A new working group of faith leaders, youth voices, and residents will now partner with police to support victims and protect community cohesion.",
+      "onScreenGraphic": {
+        "headline": "CROSS-COMMUNITY WORKING GROUP",
+        "subhead": "Residents • Faith Leaders • Youth • Police"
+      },
+      "citations": ["Para 3 commitments 2 & 3"]
+    },
+    {
+      "sceneNumber": 5,
+      "type": "real_asset",
+      "durationSeconds": 6.0,
+      "visualAsset": {
+        "source": "assets/branding/scene5_outro.png",
+        "effect": "static",
+        "isIllustrative": false
+      },
+      "voiceoverText": "Full meeting minutes and council records are available on London Local dot news.",
+      "onScreenGraphic": {
+        "headline": "London Local.",
+        "subhead": "Read the verified council record"
+      },
+      "citations": ["SOURCE DOCUMENTS: Westminster 12 November 2025 Agenda/Minutes"]
+    }
+  ]
+}
