@@ -77,10 +77,10 @@ FONT_SERIF = resolve_font_path(SERIF_CANDIDATES)
 FONT_SANS_BOLD = resolve_font_path(SANS_BOLD_CANDIDATES) or resolve_font_path(SANS_CANDIDATES)
 FONT_SANS = resolve_font_path(SANS_CANDIDATES)
 
-MARGIN_X = 80
-MARGIN_RIGHT = 175  # TikTok Safe Zone: >= 15% right margin (175px = 16.2%)
-SAFE_X2 = 1080 - MARGIN_RIGHT  # 905px
-SAFE_WIDTH = SAFE_X2 - MARGIN_X  # 825px
+MARGIN_X = 162  # Symmetrical 15.0% safe margin for TikTok/Reels (162px = 15.0%)
+MARGIN_RIGHT = 162
+SAFE_X2 = 1080 - MARGIN_RIGHT  # 918px
+SAFE_WIDTH = SAFE_X2 - MARGIN_X  # 756px
 SAFE_BOTTOM = 1640  # TikTok Safe Zone: >= 250px above bottom edge (1920 - 280px)
 
 # Consistent Brand Color Palette
@@ -939,7 +939,7 @@ def render_template_scene3_key_points(spec, scene, t=10.0, total_dur=6.0):
         is_active = (idx == active_idx) or (t >= total_dur - 0.4)
         if is_active:
             draw.rounded_rectangle(
-                [(MARGIN_X - 10, py - 18 + y_off), (SAFE_X2, py + 235 + y_off)],
+                [(MARGIN_X, py - 18 + y_off), (SAFE_X2, py + 235 + y_off)],
                 radius=18,
                 fill=(22, 24, 34, int(225 * p_pt)),
                 outline=accent_rgb + (int(220 * p_pt),),
@@ -947,26 +947,26 @@ def render_template_scene3_key_points(spec, scene, t=10.0, total_dur=6.0):
             )
 
         bar_col = accent_rgb + (int(255 * p_pt),) if is_active else (140, 145, 160, int(180 * p_pt))
-        draw.line([(MARGIN_X, py + 12 + y_off), (MARGIN_X, py + 72 + y_off)], fill=bar_col, width=5)
+        draw.line([(MARGIN_X + 10, py + 12 + y_off), (MARGIN_X + 10, py + 72 + y_off)], fill=bar_col, width=5)
 
         # Prominent Hero Step Number (52px bold serif)
         step_txt = f"0{idx + 1}"
-        draw.text((MARGIN_X + 18, py + 14 + y_off), step_txt, font=f_step, fill=accent_rgb + (int(255 * p_pt),))
+        draw.text((MARGIN_X + 28, py + 14 + y_off), step_txt, font=f_step, fill=accent_rgb + (int(255 * p_pt),))
 
         # Vertical Divider
-        draw.line([(MARGIN_X + 96, py + 20 + y_off), (MARGIN_X + 96, py + 70 + y_off)], fill=(255, 255, 255, int(70 * p_pt)), width=2)
+        draw.line([(MARGIN_X + 106, py + 20 + y_off), (MARGIN_X + 106, py + 70 + y_off)], fill=(255, 255, 255, int(70 * p_pt)), width=2)
 
         # Bold Anchor Headline
-        draw.text((MARGIN_X + 116, py + 16 + y_off), anchor, font=f_anchor, fill=(255, 255, 255, int(255 * p_pt)))
+        draw.text((MARGIN_X + 126, py + 16 + y_off), anchor, font=f_anchor, fill=(255, 255, 255, int(255 * p_pt)))
 
         sub_y = py + 92 + y_off
         if sub:
-            for line in rt.wrap_text(draw, sub, f_sub, SAFE_WIDTH - 40)[:2]:
-                draw.text((MARGIN_X + 18, sub_y), line, font=f_sub, fill=(225, 230, 240, int(255 * p_pt)))
+            for line in rt.wrap_text(draw, sub, f_sub, SAFE_WIDTH - 50)[:2]:
+                draw.text((MARGIN_X + 28, sub_y), line, font=f_sub, fill=(225, 230, 240, int(255 * p_pt)))
                 sub_y += 38
 
         cite_str = cite_text.strip().lstrip("<").rstrip(">")
-        draw.text((MARGIN_X + 18, sub_y + 8), cite_str, font=f_cite, fill=(180, 185, 200, int(255 * p_pt)))
+        draw.text((MARGIN_X + 28, sub_y + 8), cite_str, font=f_cite, fill=(180, 185, 200, int(255 * p_pt)))
 
     if spec.get("branding", {}).get("showCaptions", False):
         rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1540)

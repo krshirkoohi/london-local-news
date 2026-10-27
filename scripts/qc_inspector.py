@@ -88,7 +88,7 @@ def audit_spec_text_layout(spec):
                 violations.append(f"Scene 3 point {idx+1} body length ({lw:.1f}px) exceeds card width (830px)")
 
     # 3. Check Scene 4 Facts and figures cards (Values, Kickers, Labels, Subtexts)
-    card_inner_w = 325  # ((SAFE_X2 - MARGIN_X - 50) // 2) - 48
+    card_inner_w = 305  # ((918 - 162 - 50) // 2) - 48 for centered 15% safe margin
     for scene in spec.get("timeline", []):
         if scene.get("figure", {}).get("type") == "stat_comparison":
             cards = scene.get("figure", {}).get("data", {}).get("cards", [])
@@ -129,7 +129,7 @@ def audit_spec_text_layout(spec):
     # 4. Check Scene 4 Takeaway Card Title & Subtitle
     takeaway = spec.get("takeawayCard", {})
     t_title = takeaway.get("title", "")
-    t_width = 864 - 80
+    t_width = 756 - 80
     f_tt, tt_lines, _ = rt.fit_text_to_bounds(draw, t_title, rt.FONT_SERIF_BOLD, initial_size=31, max_width=t_width, max_lines=1, min_size=20)
     for ttl in tt_lines:
         ttw = draw.textlength(ttl, font=f_tt)
@@ -151,7 +151,7 @@ def audit_rendered_video_keyframes(video_path, total_scenes=5):
         return {"passed": False, "error": "Could not probe video duration"}
 
     dur = float(res.stdout.strip())
-    test_times = [dur * 0.15, dur * 0.40, dur * 0.65, dur * 0.85, dur * 0.96]
+    test_times = [dur * 0.08, dur * 0.22, dur * 0.50, dur * 0.68, dur * 0.94]
     
     tmp_dir = "/tmp/qc_keyframes"
     os.makedirs(tmp_dir, exist_ok=True)
@@ -165,9 +165,21 @@ def audit_rendered_video_keyframes(video_path, total_scenes=5):
             img = Image.open(frame_file)
             sharpness = check_laplacian_sharpness(img)
             pixel_leak = False
-            # Check frame 2 (Scene 4 Facts and figures) for text pixel leak outside the upper card right border (x > 887)
+            off_center = False
+
+            # Check frame 1 (Scene 2 Receipt card) for symmetrical horizontal centering at x=540
+            if idx == 1 and img.size == (1080, 1920):
+                arr = np.array(img)
+                mask = (arr[800:1000, :, 0] > 240) & (arr[800:1000, :, 1] > 240) & (arr[800:1000, :, 2] > 230)
+                cols = np.where(mask.any(axis=0))[0]
+                if len(cols) > 0:
+                    center_x = (cols.min() + cols.max()) / 2.0
+                    if abs(center_x - 540.0) > 6.0:
+                        off_center = True
+
+            # Check frame 2 (Scene 4 Facts and figures) for text pixel leak outside container right border (x > 920)
             if idx == 2 and img.size == (1080, 1920):
-                leak_crop = img.crop((887, 280, 930, 600)).convert("L")
+                leak_crop = img.crop((920, 280, 970, 600)).convert("L")
                 arr_leak = np.array(leak_crop)
                 leaked_pixels = int(np.sum(arr_leak > 215))
                 if leaked_pixels > 25:
@@ -177,8 +189,9 @@ def audit_rendered_video_keyframes(video_path, total_scenes=5):
                 "timeSeconds": round(t, 2),
                 "resolution": img.size,
                 "sharpnessScore": round(sharpness, 2),
-                "validResolution": (img.size == (1080, 1920)) and not pixel_leak,
+                "validResolution": (img.size == (1080, 1920)) and not pixel_leak and not off_center,
                 "pixelLeak": pixel_leak,
+                "offCenter": off_center,
             })
 
     all_res_valid = all(f["validResolution"] for f in frame_audits)
