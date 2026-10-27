@@ -30,11 +30,43 @@ FONT_SANS = "/System/Library/Fonts/Supplemental/Arial.ttf"
 _font_cache = {}
 
 
+def resolve_font_path(font_path):
+    if font_path and os.path.exists(font_path):
+        return font_path
+
+    # Cross-platform fallbacks for Linux CI (fonts-liberation / fonts-dejavu-core)
+    linux_fallbacks = {
+        "Georgia Bold": [
+            "/usr/share/fonts/truetype/liberation/LiberationSerif-Bold.ttf",
+            "/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf",
+        ],
+        "Georgia": [
+            "/usr/share/fonts/truetype/liberation/LiberationSerif-Regular.ttf",
+            "/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf",
+        ],
+        "Arial Bold": [
+            "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+            "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        ],
+        "Arial": [
+            "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
+            "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        ],
+    }
+    for name, paths in linux_fallbacks.items():
+        if name in (font_path or ""):
+            for p in paths:
+                if os.path.exists(p):
+                    return p
+    return font_path
+
+
 def get_font(font_path, size):
-    key = (font_path, size)
+    resolved = resolve_font_path(font_path)
+    key = (resolved, size)
     if key not in _font_cache:
         try:
-            _font_cache[key] = ImageFont.truetype(font_path, size)
+            _font_cache[key] = ImageFont.truetype(resolved, size)
         except Exception:
             _font_cache[key] = ImageFont.load_default()
     return _font_cache[key]
