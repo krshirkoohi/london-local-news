@@ -1481,12 +1481,14 @@ def render_story_from_spec(spec_path, show_logo=True, force_tts=False):
                     "[vid][1:v]overlay=0:0[outv]"
                 )
             elif crop_mode == "heat_shimmer":
-                # Solar shimmer wave effect (Southwark school heat hook)
+                # Warm solar heat haze with subtle thermal breathing (smooth, zero camera shake)
                 vf_chain = (
                     f"[0:v]{setpts_filter}"
-                    "scale=1080:1940:force_original_aspect_ratio=increase,"
-                    "crop=1080:1920:0:'6*sin(12*PI*t)+10',"
-                    "eq=contrast='1.18+0.04*sin(8*PI*t)':brightness='0.02+0.02*sin(6*PI*t)':saturation=1.30,"
+                    "scale=1080:1920:force_original_aspect_ratio=increase,"
+                    "crop=1080:1920,"
+                    f"scale=w='1080*(1.0 + 0.05*min(t/{pad_dur:.3f}, 1.0))':h='1920*(1.0 + 0.05*min(t/{pad_dur:.3f}, 1.0))':eval=frame,"
+                    "crop=1080:1920:(in_w-1080)/2:(in_h-1920)/2,"
+                    "eq=contrast='1.12+0.03*sin(2.5*PI*t)':brightness='0.02+0.015*sin(2*PI*t)':saturation=1.25,"
                     "colorbalance=rs=0.12:gs=0.03:bs=-0.14,"
                     "fps=30[vid];"
                     "[vid][1:v]overlay=0:0[outv]"
@@ -1554,11 +1556,13 @@ def render_story_from_spec(spec_path, show_logo=True, force_tts=False):
                     f"[bg][1:v]overlay=0:0[outv]"
                 )
             elif crop_mode == "heat_shimmer":
-                # Solar shimmer wave on still image (Southwark playground hook)
+                # Warm solar heat haze on still image (smooth, zero camera shake)
                 vf_chain = (
-                    f"[0:v]scale=1080:1940:force_original_aspect_ratio=increase,"
-                    f"crop=1080:1920:0:'6*sin(12*PI*t)+10',"
-                    f"eq=contrast='1.18+0.04*sin(8*PI*t)':brightness='0.02+0.02*sin(6*PI*t)':saturation=1.30,"
+                    f"[0:v]scale=1080:1920:force_original_aspect_ratio=increase,"
+                    f"crop=1080:1920,"
+                    f"scale=w='1080*(1.0 + 0.05*min(t/{pad_dur:.3f}, 1.0))':h='1920*(1.0 + 0.05*min(t/{pad_dur:.3f}, 1.0))':eval=frame,"
+                    f"crop=1080:1920:(in_w-1080)/2:(in_h-1920)/2,"
+                    f"eq=contrast='1.12+0.03*sin(2.5*PI*t)':brightness='0.02+0.015*sin(2*PI*t)':saturation=1.25,"
                     f"colorbalance=rs=0.12:gs=0.03:bs=-0.14,"
                     f"fps=30[bg];"
                     f"[bg][1:v]overlay=0:0[outv]"
