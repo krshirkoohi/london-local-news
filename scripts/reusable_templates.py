@@ -593,12 +593,12 @@ def generate_borough_map_overlay(borough_name, width=820, height=540, zoom=1.0, 
         _map_base_cache[cache_key] = map_img
 
     base_img = _map_base_cache[cache_key]
-    # Base bounding box (320, 180, 1120, 880) -> 800x700 centered around central/inner London
+    # Base bounding box (800x700) centered on the illuminated borough seed
     z = max(1.0, min(1.25, float(zoom)))
     half_w = int(400 / z)
     half_h = int(350 / z)
-    cx = int(720 + (seed[0] - 720) * (1.0 - 1.0 / z) * 0.7)
-    cy = int(530 + (seed[1] - 530) * (1.0 - 1.0 / z) * 0.7)
+    cx = int(seed[0])
+    cy = int(seed[1])
     x1 = max(0, min(1448 - 2 * half_w, cx - half_w))
     y1 = max(0, min(1086 - 2 * half_h, cy - half_h))
     cropped = base_img.crop((x1, y1, x1 + 2 * half_w, y1 + 2 * half_h)).resize((width, height), Image.Resampling.LANCZOS)

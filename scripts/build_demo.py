@@ -914,8 +914,26 @@ def render_template_scene3_key_points(spec, scene, t=10.0, total_dur=6.0):
     start_y = max(330, hy + 25)
     spacing = 355
 
-    # Active spoken point index (0, 1, or 2) progresses across the scene duration
-    active_idx = min(2, int((t / max(1.0, total_dur - 0.4)) * 3))
+    # Calm, smooth progressive step illumination across scene duration
+    t1 = total_dur * 0.42
+    t2 = total_dur * 0.76
+    fade_half = 0.18  # smooth 0.36s crossfade between tabs
+
+    tab_intensities = [0.0, 0.0, 0.0]
+    if t < t1 - fade_half:
+        tab_intensities[0] = 1.0
+    elif t < t1 + fade_half:
+        p = (t - (t1 - fade_half)) / (2 * fade_half)
+        tab_intensities[0] = 1.0 - p
+        tab_intensities[1] = p
+    elif t < t2 - fade_half:
+        tab_intensities[1] = 1.0
+    elif t < t2 + fade_half:
+        p = (t - (t2 - fade_half)) / (2 * fade_half)
+        tab_intensities[1] = 1.0 - p
+        tab_intensities[2] = p
+    else:
+        tab_intensities[2] = 1.0
 
     for idx, pt in enumerate(points[:3]):
         t_start = 0.10 + idx * 0.22
@@ -936,22 +954,29 @@ def render_template_scene3_key_points(spec, scene, t=10.0, total_dur=6.0):
             sub = ""
             cite_text = "Council Public Record"
 
-        is_active = (idx == active_idx) or (t >= total_dur - 0.4)
-        if is_active:
+        act_val = tab_intensities[idx] * p_pt
+        if act_val > 0.02:
             draw.rounded_rectangle(
                 [(MARGIN_X, py - 18 + y_off), (SAFE_X2, py + 235 + y_off)],
                 radius=18,
-                fill=(22, 24, 34, int(225 * p_pt)),
-                outline=accent_rgb + (int(220 * p_pt),),
+                fill=(22, 24, 34, int(225 * act_val)),
+                outline=accent_rgb + (int(220 * act_val),),
                 width=2,
             )
 
-        bar_col = accent_rgb + (int(255 * p_pt),) if is_active else (140, 145, 160, int(180 * p_pt))
-        draw.line([(MARGIN_X + 10, py + 12 + y_off), (MARGIN_X + 10, py + 72 + y_off)], fill=bar_col, width=5)
+        # Left vertical accent line on card (crossfades between muted grey and bright accent)
+        r_bar = int(140 * (1.0 - act_val) + accent_rgb[0] * act_val)
+        g_bar = int(145 * (1.0 - act_val) + accent_rgb[1] * act_val)
+        b_bar = int(160 * (1.0 - act_val) + accent_rgb[2] * act_val)
+        a_bar = int(180 * (1.0 - act_val) + 255 * act_val)
+        draw.line([(MARGIN_X + 10, py + 12 + y_off), (MARGIN_X + 10, py + 72 + y_off)], fill=(r_bar, g_bar, b_bar, int(a_bar * p_pt)), width=5)
 
         # Prominent Hero Step Number (52px bold serif)
         step_txt = f"0{idx + 1}"
-        draw.text((MARGIN_X + 28, py + 14 + y_off), step_txt, font=f_step, fill=accent_rgb + (int(255 * p_pt),))
+        r_step = int(180 * (1.0 - act_val) + accent_rgb[0] * act_val)
+        g_step = int(185 * (1.0 - act_val) + accent_rgb[1] * act_val)
+        b_step = int(200 * (1.0 - act_val) + accent_rgb[2] * act_val)
+        draw.text((MARGIN_X + 28, py + 14 + y_off), step_txt, font=f_step, fill=(r_step, g_step, b_step, int(255 * p_pt)))
 
         # Vertical Divider
         draw.line([(MARGIN_X + 106, py + 20 + y_off), (MARGIN_X + 106, py + 70 + y_off)], fill=(255, 255, 255, int(70 * p_pt)), width=2)
@@ -994,9 +1019,11 @@ def render_template_scene4_facts_figures(spec, scene, t=10.0, total_dur=6.0):
         a = int(210 * (1.0 - (y / 280.0)**1.4))
         draw.line([(0, y), (1080, y)], fill=(8, 8, 12, a))
 
-    # Header from 5.png
-    f_title = rt.get_font(rt.FONT_SERIF_BOLD, 92)
-    draw.text((MARGIN_X, 115), "Facts and figures", font=f_title, fill=(255, 255, 255, 255))
+    # Header from 5.png - Centered within SAFE_WIDTH on 540px axis
+    f_title, head_lines, _ = rt.fit_text_to_bounds(draw, "Facts and figures", rt.FONT_SERIF_BOLD, initial_size=82, max_width=SAFE_WIDTH, max_lines=1, min_size=56)
+    title_txt = head_lines[0] if head_lines else "Facts and figures"
+    tw = draw.textlength(title_txt, font=f_title)
+    draw.text(((1080 - tw) // 2, 115), title_txt, font=f_title, fill=(255, 255, 255, 255))
 
     # Container frame from 5.png (bounded strictly within SAFE_X2 and ending at 1545)
     bx1, by1, bx2, by2 = MARGIN_X, 260, SAFE_X2, 1545
@@ -1100,12 +1127,20 @@ def render_template_scene4_facts_figures(spec, scene, t=10.0, total_dur=6.0):
     t_title = takeaway.get("title", scene.get("onScreenGraphic", {}).get("headline", "Council Implementation").replace("\n", " "))
     t_sub = takeaway.get("subtitle", scene.get("onScreenGraphic", {}).get("body", ""))
 
-    draw.text((bx1 + 40, vy1 + 22), t_kicker.upper(), font=rt.get_font(rt.FONT_SANS_BOLD, 18), fill=DOT_ORANGE + (255,))
+    f_kicker = rt.get_font(rt.FONT_SANS_BOLD, 18)
+    kw = draw.textlength(t_kicker.upper(), font=f_kicker)
+    draw.text(((1080 - kw) // 2, vy1 + 22), t_kicker.upper(), font=f_kicker, fill=DOT_ORANGE + (255,))
+
     t_width = bx2 - bx1 - 80
     f_ttitle, tt_lines, _ = rt.fit_text_to_bounds(draw, t_title, rt.FONT_SERIF_BOLD, initial_size=31, max_width=t_width, max_lines=1, min_size=20)
-    draw.text((bx1 + 40, vy1 + 56), tt_lines[0] if tt_lines else t_title, font=f_ttitle, fill=(255, 255, 255, 255))
-    for sl in rt.wrap_text(draw, t_sub, rt.get_font(rt.FONT_SANS, 20), t_width)[:1]:
-        draw.text((bx1 + 40, vy1 + 104), sl, font=rt.get_font(rt.FONT_SANS, 20), fill=(195, 200, 210, 255))
+    t_text = tt_lines[0] if tt_lines else t_title
+    tw = draw.textlength(t_text, font=f_ttitle)
+    draw.text(((1080 - tw) // 2, vy1 + 56), t_text, font=f_ttitle, fill=(255, 255, 255, 255))
+
+    f_sub = rt.get_font(rt.FONT_SANS, 20)
+    for sl in rt.wrap_text(draw, t_sub, f_sub, t_width)[:1]:
+        sw = draw.textlength(sl, font=f_sub)
+        draw.text(((1080 - sw) // 2, vy1 + 104), sl, font=f_sub, fill=(195, 200, 210, 255))
 
     # Bottom scrim for caption, citation & AI-GENERATED MEDIA badge contrast over bright B-roll
     for y in range(1545, 1920):
