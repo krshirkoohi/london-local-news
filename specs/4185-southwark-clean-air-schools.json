@@ -100,8 +100,8 @@
         "SOU-C1"
       ],
       "visualAsset": {
-        "type": "image",
-        "source": "assets/generative/southwark_school_traffic.jpg",
+        "type": "video",
+        "source": "assets/generative/southwark_school_traffic_video.mp4",
         "cropMode": "full",
         "trimStart": 0.0,
         "isIllustrative": true,
@@ -124,8 +124,8 @@
         "SOU-C3"
       ],
       "visualAsset": {
-        "type": "image",
-        "source": "assets/generative/southwark_school_sign.jpg",
+        "type": "video",
+        "source": "assets/generative/southwark_school_sign_video.mp4",
         "cropMode": "architectural_upper",
         "trimStart": 0.0,
         "isIllustrative": true,
@@ -162,8 +162,8 @@
         "SOU-C3"
       ],
       "visualAsset": {
-        "type": "image",
-        "source": "assets/generative/southwark_car_free_school.jpg",
+        "type": "video",
+        "source": "assets/generative/southwark_car_free_school_video.mp4",
         "cropMode": "full",
         "trimStart": 0.0,
         "isIllustrative": true,
@@ -217,8 +217,8 @@
         "SOU-C4"
       ],
       "visualAsset": {
-        "type": "image",
-        "source": "assets/generative/southwark_clean_air_sensor.jpg",
+        "type": "video",
+        "source": "assets/generative/southwark_clean_air_sensor_video.mp4",
         "cropMode": "full",
         "trimStart": 0.0,
         "isIllustrative": true,
