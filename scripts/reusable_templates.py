@@ -118,11 +118,12 @@ def wrap_text(draw, text, font, max_width):
     return lines
 
 
-def fit_text_to_bounds(draw, text, font_name, initial_size, max_width, max_height=None, max_lines=3, min_size=24):
+def fit_text_to_bounds(draw, text, font_name, initial_size, max_width, max_height=None, max_lines=3, min_size=20):
     """
     Quality Control Utility:
     Dynamically measures, steps down font size, and wraps text so it fits
     strictly within max_width and max_lines without clipping or overflowing.
+    Every rendered line must be <= max_width.
     """
     size = initial_size
     while size >= min_size:
@@ -134,16 +135,24 @@ def fit_text_to_bounds(draw, text, font_name, initial_size, max_width, max_heigh
         
         line_spacing = int(size * 1.18)
         total_h = len(all_wrapped) * line_spacing
-        if len(all_wrapped) <= max_lines and (max_height is None or total_h <= max_height):
+        lines_fit = len(all_wrapped) <= max_lines
+        height_fit = (max_height is None or total_h <= max_height)
+        width_fit = all(draw.textlength(l, font=font) <= max_width for l in all_wrapped)
+        if lines_fit and height_fit and width_fit:
             return font, all_wrapped, line_spacing
-        size -= 4
+        size -= 2
 
     font = get_font(font_name, min_size)
     raw_lines = text.split("\n")
     all_wrapped = []
     for rl in raw_lines:
         all_wrapped.extend(wrap_text(draw, rl, font, max_width))
-    return font, all_wrapped[:max_lines], int(min_size * 1.18)
+    clamped_lines = []
+    for l in all_wrapped[:max_lines]:
+        while draw.textlength(l, font=font) > max_width and len(l) > 3:
+            l = l[:-2] + "…"
+        clamped_lines.append(l)
+    return font, clamped_lines, int(min_size * 1.18)
 
 
 # ==============================================================================

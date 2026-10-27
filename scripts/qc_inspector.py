@@ -87,19 +87,54 @@ def audit_spec_text_layout(spec):
             if lw > 830:
                 violations.append(f"Scene 3 point {idx+1} body length ({lw:.1f}px) exceeds card width (830px)")
 
-    # 3. Check Scene 4 Facts and figures card subtexts
+    # 3. Check Scene 4 Facts and figures cards (Values, Kickers, Labels, Subtexts)
+    card_inner_w = 325  # ((SAFE_X2 - MARGIN_X - 50) // 2) - 48
     for scene in spec.get("timeline", []):
         if scene.get("figure", {}).get("type") == "stat_comparison":
             cards = scene.get("figure", {}).get("data", {}).get("cards", [])
-            for c_idx, c in enumerate(cards):
+            for c_idx, c in enumerate(cards[:2]):
+                # Value
+                v_str = str(c.get("value", ""))
+                f_val, val_lines, _ = rt.fit_text_to_bounds(draw, v_str, rt.FONT_SERIF_BOLD, initial_size=70, max_width=card_inner_w, max_lines=1, min_size=28)
+                for vl in val_lines:
+                    vw = draw.textlength(vl, font=f_val)
+                    if vw > card_inner_w + 2:
+                        violations.append(f"Scene 4 card {c_idx+1} value '{v_str}' length ({vw:.1f}px) overflows card boundary ({card_inner_w}px)")
+
+                # Kicker
+                k_str = str(c.get("kicker", ""))
+                f_kicker, k_lines, _ = rt.fit_text_to_bounds(draw, k_str, rt.FONT_SANS_BOLD, initial_size=17, max_width=card_inner_w, max_lines=1, min_size=12)
+                for kl in k_lines:
+                    kw = draw.textlength(kl, font=f_kicker)
+                    if kw > card_inner_w + 2:
+                        violations.append(f"Scene 4 card {c_idx+1} kicker '{k_str}' length ({kw:.1f}px) overflows card boundary ({card_inner_w}px)")
+
+                # Label
+                f_lbl = rt.get_font(rt.FONT_SANS_BOLD, 20)
+                lbl_lines = rt.wrap_text(draw, c.get("label", ""), f_lbl, card_inner_w)
+                for ll in lbl_lines:
+                    lw = draw.textlength(ll, font=f_lbl)
+                    if lw > card_inner_w + 2:
+                        violations.append(f"Scene 4 card {c_idx+1} label line '{ll}' ({lw:.1f}px) overflows card boundary ({card_inner_w}px)")
+
+                # Subtext
                 sub = c.get("subtext", "")
                 f_card_sub = rt.get_font(rt.FONT_SANS, 17)
-                card_w = 406 - 48
-                sub_lines = rt.wrap_text(draw, sub, f_card_sub, card_w)
+                sub_lines = rt.wrap_text(draw, sub, f_card_sub, card_inner_w)
                 for sl in sub_lines:
                     lw = draw.textlength(sl, font=f_card_sub)
-                    if lw > card_w + 5:
-                        violations.append(f"Scene 4 card {c_idx+1} subtext ({lw:.1f}px) exceeds card width ({card_w}px)")
+                    if lw > card_inner_w + 5:
+                        violations.append(f"Scene 4 card {c_idx+1} subtext ({lw:.1f}px) exceeds card width ({card_inner_w}px)")
+
+    # 4. Check Scene 4 Takeaway Card Title & Subtitle
+    takeaway = spec.get("takeawayCard", {})
+    t_title = takeaway.get("title", "")
+    t_width = 864 - 80
+    f_tt, tt_lines, _ = rt.fit_text_to_bounds(draw, t_title, rt.FONT_SERIF_BOLD, initial_size=31, max_width=t_width, max_lines=1, min_size=20)
+    for ttl in tt_lines:
+        ttw = draw.textlength(ttl, font=f_tt)
+        if ttw > t_width + 2:
+            violations.append(f"Scene 4 takeaway title '{t_title}' length ({ttw:.1f}px) exceeds takeaway width ({t_width}px)")
 
     return violations
 
@@ -129,11 +164,21 @@ def audit_rendered_video_keyframes(video_path, total_scenes=5):
         if os.path.exists(frame_file):
             img = Image.open(frame_file)
             sharpness = check_laplacian_sharpness(img)
+            pixel_leak = False
+            # Check frame 2 (Scene 4 Facts and figures) for text pixel leak outside the upper card right border (x > 887)
+            if idx == 2 and img.size == (1080, 1920):
+                leak_crop = img.crop((887, 280, 930, 600)).convert("L")
+                arr_leak = np.array(leak_crop)
+                leaked_pixels = int(np.sum(arr_leak > 215))
+                if leaked_pixels > 25:
+                    pixel_leak = True
+
             frame_audits.append({
                 "timeSeconds": round(t, 2),
                 "resolution": img.size,
                 "sharpnessScore": round(sharpness, 2),
-                "validResolution": (img.size == (1080, 1920)),
+                "validResolution": (img.size == (1080, 1920)) and not pixel_leak,
+                "pixelLeak": pixel_leak,
             })
 
     all_res_valid = all(f["validResolution"] for f in frame_audits)

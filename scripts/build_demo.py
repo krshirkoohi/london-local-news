@@ -550,9 +550,24 @@ def render_figure_stat_comparison(draw, fig_data, t=10.0):
             width=1,
         )
         bar_col = DOT_ORANGE + (255,)
-        draw.text((cx + 26, py1 + 20), c.get("kicker", ""), font=get_font(FONT_SANS_BOLD, 16), fill=bar_col)
-        draw.text((cx + 26, py1 + 44), str(c.get("value", "")), font=get_font(FONT_SERIF_BOLD, 70), fill=COLOR_WHITE + (255,))
-        draw.text((cx + 26, py1 + 132), c.get("label", ""), font=get_font(FONT_SANS_BOLD, 22), fill=COLOR_WHITE + (255,))
+        card_inner_w = card_w - 52
+
+        # 1. Kicker
+        kicker_txt = str(c.get("kicker", ""))
+        f_kicker, k_lines, _ = rt.fit_text_to_bounds(draw, kicker_txt, FONT_SANS_BOLD, initial_size=16, max_width=card_inner_w, max_lines=1, min_size=12)
+        draw.text((cx + 26, py1 + 20), k_lines[0] if k_lines else kicker_txt, font=f_kicker, fill=bar_col)
+
+        # 2. Hero Value (Dynamic font scaling strictly bounded within card_inner_w)
+        val_str = str(c.get("value", ""))
+        f_val, val_lines, _ = rt.fit_text_to_bounds(draw, val_str, FONT_SERIF_BOLD, initial_size=70, max_width=card_inner_w, max_lines=1, min_size=28)
+        val_size = getattr(f_val, "size", 70)
+        y_val_offset = (70 - val_size) // 2
+        draw.text((cx + 26, py1 + 44 + y_val_offset), val_lines[0] if val_lines else val_str, font=f_val, fill=COLOR_WHITE + (255,))
+
+        # 3. Label
+        lbl_txt = str(c.get("label", ""))
+        f_lbl, lbl_lines, _ = rt.fit_text_to_bounds(draw, lbl_txt, FONT_SANS_BOLD, initial_size=22, max_width=card_inner_w, max_lines=1, min_size=14)
+        draw.text((cx + 26, py1 + 132), lbl_lines[0] if lbl_lines else lbl_txt, font=f_lbl, fill=COLOR_WHITE + (255,))
 
         # Benchmark bar fills progressively in signature dot orange
         bar_p = ease_out_cubic((card_t - 0.2) / 0.7) if card_t > 0.2 else 0.0
@@ -1011,22 +1026,35 @@ def render_template_scene4_facts_figures(spec, scene, t=10.0, total_dur=6.0):
             p_c = ease_out_cubic(t_card / 0.4) if t_card > 0 else 0.0
             if p_c <= 0.01:
                 continue
+            card_inner_w = cx2 - cx1 - 48
             bar_col = tuple(c.get("barColor", list(accent_rgb))) + (255,)
             draw.rounded_rectangle([(cx1, by1 + 24), (cx2, by1 + 335)], radius=16, fill=(16, 17, 24, 255), outline=(255, 255, 255, 60), width=1)
-            draw.text((cx1 + 24, by1 + 46), c.get("kicker", ""), font=rt.get_font(rt.FONT_SANS_BOLD, 17), fill=bar_col)
-            draw.text((cx1 + 24, by1 + 80), str(c.get("value", "")), font=rt.get_font(rt.FONT_SERIF_BOLD, 70), fill=(255, 255, 255, 255))
-            card_inner_w = cx2 - cx1 - 48
+
+            # 1. Kicker
+            kicker_str = str(c.get("kicker", ""))
+            f_kicker, k_lines, _ = rt.fit_text_to_bounds(draw, kicker_str, rt.FONT_SANS_BOLD, initial_size=17, max_width=card_inner_w, max_lines=1, min_size=12)
+            draw.text((cx1 + 24, by1 + 46), k_lines[0] if k_lines else kicker_str, font=f_kicker, fill=bar_col)
+
+            # 2. Hero Value (Dynamic font scaling strictly bounded within card_inner_w)
+            val_str = str(c.get("value", ""))
+            f_val, val_lines, _ = rt.fit_text_to_bounds(draw, val_str, rt.FONT_SERIF_BOLD, initial_size=70, max_width=card_inner_w, max_lines=1, min_size=28)
+            val_size = getattr(f_val, "size", 70)
+            y_val_offset = (70 - val_size) // 2
+            draw.text((cx1 + 24, by1 + 80 + y_val_offset), val_lines[0] if val_lines else val_str, font=f_val, fill=(255, 255, 255, 255))
+
+            # 3. Label
             f_lbl = rt.get_font(rt.FONT_SANS_BOLD, 20)
             lbl_lines = rt.wrap_text(draw, c.get("label", ""), f_lbl, card_inner_w)
             draw.text((cx1 + 24, by1 + 172), lbl_lines[0] if lbl_lines else "", font=f_lbl, fill=(230, 230, 235, 255))
 
+            # 4. Progress bar
             draw.rounded_rectangle([(cx1 + 24, by1 + 218), (cx2 - 24, by1 + 230)], radius=6, fill=(45, 45, 55, 255))
             ratio = max(0.1, min(1.0, float(c.get("barRatio", 0.85)))) * p_c
             fill_w = int(card_inner_w * ratio)
             if fill_w > 4:
                 draw.rounded_rectangle([(cx1 + 24, by1 + 218), (cx1 + 24 + fill_w, by1 + 230)], radius=6, fill=bar_col)
 
-            # Auto-wrap subtext inside the card bounds so it never clips horizontally
+            # 5. Subtext
             f_card_sub = rt.get_font(rt.FONT_SANS, 17)
             sub_lines = rt.wrap_text(draw, c.get("subtext", ""), f_card_sub, card_inner_w)
             sub_y = by1 + 246
@@ -1073,8 +1101,10 @@ def render_template_scene4_facts_figures(spec, scene, t=10.0, total_dur=6.0):
     t_sub = takeaway.get("subtitle", scene.get("onScreenGraphic", {}).get("body", ""))
 
     draw.text((bx1 + 40, vy1 + 22), t_kicker.upper(), font=rt.get_font(rt.FONT_SANS_BOLD, 18), fill=DOT_ORANGE + (255,))
-    draw.text((bx1 + 40, vy1 + 56), t_title, font=rt.get_font(rt.FONT_SERIF_BOLD, 31), fill=(255, 255, 255, 255))
-    for sl in rt.wrap_text(draw, t_sub, rt.get_font(rt.FONT_SANS, 20), bx2 - bx1 - 80)[:1]:
+    t_width = bx2 - bx1 - 80
+    f_ttitle, tt_lines, _ = rt.fit_text_to_bounds(draw, t_title, rt.FONT_SERIF_BOLD, initial_size=31, max_width=t_width, max_lines=1, min_size=20)
+    draw.text((bx1 + 40, vy1 + 56), tt_lines[0] if tt_lines else t_title, font=f_ttitle, fill=(255, 255, 255, 255))
+    for sl in rt.wrap_text(draw, t_sub, rt.get_font(rt.FONT_SANS, 20), t_width)[:1]:
         draw.text((bx1 + 40, vy1 + 104), sl, font=rt.get_font(rt.FONT_SANS, 20), fill=(195, 200, 210, 255))
 
     # Bottom scrim for caption, citation & AI-GENERATED MEDIA badge contrast over bright B-roll
