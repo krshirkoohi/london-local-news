@@ -179,9 +179,9 @@
               "subtext": "Low playground shade",
               "barRatio": 0.95,
               "barColor": [
-                52,
-                211,
-                153
+                254,
+                107,
+                33
               ]
             },
             {
@@ -191,9 +191,9 @@
               "subtext": "Primary & SEND classrooms",
               "barRatio": 0.88,
               "barColor": [
-                245,
-                158,
-                11
+                254,
+                107,
+                33
               ]
             }
           ]
@@ -234,9 +234,9 @@
               "subtext": "Classroom cooling ventilation",
               "barRatio": 0.92,
               "barColor": [
-                52,
-                211,
-                153
+                254,
+                107,
+                33
               ]
             },
             {
@@ -246,9 +246,9 @@
               "subtext": "Targeting high-risk playgrounds",
               "barRatio": 0.85,
               "barColor": [
-                245,
-                158,
-                11
+                254,
+                107,
+                33
               ]
             }
           ]
@@ -287,9 +287,9 @@
               "title": "Environment Scrutiny Commission Public Reports Pack (14 Oct 2026)",
               "badge": "SCRUTINY REPORT",
               "badgeColor": [
-                52,
-                211,
-                153
+                254,
+                107,
+                33
               ]
             },
             {
@@ -297,9 +297,9 @@
               "title": "Southwark 116 Schools Heat Vulnerability Tier Model & Climate Audit",
               "badge": "CIVIC AUDIT",
               "badgeColor": [
-                245,
-                158,
-                11
+                254,
+                107,
+                33
               ]
             },
             {
@@ -307,9 +307,9 @@
               "title": "London Local Story #10631: Southwark Schools Climate Resilience",
               "badge": "EDITORIAL VERIFIED",
               "badgeColor": [
-                52,
-                211,
-                153
+                254,
+                107,
+                33
               ]
             }
           ],

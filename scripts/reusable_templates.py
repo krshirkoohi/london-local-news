@@ -27,6 +27,35 @@ FONT_SERIF = "/System/Library/Fonts/Supplemental/Georgia.ttf"
 FONT_SANS_BOLD = "/System/Library/Fonts/Supplemental/Arial Bold.ttf"
 FONT_SANS = "/System/Library/Fonts/Supplemental/Arial.ttf"
 
+# Unified brand color system (Pure White, Light Grey, Signature Dot Orange)
+DOT_ORANGE = (254, 107, 33)  # Official London Local dot orange (#FE6B21)
+COLOR_WHITE = (255, 255, 255)
+COLOR_LIGHT_GREY = (225, 230, 240)
+COLOR_MUTED_GREY = (170, 175, 185)
+
+ARCHETYPE_CONFIG = {
+    "transport": {
+        "accent": DOT_ORANGE,
+        "secondary": COLOR_LIGHT_GREY,
+        "badge": "TFL CONSULTATION",
+    },
+    "housing": {
+        "accent": DOT_ORANGE,
+        "secondary": COLOR_LIGHT_GREY,
+        "badge": "HOUSING & ESTATES",
+    },
+    "council_decision": {
+        "accent": DOT_ORANGE,
+        "secondary": COLOR_LIGHT_GREY,
+        "badge": "FULL COUNCIL MOTION",
+    },
+    "environment_schools": {
+        "accent": DOT_ORANGE,
+        "secondary": COLOR_LIGHT_GREY,
+        "badge": "SCHOOLS & CLIMATE",
+    },
+}
+
 _font_cache = {}
 
 
@@ -247,7 +276,7 @@ def render_key_points_card(points, bg_image=None, is_ai=False):
             sub = ""
             cite_text = "Council Public Record"
 
-        draw.line([(109, py + 8), (109, py + 52)], fill=(245, 158, 11, 240), width=4)
+        draw.line([(109, py + 8), (109, py + 52)], fill=(254, 107, 33, 240), width=4)
         draw.text((128, py), anchor, font=f_anchor, fill=(255, 255, 255, 255))
 
         sub_y = py + 70
@@ -323,18 +352,18 @@ def render_street_sign(story_id="4182", custom_text=None):
         draw.text((60, 140), custom_text.get("title", "COUNCIL REPORT").upper(), font=f_sub, fill=(15, 15, 20, 255))
         draw.line([(60, 245), (860, 245)], fill=(15, 15, 20, 255), width=4)
         f_red = get_font(FONT_SERIF_BOLD, 38)
-        draw.text((60, 265), custom_text.get("footer", "londonlocal.news"), font=f_red, fill=(217, 72, 63, 255))
+        draw.text((60, 265), custom_text.get("footer", "londonlocal.news"), font=f_red, fill=(254, 107, 33, 255))
         return sign
 
     base_path = os.path.join(TEMPLATES_DIR, "street_sign_story_base.png")
     sign = Image.open(base_path).convert("RGBA").copy()
     draw = ImageDraw.Draw(sign)
     f_num = get_font(FONT_SERIF, 108)
-    draw.text((465, 138), str(story_id), font=f_num, fill=(217, 72, 63, 255))
+    draw.text((465, 138), str(story_id), font=f_num, fill=(254, 107, 33, 255))
     return sign
 
 
-def create_textured_borough_backdrop(borough="Westminster", accent_rgb=(217, 72, 63)):
+def create_textured_borough_backdrop(borough="Westminster", accent_rgb=(254, 107, 33)):
     """
     Creates an atmospheric, high-definition textured dark London borough map backdrop (1080x1920).
     Features deep slate gradients, full 1:1 crisp vector lines with illuminated borough, and tactile film grain.
@@ -393,7 +422,7 @@ def create_textured_borough_backdrop(borough="Westminster", accent_rgb=(217, 72,
     return Image.fromarray(arr).convert("RGBA")
 
 
-def render_outro_card(story_id="4182", bg_image=None, borough="Westminster", accent_rgb=(217, 72, 63)):
+def render_outro_card(story_id="4182", bg_image=None, borough="Westminster", accent_rgb=DOT_ORANGE):
     """
     Renders the official Scene 5 outro card over a textured dark London borough map:
     - Master persistent watermark London Local. at top
@@ -439,11 +468,11 @@ def render_outro_card(story_id="4182", bg_image=None, borough="Westminster", acc
 # ==============================================================================
 
 
-def render_selling_point_slide(custom_statement=None, bg_image=None, borough="Westminster", accent_rgb=(217, 72, 63)):
+def render_selling_point_slide(custom_statement=None, bg_image=None, borough="Westminster", accent_rgb=DOT_ORANGE):
     """
     Renders the official London Local value proposition slide from London Local.png:
     'Local news, from your council.'
-    Clean, bold brand payoff with single red dot, 3 trust badges, and zero clutter over a textured borough map.
+    Clean, bold brand payoff with single orange dot, 3 trust badges, and zero clutter over a textured borough map.
     """
     if bg_image:
         card = bg_image.convert("RGBA").resize((1080, 1920)).copy()
@@ -460,8 +489,8 @@ def render_selling_point_slide(custom_statement=None, bg_image=None, borough="We
     d.text((108, 800), line1, font=f_main, fill=(255, 255, 255, 255))
     d.text((108, 910), line2, font=f_main, fill=(255, 255, 255, 255))
     l_yc = d.textlength(line2, font=f_main)
-    # The iconic single red dot acts as the period
-    d.ellipse([(108 + l_yc + 8, 955), (108 + l_yc + 26, 973)], fill=(217, 72, 63, 255))
+    # The iconic single dot in signature London Local dot orange
+    d.ellipse([(108 + l_yc + 8, 955), (108 + l_yc + 26, 973)], fill=DOT_ORANGE + (255,))
 
     d.line([(108, 1060), (905, 1060)], fill=(255, 255, 255, 45), width=1)
 
@@ -480,33 +509,11 @@ def render_selling_point_slide(custom_statement=None, bg_image=None, borough="We
 # 7. LONDON BOROUGH MAP OVERLAY & CAPTION COMPONENTS
 # ==============================================================================
 
-ARCHETYPE_CONFIG = {
-    "transport": {
-        "accent": (217, 72, 63),       # Iconic London Bus Red / Coral
-        "secondary": (245, 158, 11),   # Amber Warning
-        "badge": "TFL CONSULTATION",
-    },
-    "housing": {
-        "accent": (245, 158, 11),      # Warm Amber
-        "secondary": (52, 211, 153),   # Emerald
-        "badge": "HOUSING & ESTATES",
-    },
-    "council_decision": {
-        "accent": (217, 72, 63),       # London Local Coral-Red
-        "secondary": (245, 158, 11),   # Amber
-        "badge": "FULL COUNCIL MOTION",
-    },
-    "environment_schools": {
-        "accent": (52, 211, 153),      # Clean Air / Climate Emerald
-        "secondary": (245, 158, 11),   # Amber
-        "badge": "SCHOOLS & CLIMATE",
-    },
-}
 
 _map_base_cache = {}
 
 
-def generate_borough_map_overlay(borough_name, width=820, height=540, zoom=1.0, accent_rgb=(245, 158, 11)):
+def generate_borough_map_overlay(borough_name, width=820, height=540, zoom=1.0, accent_rgb=DOT_ORANGE):
     """
     Renders an inverted, high-contrast dark broadsheet map of London
     from London borough map.png with the specified borough illuminated.

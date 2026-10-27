@@ -180,9 +180,9 @@
               "subtext": "Diverse city population",
               "barRatio": 0.95,
               "barColor": [
-                52,
-                211,
-                153
+                254,
+                107,
+                33
               ]
             },
             {
@@ -192,9 +192,9 @@
               "subtext": "City-wide community support",
               "barRatio": 0.88,
               "barColor": [
-                245,
-                158,
-                11
+                254,
+                107,
+                33
               ]
             }
           ]
@@ -235,9 +235,9 @@
               "subtext": "Residents, youth, faith & police",
               "barRatio": 0.94,
               "barColor": [
-                217,
-                72,
-                63
+                254,
+                107,
+                33
               ]
             },
             {
@@ -247,9 +247,9 @@
               "subtext": "Cross-party consensus on safety",
               "barRatio": 0.98,
               "barColor": [
-                52,
-                211,
-                153
+                254,
+                107,
+                33
               ]
             }
           ]
@@ -288,9 +288,9 @@
               "title": "Westminster City Council Full Council Motion 12 Nov 2025",
               "badge": "UNANIMOUS VOTE",
               "badgeColor": [
-                52,
-                211,
-                153
+                254,
+                107,
+                33
               ]
             },
             {
@@ -298,9 +298,9 @@
               "title": "Community Equality Strategy & Victim Support Taskforce Framework",
               "badge": "CABINET POLICY",
               "badgeColor": [
-                245,
-                158,
-                11
+                254,
+                107,
+                33
               ]
             },
             {
@@ -308,9 +308,9 @@
               "title": "London Local Story #4178: Westminster Hate Crime Response",
               "badge": "EDITORIAL VERIFIED",
               "badgeColor": [
-                52,
-                211,
-                153
+                254,
+                107,
+                33
               ]
             }
           ],

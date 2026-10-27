@@ -180,9 +180,9 @@
               "subtext": "Within 24 hours",
               "barRatio": 0.95,
               "barColor": [
-                245,
-                158,
-                11
+                254,
+                107,
+                33
               ]
             },
             {
@@ -192,9 +192,9 @@
               "subtext": "Strict legal timeframe",
               "barRatio": 0.82,
               "barColor": [
-                52,
-                211,
-                153
+                254,
+                107,
+                33
               ]
             }
           ]
@@ -235,9 +235,9 @@
               "subtext": "Moisture & condensation monitors",
               "barRatio": 0.92,
               "barColor": [
-                52,
-                211,
-                153
+                254,
+                107,
+                33
               ]
             },
             {
@@ -247,9 +247,9 @@
               "subtext": "Void properties & council homes",
               "barRatio": 0.88,
               "barColor": [
-                245,
-                158,
-                11
+                254,
+                107,
+                33
               ]
             }
           ]
@@ -289,9 +289,9 @@
               "title": "Preparation for Awaab's Law Report & Delivery Model (18 Sep 2025)",
               "badge": "OFFICIAL REPORT",
               "badgeColor": [
-                245,
-                158,
-                11
+                254,
+                107,
+                33
               ]
             },
             {
@@ -299,9 +299,9 @@
               "title": "Awaab's Law Statutory Repair Deadlines: 24h Make-Safe & 5-Day Safety Works",
               "badge": "STATUTORY MANDATE",
               "badgeColor": [
-                52,
-                211,
-                153
+                254,
+                107,
+                33
               ]
             },
             {
@@ -309,9 +309,9 @@
               "title": "London Local Story #2576: Camden Council Awaab's Law Damp Rapid Response",
               "badge": "EDITORIAL VERIFIED",
               "badgeColor": [
-                52,
-                211,
-                153
+                254,
+                107,
+                33
               ]
             }
           ],

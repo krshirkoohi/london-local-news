@@ -83,6 +83,12 @@ SAFE_X2 = 1080 - MARGIN_RIGHT  # 905px
 SAFE_WIDTH = SAFE_X2 - MARGIN_X  # 825px
 SAFE_BOTTOM = 1640  # TikTok Safe Zone: >= 250px above bottom edge (1920 - 280px)
 
+# Consistent Brand Color Palette
+DOT_ORANGE = (254, 107, 33)        # Signature London Local dot orange (#FE6B21) for bars, sliders, accents
+COLOR_WHITE = (255, 255, 255)       # Primary headlines, hero figures, titles
+COLOR_LIGHT_GREY = (225, 230, 240)  # Secondary text, subtitles, descriptions, labels
+COLOR_MUTED_GREY = (170, 175, 185)  # Citations, timestamps, divider rules
+
 
 def get_font(path, size):
     if path and os.path.exists(path):
@@ -156,10 +162,10 @@ def draw_top_bar(
         alpha = int(195 * (1 - (y / 260)))
         draw.line([(0, y), (1080, y)], fill=(6, 6, 8, alpha))
 
-    # Top progress bar (4px height at y=0..4)
+    # Top progress bar (4px height at y=0..4) in signature dot orange
     draw.rectangle([(0, 0), (1080, 5)], fill=(255, 255, 255, 35))
     prog_w = int(1080 * (scene_num / max(1, total_scenes)))
-    draw.rectangle([(0, 0), (prog_w, 5)], fill=(255, 82, 56, 230))
+    draw.rectangle([(0, 0), (prog_w, 5)], fill=DOT_ORANGE + (240,))
 
     # Left Brand Pill (Unified glass container so wordmark never floats awkwardly)
     wm = load_transparent_wordmark(target_height=34) if show_logo else None
@@ -200,7 +206,7 @@ def draw_top_bar(
         outline=(255, 255, 255, 60),
         width=1,
     )
-    draw.text((pill_x1 + 23, 83), tag_text, font=f_tag, fill=(240, 240, 245, 255))
+    draw.text((pill_x1 + 23, 83), tag_text, font=f_tag, fill=COLOR_LIGHT_GREY + (255,))
 
     # Optional AI Illustrative Disclaimer Pill (Top-Left Second Row)
     if disclaimer:
@@ -211,11 +217,11 @@ def draw_top_bar(
             [(MARGIN_X, 132), (MARGIN_X + int(ai_w + 52), 168)],
             radius=18,
             fill=(12, 12, 16, 195),
-            outline=(245, 158, 11, 210),
+            outline=DOT_ORANGE + (210,),
             width=1,
         )
-        draw.ellipse([(MARGIN_X + 16, 146), (MARGIN_X + 24, 154)], fill=(251, 191, 36, 255))
-        draw.text((MARGIN_X + 33, 142), ai_text, font=f_ai, fill=(251, 191, 36, 255))
+        draw.ellipse([(MARGIN_X + 16, 146), (MARGIN_X + 24, 154)], fill=DOT_ORANGE + (255,))
+        draw.text((MARGIN_X + 33, 142), ai_text, font=f_ai, fill=DOT_ORANGE + (255,))
 
     # Scene Counter Pill (Top-Right Second Row)
     f_sc = get_font(FONT_SANS_BOLD, 15)
@@ -230,7 +236,7 @@ def draw_top_bar(
         outline=(255, 255, 255, 40),
         width=1,
     )
-    draw.text((sc_x1 + 16, 142), sc_text, font=f_sc, fill=(185, 185, 195, 255))
+    draw.text((sc_x1 + 16, 142), sc_text, font=f_sc, fill=COLOR_MUTED_GREY + (255,))
 
 
 def draw_spatial_postcode_hud(draw, spec, scene_num=1, t=10.0):
@@ -246,41 +252,41 @@ def draw_spatial_postcode_hud(draw, spec, scene_num=1, t=10.0):
         [(MARGIN_X, bar_y1), (SAFE_X2, bar_y2)],
         radius=12,
         fill=(14, 14, 20, 215),
-        outline=(255, 82, 56, 160),
+        outline=DOT_ORANGE + (160,),
         width=1,
     )
 
-    # Pulsing live location reticle on left
+    # Pulsing live location reticle on left in dot orange
     cx, cy = MARGIN_X + 26, (bar_y1 + bar_y2) // 2
     pulse = (t * 2.2) % 1.0
     p_rad = int(5 + 7 * pulse)
     p_alpha = int(210 * (1.0 - pulse))
-    draw.ellipse([(cx - p_rad, cy - p_rad), (cx + p_rad, cy + p_rad)], outline=(255, 82, 56, p_alpha), width=2)
-    draw.ellipse([(cx - 5, cy - 5), (cx + 5, cy + 5)], fill=(255, 82, 56, 255))
+    draw.ellipse([(cx - p_rad, cy - p_rad), (cx + p_rad, cy + p_rad)], outline=DOT_ORANGE + (p_alpha,), width=2)
+    draw.ellipse([(cx - 5, cy - 5), (cx + 5, cy + 5)], fill=DOT_ORANGE + (255,))
 
     f_pc = get_font(FONT_SANS_BOLD, 18)
-    draw.text((MARGIN_X + 46, bar_y1 + 13), postcode_tag.upper(), font=f_pc, fill=(255, 255, 255, 255))
+    draw.text((MARGIN_X + 46, bar_y1 + 13), postcode_tag.upper(), font=f_pc, fill=COLOR_WHITE + (255,))
 
     # Right coordinate / citizen brief tag
     f_rt = get_font(FONT_SANS_BOLD, 15)
     rt_txt = "CITIZEN IMPACT BRIEF"
     rw = draw.textlength(rt_txt, font=f_rt)
-    draw.text((SAFE_X2 - 20 - rw, bar_y1 + 15), rt_txt, font=f_rt, fill=(251, 191, 36, 255))
+    draw.text((SAFE_X2 - 20 - rw, bar_y1 + 15), rt_txt, font=f_rt, fill=DOT_ORANGE + (255,))
 
     # Scene 1 Spatial Lock-On Reticle in the first 1.8 seconds ("Wait, I know that place!" hook)
     if scene_num == 1 and t <= 1.85 and coords:
         fade = 1.0 if t < 1.35 else max(0.0, (1.85 - t) / 0.5)
         al = int(235 * fade)
         if al > 15:
-            rx1, ry1, rx2, ry2 = 180, 440, 900, 535
-            draw.rounded_rectangle([(rx1, ry1), (rx2, ry2)], radius=14, fill=(10, 10, 15, int(185 * fade)), outline=(251, 191, 36, al), width=2)
+            rx1, ry1, rx2, ry2 = MARGIN_X, 440, SAFE_X2, 535
+            draw.rounded_rectangle([(rx1, ry1), (rx2, ry2)], radius=14, fill=(10, 10, 15, int(185 * fade)), outline=DOT_ORANGE + (al,), width=2)
             f_lock = get_font(FONT_SANS_BOLD, 16)
             f_coord = get_font(FONT_SANS_BOLD, 21)
             l_txt = "SPATIAL LOCK · VERIFIED BOROUGH LOCATION"
             lw = draw.textlength(l_txt, font=f_lock)
-            draw.text(((1080 - lw) // 2, ry1 + 18), l_txt, font=f_lock, fill=(251, 191, 36, al))
+            draw.text(((1080 - lw) // 2, ry1 + 18), l_txt, font=f_lock, fill=DOT_ORANGE + (al,))
             cw = draw.textlength(coords, font=f_coord)
-            draw.text(((1080 - cw) // 2, ry1 + 48), coords, font=f_coord, fill=(255, 255, 255, al))
+            draw.text(((1080 - cw) // 2, ry1 + 48), coords, font=f_coord, fill=COLOR_WHITE + (al,))
 
 
 def draw_bottom_vignette(draw, start_y=940):
@@ -303,18 +309,18 @@ def draw_lower_third_text(draw, graphic, citation_footer, top_y=1300):
     curr_y = top_y
     if kicker:
         clean_kicker = kicker.replace("📍", "").strip()
-        draw.text((MARGIN_X, curr_y), clean_kicker.upper(), font=f_kicker, fill=(251, 191, 36, 255))
+        draw.text((MARGIN_X, curr_y), clean_kicker.upper(), font=f_kicker, fill=DOT_ORANGE + (255,))
         curr_y += 34
 
     h1_lines = wrap_text_to_width(draw, headline, f_h1, SAFE_WIDTH)
     for hl in h1_lines[:2]:
-        draw.text((MARGIN_X, curr_y), hl, font=f_h1, fill=(255, 255, 255, 255))
+        draw.text((MARGIN_X, curr_y), hl, font=f_h1, fill=COLOR_WHITE + (255,))
         curr_y += 64
 
     curr_y += 12
     b_lines = wrap_text_to_width(draw, body, f_body, SAFE_WIDTH)
     for bl in b_lines[:3]:
-        draw.text((MARGIN_X, curr_y), bl, font=f_body, fill=(225, 225, 232, 255))
+        draw.text((MARGIN_X, curr_y), bl, font=f_body, fill=COLOR_LIGHT_GREY + (255,))
         curr_y += 39
 
     # Citation Rule & Footer (clamped safely above TikTok 250px bottom margin)
@@ -322,7 +328,7 @@ def draw_lower_third_text(draw, graphic, citation_footer, top_y=1300):
     draw.line([(MARGIN_X, rule_y), (SAFE_X2, rule_y)], fill=(255, 255, 255, 45), width=1)
     cite_lines = wrap_text_to_width(draw, citation_footer, f_meta, SAFE_WIDTH)
     if cite_lines:
-        draw.text((MARGIN_X, rule_y + 18), cite_lines[0], font=f_meta, fill=(165, 165, 175, 255))
+        draw.text((MARGIN_X, rule_y + 18), cite_lines[0], font=f_meta, fill=COLOR_MUTED_GREY + (255,))
 
 
 # ==============================================================================
@@ -357,13 +363,13 @@ def render_figure_vote_tally(draw, fig_data, t=10.0):
     f_hdr = get_font(FONT_SANS_BOLD, 18)
     hdr_left = fig_data.get("headerLeft", "CHAMBER DIVISION TALLY")
     raw_right = fig_data.get("headerRight", "MOTION CARRIED").replace("✓", "").strip()
-    draw.text((MARGIN_X + 26, fig_y1 + 20), hdr_left, font=f_hdr, fill=(245, 158, 11, 255))
+    draw.text((MARGIN_X + 26, fig_y1 + 20), hdr_left, font=f_hdr, fill=DOT_ORANGE + (255,))
 
     # Badge pops in with scale/opacity after vote bar fills (t >= 0.75s)
     if t >= 0.75:
         rw = draw.textlength(raw_right, font=f_hdr)
         rx = int(SAFE_X2 - 26 - rw)
-        chk_col = (52, 211, 153, 255)
+        chk_col = DOT_ORANGE + (255,)
         draw_vector_check(draw, rx - 22, fig_y1 + 22, chk_col, size=14)
         draw.text((rx, fig_y1 + 20), raw_right, font=f_hdr, fill=chk_col)
 
@@ -456,7 +462,7 @@ def render_figure_motion_document(draw, fig_data, t=10.0):
     right_hdr = fig_data.get("docHeaderRight", "OFFICIAL RECORD")
     draw.text((MARGIN_X + 28, fig_y1 + 18), left_hdr, font=f_doc_hdr, fill=ink_muted)
     rw = draw.textlength(right_hdr, font=f_doc_hdr)
-    draw.text((SAFE_X2 - 28 - rw, fig_y1 + 18), right_hdr, font=f_doc_hdr, fill=(180, 83, 9, 255))
+    draw.text((SAFE_X2 - 28 - rw, fig_y1 + 18), right_hdr, font=f_doc_hdr, fill=DOT_ORANGE + (255,))
 
     # Double parliamentary rule
     draw.line([(MARGIN_X + 28, fig_y1 + 46), (SAFE_X2 - 28, fig_y1 + 46)], fill=(40, 40, 45, 220), width=2)
@@ -475,24 +481,24 @@ def render_figure_motion_document(draw, fig_data, t=10.0):
     # Calculate live highlight sweep progress
     hl_progress = ease_out_cubic(max(0.0, min(1.0, (t - 0.9) / 1.7))) if t >= 0.9 else 0.0
 
-    # Red-Pen Audit Bracket on the left margin of the excerpt
+    # Signature Dot-Orange Audit Bracket on the left margin of the excerpt
     if hl_progress > 0.1:
         bracket_h = int(105 * hl_progress)
-        draw.line([(MARGIN_X + 16, fig_y1 + 64), (MARGIN_X + 16, fig_y1 + 64 + bracket_h)], fill=(220, 38, 38, 240), width=4)
-        draw.line([(MARGIN_X + 16, fig_y1 + 64), (MARGIN_X + 24, fig_y1 + 64)], fill=(220, 38, 38, 240), width=3)
+        draw.line([(MARGIN_X + 16, fig_y1 + 64), (MARGIN_X + 16, fig_y1 + 64 + bracket_h)], fill=DOT_ORANGE + (240,), width=4)
+        draw.line([(MARGIN_X + 16, fig_y1 + 64), (MARGIN_X + 24, fig_y1 + 64)], fill=DOT_ORANGE + (240,), width=3)
 
     qy = fig_y1 + 66
     for ql in q_lines[:3]:
         hl_words = [w for w in highlight.split(" ") if len(w) > 3]
         if any(hw in ql for hw in hl_words):
             lw = draw.textlength(ql, font=f_quote)
-            # Sweeping highlight rectangle
+            # Sweeping highlight rectangle in refined light grey
             current_hl_w = int(lw * hl_progress)
             if current_hl_w > 4:
                 draw.rounded_rectangle(
                     [(MARGIN_X + 24, qy - 2), (MARGIN_X + 28 + current_hl_w, qy + 32)],
                     radius=4,
-                    fill=(253, 224, 71, 235),
+                    fill=(226, 230, 240, 235),
                 )
         draw.text((MARGIN_X + 28, qy), ql, font=f_quote, fill=ink_dark)
         qy += 38
@@ -515,12 +521,12 @@ def render_figure_motion_document(draw, fig_data, t=10.0):
         st_x2 = SAFE_X2 - 24
         st_x1 = st_x2 - st_box_w
         st_y = sig_y - 4
-        draw.rounded_rectangle([(st_x1, st_y), (st_x2, st_y + 36)], radius=6, fill=(254, 242, 242, 245), outline=(220, 38, 38, 240), width=2)
-        draw.text((st_x1 + 16, st_y + 9), receipt_stamp, font=f_stamp, fill=(220, 38, 38, 255))
+        draw.rounded_rectangle([(st_x1, st_y), (st_x2, st_y + 36)], radius=6, fill=(254, 242, 242, 245), outline=DOT_ORANGE + (240,), width=2)
+        draw.text((st_x1 + 16, st_y + 9), receipt_stamp, font=f_stamp, fill=DOT_ORANGE + (255,))
 
 
 def render_figure_stat_comparison(draw, fig_data, t=10.0):
-    """Renders dual floating glassmorphic metric cards with staggered entry and progressive bar fills."""
+    """Renders dual floating glassmorphic metric cards with staggered entry and progressive bar fills in consistent dot orange."""
     fig_y1, fig_y2 = 1055, 1320
     cards = fig_data.get("cards", [])
     card_w = (SAFE_WIDTH - 24) // 2
@@ -543,22 +549,22 @@ def render_figure_stat_comparison(draw, fig_data, t=10.0):
             outline=(255, 255, 255, 65),
             width=1,
         )
-        bar_col = tuple(c.get("barColor", [245, 158, 11])) + (255,)
+        bar_col = DOT_ORANGE + (255,)
         draw.text((cx + 26, py1 + 20), c.get("kicker", ""), font=get_font(FONT_SANS_BOLD, 16), fill=bar_col)
-        draw.text((cx + 26, py1 + 44), c.get("value", ""), font=get_font(FONT_SERIF_BOLD, 70), fill=(255, 255, 255, 255))
-        draw.text((cx + 26, py1 + 132), c.get("label", ""), font=get_font(FONT_SANS_BOLD, 22), fill=(235, 235, 240, 255))
+        draw.text((cx + 26, py1 + 44), str(c.get("value", "")), font=get_font(FONT_SERIF_BOLD, 70), fill=COLOR_WHITE + (255,))
+        draw.text((cx + 26, py1 + 132), c.get("label", ""), font=get_font(FONT_SANS_BOLD, 22), fill=COLOR_WHITE + (255,))
 
-        # Benchmark bar fills progressively
+        # Benchmark bar fills progressively in signature dot orange
         bar_p = ease_out_cubic((card_t - 0.2) / 0.7) if card_t > 0.2 else 0.0
         bx1, bx2 = cx + 26, cx + card_w - 26
         by1, by2 = py1 + 174, py1 + 184
-        draw.rounded_rectangle([(bx1, by1), (bx2, by2)], radius=5, fill=(45, 45, 55, 255))
+        draw.rounded_rectangle([(bx1, by1), (bx2, by2)], radius=5, fill=(45, 48, 58, 255))
         ratio = max(0.1, min(1.0, float(c.get("barRatio", 0.85)))) * bar_p
         fill_w = int((bx2 - bx1) * ratio)
         if fill_w > 4:
             draw.rounded_rectangle([(bx1, by1), (bx1 + fill_w, by2)], radius=5, fill=bar_col)
 
-        draw.text((cx + 26, py1 + 198), c.get("subtext", ""), font=get_font(FONT_SANS, 17), fill=(175, 175, 185, 255))
+        draw.text((cx + 26, py1 + 198), c.get("subtext", ""), font=get_font(FONT_SANS, 17), fill=COLOR_LIGHT_GREY + (255,))
 
 
 def render_figure_action_matrix(draw, fig_data, t=10.0):
@@ -568,7 +574,7 @@ def render_figure_action_matrix(draw, fig_data, t=10.0):
     draw.rounded_rectangle(
         [(MARGIN_X, hdr_y1), (MARGIN_X + int((SAFE_WIDTH) * hdr_p), hdr_y2)],
         radius=10,
-        fill=(245, 158, 11, 230),
+        fill=DOT_ORANGE + (230,),
     )
     if hdr_p > 0.6:
         f_mhdr = get_font(FONT_SANS_BOLD, 18)
@@ -601,7 +607,7 @@ def render_figure_action_matrix(draw, fig_data, t=10.0):
             outline=(255, 255, 255, 55),
             width=1,
         )
-        draw.text((px + 20, py + 16), p.get("code", ""), font=get_font(FONT_SANS_BOLD, 18), fill=(245, 158, 11, 255))
+        draw.text((px + 20, py + 16), p.get("code", ""), font=get_font(FONT_SANS_BOLD, 18), fill=DOT_ORANGE + (255,))
         d_lines = wrap_text_to_width(draw, p.get("desc", ""), get_font(FONT_SANS, 20), gw - 40)
         dy = py + 46
         for dl in d_lines[:2]:
@@ -636,20 +642,20 @@ def render_template_scene1_hook(spec, scene, t=10.0, total_dur=6.0):
     if pc:
         f_pc = rt.get_font(rt.FONT_SANS_BOLD, 20)
         pw = draw.textlength(pc, font=f_pc)
-        pill_w = min(920, int(pw + 36))
+        pill_w = min(SAFE_WIDTH, int(pw + 36))
         px1 = (1080 - pill_w) // 2
         px2 = px1 + pill_w
         py1 = 770
         py2 = py1 + 42
-        draw.rounded_rectangle([(px1, py1), (px2, py2)], radius=10, fill=(14, 15, 22, 225), outline=accent_rgb + (190,), width=1)
-        draw.text(((1080 - pw) // 2, py1 + 10), pc, font=f_pc, fill=accent_rgb + (255,))
+        draw.rounded_rectangle([(px1, py1), (px2, py2)], radius=10, fill=(14, 15, 22, 225), outline=DOT_ORANGE + (190,), width=1)
+        draw.text(((1080 - pw) // 2, py1 + 10), pc, font=f_pc, fill=DOT_ORANGE + (255,))
 
     # Headline and Subtitle with dynamic bounds-checking and auto-fit
     h_txt = scene.get("onScreenGraphic", {}).get("headline", spec.get("headline", ""))
     b_txt = scene.get("onScreenGraphic", {}).get("body", "")
 
-    f_h1, h_lines, h_spacing = rt.fit_text_to_bounds(draw, h_txt, rt.FONT_SERIF_BOLD, initial_size=72, max_width=864, max_lines=3, min_size=46)
-    f_sub, b_lines, b_spacing = rt.fit_text_to_bounds(draw, b_txt, rt.FONT_SERIF_BOLD, initial_size=40, max_width=864, max_lines=3, min_size=28)
+    f_h1, h_lines, h_spacing = rt.fit_text_to_bounds(draw, h_txt, rt.FONT_SERIF_BOLD, initial_size=72, max_width=SAFE_WIDTH, max_lines=3, min_size=46)
+    f_sub, b_lines, b_spacing = rt.fit_text_to_bounds(draw, b_txt, rt.FONT_SERIF_BOLD, initial_size=40, max_width=SAFE_WIDTH, max_lines=3, min_size=28)
 
     # Animation ease-in: fade and 20px rise
     p = ease_out_cubic(min(1.0, max(0.0, t / 0.4)))
@@ -658,17 +664,17 @@ def render_template_scene1_hook(spec, scene, t=10.0, total_dur=6.0):
     hy = 840 + y_off
     for line in h_lines:
         lw = draw.textlength(line, font=f_h1)
-        draw.text(((1080 - lw) // 2, hy), line, font=f_h1, fill=(255, 255, 255, int(255 * p)))
+        draw.text(((1080 - lw) // 2, hy), line, font=f_h1, fill=COLOR_WHITE + (int(255 * p),))
         hy += h_spacing
 
     hy += 18
     for line in b_lines:
         lw = draw.textlength(line, font=f_sub)
-        draw.text(((1080 - lw) // 2, hy), line, font=f_sub, fill=(230, 230, 240, int(255 * p)))
+        draw.text(((1080 - lw) // 2, hy), line, font=f_sub, fill=COLOR_LIGHT_GREY + (int(255 * p),))
         hy += b_spacing
 
     if spec.get("branding", {}).get("showCaptions", False):
-        rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1568)
+        rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1540)
 
     # Bottom scrim for AI-GENERATED MEDIA badge contrast over bright streets
     for y in range(1650, 1920):
@@ -681,7 +687,7 @@ def render_template_scene1_hook(spec, scene, t=10.0, total_dur=6.0):
 
 
 def render_template_scene2_receipt(spec, scene, t=10.0, total_dur=6.0):
-    """Renders an authentic Verified Public Record Excerpt card with live yellow highlight vertically centered over 35mm B-roll."""
+    """Renders an authentic Verified Public Record Excerpt card with live subtle highlight vertically centered over 35mm B-roll."""
     overlay = Image.new("RGBA", (1080, 1920), (0, 0, 0, 0))
     draw = ImageDraw.Draw(overlay)
 
@@ -695,8 +701,8 @@ def render_template_scene2_receipt(spec, scene, t=10.0, total_dur=6.0):
     fig = scene.get("figure", {})
     fig_data = fig.get("data", {})
 
-    ox = 70
-    card_w = 940
+    ox = MARGIN_X
+    card_w = SAFE_WIDTH
 
     f_doc_hdr = rt.get_font(rt.FONT_SANS_BOLD, 21)
     f_mtitle = rt.get_font(rt.FONT_SERIF_BOLD, 44)
@@ -754,7 +760,7 @@ def render_template_scene2_receipt(spec, scene, t=10.0, total_dur=6.0):
     curr_y = act_cy1 + pad_top
     draw.text((ox + 35, curr_y), left_hdr, font=f_doc_hdr, fill=ink_muted)
     rw = draw.textlength(right_hdr, font=f_doc_hdr)
-    draw.text((ox + card_w - 35 - rw, curr_y), right_hdr, font=f_doc_hdr, fill=(180, 83, 9, 255))
+    draw.text((ox + card_w - 35 - rw, curr_y), right_hdr, font=f_doc_hdr, fill=DOT_ORANGE + (255,))
     curr_y += 38
 
     draw.line([(ox + 35, curr_y), (ox + card_w - 35, curr_y)], fill=(40, 40, 45, 240), width=3)
@@ -766,16 +772,16 @@ def render_template_scene2_receipt(spec, scene, t=10.0, total_dur=6.0):
         draw.text((ox + 35, curr_y), tl, font=f_mtitle, fill=ink_dark)
     curr_y += title_h
 
-    # Red margin bracket & highlighted quote
+    # Signature Dot-Orange margin bracket & highlighted quote
     hl_progress = ease_out_cubic(max(0.0, min(1.0, (t - 0.35) / 1.25))) if t >= 0.35 else 0.0
     bracket_start = curr_y - 6
     bracket_h = int((len(q_lines[:5]) * 52 + 10) * max(0.1, hl_progress))
 
     if hl_progress > 0.05:
-        draw.line([(ox + 18, bracket_start), (ox + 18, bracket_start + bracket_h)], fill=(217, 72, 63, 245), width=4)
-        draw.line([(ox + 18, bracket_start), (ox + 28, bracket_start)], fill=(217, 72, 63, 245), width=3)
+        draw.line([(ox + 18, bracket_start), (ox + 18, bracket_start + bracket_h)], fill=DOT_ORANGE + (245,), width=4)
+        draw.line([(ox + 18, bracket_start), (ox + 28, bracket_start)], fill=DOT_ORANGE + (245,), width=3)
         if hl_progress > 0.9:
-            draw.line([(ox + 18, bracket_start + bracket_h), (ox + 28, bracket_start + bracket_h)], fill=(217, 72, 63, 245), width=3)
+            draw.line([(ox + 18, bracket_start + bracket_h), (ox + 28, bracket_start + bracket_h)], fill=DOT_ORANGE + (245,), width=3)
 
     for ql in q_lines[:5]:
         hl_words = [w.strip(".,\"'") for w in highlight.split(" ") if len(w.strip(".,\"'")) > 3]
@@ -783,7 +789,8 @@ def render_template_scene2_receipt(spec, scene, t=10.0, total_dur=6.0):
             lw = draw.textlength(ql, font=f_quote)
             current_hl_w = int(lw * hl_progress)
             if current_hl_w > 4:
-                draw.rounded_rectangle([(ox + 32, curr_y - 2), (ox + 36 + current_hl_w, curr_y + 42)], radius=4, fill=(253, 224, 71, 235))
+                # Refined light grey highlight marker
+                draw.rounded_rectangle([(ox + 32, curr_y - 2), (ox + 36 + current_hl_w, curr_y + 42)], radius=4, fill=(226, 230, 240, 235))
         draw.text((ox + 35, curr_y), ql, font=f_quote, fill=ink_dark)
         curr_y += 52
 
@@ -799,8 +806,8 @@ def render_template_scene2_receipt(spec, scene, t=10.0, total_dur=6.0):
     st_w = draw.textlength(st_txt, font=f_stamp)
     st_x2 = ox + card_w - 35
     st_x1 = st_x2 - int(st_w + 34)
-    draw.rounded_rectangle([(st_x1, curr_y + 4), (st_x2, curr_y + 50)], radius=8, fill=(254, 242, 242, 245), outline=(217, 72, 63, 240), width=2)
-    draw.text((st_x1 + 17, curr_y + 15), st_txt, font=f_stamp, fill=(217, 72, 63, 255))
+    draw.rounded_rectangle([(st_x1, curr_y + 4), (st_x2, curr_y + 50)], radius=8, fill=(254, 242, 242, 245), outline=DOT_ORANGE + (240,), width=2)
+    draw.text((st_x1 + 17, curr_y + 15), st_txt, font=f_stamp, fill=DOT_ORANGE + (255,))
 
     if spec.get("branding", {}).get("showCaptions", False):
         rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1540)
@@ -841,13 +848,13 @@ def render_selling_point_slide_card(spec, t=10.0):
     draw.text((MARGIN_X, 800), line1, font=f_main, fill=(255, 255, 255, int(255 * p_title)))
     draw.text((MARGIN_X, 910), line2, font=f_main, fill=(255, 255, 255, int(255 * p_title)))
     l_yc = draw.textlength(line2, font=f_main)
-    draw.ellipse([(MARGIN_X + l_yc + 8, 955), (MARGIN_X + l_yc + 26, 973)], fill=(217, 72, 63, int(255 * p_title)))
+    draw.ellipse([(MARGIN_X + l_yc + 8, 955), (MARGIN_X + l_yc + 26, 973)], fill=DOT_ORANGE + (int(255 * p_title),))
 
     draw.line([(MARGIN_X, 1060), (SAFE_X2, 1060)], fill=(255, 255, 255, 45), width=1)
 
     f_sub = rt.get_font(rt.FONT_SERIF, 36)
     sub_txt = "Direct from council agendas to your phone."
-    draw.text((MARGIN_X, 1100), sub_txt, font=f_sub, fill=(210, 215, 225, int(255 * p_title)))
+    draw.text((MARGIN_X, 1100), sub_txt, font=f_sub, fill=COLOR_LIGHT_GREY + (int(255 * p_title),))
 
     # 3 Sleek Trust Badges
     f_badge = rt.get_font(rt.FONT_SANS_BOLD, 20)
@@ -855,8 +862,8 @@ def render_selling_point_slide_card(spec, t=10.0):
     bx = MARGIN_X
     for b in badges:
         bw = draw.textlength(b, font=f_badge)
-        draw.rounded_rectangle([(bx, 1200), (bx + bw + 36, 1248)], radius=12, fill=(22, 24, 32, 255), outline=(245, 158, 11, 160), width=1)
-        draw.text((bx + 18, 1214), b, font=f_badge, fill=(245, 158, 11, int(255 * p_title)))
+        draw.rounded_rectangle([(bx, 1200), (bx + bw + 36, 1248)], radius=12, fill=(22, 24, 32, 255), outline=DOT_ORANGE + (160,), width=1)
+        draw.text((bx + 18, 1214), b, font=f_badge, fill=DOT_ORANGE + (int(255 * p_title),))
         bx += int(bw + 40)
 
     f_bot = rt.get_font(rt.FONT_SERIF, 34)
@@ -1065,7 +1072,7 @@ def render_template_scene4_facts_figures(spec, scene, t=10.0, total_dur=6.0):
     t_title = takeaway.get("title", scene.get("onScreenGraphic", {}).get("headline", "Council Implementation").replace("\n", " "))
     t_sub = takeaway.get("subtitle", scene.get("onScreenGraphic", {}).get("body", ""))
 
-    draw.text((bx1 + 40, vy1 + 22), t_kicker.upper(), font=rt.get_font(rt.FONT_SANS_BOLD, 18), fill=(52, 211, 153, 255))
+    draw.text((bx1 + 40, vy1 + 22), t_kicker.upper(), font=rt.get_font(rt.FONT_SANS_BOLD, 18), fill=DOT_ORANGE + (255,))
     draw.text((bx1 + 40, vy1 + 56), t_title, font=rt.get_font(rt.FONT_SERIF_BOLD, 31), fill=(255, 255, 255, 255))
     for sl in rt.wrap_text(draw, t_sub, rt.get_font(rt.FONT_SANS, 20), bx2 - bx1 - 80)[:1]:
         draw.text((bx1 + 40, vy1 + 104), sl, font=rt.get_font(rt.FONT_SANS, 20), fill=(195, 200, 210, 255))
@@ -1203,7 +1210,7 @@ def _render_legacy_audit_card(spec, scene, total_scenes=5, show_logo=True, t=10.
 
     # Audit Table Header
     audit_hdr = fig_data.get("auditHeader", "PUBLIC RECORD AUDIT TRAIL")
-    draw.text((ox, 530), audit_hdr, font=get_font(FONT_SANS_BOLD, 21), fill=(245, 158, 11, 255))
+    draw.text((ox, 530), audit_hdr, font=get_font(FONT_SANS_BOLD, 21), fill=DOT_ORANGE + (255,))
 
     records = fig_data.get("records", [])
     ry = 568
@@ -1230,7 +1237,7 @@ def _render_legacy_audit_card(spec, scene, total_scenes=5, show_logo=True, t=10.
 
         # Status badge on right (with vector checkmark so fonts never render missing glyph boxes)
         badge_label = rec.get("badge", "VERIFIED").replace("✓", "").strip()
-        b_col = tuple(rec.get("badgeColor", [52, 211, 153])) + (255,)
+        b_col = tuple(rec.get("badgeColor", list(DOT_ORANGE))) + (255,)
         f_badge = get_font(FONT_SANS_BOLD, 16)
         bw = int(draw.textlength(badge_label, font=f_badge) + 52)
         bx2 = 1080 - ox - 24

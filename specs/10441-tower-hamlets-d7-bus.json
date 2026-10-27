@@ -177,9 +177,9 @@
               "subtext": "Connecting Blackwall & Millwall",
               "barRatio": 0.95,
               "barColor": [
-                217,
-                72,
-                63
+                254,
+                107,
+                33
               ]
             },
             {
@@ -187,11 +187,11 @@
               "value": "George Green's",
               "label": "Pupil Journey Impact",
               "subtext": "Direct route for local pupils",
-              "barRatio": 0.90,
+              "barRatio": 0.9,
               "barColor": [
-                245,
-                158,
-                11
+                254,
+                107,
+                33
               ]
             }
           ]
@@ -233,9 +233,9 @@
               "subtext": "TfL states other routes cover most passenger journeys",
               "barRatio": 0.85,
               "barColor": [
-                217,
-                72,
-                63
+                254,
+                107,
+                33
               ]
             },
             {
@@ -245,9 +245,9 @@
               "subtext": "Council cites growing population and extra interchanges",
               "barRatio": 0.92,
               "barColor": [
-                245,
-                158,
-                11
+                254,
+                107,
+                33
               ]
             }
           ]
@@ -285,9 +285,9 @@
               "title": "Isle of Dogs Bus Restructure Consultation Document (Routes D7, 135, 277, D6)",
               "badge": "OFFICIAL CONSULTATION",
               "badgeColor": [
-                245,
-                158,
-                11
+                254,
+                107,
+                33
               ]
             },
             {
@@ -295,9 +295,9 @@
               "title": "Tower Hamlets Full Council Emergency Motion opposing D7 Withdrawal",
               "badge": "COUNCIL OPPOSITION",
               "badgeColor": [
-                217,
-                72,
-                63
+                254,
+                107,
+                33
               ]
             },
             {
@@ -305,9 +305,9 @@
               "title": "London Local Story #10441: Isle of Dogs Public Transport Connectivity Impact",
               "badge": "EDITORIAL VERIFIED",
               "badgeColor": [
-                52,
-                211,
-                153
+                254,
+                107,
+                33
               ]
             }
           ],
