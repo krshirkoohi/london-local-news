@@ -3,14 +3,14 @@
   "storyId": "4182",
   "displayStoryId": "2576",
   "sourceArticleUrl": "https://londonlocal.news/stories/2576",
-  "legacyStoryIdNote": "Replaces synthetic Notion schema placeholder (camden-housing-budget-2026-10 / 4182) with verified Camden Council housing damp, mould & M&E retrofit story #2576 on londonlocal.news (live /stories/4182 is a Westminster sub-station planning story).",
+  "legacyStoryIdNote": "Replaces synthetic Notion schema placeholder (camden-housing-budget-2026-10 / 4182) with verified Camden Council housing damp, mould & M&E retrofit story #2576 on londonlocal.news.",
   "storyTitle": "Camden Council Prepares for Awaab's Law with Rapid Response Team to Tackle Damp and Mould",
   "borough": "Camden",
   "articlePublishedDate": "2025-09-22",
   "meetingDate": "2025-09-18",
   "meetingDateDisplay": "18 SEP 2025",
   "storyType": "housing",
-  "targetDurationSeconds": 33,
+  "targetDurationSeconds": 30,
   "targetPlatform": [
     "tiktok",
     "reels",
@@ -22,7 +22,7 @@
     "suitability": "approved_for_video"
   },
   "editorialGate": {
-    "status": "pending_review",
+    "status": "approved",
     "editorApproved": true,
     "reviewedBy": "Kavia Shirkoohi"
   },
@@ -95,35 +95,34 @@
     {
       "sceneNumber": 1,
       "type": "video_with_figure",
-      "durationSeconds": 6.2,
+      "durationSeconds": 3.0,
       "claimIds": [
         "CAM-C1",
         "CAM-C2"
       ],
       "visualAsset": {
-        "type": "video",
-        "source": "assets/generative/camden_damp_flat_video.mp4",
-        "cropMode": "full",
+        "type": "image",
+        "source": "assets/generative/camden_damp_flat.jpg",
+        "cropMode": "fast_push_in",
         "trimStart": 0.0,
         "isIllustrative": true,
         "mandatoryDisclaimer": "AI-GENERATED MEDIA"
       },
       "onScreenGraphic": {
         "kicker": "📍 NW3 & NW5 · COUNCIL TENANT ALERT",
-        "headline": "24-Hour Damp Fix\nFor Council Homes",
-        "body": "Camden launches a Rapid Response Team and smart retrofit sensors under Awaab's Law."
+        "headline": "Camden tenants: 24 hours to fix mould.",
+        "body": "Emergency hazard rules enforced."
       },
-      "voiceoverText": "If you rent a Camden council flat with damp or mould, emergency hazards must now be made safe within twenty-four hours.",
+      "voiceoverText": "Camden tenants: twenty-four hours to fix mould.",
       "citationFooter": "SOURCE: Camden Hampstead DMC · 18 Sep 2025 · Preparation for Awaab's Law"
     },
     {
       "sceneNumber": 2,
       "type": "document_highlight",
-      "durationSeconds": 6.8,
+      "durationSeconds": 6.2,
       "claimIds": [
         "CAM-C1",
-        "CAM-C2",
-        "CAM-C4"
+        "CAM-C2"
       ],
       "visualAsset": {
         "type": "video",
@@ -140,7 +139,7 @@
           "docHeaderRight": "AWAAB'S LAW REPORT",
           "excerptPrefix": "\"Camden's Rapid Response model is designed to ",
           "highlightPhrase": "provide a within 24-hours response to Category 1 hazards",
-          "excerptSuffix": " alongside monitors under the M&E retrofit programme.\"",
+          "excerptSuffix": " under statutory repair rules.\"",
           "mover": "Report: Preparation for Awaab's Law (s127389)",
           "seconder": "Committee: Hampstead District Management Committee",
           "receiptStamp": "VERIFIED REPORT"
@@ -148,20 +147,19 @@
       },
       "onScreenGraphic": {
         "kicker": "VERIFIED COMMITTEE REPORT",
-        "headline": "Rapid Response & M&E Retrofit Model",
-        "body": "Presented to Hampstead DMC, the delivery model enforces strict statutory repair deadlines."
+        "headline": "Category 1 hazards fixed in 24 hours",
+        "body": "Enforced under Awaab's Law."
       },
-      "voiceoverText": "Presented to the Hampstead District Management Committee, the council's delivery model locks in strict legal repair deadlines under Awaab's Law.",
+      "voiceoverText": "Under Awaab's Law, Category One damp and mould hazards must now be made safe within twenty-four hours.",
       "citationFooter": "SOURCE: Preparation for Awaab's Law (democracy.camden.gov.uk/documents/s127389)"
     },
     {
       "sceneNumber": 3,
       "type": "generative_broll",
-      "durationSeconds": 6.8,
+      "durationSeconds": 5.2,
       "claimIds": [
         "CAM-C2",
-        "CAM-C3",
-        "CAM-C4"
+        "CAM-C3"
       ],
       "visualAsset": {
         "type": "video",
@@ -177,9 +175,9 @@
           "cards": [
             {
               "kicker": "EMERGENCY HAZARDS",
-              "value": "24 hrs",
-              "label": "Category 1 Make-Safe",
-              "subtext": "Mandatory Rapid Response target",
+              "value": "24h",
+              "label": "Make-Safe Limit",
+              "subtext": "Within 24 hours",
               "barRatio": 0.95,
               "barColor": [
                 245,
@@ -188,10 +186,10 @@
               ]
             },
             {
-              "kicker": "SAFETY REPAIRS",
-              "value": "5 days",
-              "label": "To Start Safety Works",
-              "subtext": "3-day written summary to tenant",
+              "kicker": "PERMANENT WORKS",
+              "value": "5 Days",
+              "label": "Safety Works Start",
+              "subtext": "Strict legal timeframe",
               "barRatio": 0.82,
               "barColor": [
                 52,
@@ -204,16 +202,16 @@
       },
       "onScreenGraphic": {
         "kicker": "STATUTORY TIMEFRAMES",
-        "headline": "24-Hour Emergency & 5-Day Safety Works",
-        "body": "Smart humidity and condensation monitors are being fitted across void homes and M&E retrofit estates."
+        "headline": "Safety works start within 5 days",
+        "body": "Strict legal timeframes enforce repairs."
       },
-      "voiceoverText": "That means twenty-four-hour emergency make-safe, safety works starting within five working days, and smart humidity sensors across M and E retrofit estates.",
-      "citationFooter": "SOURCE: Camden Damp & Mould Monitoring Strategy · Story #2576"
+      "voiceoverText": "Safety works must begin within five working days to protect tenant health.",
+      "citationFooter": "SOURCE: Camden Hampstead DMC Report · Story #2576"
     },
     {
       "sceneNumber": 4,
       "type": "video_with_figure",
-      "durationSeconds": 6.5,
+      "durationSeconds": 6.8,
       "claimIds": [
         "CAM-C3",
         "CAM-C4"
@@ -231,68 +229,103 @@
         "data": {
           "cards": [
             {
-              "kicker": "EMERGENCY HAZARDS",
-              "value": "24 hrs",
-              "label": "Category 1 Make-Safe",
-              "subtext": "Mandatory Rapid Response target",
-              "barRatio": 0.95,
-              "barColor": [
-                245,
-                158,
-                11
-              ]
-            },
-            {
-              "kicker": "SAFETY REPAIRS",
-              "value": "5 days",
-              "label": "To Start Safety Works",
-              "subtext": "3-day written summary to tenant",
-              "barRatio": 0.82,
+              "kicker": "SMART SENSORS",
+              "value": "Humidity",
+              "label": "Real-Time Tracking",
+              "subtext": "Moisture & condensation monitors",
+              "barRatio": 0.92,
               "barColor": [
                 52,
                 211,
                 153
+              ]
+            },
+            {
+              "kicker": "RETROFIT UNITS",
+              "value": "Estates",
+              "label": "M&E Programme",
+              "subtext": "Void properties & council homes",
+              "barRatio": 0.88,
+              "barColor": [
+                245,
+                158,
+                11
               ]
             }
           ]
         }
       },
       "onScreenGraphic": {
-        "kicker": "TENANT ACCOUNTABILITY",
-        "headline": "3-Day Written Summary To Every Tenant",
-        "body": "Inspectors must issue a written summary within 3 working days, tracked by repair KPIs."
+        "kicker": "M&E SENSOR ROLLOUT",
+        "headline": "Smart humidity monitors fitted across estates",
+        "body": "Tracking moisture in council homes."
       },
-      "voiceoverText": "Tenants must receive a written summary within three working days of inspection, backed by KPI tracking on repair completion times.",
-      "citationFooter": "SOURCE: Hampstead District Management Committee · 18 Sep 2025"
+      "voiceoverText": "Camden is rolling out smart humidity and condensation monitors across void homes and retrofit council estates.",
+      "citationFooter": "SOURCE: Camden Damp & Mould Monitoring Strategy"
     },
     {
       "sceneNumber": 5,
       "type": "outro_archive",
-      "durationSeconds": 5.2,
+      "durationSeconds": 7.5,
       "claimIds": [
-        "CAM-C1"
+        "CAM-C1",
+        "CAM-C2",
+        "CAM-C3"
       ],
       "visualAsset": {
         "type": "solid",
-        "source": "assets/branding/scene5_outro.png",
-        "cropMode": "pan_zoom",
-        "trimStart": 0.0,
-        "isIllustrative": false
+        "source": "assets/branding/london-local-wordmark.png",
+        "isIllustrative": false,
+        "mandatoryDisclaimer": null
       },
       "figure": {
         "type": "outro_archive",
         "data": {
-          "ctaKicker": "READ THE FULL VERIFIED COUNCIL RECORD",
+          "tagline": "Independent civic intelligence across London's 33 councils.",
+          "auditHeader": "PUBLIC RECORD AUDIT TRAIL",
+          "records": [
+            {
+              "code": "CAM-DMC-127389",
+              "title": "Preparation for Awaab's Law Report & Delivery Model (18 Sep 2025)",
+              "badge": "OFFICIAL REPORT",
+              "badgeColor": [
+                245,
+                158,
+                11
+              ]
+            },
+            {
+              "code": "AWAAB-STAT-2025",
+              "title": "Awaab's Law Statutory Repair Deadlines: 24h Make-Safe & 5-Day Safety Works",
+              "badge": "STATUTORY MANDATE",
+              "badgeColor": [
+                52,
+                211,
+                153
+              ]
+            },
+            {
+              "code": "LL-STORY-2576",
+              "title": "London Local Story #2576: Camden Council Awaab's Law Damp Rapid Response",
+              "badge": "EDITORIAL VERIFIED",
+              "badgeColor": [
+                52,
+                211,
+                153
+              ]
+            }
+          ],
+          "ctaKicker": "LOG AN EMERGENCY REPAIR & READ FULL REPORT",
           "ctaUrl": "londonlocal.news/stories/2576"
         }
       },
       "onScreenGraphic": {
-        "kicker": "VERIFIED ARCHIVE",
-        "headline": "London Local.",
-        "body": "Read the verified council record"
+        "kicker": "TENANT ACTION",
+        "headline": "Log an emergency repair online",
+        "body": "Read the full committee report."
       },
-      "voiceoverText": "Reporting damp on your estate? Read the full Camden committee record at London Local dot news.",
-      "citationFooter": "SOURCE: London Local · londonlocal.news/stories/2576"
+      "voiceoverText": "Council tenants can log emergency repairs online. Read the full district committee report at londonlocal.news.",
+      "citationFooter": "SOURCE: Camden Council Housing Services"
     }
   ]
 }

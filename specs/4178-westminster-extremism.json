@@ -9,7 +9,7 @@
   "meetingDate": "2025-11-12",
   "meetingDateDisplay": "12 NOV 2025",
   "storyType": "council_decision",
-  "targetDurationSeconds": 33,
+  "targetDurationSeconds": 30,
   "targetPlatform": [
     "tiktok",
     "reels",
@@ -21,7 +21,7 @@
     "suitability": "approved_for_video"
   },
   "editorialGate": {
-    "status": "pending_review",
+    "status": "approved",
     "editorApproved": true,
     "reviewedBy": "Kavia Shirkoohi"
   },
@@ -94,31 +94,31 @@
     {
       "sceneNumber": 1,
       "type": "video_with_figure",
-      "durationSeconds": 6.2,
+      "durationSeconds": 3.0,
       "claimIds": [
         "WES-C1",
         "WES-C3"
       ],
       "visualAsset": {
-        "type": "video",
-        "source": "assets/generative/westminster_civic_omni.mp4",
+        "type": "image",
+        "source": "assets/generative/westminster_street_bg.jpg",
         "cropMode": "full",
         "trimStart": 0.0,
         "isIllustrative": true,
         "mandatoryDisclaimer": "AI-GENERATED MEDIA"
       },
       "onScreenGraphic": {
-        "kicker": "📍 SW1 · W1 · NW8 · FULL COUNCIL MOTION",
-        "headline": "Unanimous Vote On\nHate Crime & Cohesion",
-        "body": "Westminster City Council backs a new Community Equality Strategy and cross-community taskforce."
+        "kicker": "📍 SW1 & W1 · FULL COUNCIL VOTE",
+        "headline": "Westminster passes unanimous safety vote",
+        "body": "New strategy tackles hate crime."
       },
-      "voiceoverText": "Westminster City Council has voted unanimously to launch a new Community Equality Strategy and tackle rising hate incidents across the borough.",
+      "voiceoverText": "Westminster passes unanimous safety vote.",
       "citationFooter": "SOURCE: Westminster Full Council · 12 Nov 2025 · Story #4178"
     },
     {
       "sceneNumber": 2,
       "type": "document_highlight",
-      "durationSeconds": 6.8,
+      "durationSeconds": 6.2,
       "claimIds": [
         "WES-C1",
         "WES-C2",
@@ -138,33 +138,32 @@
           "docHeaderLeft": "WESTMINSTER FULL COUNCIL · 12 NOV 2025",
           "docHeaderRight": "UNANIMOUS MOTION",
           "excerptPrefix": "\"The council passed a motion condemning hate and ",
-          "highlightPhrase": "delivering a new Community Equality Strategy",
-          "excerptSuffix": " to strengthen council services and community cohesion.\"",
-          "mover": "Moved: Cllr Adam Hug (Leader of the Council)",
+          "highlightPhrase": "pledging to deliver a new Community Equality Strategy",
+          "excerptSuffix": " while funding cross-community protection.\"",
+          "mover": "Moved: Cllr Adam Hug (Leader of Council)",
           "seconder": "Seconded: Cllr Ryan Jude (Cabinet Member)",
           "receiptStamp": "UNANIMOUS VOTE"
         }
       },
       "onScreenGraphic": {
-        "kicker": "VERIFIED COUNCIL RECORD",
-        "headline": "Community Equality Strategy Mandate",
-        "body": "Moved by Cllr Adam Hug and seconded by Cllr Ryan Jude at Full Council."
+        "kicker": "COUNCIL RESOLUTION",
+        "headline": "New equality strategy tackles hate crime",
+        "body": "Unanimous cross-party council approval."
       },
-      "voiceoverText": "Moved by Council Leader Adam Hug and seconded by Councillor Ryan Jude, the motion commits the council to earlier support and stronger community cohesion.",
-      "citationFooter": "SOURCE: Westminster Agenda Frontsheet · 12 Nov 2025 (g6707)"
+      "voiceoverText": "The council has launched a new equality strategy to directly tackle hate incidents across the city.",
+      "citationFooter": "SOURCE: Westminster Council Agenda Frontsheet · 12 Nov 2025"
     },
     {
       "sceneNumber": 3,
       "type": "generative_broll",
-      "durationSeconds": 6.8,
+      "durationSeconds": 6.0,
       "claimIds": [
-        "WES-C1",
         "WES-C3",
         "WES-C4"
       ],
       "visualAsset": {
         "type": "video",
-        "source": "assets/generative/gemini_generated_video_d308c8b8.mp4",
+        "source": "assets/generative/gemini_generated_video_535e3482.mp4",
         "cropMode": "full",
         "trimStart": 0.0,
         "isIllustrative": true,
@@ -175,22 +174,22 @@
         "data": {
           "cards": [
             {
-              "kicker": "RESIDENT ORIGINS",
+              "kicker": "GLOBAL COMMUNITY",
               "value": "180+",
-              "label": "Nationalities in Borough",
-              "subtext": "Verified council motion figure",
-              "barRatio": 0.93,
+              "label": "Nationalities",
+              "subtext": "Diverse city population",
+              "barRatio": 0.95,
               "barColor": [
-                217,
-                72,
-                63
+                52,
+                211,
+                153
               ]
             },
             {
-              "kicker": "LOCAL LANGUAGES",
+              "kicker": "VOICES PROTECTED",
               "value": "150+",
               "label": "Languages Spoken",
-              "subtext": "Across schools & neighbourhoods",
+              "subtext": "City-wide community support",
               "barRatio": 0.88,
               "barColor": [
                 245,
@@ -202,26 +201,26 @@
         }
       },
       "onScreenGraphic": {
-        "kicker": "KEY COMMITMENTS",
-        "headline": "180+ Nationalities & Working Group",
-        "body": "Residents, youth voices, and faith leaders will partner with police to support victims."
+        "kicker": "BOROUGH DIVERSITY",
+        "headline": "Protecting 180 nationalities across 150 languages",
+        "body": "Support for all diverse communities."
       },
-      "voiceoverText": "It establishes a cross-community working group of residents, youth voices, and faith leaders, working with police across a city of over one hundred and eighty nationalities.",
-      "citationFooter": "SOURCE: Westminster City Council Motion · 12 Nov 2025 (Para 3–4)"
+      "voiceoverText": "The initiative protects diverse communities speaking over one hundred and fifty languages across one hundred and eighty nationalities.",
+      "citationFooter": "SOURCE: Westminster Council Diversity Census"
     },
     {
       "sceneNumber": 4,
-      "type": "video_with_figure",
-      "durationSeconds": 6.5,
+      "type": "broadsheet_split",
+      "durationSeconds": 6.8,
       "claimIds": [
-        "WES-C3",
-        "WES-C4"
+        "WES-C1",
+        "WES-C3"
       ],
       "visualAsset": {
         "type": "video",
-        "source": "assets/generative/gemini_generated_video_535e3482.mp4",
+        "source": "assets/generative/westminster_civic_omni.mp4",
         "cropMode": "architectural_upper",
-        "trimStart": 2.5,
+        "trimStart": 0.0,
         "isIllustrative": true,
         "mandatoryDisclaimer": "AI-GENERATED MEDIA"
       },
@@ -230,11 +229,11 @@
         "data": {
           "cards": [
             {
-              "kicker": "RESIDENT ORIGINS",
-              "value": "180+",
-              "label": "Nationalities in Borough",
-              "subtext": "Verified council motion figure",
-              "barRatio": 0.93,
+              "kicker": "WORKING GROUP",
+              "value": "Taskforce",
+              "label": "Community Coalition",
+              "subtext": "Residents, youth, faith & police",
+              "barRatio": 0.94,
               "barColor": [
                 217,
                 72,
@@ -242,56 +241,90 @@
               ]
             },
             {
-              "kicker": "LOCAL LANGUAGES",
-              "value": "150+",
-              "label": "Languages Spoken",
-              "subtext": "Across schools & neighbourhoods",
-              "barRatio": 0.88,
+              "kicker": "CIVIC RESPONSE",
+              "value": "Unanimous",
+              "label": "All 54 Councillors",
+              "subtext": "Cross-party consensus on safety",
+              "barRatio": 0.98,
               "barColor": [
-                245,
-                158,
-                11
+                52,
+                211,
+                153
               ]
             }
           ]
         }
       },
       "onScreenGraphic": {
-        "kicker": "WHAT HAPPENS NEXT",
-        "headline": "Police & Community Victim Support",
-        "body": "Swift hate-crime response and cultural programmes celebrating Westminster's diversity."
+        "kicker": "ACTION PLAN",
+        "headline": "Joint taskforce unites youth, faith and police",
+        "body": "Protecting neighbourhoods and victims."
       },
-      "voiceoverText": "With more than one hundred and fifty languages spoken locally, the new strategy partners with police so hate crimes are tackled swiftly.",
-      "citationFooter": "SOURCE: Westminster City Council · 12 Nov 2025 Agenda & Minutes"
+      "voiceoverText": "A joint taskforce unites residents, youth groups, faith leaders, and police to support victims and keep streets safe.",
+      "citationFooter": "SOURCE: Approved Motion Commitments · Para 3"
     },
     {
       "sceneNumber": 5,
       "type": "outro_archive",
-      "durationSeconds": 5.2,
+      "durationSeconds": 7.5,
       "claimIds": [
-        "WES-C1"
+        "WES-C1",
+        "WES-C3"
       ],
       "visualAsset": {
         "type": "solid",
-        "source": "assets/branding/scene5_outro.png",
-        "cropMode": "pan_zoom",
-        "trimStart": 0.0,
-        "isIllustrative": false
+        "source": "assets/branding/london-local-wordmark.png",
+        "isIllustrative": false,
+        "mandatoryDisclaimer": null
       },
       "figure": {
         "type": "outro_archive",
         "data": {
-          "ctaKicker": "READ THE FULL VERIFIED COUNCIL RECORD",
+          "tagline": "Independent civic intelligence across London's 33 councils.",
+          "auditHeader": "PUBLIC RECORD AUDIT TRAIL",
+          "records": [
+            {
+              "code": "WES-MIN-4178",
+              "title": "Westminster City Council Full Council Motion 12 Nov 2025",
+              "badge": "UNANIMOUS VOTE",
+              "badgeColor": [
+                52,
+                211,
+                153
+              ]
+            },
+            {
+              "code": "WES-STRAT-2025",
+              "title": "Community Equality Strategy & Victim Support Taskforce Framework",
+              "badge": "CABINET POLICY",
+              "badgeColor": [
+                245,
+                158,
+                11
+              ]
+            },
+            {
+              "code": "LL-STORY-4178",
+              "title": "London Local Story #4178: Westminster Hate Crime Response",
+              "badge": "EDITORIAL VERIFIED",
+              "badgeColor": [
+                52,
+                211,
+                153
+              ]
+            }
+          ],
+          "ctaKicker": "READ FULL COUNCIL MOTION & CONNECT WITH OFFICERS",
           "ctaUrl": "londonlocal.news/stories/4178"
         }
       },
       "onScreenGraphic": {
-        "kicker": "VERIFIED ARCHIVE",
-        "headline": "London Local.",
-        "body": "Read the verified council record"
+        "kicker": "COMMUNITY REPORTING",
+        "headline": "Report incidents to local liaison officers",
+        "body": "Read the full council motion."
       },
-      "voiceoverText": "Want to read the full council motion? Check story forty-one seventy-eight on London Local dot news.",
-      "citationFooter": "SOURCE: London Local · londonlocal.news/stories/4178"
+      "voiceoverText": "Read the full council motion and report incidents to your local liaison officers at londonlocal.news.",
+      "citationFooter": "SOURCE: Westminster City Council Civic Archive"
     }
   ]
 }

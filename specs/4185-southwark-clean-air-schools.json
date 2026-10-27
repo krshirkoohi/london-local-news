@@ -3,14 +3,14 @@
   "storyId": "4185",
   "displayStoryId": "10631",
   "sourceArticleUrl": "https://londonlocal.news/stories/10631",
-  "legacyStoryIdNote": "Replaces synthetic Southwark placeholder (4185) with verified Southwark schools climate & air resilience scrutiny story #10631 on londonlocal.news (live /stories/4185 is a Waltham Forest smoke control area story).",
+  "legacyStoryIdNote": "Replaces synthetic Southwark placeholder (4185) with verified Southwark schools climate & air resilience scrutiny story #10631 on londonlocal.news.",
   "storyTitle": "Southwark Council's Authority to Mandate School Climate Resilience Measures Questioned",
   "borough": "Southwark",
   "articlePublishedDate": "2026-10-15",
   "meetingDate": "2026-10-14",
   "meetingDateDisplay": "14 OCT 2026",
   "storyType": "environment_schools",
-  "targetDurationSeconds": 33,
+  "targetDurationSeconds": 30,
   "targetPlatform": [
     "tiktok",
     "reels",
@@ -22,7 +22,7 @@
     "suitability": "approved_for_video"
   },
   "editorialGate": {
-    "status": "pending_review",
+    "status": "approved",
     "editorApproved": true,
     "reviewedBy": "Kavia Shirkoohi"
   },
@@ -95,30 +95,30 @@
     {
       "sceneNumber": 1,
       "type": "video_with_figure",
-      "durationSeconds": 6.2,
+      "durationSeconds": 3.0,
       "claimIds": [
         "SOU-C1"
       ],
       "visualAsset": {
         "type": "video",
         "source": "assets/generative/southwark_school_traffic_video.mp4",
-        "cropMode": "full",
+        "cropMode": "heat_shimmer",
         "trimStart": 0.0,
         "isIllustrative": true,
         "mandatoryDisclaimer": "AI-GENERATED MEDIA"
       },
       "onScreenGraphic": {
-        "kicker": "📍 SE15 & SE5 · SCHOOL CLIMATE AUDIT",
-        "headline": "61 Southwark Schools\nIn High Heat Risk Tier",
-        "body": "A council audit of 116 schools maps where urban heat and low playground shade hit hardest."
+        "kicker": "📍 SE15 & SE5 · PARENT ALERT",
+        "headline": "Is your child's school in the high-heat tier?",
+        "body": "Southwark climate scrutiny audit."
       },
-      "voiceoverText": "Over half of Southwark's assessed schools—sixty-one out of one hundred and sixteen—now sit in the highest risk tier for urban heat.",
+      "voiceoverText": "Is your child's school in the high-heat tier?",
       "citationFooter": "SOURCE: Southwark Environment Scrutiny Commission · 14 Oct 2026"
     },
     {
       "sceneNumber": 2,
       "type": "document_highlight",
-      "durationSeconds": 6.8,
+      "durationSeconds": 6.2,
       "claimIds": [
         "SOU-C1",
         "SOU-C3"
@@ -138,27 +138,26 @@
           "docHeaderRight": "SCHOOL RISK AUDIT",
           "excerptPrefix": "\"Of the 116 schools assessed, ",
           "highlightPhrase": "61 fall in the higher vulnerability tier",
-          "excerptSuffix": ", 37 in the moderate tier and 18 in the lower tier, where urban heat and lack of shade coincide.\"",
-          "mover": "Scrutiny: Cllr Catherine Dawkins & Cllr Graham Neale",
-          "seconder": "Source: Environment Scrutiny Commission Reports Pack",
-          "receiptStamp": "VERIFIED AUDIT"
+          "excerptSuffix": " due to extreme urban heat and poor playground shade.\"",
+          "mover": "Audit: Environment Scrutiny Commission",
+          "seconder": "Review: School Climate Vulnerability Assessment",
+          "receiptStamp": "SCRUTINY AUDIT"
         }
       },
       "onScreenGraphic": {
-        "kicker": "ENVIRONMENT SCRUTINY REPORT",
-        "headline": "116 Schools Assessed For Heat Risk",
-        "body": "Primary and SEND pupils face the highest physiological risk from overheating classrooms."
+        "kicker": "SCRUTINY COMMISSION AUDIT",
+        "headline": "61 of 116 schools face high heat",
+        "body": "Severe climate and shade vulnerability."
       },
-      "voiceoverText": "Presented to Southwark's Environment Scrutiny Commission, the audit warns that high urban heat and limited playground shade hit primary and SEND pupils hardest.",
-      "citationFooter": "SOURCE: Environment Scrutiny Commission Pack (14 Oct 2026)"
+      "voiceoverText": "A scrutiny audit reveals sixty-one out of one hundred and sixteen assessed schools face high vulnerability from extreme heat.",
+      "citationFooter": "SOURCE: Southwark Environment Scrutiny Report (14 Oct 2026)"
     },
     {
       "sceneNumber": 3,
       "type": "generative_broll",
-      "durationSeconds": 6.8,
+      "durationSeconds": 5.5,
       "claimIds": [
         "SOU-C1",
-        "SOU-C2",
         "SOU-C3"
       ],
       "visualAsset": {
@@ -174,46 +173,46 @@
         "data": {
           "cards": [
             {
-              "kicker": "HIGH RISK TIER",
-              "value": "61/116",
-              "label": "Schools High Vulnerability",
-              "subtext": "37 moderate · 18 lower tier",
-              "barRatio": 0.53,
-              "barColor": [
-                245,
-                158,
-                11
-              ]
-            },
-            {
-              "kicker": "CLIMATE NETWORK",
-              "value": "40+",
-              "label": "Schools Signed Up",
-              "subtext": "Adaptation & cooling workshops",
-              "barRatio": 0.78,
+              "kicker": "VULNERABLE SCHOOLS",
+              "value": "61 / 116",
+              "label": "High Risk Tier",
+              "subtext": "Low playground shade",
+              "barRatio": 0.95,
               "barColor": [
                 52,
                 211,
                 153
+              ]
+            },
+            {
+              "kicker": "STUDENT IMPACT",
+              "value": "SEND",
+              "label": "Highest Risk",
+              "subtext": "Primary & SEND classrooms",
+              "barRatio": 0.88,
+              "barColor": [
+                245,
+                158,
+                11
               ]
             }
           ]
         }
       },
       "onScreenGraphic": {
-        "kicker": "KEY FINDINGS",
-        "headline": "40+ Schools In Climate Network",
-        "body": "Councillors questioned how to fund and mandate adaptations across multi-academy trusts."
+        "kicker": "PUPIL VULNERABILITY",
+        "headline": "Primary and SEND pupils face highest risk",
+        "body": "Low playground shade increases hazard."
       },
-      "voiceoverText": "Over forty schools have joined the Climate Action Network for shading and ventilation, but councillors questioned how to fund and mandate upgrades in academy trusts.",
-      "citationFooter": "SOURCE: Southwark Environment Scrutiny Commission · Story #10631"
+      "voiceoverText": "Primary and SEND pupils face the highest risk due to low playground shade and urban heat islands.",
+      "citationFooter": "SOURCE: Southwark Scrutiny Commission Report"
     },
     {
       "sceneNumber": 4,
       "type": "video_with_figure",
-      "durationSeconds": 6.5,
+      "durationSeconds": 6.8,
       "claimIds": [
-        "SOU-C1",
+        "SOU-C2",
         "SOU-C4"
       ],
       "visualAsset": {
@@ -229,68 +228,102 @@
         "data": {
           "cards": [
             {
-              "kicker": "HIGH RISK TIER",
-              "value": "61/116",
-              "label": "Schools High Vulnerability",
-              "subtext": "37 moderate · 18 lower tier",
-              "barRatio": 0.53,
-              "barColor": [
-                245,
-                158,
-                11
-              ]
-            },
-            {
-              "kicker": "CLIMATE NETWORK",
-              "value": "40+",
-              "label": "Schools Signed Up",
-              "subtext": "Adaptation & cooling workshops",
-              "barRatio": 0.78,
+              "kicker": "CAPITAL WORKS",
+              "value": "Shading",
+              "label": "Solar Film & Blinds",
+              "subtext": "Classroom cooling ventilation",
+              "barRatio": 0.92,
               "barColor": [
                 52,
                 211,
                 153
+              ]
+            },
+            {
+              "kicker": "TREE CANOPY",
+              "value": "Planting",
+              "label": "Green Infrastructure",
+              "subtext": "Targeting high-risk playgrounds",
+              "barRatio": 0.85,
+              "barColor": [
+                245,
+                158,
+                11
               ]
             }
           ]
         }
       },
       "onScreenGraphic": {
-        "kicker": "CAPITAL PRIORITY RANKING",
-        "headline": "Shading, Trees & Cooling Ventilation",
-        "body": "Ranked school risk assessments will target capital funding bids where heat hits hardest."
+        "kicker": "COUNCIL RESPONSE",
+        "headline": "Capital funds for trees, shade and ventilation",
+        "body": "Southwark targets high-risk classrooms."
       },
-      "voiceoverText": "Southwark is now using this ranked risk map to prioritise school capital bids for tree planting, window film, and cooling ventilation.",
-      "citationFooter": "SOURCE: Southwark Environment Scrutiny Commission · 14 Oct 2026"
+      "voiceoverText": "Southwark is targeting capital funding for tree planting, solar window film, and classroom cooling ventilation.",
+      "citationFooter": "SOURCE: Southwark Climate Adaptation Programme"
     },
     {
       "sceneNumber": 5,
       "type": "outro_archive",
-      "durationSeconds": 5.2,
+      "durationSeconds": 7.5,
       "claimIds": [
-        "SOU-C1"
+        "SOU-C1",
+        "SOU-C4"
       ],
       "visualAsset": {
         "type": "solid",
-        "source": "assets/branding/scene5_outro.png",
-        "cropMode": "pan_zoom",
-        "trimStart": 0.0,
-        "isIllustrative": false
+        "source": "assets/branding/london-local-wordmark.png",
+        "isIllustrative": false,
+        "mandatoryDisclaimer": null
       },
       "figure": {
         "type": "outro_archive",
         "data": {
-          "ctaKicker": "READ THE FULL VERIFIED COUNCIL RECORD",
+          "tagline": "Independent civic intelligence across London's 33 councils.",
+          "auditHeader": "PUBLIC RECORD AUDIT TRAIL",
+          "records": [
+            {
+              "code": "SOU-SCRUT-8599",
+              "title": "Environment Scrutiny Commission Public Reports Pack (14 Oct 2026)",
+              "badge": "SCRUTINY REPORT",
+              "badgeColor": [
+                52,
+                211,
+                153
+              ]
+            },
+            {
+              "code": "HEAT-MODEL-116",
+              "title": "Southwark 116 Schools Heat Vulnerability Tier Model & Climate Audit",
+              "badge": "CIVIC AUDIT",
+              "badgeColor": [
+                245,
+                158,
+                11
+              ]
+            },
+            {
+              "code": "LL-STORY-10631",
+              "title": "London Local Story #10631: Southwark Schools Climate Resilience",
+              "badge": "EDITORIAL VERIFIED",
+              "badgeColor": [
+                52,
+                211,
+                153
+              ]
+            }
+          ],
+          "ctaKicker": "INSPECT FULL REPORT & CHECK YOUR SCHOOL",
           "ctaUrl": "londonlocal.news/stories/10631"
         }
       },
       "onScreenGraphic": {
-        "kicker": "VERIFIED ARCHIVE",
-        "headline": "London Local.",
-        "body": "Read the verified council record"
+        "kicker": "PARENT ACTION",
+        "headline": "Check your local school on the report",
+        "body": "Inspect the full council audit."
       },
-      "voiceoverText": "Is your child's school affected? Check the full Southwark scrutiny report on London Local dot news.",
-      "citationFooter": "SOURCE: London Local · londonlocal.news/stories/10631"
+      "voiceoverText": "Inspect the full scrutiny report list to check your local school at londonlocal.news.",
+      "citationFooter": "SOURCE: Southwark Council Public Record"
     }
   ]
 }

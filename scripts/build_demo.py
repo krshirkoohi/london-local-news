@@ -77,8 +77,11 @@ FONT_SERIF = resolve_font_path(SERIF_CANDIDATES)
 FONT_SANS_BOLD = resolve_font_path(SANS_BOLD_CANDIDATES) or resolve_font_path(SANS_CANDIDATES)
 FONT_SANS = resolve_font_path(SANS_CANDIDATES)
 
-MARGIN_X = 70
-SAFE_WIDTH = 1080 - (2 * MARGIN_X)  # 940px
+MARGIN_X = 80
+MARGIN_RIGHT = 175  # TikTok Safe Zone: >= 15% right margin (175px = 16.2%)
+SAFE_X2 = 1080 - MARGIN_RIGHT  # 905px
+SAFE_WIDTH = SAFE_X2 - MARGIN_X  # 825px
+SAFE_BOTTOM = 1640  # TikTok Safe Zone: >= 250px above bottom edge (1920 - 280px)
 
 
 def get_font(path, size):
@@ -188,7 +191,7 @@ def draw_top_bar(
     tag_text = f"{borough.upper()} • {date_str.upper()}"
     tag_w = draw.textlength(tag_text, font=f_tag)
     pill_w = int(tag_w + 46)
-    pill_x2 = 1080 - MARGIN_X
+    pill_x2 = SAFE_X2
     pill_x1 = pill_x2 - pill_w
     draw.rounded_rectangle(
         [(pill_x1, 66), (pill_x2, 120)],
@@ -218,7 +221,7 @@ def draw_top_bar(
     f_sc = get_font(FONT_SANS_BOLD, 15)
     sc_text = f"SCENE 0{scene_num} / 0{total_scenes}"
     sc_w = draw.textlength(sc_text, font=f_sc)
-    sc_x2 = 1080 - MARGIN_X
+    sc_x2 = SAFE_X2
     sc_x1 = sc_x2 - int(sc_w + 32)
     draw.rounded_rectangle(
         [(sc_x1, 132), (sc_x2, 168)],
@@ -240,7 +243,7 @@ def draw_spatial_postcode_hud(draw, spec, scene_num=1, t=10.0):
     # Top Frame-1 OCR Geo-Routing Bar (y=182..230) so platform vision models route to local postcodes
     bar_y1, bar_y2 = 182, 230
     draw.rounded_rectangle(
-        [(MARGIN_X, bar_y1), (1080 - MARGIN_X, bar_y2)],
+        [(MARGIN_X, bar_y1), (SAFE_X2, bar_y2)],
         radius=12,
         fill=(14, 14, 20, 215),
         outline=(255, 82, 56, 160),
@@ -262,7 +265,7 @@ def draw_spatial_postcode_hud(draw, spec, scene_num=1, t=10.0):
     f_rt = get_font(FONT_SANS_BOLD, 15)
     rt_txt = "CITIZEN IMPACT BRIEF"
     rw = draw.textlength(rt_txt, font=f_rt)
-    draw.text((1080 - MARGIN_X - 20 - rw, bar_y1 + 15), rt_txt, font=f_rt, fill=(251, 191, 36, 255))
+    draw.text((SAFE_X2 - 20 - rw, bar_y1 + 15), rt_txt, font=f_rt, fill=(251, 191, 36, 255))
 
     # Scene 1 Spatial Lock-On Reticle in the first 1.8 seconds ("Wait, I know that place!" hook)
     if scene_num == 1 and t <= 1.85 and coords:
@@ -287,7 +290,7 @@ def draw_bottom_vignette(draw, start_y=940):
         draw.line([(0, y), (1080, y)], fill=(8, 8, 11, alpha))
 
 
-def draw_lower_third_text(draw, graphic, citation_footer, top_y=1350):
+def draw_lower_third_text(draw, graphic, citation_footer, top_y=1300):
     f_kicker = get_font(FONT_SANS_BOLD, 21)
     f_h1 = get_font(FONT_SERIF_BOLD, 56)
     f_body = get_font(FONT_SANS, 29)
@@ -314,12 +317,12 @@ def draw_lower_third_text(draw, graphic, citation_footer, top_y=1350):
         draw.text((MARGIN_X, curr_y), bl, font=f_body, fill=(225, 225, 232, 255))
         curr_y += 39
 
-    # Citation Rule & Footer
-    rule_y = 1700
-    draw.line([(MARGIN_X, rule_y), (1080 - MARGIN_X, rule_y)], fill=(255, 255, 255, 45), width=1)
+    # Citation Rule & Footer (clamped safely above TikTok 250px bottom margin)
+    rule_y = 1570
+    draw.line([(MARGIN_X, rule_y), (SAFE_X2, rule_y)], fill=(255, 255, 255, 45), width=1)
     cite_lines = wrap_text_to_width(draw, citation_footer, f_meta, SAFE_WIDTH)
     if cite_lines:
-        draw.text((MARGIN_X, rule_y + 22), cite_lines[0], font=f_meta, fill=(165, 165, 175, 255))
+        draw.text((MARGIN_X, rule_y + 18), cite_lines[0], font=f_meta, fill=(165, 165, 175, 255))
 
 
 # ==============================================================================
@@ -344,7 +347,7 @@ def render_figure_vote_tally(draw, fig_data, t=10.0):
     """Renders proportional parliamentary division bar & party breakdown HUD with counting animation."""
     fig_y1, fig_y2 = 1090, 1315
     draw.rounded_rectangle(
-        [(MARGIN_X, fig_y1), (1080 - MARGIN_X, fig_y2)],
+        [(MARGIN_X, fig_y1), (SAFE_X2, fig_y2)],
         radius=16,
         fill=(16, 16, 22, 228),
         outline=(255, 255, 255, 65),
@@ -359,7 +362,7 @@ def render_figure_vote_tally(draw, fig_data, t=10.0):
     # Badge pops in with scale/opacity after vote bar fills (t >= 0.75s)
     if t >= 0.75:
         rw = draw.textlength(raw_right, font=f_hdr)
-        rx = int(1080 - MARGIN_X - 26 - rw)
+        rx = int(SAFE_X2 - 26 - rw)
         chk_col = (52, 211, 153, 255)
         draw_vector_check(draw, rx - 22, fig_y1 + 22, chk_col, size=14)
         draw.text((rx, fig_y1 + 20), raw_right, font=f_hdr, fill=chk_col)
@@ -367,7 +370,7 @@ def render_figure_vote_tally(draw, fig_data, t=10.0):
     parties = fig_data.get("parties", [])
     total_seats = sum(max(1, p.get("seats", 1)) for p in parties) or 1
     bar_x1 = MARGIN_X + 26
-    bar_x2 = 1080 - MARGIN_X - 26
+    bar_x2 = SAFE_X2 - 26
     bar_total_w = bar_x2 - bar_x1
     bar_y1, bar_y2 = fig_y1 + 56, fig_y1 + 72
 
@@ -431,7 +434,7 @@ def render_figure_motion_document(draw, fig_data, t=10.0):
 
     # Subtle drop shadow
     draw.rounded_rectangle(
-        [(MARGIN_X + 6, fig_y1 + 8), (1080 - MARGIN_X + 6, fig_y2 + 8)],
+        [(MARGIN_X + 6, fig_y1 + 8), (SAFE_X2 + 6, fig_y2 + 8)],
         radius=14,
         fill=(0, 0, 0, 160),
     )
@@ -440,7 +443,7 @@ def render_figure_motion_document(draw, fig_data, t=10.0):
     ink_dark = (18, 18, 22, 255)
     ink_muted = (85, 85, 95, 255)
     draw.rounded_rectangle(
-        [(MARGIN_X, fig_y1), (1080 - MARGIN_X, fig_y2)],
+        [(MARGIN_X, fig_y1), (SAFE_X2, fig_y2)],
         radius=14,
         fill=paper_bg,
         outline=(200, 195, 185, 255),
@@ -453,11 +456,11 @@ def render_figure_motion_document(draw, fig_data, t=10.0):
     right_hdr = fig_data.get("docHeaderRight", "OFFICIAL RECORD")
     draw.text((MARGIN_X + 28, fig_y1 + 18), left_hdr, font=f_doc_hdr, fill=ink_muted)
     rw = draw.textlength(right_hdr, font=f_doc_hdr)
-    draw.text((1080 - MARGIN_X - 28 - rw, fig_y1 + 18), right_hdr, font=f_doc_hdr, fill=(180, 83, 9, 255))
+    draw.text((SAFE_X2 - 28 - rw, fig_y1 + 18), right_hdr, font=f_doc_hdr, fill=(180, 83, 9, 255))
 
     # Double parliamentary rule
-    draw.line([(MARGIN_X + 28, fig_y1 + 46), (1080 - MARGIN_X - 28, fig_y1 + 46)], fill=(40, 40, 45, 220), width=2)
-    draw.line([(MARGIN_X + 28, fig_y1 + 51), (1080 - MARGIN_X - 28, fig_y1 + 51)], fill=(40, 40, 45, 120), width=1)
+    draw.line([(MARGIN_X + 28, fig_y1 + 46), (SAFE_X2 - 28, fig_y1 + 46)], fill=(40, 40, 45, 220), width=2)
+    draw.line([(MARGIN_X + 28, fig_y1 + 51), (SAFE_X2 - 28, fig_y1 + 51)], fill=(40, 40, 45, 120), width=1)
 
     # Excerpt with live-drawing highlighted phrase (starts at t=1.0s, sweeps across over 1.6s)
     prefix = fig_data.get("excerptPrefix", "")
@@ -496,7 +499,7 @@ def render_figure_motion_document(draw, fig_data, t=10.0):
 
     # Signatories Footer Bar inside paper card
     sig_y = fig_y2 - 52
-    draw.line([(MARGIN_X + 28, sig_y - 8), (1080 - MARGIN_X - 28, sig_y - 8)], fill=(200, 195, 185, 255), width=1)
+    draw.line([(MARGIN_X + 28, sig_y - 8), (SAFE_X2 - 28, sig_y - 8)], fill=(200, 195, 185, 255), width=1)
     f_sig = get_font(FONT_SANS_BOLD, 18)
     mover = fig_data.get("mover", "")
     seconder = fig_data.get("seconder", "")
@@ -509,7 +512,7 @@ def render_figure_motion_document(draw, fig_data, t=10.0):
         f_stamp = get_font(FONT_SANS_BOLD, 16)
         st_w = draw.textlength(receipt_stamp, font=f_stamp)
         st_box_w = int(st_w + 32)
-        st_x2 = 1080 - MARGIN_X - 24
+        st_x2 = SAFE_X2 - 24
         st_x1 = st_x2 - st_box_w
         st_y = sig_y - 4
         draw.rounded_rectangle([(st_x1, st_y), (st_x2, st_y + 36)], radius=6, fill=(254, 242, 242, 245), outline=(220, 38, 38, 240), width=2)
@@ -800,20 +803,20 @@ def render_template_scene2_receipt(spec, scene, t=10.0, total_dur=6.0):
     draw.text((st_x1 + 17, curr_y + 15), st_txt, font=f_stamp, fill=(217, 72, 63, 255))
 
     if spec.get("branding", {}).get("showCaptions", False):
-        rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1568)
+        rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1540)
 
     # Bottom scrim for citation & AI-GENERATED MEDIA badge contrast
-    for y in range(1620, 1920):
-        a = int(175 * ((y - 1620) / 300.0)**1.2)
+    for y in range(1580, 1920):
+        a = int(175 * ((y - 1580) / 340.0)**1.2)
         draw.line([(0, y), (1080, y)], fill=(8, 8, 12, a))
 
-    # Clean verified source attribution line at bottom (clamped cleanly within 940px)
+    # Clean verified source attribution line at bottom (safely at y=1615, well above 1640)
     cite = scene.get("citationFooter", spec.get("meetingDateDisplay", "Council Public Record"))
     cite_clean = cite.strip().lstrip("<").rstrip(">")
     f_cite = rt.get_font(rt.FONT_SANS_BOLD, 21)
-    for cl in rt.wrap_text(draw, cite_clean, f_cite, 940)[:1]:
+    for cl in rt.wrap_text(draw, cite_clean, f_cite, SAFE_WIDTH)[:1]:
         cw = draw.textlength(cl, font=f_cite)
-        draw.text(((1080 - cw) // 2, 1668), cl, font=f_cite, fill=(225, 230, 240, 255))
+        draw.text(((1080 - cw) // 2, 1615), cl, font=f_cite, fill=(225, 230, 240, 255))
 
     rt.apply_ai_disclaimer(overlay, show=True)
     return overlay
@@ -835,31 +838,31 @@ def render_selling_point_slide_card(spec, t=10.0):
     line2 = "your council"  # Single red dot acts as the period (NO trailing period!)
 
     p_title = ease_out_cubic(min(1.0, max(0.0, t / 0.3)))
-    draw.text((108, 800), line1, font=f_main, fill=(255, 255, 255, int(255 * p_title)))
-    draw.text((108, 910), line2, font=f_main, fill=(255, 255, 255, int(255 * p_title)))
+    draw.text((MARGIN_X, 800), line1, font=f_main, fill=(255, 255, 255, int(255 * p_title)))
+    draw.text((MARGIN_X, 910), line2, font=f_main, fill=(255, 255, 255, int(255 * p_title)))
     l_yc = draw.textlength(line2, font=f_main)
-    draw.ellipse([(108 + l_yc + 8, 955), (108 + l_yc + 26, 973)], fill=(217, 72, 63, int(255 * p_title)))
+    draw.ellipse([(MARGIN_X + l_yc + 8, 955), (MARGIN_X + l_yc + 26, 973)], fill=(217, 72, 63, int(255 * p_title)))
 
-    draw.line([(108, 1060), (972, 1060)], fill=(255, 255, 255, 45), width=1)
+    draw.line([(MARGIN_X, 1060), (SAFE_X2, 1060)], fill=(255, 255, 255, 45), width=1)
 
     f_sub = rt.get_font(rt.FONT_SERIF, 36)
     sub_txt = "Direct from council agendas to your phone."
-    draw.text((108, 1100), sub_txt, font=f_sub, fill=(210, 215, 225, int(255 * p_title)))
+    draw.text((MARGIN_X, 1100), sub_txt, font=f_sub, fill=(210, 215, 225, int(255 * p_title)))
 
     # 3 Sleek Trust Badges
     f_badge = rt.get_font(rt.FONT_SANS_BOLD, 20)
     badges = ["OFFICIAL RECEIPTS", "ZERO SENSATIONALISM", "ALL 33 BOROUGHS"]
-    bx = 108
+    bx = MARGIN_X
     for b in badges:
         bw = draw.textlength(b, font=f_badge)
         draw.rounded_rectangle([(bx, 1200), (bx + bw + 36, 1248)], radius=12, fill=(22, 24, 32, 255), outline=(245, 158, 11, 160), width=1)
         draw.text((bx + 18, 1214), b, font=f_badge, fill=(245, 158, 11, int(255 * p_title)))
-        bx += int(bw + 54)
+        bx += int(bw + 40)
 
     f_bot = rt.get_font(rt.FONT_SERIF, 34)
     bot_txt = "londonlocal.news"
     bw = draw.textlength(bot_txt, font=f_bot)
-    draw.text(((1080 - bw) // 2, 1720), bot_txt, font=f_bot, fill=(180, 185, 195, 255))
+    draw.text(((1080 - bw) // 2, 1615), bot_txt, font=f_bot, fill=(180, 185, 195, 255))
     return card
 
 
@@ -871,12 +874,12 @@ def render_template_scene3_key_points(spec, scene, t=10.0, total_dur=6.0):
     archetype = rt.ARCHETYPE_CONFIG.get(spec.get("storyType", "council_decision"), rt.ARCHETYPE_CONFIG["council_decision"])
     accent_rgb = archetype["accent"]
 
-    # Section Heading with Quality Control dynamic fitting (never overflows 864px width)
+    # Section Heading with Quality Control dynamic fitting (fits inside SAFE_WIDTH)
     heading = spec.get("keyPointsHeading", scene.get("onScreenGraphic", {}).get("headline", "Key points")).replace("\n", " ")
-    f_title, head_lines, head_spacing = rt.fit_text_to_bounds(draw, heading, rt.FONT_SERIF_BOLD, initial_size=82, max_width=864, max_lines=2, min_size=48)
+    f_title, head_lines, head_spacing = rt.fit_text_to_bounds(draw, heading, rt.FONT_SERIF_BOLD, initial_size=82, max_width=SAFE_WIDTH, max_lines=2, min_size=48)
     hy = 120
     for hl in head_lines:
-        draw.text((109, hy), hl, font=f_title, fill=(255, 255, 255, 255))
+        draw.text((MARGIN_X, hy), hl, font=f_title, fill=(255, 255, 255, 255))
         hy += head_spacing
 
     points = spec.get("keyPoints", [])
@@ -914,7 +917,7 @@ def render_template_scene3_key_points(spec, scene, t=10.0, total_dur=6.0):
         is_active = (idx == active_idx) or (t >= total_dur - 0.4)
         if is_active:
             draw.rounded_rectangle(
-                [(88, py - 18 + y_off), (992, py + 235 + y_off)],
+                [(MARGIN_X - 10, py - 18 + y_off), (SAFE_X2, py + 235 + y_off)],
                 radius=18,
                 fill=(22, 24, 34, int(225 * p_pt)),
                 outline=accent_rgb + (int(220 * p_pt),),
@@ -922,35 +925,35 @@ def render_template_scene3_key_points(spec, scene, t=10.0, total_dur=6.0):
             )
 
         bar_col = accent_rgb + (int(255 * p_pt),) if is_active else (140, 145, 160, int(180 * p_pt))
-        draw.line([(109, py + 12 + y_off), (109, py + 72 + y_off)], fill=bar_col, width=5)
+        draw.line([(MARGIN_X, py + 12 + y_off), (MARGIN_X, py + 72 + y_off)], fill=bar_col, width=5)
 
         # Prominent Hero Step Number (52px bold serif)
         step_txt = f"0{idx + 1}"
-        draw.text((128, py + 14 + y_off), step_txt, font=f_step, fill=accent_rgb + (int(255 * p_pt),))
+        draw.text((MARGIN_X + 18, py + 14 + y_off), step_txt, font=f_step, fill=accent_rgb + (int(255 * p_pt),))
 
         # Vertical Divider
-        draw.line([(206, py + 20 + y_off), (206, py + 70 + y_off)], fill=(255, 255, 255, int(70 * p_pt)), width=2)
+        draw.line([(MARGIN_X + 96, py + 20 + y_off), (MARGIN_X + 96, py + 70 + y_off)], fill=(255, 255, 255, int(70 * p_pt)), width=2)
 
         # Bold Anchor Headline
-        draw.text((226, py + 16 + y_off), anchor, font=f_anchor, fill=(255, 255, 255, int(255 * p_pt)))
+        draw.text((MARGIN_X + 116, py + 16 + y_off), anchor, font=f_anchor, fill=(255, 255, 255, int(255 * p_pt)))
 
         sub_y = py + 92 + y_off
         if sub:
-            for line in rt.wrap_text(draw, sub, f_sub, 820)[:2]:
-                draw.text((128, sub_y), line, font=f_sub, fill=(225, 230, 240, int(255 * p_pt)))
+            for line in rt.wrap_text(draw, sub, f_sub, SAFE_WIDTH - 40)[:2]:
+                draw.text((MARGIN_X + 18, sub_y), line, font=f_sub, fill=(225, 230, 240, int(255 * p_pt)))
                 sub_y += 38
 
         cite_str = cite_text.strip().lstrip("<").rstrip(">")
-        draw.text((128, sub_y + 8), cite_str, font=f_cite, fill=(180, 185, 200, int(255 * p_pt)))
+        draw.text((MARGIN_X + 18, sub_y + 8), cite_str, font=f_cite, fill=(180, 185, 200, int(255 * p_pt)))
 
     if spec.get("branding", {}).get("showCaptions", False):
-        rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1568)
+        rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1540)
 
-    # Clean bottom public record attribution (crisp 21px bold sans)
+    # Clean bottom public record attribution (crisp 21px bold sans at y=1615)
     f_bot = rt.get_font(rt.FONT_SANS_BOLD, 21)
     bot_txt = f"LONDON BOROUGH OF {spec.get('borough', 'Council').upper()} · VERIFIED PUBLIC RECORD"
     bw = draw.textlength(bot_txt, font=f_bot)
-    draw.text(((1080 - bw) // 2, 1680), bot_txt, font=f_bot, fill=(205, 210, 225, 255))
+    draw.text(((1080 - bw) // 2, 1615), bot_txt, font=f_bot, fill=(205, 210, 225, 255))
 
     rt.apply_ai_disclaimer(overlay, show=True)
     return overlay
@@ -971,10 +974,10 @@ def render_template_scene4_facts_figures(spec, scene, t=10.0, total_dur=6.0):
 
     # Header from 5.png
     f_title = rt.get_font(rt.FONT_SERIF_BOLD, 92)
-    draw.text((108, 115), "Facts and figures", font=f_title, fill=(255, 255, 255, 255))
+    draw.text((MARGIN_X, 115), "Facts and figures", font=f_title, fill=(255, 255, 255, 255))
 
-    # Container frame from 5.png (adjusted bottom to 1545 so caption track at 1568 has full breathing room)
-    bx1, by1, bx2, by2 = 108, 260, 971, 1545
+    # Container frame from 5.png (bounded strictly within SAFE_X2 and ending at 1545)
+    bx1, by1, bx2, by2 = MARGIN_X, 260, SAFE_X2, 1545
     draw.rounded_rectangle([(bx1, by1), (bx2, by2)], radius=20, fill=(22, 23, 31, 245), outline=(255, 255, 255, 45), width=2)
 
     fig = scene.get("figure", {})
@@ -1073,15 +1076,15 @@ def render_template_scene4_facts_figures(spec, scene, t=10.0, total_dur=6.0):
         draw.line([(0, y), (1080, y)], fill=(8, 8, 12, a))
 
     if spec.get("branding", {}).get("showCaptions", False):
-        rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1568)
+        rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1540)
 
-    # Bottom Citation (clamped cleanly within 940px in crisp sans bold)
+    # Bottom Citation (clamped cleanly at y=1615, well above 1640)
     cite = scene.get("citationFooter", spec.get("meetingDateDisplay", "Council Public Record"))
     cite_str = cite.strip().lstrip("<").rstrip(">")
     f_cite = rt.get_font(rt.FONT_SANS_BOLD, 21)
-    for cl in rt.wrap_text(draw, cite_str, f_cite, 940)[:1]:
+    for cl in rt.wrap_text(draw, cite_str, f_cite, SAFE_WIDTH)[:1]:
         cw = draw.textlength(cl, font=f_cite)
-        draw.text(((1080 - cw) // 2, 1668), cl, font=f_cite, fill=(225, 230, 240, 255))
+        draw.text(((1080 - cw) // 2, 1615), cl, font=f_cite, fill=(225, 230, 240, 255))
 
     rt.apply_ai_disclaimer(overlay, show=True)
     return overlay
@@ -1149,15 +1152,15 @@ def create_outro_archive_card_image(spec, scene, total_scenes=5, show_logo=True,
     )
 
     # Narrative pacing:
-    # 0.0s..3.2s: Clean value prop ("Local news, from your council." + "Direct from council agendas to your phone.")
-    # 3.2s..3.8s: Smooth 0.6s cinematic crossfade
-    # 3.8s..8.8s+: The iconic street sign plate resolves as the hero final resting slide!
-    if t < 3.2:
+    # Smooth cinematic crossfade between the selling point and the hero street sign outro plate
+    t_fade_start = min(3.0, max(1.8, total_dur * 0.40))
+    t_fade_end = t_fade_start + 0.5
+    if t < t_fade_start:
         return selling_point
-    elif t >= 3.8:
+    elif t >= t_fade_end:
         return outro_sign
     else:
-        alpha = ease_out_cubic((t - 3.2) / 0.6)
+        alpha = ease_out_cubic((t - t_fade_start) / 0.5)
         return Image.blend(selling_point, outro_sign, alpha)
 
 
@@ -1422,8 +1425,8 @@ def render_story_from_spec(spec_path, show_logo=True, force_tts=False):
         trim_start = float(vis.get("trimStart", 0.0))
 
         if scene.get("type") == "outro_archive" or scene.get("figure", {}).get("type") == "outro_archive":
-            # Ensure Scene 5 has at least 8.8s to let both the street sign and the selling point payoff breathe comfortably
-            pad_dur = max(dur + 0.18, 8.8)
+            # Outro scene dynamically respects duration target (default 7.5s for 30s TikTok runtime)
+            pad_dur = max(dur + 0.18, float(scene.get("durationSeconds", 7.5)))
             total_frames = int(pad_dur * 30)
             cmd = [
                 "ffmpeg", "-y",
@@ -1465,7 +1468,30 @@ def render_story_from_spec(spec_path, show_logo=True, force_tts=False):
             else:
                 setpts_filter = ""
 
-            if crop_mode == "architectural_upper":
+            if crop_mode == "fast_push_in":
+                # High-contrast rapid push-in (Camden mould hook)
+                vf_chain = (
+                    f"[0:v]{setpts_filter}"
+                    "scale=1080:1920:force_original_aspect_ratio=increase,"
+                    "crop=1080:1920,"
+                    f"scale=w='1080*(1.0 + 0.20*min(t/{pad_dur:.3f}, 1.0))':h='1920*(1.0 + 0.20*min(t/{pad_dur:.3f}, 1.0))':eval=frame,"
+                    "crop=1080:1920:(in_w-1080)/2:(in_h-1920)/2,"
+                    "eq=contrast=1.24:brightness=-0.05:saturation=1.05,"
+                    "fps=30[vid];"
+                    "[vid][1:v]overlay=0:0[outv]"
+                )
+            elif crop_mode == "heat_shimmer":
+                # Solar shimmer wave effect (Southwark school heat hook)
+                vf_chain = (
+                    f"[0:v]{setpts_filter}"
+                    "scale=1080:1940:force_original_aspect_ratio=increase,"
+                    "crop=1080:1920:0:'6*sin(12*PI*t)+10',"
+                    "eq=contrast='1.18+0.04*sin(8*PI*t)':brightness='0.02+0.02*sin(6*PI*t)':saturation=1.30,"
+                    "colorbalance=rs=0.12:gs=0.03:bs=-0.14,"
+                    "fps=30[vid];"
+                    "[vid][1:v]overlay=0:0[outv]"
+                )
+            elif crop_mode == "architectural_upper":
                 # Depth-of-field editorial backdrop: calm, soft focus blur, dark vignette
                 # Makes foreground documents and figures pop with zero dizzying 2x zoom-ins
                 vf_chain = (
@@ -1516,15 +1542,37 @@ def render_story_from_spec(spec_path, show_logo=True, force_tts=False):
             print(f"  ✓ Scene {num} [Video: {crop_mode} + Animated Figure: {fig_label}] encoded ({pad_dur:.2f}s @ 30fps)")
 
         elif os.path.exists(vis_src):
-            # Ultra-smooth subtle documentary camera drift (continuous subpixel pan, zero zoom resets)
-            vf_chain = (
-                f"[0:v]scale=1160:2062:force_original_aspect_ratio=increase,"
-                f"crop=1160:2062,"
-                f"crop=1080:1920:x='(1160-1080)*(t/{pad_dur:.3f})':y='(2062-1920)*0.5',"
-                f"eq=brightness=-0.06:contrast=1.08:saturation=0.90,"
-                f"noise=alls=6:allf=t+u[bg];"
-                f"[bg][1:v]overlay=0:0[outv]"
-            )
+            if crop_mode == "fast_push_in":
+                # High-contrast rapid push-in on still image (Camden mould hook)
+                vf_chain = (
+                    f"[0:v]scale=1080:1920:force_original_aspect_ratio=increase,"
+                    f"crop=1080:1920,"
+                    f"scale=w='1080*(1.0 + 0.20*min(t/{pad_dur:.3f}, 1.0))':h='1920*(1.0 + 0.20*min(t/{pad_dur:.3f}, 1.0))':eval=frame,"
+                    f"crop=1080:1920:(in_w-1080)/2:(in_h-1920)/2,"
+                    f"eq=contrast=1.24:brightness=-0.05:saturation=1.05,"
+                    f"fps=30[bg];"
+                    f"[bg][1:v]overlay=0:0[outv]"
+                )
+            elif crop_mode == "heat_shimmer":
+                # Solar shimmer wave on still image (Southwark playground hook)
+                vf_chain = (
+                    f"[0:v]scale=1080:1940:force_original_aspect_ratio=increase,"
+                    f"crop=1080:1920:0:'6*sin(12*PI*t)+10',"
+                    f"eq=contrast='1.18+0.04*sin(8*PI*t)':brightness='0.02+0.02*sin(6*PI*t)':saturation=1.30,"
+                    f"colorbalance=rs=0.12:gs=0.03:bs=-0.14,"
+                    f"fps=30[bg];"
+                    f"[bg][1:v]overlay=0:0[outv]"
+                )
+            else:
+                # Ultra-smooth subtle documentary camera drift (continuous subpixel pan, zero zoom resets)
+                vf_chain = (
+                    f"[0:v]scale=1160:2062:force_original_aspect_ratio=increase,"
+                    f"crop=1160:2062,"
+                    f"crop=1080:1920:x='(1160-1080)*(t/{pad_dur:.3f})':y='(2062-1920)*0.5',"
+                    f"eq=brightness=-0.06:contrast=1.08:saturation=0.90,"
+                    f"noise=alls=6:allf=t+u[bg];"
+                    f"[bg][1:v]overlay=0:0[outv]"
+                )
             cmd = [
                 "ffmpeg", "-y",
                 "-loop", "1", "-i", vis_src,
@@ -1548,7 +1596,7 @@ def render_story_from_spec(spec_path, show_logo=True, force_tts=False):
             proc.wait()
             segment_files.append(seg_out)
             fig_label = scene.get("figure", {}).get("type", "overlay")
-            print(f"  ✓ Scene {num} [35mm Drift+Grain + Animated Figure: {fig_label}] encoded ({pad_dur:.2f}s @ 30fps)")
+            print(f"  ✓ Scene {num} [35mm Motion ({crop_mode}) + Animated Figure: {fig_label}] encoded ({pad_dur:.2f}s @ 30fps)")
 
     print("=== 3. Concatenating Frame-Accurate 30fps Master MP4 ===")
     concat_list = os.path.join(story_build_dir, "concat_list.txt")

@@ -252,7 +252,7 @@ def render_key_points_card(points, bg_image=None, is_ai=False):
 
         sub_y = py + 70
         if sub:
-            for line in wrap_text(draw, sub, f_sub, 840)[:2]:
+            for line in wrap_text(draw, sub, f_sub, 760)[:2]:
                 draw.text((128, sub_y), line, font=f_sub, fill=(220, 225, 235, 255))
                 sub_y += 46
 
@@ -288,16 +288,16 @@ def render_facts_figures_card(inner_renderer_fn, citation_source, bg_image=None,
     else:
         draw = ImageDraw.Draw(card)
         draw.text((108, 119), "Facts and figures", font=get_font(FONT_SERIF_BOLD, 92), fill=(255, 255, 255, 255))
-        draw.rounded_rectangle([(108, 282), (971, 1741)], radius=18, fill=(12, 12, 18, 225), outline=(255, 255, 255, 55), width=2)
+        draw.rounded_rectangle([(108, 282), (905, 1600)], radius=18, fill=(12, 12, 18, 225), outline=(255, 255, 255, 55), width=2)
 
     if callable(inner_renderer_fn):
-        inner_renderer_fn(card, container_box=(108, 282, 971, 1741))
+        inner_renderer_fn(card, container_box=(108, 282, 905, 1600))
 
     draw = ImageDraw.Draw(card)
-    f_cite = get_font(FONT_SERIF, 36)
+    f_cite = get_font(FONT_SERIF, 32)
     cite_str = citation_source.strip().lstrip("<").rstrip(">")
     cw = draw.textlength(cite_str, font=f_cite)
-    draw.text(((1080 - cw) // 2, 1774), cite_str, font=f_cite, fill=(216, 216, 216, 255))
+    draw.text(((1080 - cw) // 2, 1625), cite_str, font=f_cite, fill=(216, 216, 216, 255))
 
     apply_ai_disclaimer(card, show=is_ai)
     return card
@@ -416,17 +416,20 @@ def render_outro_card(story_id="4182", bg_image=None, borough="Westminster", acc
     draw.text(((1080 - tw) // 2, 460), txt, font=f_title, fill=(255, 255, 255, 255))
 
     sign = render_street_sign(story_id=str(story_id))
-    card.paste(sign, (80, 640), sign)
+    # Resize sign to fit safely within TikTok safe zones (max width 820px, clear of right 15% margin)
+    sign_w, sign_h = 820, int(380 * 820 / 920)
+    sign_resized = sign.resize((sign_w, sign_h), Image.Resampling.LANCZOS)
+    card.paste(sign_resized, (80, 660), sign_resized)
 
     f_sub = get_font(FONT_SERIF, 34)
     sub_txt = "Direct from council agendas to your phone."
     sw = draw.textlength(sub_txt, font=f_sub)
-    draw.text(((1080 - sw) // 2, 1120), sub_txt, font=f_sub, fill=(215, 220, 230, 255))
+    draw.text(((1080 - sw) // 2, 1100), sub_txt, font=f_sub, fill=(215, 220, 230, 255))
 
     f_bot = get_font(FONT_SERIF, 32)
     bot_txt = "londonlocal.news"
     bw = draw.textlength(bot_txt, font=f_bot)
-    draw.text(((1080 - bw) // 2, 1720), bot_txt, font=f_bot, fill=(180, 185, 195, 255))
+    draw.text(((1080 - bw) // 2, 1620), bot_txt, font=f_bot, fill=(180, 185, 195, 255))
 
     return card
 
@@ -460,7 +463,7 @@ def render_selling_point_slide(custom_statement=None, bg_image=None, borough="We
     # The iconic single red dot acts as the period
     d.ellipse([(108 + l_yc + 8, 955), (108 + l_yc + 26, 973)], fill=(217, 72, 63, 255))
 
-    d.line([(108, 1060), (972, 1060)], fill=(255, 255, 255, 45), width=1)
+    d.line([(108, 1060), (905, 1060)], fill=(255, 255, 255, 45), width=1)
 
     f_sub = get_font(FONT_SERIF, 36)
     sub_txt = "Direct from council agendas to your phone."
@@ -469,7 +472,7 @@ def render_selling_point_slide(custom_statement=None, bg_image=None, borough="We
     f_bot = get_font(FONT_SERIF, 34)
     bot_txt = "londonlocal.news"
     bw = d.textlength(bot_txt, font=f_bot)
-    d.text(((1080 - bw) // 2, 1720), bot_txt, font=f_bot, fill=(180, 185, 195, 255))
+    d.text(((1080 - bw) // 2, 1620), bot_txt, font=f_bot, fill=(180, 185, 195, 255))
     return card
 
 
