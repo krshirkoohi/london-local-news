@@ -1239,16 +1239,21 @@ def create_outro_archive_card_image(spec, scene, total_scenes=5, show_logo=True,
     )
 
     # Narrative pacing:
-    # Smooth cinematic crossfade between the selling point and the hero street sign outro plate
-    t_fade_start = min(3.0, max(1.8, total_dur * 0.40))
-    t_fade_end = t_fade_start + 0.5
-    if t < t_fade_start:
+    # Clean transition between selling point and street sign (fades out text to avoid double-exposure clash)
+    t_mid = min(3.0, max(1.8, total_dur * 0.40))
+    t_fade_half = 0.15
+    if t < t_mid - t_fade_half:
         return selling_point
-    elif t >= t_fade_end:
+    elif t > t_mid + t_fade_half:
         return outro_sign
     else:
-        alpha = ease_out_cubic((t - t_fade_start) / 0.5)
-        return Image.blend(selling_point, outro_sign, alpha)
+        progress = (t - (t_mid - t_fade_half)) / (2 * t_fade_half)
+        if progress < 0.5:
+            dim = 1.0 - (progress * 2)
+            return Image.blend(bg_backdrop, selling_point, dim)
+        else:
+            bright = (progress - 0.5) * 2
+            return Image.blend(bg_backdrop, outro_sign, bright)
 
 
 def _render_legacy_audit_card(spec, scene, total_scenes=5, show_logo=True, t=10.0):

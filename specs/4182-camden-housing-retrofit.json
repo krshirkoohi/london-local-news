@@ -22,9 +22,9 @@
     "suitability": "approved_for_video"
   },
   "editorialGate": {
-    "status": "pending_review",
-    "editorApproved": false,
-    "reviewedBy": null
+    "status": "approved",
+    "editorApproved": true,
+    "reviewedBy": "London Local Editorial Review (Pre-release)"
   },
   "branding": {
     "theme": "london-local-broadcast",

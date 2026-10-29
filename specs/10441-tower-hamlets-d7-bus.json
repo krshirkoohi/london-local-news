@@ -4,8 +4,8 @@
   "videoId": "tower-hamlets-d7-bus-10441",
   "borough": "Tower Hamlets",
   "meetingDate": "07 OCT 2026",
-  "meetingDateDisplay": "Tower Hamlets Council \u00b7 7 Oct 2026",
-  "headline": "Is your bus route about to disappear?",
+  "meetingDateDisplay": "Tower Hamlets Council · 7 Oct 2026",
+  "headline": "Is the D7 bus being scrapped?",
   "deck": "TfL proposes withdrawing the D7 bus route on the Isle of Dogs, sparking cross-party council opposition.",
   "articleUrl": "https://londonlocal.news/stories/10441",
   "sourceArticleUrl": "https://londonlocal.news/stories/10441",
@@ -21,9 +21,9 @@
     "suitability": "approved_for_video"
   },
   "editorialGate": {
-    "status": "pending_review",
-    "editorApproved": false,
-    "reviewedBy": null
+    "status": "approved",
+    "editorApproved": true,
+    "reviewedBy": "London Local Editorial Review (Pre-release)"
   },
   "branding": {
     "theme": "london-local-broadcast",
@@ -65,8 +65,8 @@
       "verified": true
     }
   ],
-  "postcodeTag": "E14 \u00b7 ISLE OF DOGS \u00b7 CANARY WHARF \u00b7 CUBITT TOWN",
-  "coordinates": "51.4984\u00b0 N, 0.0162\u00b0 W \u00b7 ISLE OF DOGS & POPLAR",
+  "postcodeTag": "E14 · ISLE OF DOGS · CANARY WHARF · CUBITT TOWN",
+  "coordinates": "51.4984° N, 0.0162° W · ISLE OF DOGS & POPLAR",
   "takeawayCard": {
     "kicker": "COUNCIL OPPOSITION",
     "title": "Councillors Fight Back Against Cuts",
@@ -76,17 +76,17 @@
     [
       "120-Year Transport Link",
       "Vital service connecting Blackwall, Cubitt Town, and Millwall.",
-      "Tower Hamlets Emergency Motion \u00b7 7 Oct 2026"
+      "Tower Hamlets Emergency Motion · 7 Oct 2026"
     ],
     [
       "School Journey Impact",
       "Direct daily route for pupils attending George Green's Secondary School.",
-      "London Local Story #10441 \u00b7 Para 3"
+      "London Local Story #10441 · Para 3"
     ],
     [
       "Community Lifeline",
       "Essential connection for non-car owners accessing clinics and workplaces.",
-      "Councillor Debate \u00b7 Open Council Network"
+      "Councillor Debate · Open Council Network"
     ]
   ],
   "timeline": [
@@ -106,11 +106,11 @@
         "mandatoryDisclaimer": "AI-GENERATED MEDIA"
       },
       "onScreenGraphic": {
-        "kicker": "\ud83d\udccd E14 \u00b7 ISLE OF DOGS BUS ALERT",
-        "headline": "Is your bus route about to disappear?",
-        "body": "TfL proposes axing route D7."
+        "kicker": "📍 E14 · ROUTE D7 CONSULTATION",
+        "headline": "Is the D7 bus being scrapped?",
+        "body": "TfL proposes withdrawing route on Isle of Dogs."
       },
-      "voiceoverText": "Is your bus route about to disappear?",
+      "voiceoverText": "Is the D-seven bus route about to disappear?",
       "citationFooter": "SOURCE: TfL Isle of Dogs Bus Restructure Consultation"
     },
     {
@@ -132,7 +132,7 @@
       "figure": {
         "type": "motion_document",
         "data": {
-          "docHeaderLeft": "TFL CONSULTATION \u00b7 ISLE OF DOGS",
+          "docHeaderLeft": "TFL CONSULTATION · ISLE OF DOGS",
           "docHeaderRight": "PROPOSED WITHDRAWAL",
           "excerptPrefix": "\"Transport for London is ",
           "highlightPhrase": "proposing to withdraw route D7 and restructure routes 135, 277 and D6",
@@ -147,7 +147,7 @@
         "headline": "TfL proposes withdrawing route D7",
         "body": "Altering routes 135, 277, and D6."
       },
-      "voiceoverText": "Transport for London proposes withdrawing route D7, while altering routes one-three-five, two-seven-seven, and D-six.",
+      "voiceoverText": "Transport for London proposes withdrawing route D7, while restructuring routes 135, 277, and D6.",
       "citationFooter": "SOURCE: TfL Consultation (haveyoursay.tfl.gov.uk/isle-of-dogs-bus-restructure)"
     },
     {
@@ -203,7 +203,7 @@
         "body": "Vital daily transport link for families."
       },
       "voiceoverText": "The cut threatens vital journeys for families and George Green's School pupils across the Isle of Dogs.",
-      "citationFooter": "SOURCE: Tower Hamlets Emergency Motion \u00b7 7 Oct 2026"
+      "citationFooter": "SOURCE: Tower Hamlets Emergency Motion · 7 Oct 2026"
     },
     {
       "sceneNumber": 4,
@@ -320,7 +320,7 @@
         "headline": "Public consultation closes 16 November",
         "body": "Submit your feedback online."
       },
-      "voiceoverText": "The public consultation closes on sixteen November. Submit your feedback at haveyoursay.tfl.gov.uk.",
+      "voiceoverText": "The public consultation closes on sixteen November. Submit your feedback at TfL's Have Your Say consultation.",
       "citationFooter": "SOURCE: TfL Consultation Closes 16 Nov 2026"
     }
   ],
