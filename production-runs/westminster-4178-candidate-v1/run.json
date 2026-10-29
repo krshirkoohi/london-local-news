@@ -1,0 +1,232 @@
+{
+  "schemaVersion": 1,
+  "skillVersion": "1.0.0",
+  "runId": "westminster-4178-candidate-v1",
+  "createdAt": "2026-10-29T16:29:40.365743+00:00",
+  "pipelineCommit": "2ef51484bb7a1e25170e1fe893e6b25ee566c9dc",
+  "specPath": "specs/4178-westminster-commitment-candidate.json",
+  "specSha256AtStart": "aac7881814f6cb29e427b94815f3127bad30599c6e41024ef51a64c467e813ff",
+  "videoPath": "build/drafts/westminster-4178-commitment-candidate.mp4",
+  "storyId": "4178",
+  "baselineRun": "production-runs/skill-baseline-inspection/run.json",
+  "hypothesis": "Replacing the procedural opening and decorative stat bars with an immediate accountability question ('What did it actually commit to?'), BuzzFeed/Vice-paced 3-item commitment cards in Scene 2, a primary-minutes receipt in Scene 3, settled-status/attendance specifics in Scene 4, and a unified 'Read the full story' CTA in Scene 5 will resolve all 6 baseline unresolved defects while improving mobile watchability.",
+  "changedVariable": "Recovered primary council agenda (1107898) and printed minutes (1122130); reordered scene layouts to ['hook', 'key_points', 'receipt', 'key_points', 'outro']; eliminated unverified '54 councillors' and census stat bars; fixed Scene 3 receipt header/caption clipping; aligned spoken and visual 'read more' CTA.",
+  "audience": "Westminster residents (including Maida Vale, Harrow Road, Church Street, and Edgware Road communities and ILR/Settled Status residents); archive/demo of the 12 November 2025 Full Council meeting",
+  "decision": "produce",
+  "budgetCapGBP": 0,
+  "sources": [
+    {
+      "sourceId": "westminster-minutes-1122130",
+      "title": "Westminster City Council Printed Minutes, Wednesday 12 November 2025 (Item 13.2)",
+      "url": "https://opencouncil.network/document/1122130/pdf?v=1763145106",
+      "localPath": "production-runs/westminster-4178-candidate-v1/sources/minutes-1122130.pdf",
+      "sha256": "82b3c169014bfe35693f1dd4760e180836543dd85162e6389d3ee6ea0e612b14",
+      "retrievedAt": "2026-10-29T16:28:12Z"
+    },
+    {
+      "sourceId": "westminster-agenda-1107898",
+      "title": "Westminster City Council Agenda Frontsheet, Wednesday 12 November 2025 (Item 13 Notice of Motion)",
+      "url": "https://opencouncil.network/document/1107898/pdf?v=1762317450",
+      "localPath": "production-runs/westminster-4178-candidate-v1/sources/agenda-1107898.pdf",
+      "sha256": "8c3e7fb82d1c5b386835f2a2c0efda3753a396f9fae723ea26471ed44bac50ba",
+      "retrievedAt": "2026-10-29T16:28:12Z"
+    },
+    {
+      "sourceId": "ocn-meeting-85390",
+      "title": "Open Council Network Meeting Record #85390 (Westminster Council, 12 Nov 2025)",
+      "url": "https://opencouncil.network/meetings/85390",
+      "localPath": "production-runs/westminster-4178-candidate-v1/sources/ocn-meeting-85390.html",
+      "sha256": "036969af45eaadb6476e84f782c3023a99d3b6a4fedf68a86d5c9227a58e9f42",
+      "retrievedAt": "2026-10-29T16:26:50Z"
+    },
+    {
+      "sourceId": "london-local-story-4178",
+      "title": "London Local Story #4178: Westminster Council Stands Against Far-Right Extremism (Published 16 Nov 2025)",
+      "url": "https://londonlocal.news/stories/4178",
+      "localPath": "production-runs/westminster-4178-candidate-v1/sources/story-4178.html",
+      "sha256": "953992ad2a1b07cd574902da5656efd820c03a1f6c3af1a2c22b05375d540a1f",
+      "retrievedAt": "2026-10-29T16:25:58Z"
+    }
+  ],
+  "claimUsages": [
+    {
+      "field": "postcodeTag",
+      "claimId": "WES-C4",
+      "sourceLocator": "minutes-1122130.pdf p. 1 (NW1 5PT) & p. 4 (Maida Vale, Harrow Road, Church Street, Edgware Road)",
+      "status": "confirmed"
+    },
+    {
+      "field": "timeline[0].onScreenGraphic.headline",
+      "claimId": "WES-C1",
+      "sourceLocator": "minutes-1122130.pdf p. 4, Item 13.2",
+      "status": "confirmed"
+    },
+    {
+      "field": "timeline[0].onScreenGraphic.body",
+      "claimId": "WES-C3",
+      "sourceLocator": "minutes-1122130.pdf p. 5, Resolutions 2, 3, 5, 6",
+      "status": "confirmed"
+    },
+    {
+      "field": "timeline[0].voiceoverText",
+      "claimId": "WES-C1",
+      "sourceLocator": "minutes-1122130.pdf p. 1 & p. 4, Item 13.2",
+      "status": "confirmed"
+    },
+    {
+      "field": "timeline[1].keyPoints[0]",
+      "claimId": "WES-C3",
+      "sourceLocator": "minutes-1122130.pdf p. 5, Resolution 6",
+      "status": "confirmed"
+    },
+    {
+      "field": "timeline[1].keyPoints[1]",
+      "claimId": "WES-C3",
+      "sourceLocator": "minutes-1122130.pdf p. 5, Resolution 3",
+      "status": "confirmed"
+    },
+    {
+      "field": "timeline[1].keyPoints[2]",
+      "claimId": "WES-C3",
+      "sourceLocator": "minutes-1122130.pdf p. 5, Resolutions 2 & 5",
+      "status": "confirmed"
+    },
+    {
+      "field": "timeline[1].voiceoverText",
+      "claimId": "WES-C3",
+      "sourceLocator": "minutes-1122130.pdf p. 5, Resolutions 2, 3, 5, 6",
+      "status": "confirmed"
+    },
+    {
+      "field": "timeline[2].figure.data",
+      "claimId": "WES-C3",
+      "sourceLocator": "minutes-1122130.pdf pp. 4-5, Item 13.1, 13.2 & Resolution 6 verbatim excerpt",
+      "status": "confirmed"
+    },
+    {
+      "field": "timeline[2].voiceoverText",
+      "claimId": "WES-C2",
+      "sourceLocator": "minutes-1122130.pdf p. 4, Item 13.1 & motion text (180+ nationalities)",
+      "status": "confirmed"
+    },
+    {
+      "field": "timeline[3].keyPoints[0]",
+      "claimId": "WES-C5",
+      "sourceLocator": "minutes-1122130.pdf p. 5, para 1 (ILR/Settled Status, £38,700, council housing)",
+      "status": "confirmed"
+    },
+    {
+      "field": "timeline[3].keyPoints[1]",
+      "claimId": "WES-C1",
+      "sourceLocator": "minutes-1122130.pdf p. 1 (51 present, 3 apologies) & p. 4 (Item 13.2 show of hands)",
+      "status": "confirmed"
+    },
+    {
+      "field": "timeline[3].keyPoints[2]",
+      "claimId": "WES-C3",
+      "sourceLocator": "minutes-1122130.pdf p. 5, Resolutions 3 & 6 (commitments carried; no rollout date/budget specified in minutes)",
+      "status": "confirmed"
+    },
+    {
+      "field": "timeline[3].voiceoverText",
+      "claimId": "WES-C5",
+      "sourceLocator": "minutes-1122130.pdf pp. 1, 4-5",
+      "status": "confirmed"
+    },
+    {
+      "field": "timeline[4].figure.data.ctaUrl",
+      "claimId": "WES-C1",
+      "sourceLocator": "story-4178.html (https://londonlocal.news/stories/4178)",
+      "status": "confirmed"
+    },
+    {
+      "field": "timeline[4].voiceoverText",
+      "claimId": "WES-C1",
+      "sourceLocator": "story-4178.html (Story #4178, published 16 Nov 2025)",
+      "status": "confirmed"
+    }
+  ],
+  "unresolved": [],
+  "assetManifest": [
+    {
+      "path": "assets/generative/westminster_street_bg_video.mp4",
+      "sha256": "e80e72274be93d681d01d2e266926f3da1bb2609718e301efd2b2e940b2f1c7c",
+      "provenance": "Existing local repository B-roll (reused, zero new generation)",
+      "isIllustrative": true,
+      "disclosure": "AI-GENERATED MEDIA"
+    },
+    {
+      "path": "assets/generative/gemini_generated_video_535e3482.mp4",
+      "sha256": "eb55e7793725614f3df1b11a4ceb17b67fe6253820bae89a527021ca9471a515",
+      "provenance": "Existing local repository B-roll (reused, zero new generation)",
+      "isIllustrative": true,
+      "disclosure": "AI-GENERATED MEDIA"
+    },
+    {
+      "path": "assets/generative/westminster_civic_omni.mp4",
+      "sha256": "064177b4c66fa20520a0c1a8b0e86755750c5e2afa4e298f131a9a956a7e5769",
+      "provenance": "Existing local repository B-roll (reused with architectural_upper crop mode, zero new generation)",
+      "isIllustrative": true,
+      "disclosure": "AI-GENERATED MEDIA"
+    },
+    {
+      "path": "assets/branding/london-local-wordmark.png",
+      "sha256": "c8f821039077ae60a354550bac2d8333bdcc12de9c17760939bcd21610deec8e",
+      "provenance": "Official London Local brand wordmark",
+      "isIllustrative": false,
+      "disclosure": null
+    }
+  ],
+  "coverageReview": {
+    "allVisibleAndSpokenClaimsChecked": true,
+    "reviewedBy": null
+  },
+  "metrics": {
+    "materialFactualErrors": 0,
+    "unsupportedFactualUnits": 0,
+    "factualUnitsCovered": 16,
+    "factualUnitsTotal": 16,
+    "productionMinutes": 18,
+    "reviewMinutes": 6,
+    "modelCalls": 0,
+    "inputTokens": 0,
+    "outputTokens": 0,
+    "newClips": 0,
+    "generatedSeconds": 0,
+    "usedGeneratedSeconds": 0,
+    "cacheHits": 4,
+    "cacheMisses": 0,
+    "actualCostGBP": 0,
+    "creditsUsed": 0,
+    "technicalDefects": 0,
+    "renderAttempts": 3
+  },
+  "watchabilityScores": {
+    "localRelevance": 5,
+    "opening": 5,
+    "structure": 5,
+    "pacing": 4,
+    "visualComprehension": 5
+  },
+  "technicalReview": {
+    "passed": true,
+    "evidence": "1080x1920 30fps H.264 + AAC 24kHz stereo MP4 (duration=40.58s, size=8,661,970 bytes). Frame-by-frame inspection of s1_hook.png, s2_keypoints.png, s3_receipt.png, s4_record.png, s5_outro1.png, and s5_outro2.png confirmed zero text truncation, zero caption clipping, and clear AI-GENERATED MEDIA disclosure on all illustrative scenes."
+  },
+  "release": {
+    "status": "pending_review",
+    "humanApproved": false,
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "specSha256": "aac7881814f6cb29e427b94815f3127bad30599c6e41024ef51a64c467e813ff",
+    "videoSha256": "c0314a269e9fc4868035dc54a07421be4e73d61acc97690110ae01c9e3fe0cf1",
+    "acceptedArticleOnlyEvidence": false
+  },
+  "improvements": [
+    {
+      "skillVersion": "1.0.0",
+      "change": "Recovered official Westminster Agenda (1107898) and Printed Minutes (1122130) via OCN cached document endpoints; reordered candidate spec to Hook -> 3 Commitments -> Verbatim Minutes Receipt -> Record & Next Steps -> Aligned Read-More Outro; fixed Scene 3 receipt title auto-fit and caption-scrim z-order in scripts/build_demo.py.",
+      "evidence": "All 12 unit tests pass; run_record.py check passes; visual inspection of all 6 extracted frames shows zero text collisions or caption clipping."
+    }
+  ],
+  "retention": null
+}

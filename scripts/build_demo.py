@@ -773,12 +773,16 @@ def render_template_scene2_receipt(spec, scene, t=10.0, total_dur=6.0):
     ink_dark = (20, 22, 28, 255)
     ink_muted = (95, 100, 112, 255)
 
-    # Masthead
+    # Masthead (auto-fitted so left_hdr and right_hdr never collide)
     left_hdr = fig_data.get("docHeaderLeft", f"LONDON BOROUGH OF {spec.get('borough', '').upper()} · PUBLIC RECORD")
     right_hdr = fig_data.get("docHeaderRight", "VERIFIED EXCERPT")
     curr_y = act_cy1 + pad_top
-    draw.text((ox + 35, curr_y), left_hdr, font=f_doc_hdr, fill=ink_muted)
     rw = draw.textlength(right_hdr, font=f_doc_hdr)
+    max_left_w = max(200, int(card_w - 70 - rw - 24))
+    f_left_hdr, left_lines, _ = rt.fit_text_to_bounds(
+        draw, left_hdr, rt.FONT_SANS_BOLD, initial_size=21, max_width=max_left_w, max_lines=1, min_size=14
+    )
+    draw.text((ox + 35, curr_y), left_lines[0] if left_lines else left_hdr, font=f_left_hdr, fill=ink_muted)
     draw.text((ox + card_w - 35 - rw, curr_y), right_hdr, font=f_doc_hdr, fill=DOT_ORANGE + (255,))
     curr_y += 38
 
@@ -788,13 +792,13 @@ def render_template_scene2_receipt(spec, scene, t=10.0, total_dur=6.0):
     # Subject Header
     mtitle = scene.get("onScreenGraphic", {}).get("headline", "Verified Council Record").replace("\n", " ")
     f_mtitle_fit, mtitle_lines, _ = rt.fit_text_to_bounds(
-        draw, mtitle, rt.FONT_SERIF_BOLD, initial_size=44, max_width=card_w - 70, max_lines=1, min_size=28
+        draw, mtitle, rt.FONT_SERIF_BOLD, initial_size=44, max_width=card_w - 70, max_lines=1, min_size=26
     )
     for tl in mtitle_lines[:1]:
         draw.text((ox + 35, curr_y), tl, font=f_mtitle_fit, fill=ink_dark)
     curr_y += title_h
 
-    # Signature Dot-Orange margin bracket & highlighted quote
+    # Signature Dot-Orange margin bracket & span-accurate highlighted quote
     hl_progress = ease_out_cubic(max(0.0, min(1.0, (t - 0.35) / 1.25))) if t >= 0.35 else 0.0
     bracket_start = curr_y - 6
     bracket_h = int((len(q_lines[:5]) * 52 + 10) * max(0.1, hl_progress))
@@ -805,13 +809,17 @@ def render_template_scene2_receipt(spec, scene, t=10.0, total_dur=6.0):
         if hl_progress > 0.9:
             draw.line([(ox + 18, bracket_start + bracket_h), (ox + 28, bracket_start + bracket_h)], fill=DOT_ORANGE + (245,), width=3)
 
+    hl_start_char = len(prefix)
+    hl_end_char = len(prefix) + len(highlight)
+    char_cursor = 0
     for ql in q_lines[:5]:
-        hl_words = [w.strip(".,\"'") for w in highlight.split(" ") if len(w.strip(".,\"'")) > 3]
-        if any(hw in ql for hw in hl_words):
+        line_start = char_cursor
+        line_end = char_cursor + len(ql)
+        char_cursor = line_end + 1  # +1 for wrapped space
+        if highlight and max(line_start, hl_start_char) < min(line_end, hl_end_char):
             lw = draw.textlength(ql, font=f_quote)
             current_hl_w = int(lw * hl_progress)
             if current_hl_w > 4:
-                # Refined light grey highlight marker
                 draw.rounded_rectangle([(ox + 32, curr_y - 2), (ox + 36 + current_hl_w, curr_y + 42)], radius=4, fill=(226, 230, 240, 235))
         draw.text((ox + 35, curr_y), ql, font=f_quote, fill=ink_dark)
         curr_y += 52
@@ -820,14 +828,24 @@ def render_template_scene2_receipt(spec, scene, t=10.0, total_dur=6.0):
     draw.line([(ox + 35, curr_y), (ox + card_w - 35, curr_y)], fill=(210, 205, 195, 255), width=2)
     curr_y += 20
 
-    # Authentic Attribution & Provenance Badge
-    draw.text((ox + 35, curr_y), fig_data.get("mover", "Source: Council Committee Report"), font=f_sig, fill=ink_dark)
-    draw.text((ox + 35, curr_y + 30), fig_data.get("seconder", "Published on londonlocal.news"), font=f_sub_sig, fill=ink_muted)
-
+    # Authentic Attribution & Provenance Badge (auto-fitted so mover/seconder never touch the right-hand stamp)
     st_txt = fig_data.get("receiptStamp", "VERIFIED SOURCE")
     st_w = draw.textlength(st_txt, font=f_stamp)
     st_x2 = ox + card_w - 35
     st_x1 = st_x2 - int(st_w + 34)
+    max_sig_w = max(200, int(st_x1 - (ox + 35) - 20))
+
+    mover_str = fig_data.get("mover", "Source: Council Committee Report")
+    seconder_str = fig_data.get("seconder", "Published on londonlocal.news")
+    f_mov_fit, mov_lines, _ = rt.fit_text_to_bounds(
+        draw, mover_str, rt.FONT_SANS_BOLD, initial_size=21, max_width=max_sig_w, max_lines=1, min_size=14
+    )
+    f_sec_fit, sec_lines, _ = rt.fit_text_to_bounds(
+        draw, seconder_str, rt.FONT_SANS, initial_size=19, max_width=max_sig_w, max_lines=1, min_size=13
+    )
+    draw.text((ox + 35, curr_y), mov_lines[0] if mov_lines else mover_str, font=f_mov_fit, fill=ink_dark)
+    draw.text((ox + 35, curr_y + 30), sec_lines[0] if sec_lines else seconder_str, font=f_sec_fit, fill=ink_muted)
+
     draw.rounded_rectangle([(st_x1, curr_y + 4), (st_x2, curr_y + 50)], radius=8, fill=(254, 242, 242, 245), outline=DOT_ORANGE + (240,), width=2)
     draw.text((st_x1 + 17, curr_y + 15), st_txt, font=f_stamp, fill=DOT_ORANGE + (255,))
 
@@ -855,7 +873,7 @@ def render_template_scene2_receipt(spec, scene, t=10.0, total_dur=6.0):
 
 
 def render_selling_point_slide_card(spec, t=10.0):
-    """Renders the official grand finale Selling Point slide from London Local.png."""
+    """Renders the official grand finale Selling Point slide from London Local.png, symmetrically centred."""
     card = Image.new("RGBA", (1080, 1920), (14, 14, 20, 255))
     draw = ImageDraw.Draw(card)
 
@@ -867,29 +885,26 @@ def render_selling_point_slide_card(spec, t=10.0):
 
     f_main = rt.get_font(rt.FONT_SERIF_BOLD, 84)
     line1 = "Local news, from"
-    line2 = "your council"  # Single red dot acts as the period (NO trailing period!)
+    line2 = "your council"  # Single dot acts as the period (NO trailing period!)
 
     p_title = ease_out_cubic(min(1.0, max(0.0, t / 0.3)))
-    draw.text((MARGIN_X, 800), line1, font=f_main, fill=(255, 255, 255, int(255 * p_title)))
-    draw.text((MARGIN_X, 910), line2, font=f_main, fill=(255, 255, 255, int(255 * p_title)))
-    l_yc = draw.textlength(line2, font=f_main)
-    draw.ellipse([(MARGIN_X + l_yc + 8, 955), (MARGIN_X + l_yc + 26, 973)], fill=DOT_ORANGE + (int(255 * p_title),))
+    w1 = draw.textlength(line1, font=f_main)
+    draw.text(((1080 - w1) // 2, 780), line1, font=f_main, fill=(255, 255, 255, int(255 * p_title)))
 
-    draw.line([(MARGIN_X, 1060), (SAFE_X2, 1060)], fill=(255, 255, 255, 45), width=1)
+    l_yc = draw.textlength(line2, font=f_main)
+    dot_d = 18
+    dot_gap = 8
+    total_w2 = l_yc + dot_gap + dot_d
+    x2 = int((1080 - total_w2) // 2)
+    draw.text((x2, 890), line2, font=f_main, fill=(255, 255, 255, int(255 * p_title)))
+    draw.ellipse([(x2 + int(l_yc) + dot_gap, 935), (x2 + int(l_yc) + dot_gap + dot_d, 935 + dot_d)], fill=DOT_ORANGE + (int(255 * p_title),))
+
+    draw.line([(220, 1035), (860, 1035)], fill=(255, 255, 255, 55), width=1)
 
     f_sub = rt.get_font(rt.FONT_SERIF, 36)
     sub_txt = "Direct from council agendas to your phone."
-    draw.text((MARGIN_X, 1100), sub_txt, font=f_sub, fill=COLOR_LIGHT_GREY + (int(255 * p_title),))
-
-    # 3 Sleek Trust Badges
-    f_badge = rt.get_font(rt.FONT_SANS_BOLD, 20)
-    badges = ["OFFICIAL RECEIPTS", "ZERO SENSATIONALISM", "ALL 33 BOROUGHS"]
-    bx = MARGIN_X
-    for b in badges:
-        bw = draw.textlength(b, font=f_badge)
-        draw.rounded_rectangle([(bx, 1200), (bx + bw + 36, 1248)], radius=12, fill=(22, 24, 32, 255), outline=DOT_ORANGE + (160,), width=1)
-        draw.text((bx + 18, 1214), b, font=f_badge, fill=DOT_ORANGE + (int(255 * p_title),))
-        bx += int(bw + 40)
+    sw = draw.textlength(sub_txt, font=f_sub)
+    draw.text(((1080 - sw) // 2, 1075), sub_txt, font=f_sub, fill=COLOR_LIGHT_GREY + (int(255 * p_title),))
 
     f_bot = rt.get_font(rt.FONT_SERIF, 34)
     bot_txt = "londonlocal.news"
@@ -899,35 +914,50 @@ def render_selling_point_slide_card(spec, t=10.0):
 
 
 def render_template_scene3_key_points(spec, scene, t=10.0, total_dur=6.0):
-    """Renders the official Scene 3 Key Points broadsheet slide from 4.png over darkened 35mm footage with progressive step illumination."""
+    """
+    Renders the Scene 3 Key Points slide over darkened 35mm footage:
+    - Top persistent 'London Local.' watermark
+    - Symmetrically centred heading & 3-card stack (x: MARGIN_X..SAFE_X2, vertically centred around y=890)
+    - Decluttered cards (number + bold anchor + 1-2 short body lines; no per-card micro-citations)
+    """
     overlay = Image.new("RGBA", (1080, 1920), (12, 12, 18, 222))
     draw = ImageDraw.Draw(overlay)
+
+    rt.apply_persistent_watermark(overlay)
 
     archetype = rt.ARCHETYPE_CONFIG.get(spec.get("storyType", "council_decision"), rt.ARCHETYPE_CONFIG["council_decision"])
     accent_rgb = archetype["accent"]
 
-    # Section Heading with Quality Control dynamic fitting (fits inside SAFE_WIDTH)
     heading = spec.get("keyPointsHeading", scene.get("onScreenGraphic", {}).get("headline", "Key points")).replace("\n", " ")
-    f_title, head_lines, head_spacing = rt.fit_text_to_bounds(draw, heading, rt.FONT_SERIF_BOLD, initial_size=82, max_width=SAFE_WIDTH, max_lines=2, min_size=48)
-    hy = 120
+    f_title, head_lines, head_spacing = rt.fit_text_to_bounds(
+        draw, heading, rt.FONT_SERIF_BOLD, initial_size=68, max_width=SAFE_WIDTH, max_lines=2, min_size=44
+    )
+
+    points = spec.get("keyPoints", [])[:3]
+    num_pts = max(1, len(points))
+    card_h = 186
+    card_gap = 28
+    cards_total_h = num_pts * card_h + (num_pts - 1) * card_gap
+    head_total_h = len(head_lines) * head_spacing
+    block_total_h = head_total_h + 44 + cards_total_h
+
+    # Vertically centre the entire [Heading + 3 Cards] lockup around y=895
+    hy = max(280, 895 - (block_total_h // 2))
     for hl in head_lines:
-        draw.text((MARGIN_X, hy), hl, font=f_title, fill=(255, 255, 255, 255))
+        lw = draw.textlength(hl, font=f_title)
+        draw.text(((1080 - lw) // 2, hy), hl, font=f_title, fill=(255, 255, 255, 255))
         hy += head_spacing
 
-    points = spec.get("keyPoints", [])
+    start_y = hy + 44
+    spacing = card_h + card_gap
 
-    f_anchor = rt.get_font(rt.FONT_SERIF_BOLD, 46)
-    f_sub = rt.get_font(rt.FONT_SANS, 28)
-    f_cite = rt.get_font(rt.FONT_SANS_BOLD, 21)
-    f_step = rt.get_font(rt.FONT_SERIF_BOLD, 52)
+    f_sub = rt.get_font(rt.FONT_SANS, 27)
+    f_step = rt.get_font(rt.FONT_SERIF_BOLD, 48)
 
-    start_y = max(330, hy + 25)
-    spacing = 355
-
-    # Calm, smooth progressive step illumination across scene duration
+    # Smooth progressive step illumination across scene duration
     t1 = total_dur * 0.42
     t2 = total_dur * 0.76
-    fade_half = 0.18  # smooth 0.36s crossfade between tabs
+    fade_half = 0.18
 
     tab_intensities = [0.0, 0.0, 0.0]
     if t < t1 - fade_half:
@@ -945,7 +975,7 @@ def render_template_scene3_key_points(spec, scene, t=10.0, total_dur=6.0):
     else:
         tab_intensities[2] = 1.0
 
-    for idx, pt in enumerate(points[:3]):
+    for idx, pt in enumerate(points):
         t_start = 0.10 + idx * 0.22
         p_pt = ease_out_cubic(min(1.0, max(0.0, (t - t_start) / 0.3))) if t >= t_start else 0.0
         if p_pt <= 0.01:
@@ -954,64 +984,63 @@ def render_template_scene3_key_points(spec, scene, t=10.0, total_dur=6.0):
         py = start_y + idx * spacing
         y_off = int((1.0 - p_pt) * 15)
 
-        if len(pt) == 3:
-            anchor, sub, cite_text = pt
-        elif len(pt) == 2:
-            anchor, cite_text = pt
-            sub = ""
+        if len(pt) >= 2:
+            anchor = str(pt[0])
+            sub = str(pt[1]) if len(pt) == 3 else ""
         else:
             anchor = str(pt[0])
             sub = ""
-            cite_text = "Council Public Record"
 
         act_val = tab_intensities[idx] * p_pt
-        # Base card container: always draw a solid/dark card backdrop so text never floats over bright video
-        card_fill_a = int(195 + 45 * act_val)
-        card_outline = (accent_rgb + (int(220 * act_val),)) if act_val > 0.05 else (255, 255, 255, int(45 * p_pt))
+        card_fill_a = int(198 + 45 * act_val)
+        card_outline = (accent_rgb + (int(225 * act_val),)) if act_val > 0.05 else (255, 255, 255, int(50 * p_pt))
         draw.rounded_rectangle(
-            [(MARGIN_X, py - 18 + y_off), (SAFE_X2, py + 235 + y_off)],
+            [(MARGIN_X, py + y_off), (SAFE_X2, py + card_h + y_off)],
             radius=18,
             fill=(18, 20, 28, int(card_fill_a * p_pt)),
             outline=card_outline,
             width=2,
         )
 
-        # Left vertical accent line on card (crossfades between muted grey and bright accent)
+        # Left vertical accent line on card
         r_bar = int(140 * (1.0 - act_val) + accent_rgb[0] * act_val)
         g_bar = int(145 * (1.0 - act_val) + accent_rgb[1] * act_val)
         b_bar = int(160 * (1.0 - act_val) + accent_rgb[2] * act_val)
         a_bar = int(180 * (1.0 - act_val) + 255 * act_val)
-        draw.line([(MARGIN_X + 10, py + 12 + y_off), (MARGIN_X + 10, py + 72 + y_off)], fill=(r_bar, g_bar, b_bar, int(a_bar * p_pt)), width=5)
+        draw.line([(MARGIN_X + 12, py + 24 + y_off), (MARGIN_X + 12, py + 80 + y_off)], fill=(r_bar, g_bar, b_bar, int(a_bar * p_pt)), width=5)
 
-        # Prominent Hero Step Number (52px bold serif)
+        # Prominent Hero Step Number
         step_txt = f"0{idx + 1}"
         r_step = int(180 * (1.0 - act_val) + accent_rgb[0] * act_val)
         g_step = int(185 * (1.0 - act_val) + accent_rgb[1] * act_val)
         b_step = int(200 * (1.0 - act_val) + accent_rgb[2] * act_val)
-        draw.text((MARGIN_X + 28, py + 14 + y_off), step_txt, font=f_step, fill=(r_step, g_step, b_step, int(255 * p_pt)))
+        draw.text((MARGIN_X + 30, py + 26 + y_off), step_txt, font=f_step, fill=(r_step, g_step, b_step, int(255 * p_pt)))
 
         # Vertical Divider
-        draw.line([(MARGIN_X + 106, py + 20 + y_off), (MARGIN_X + 106, py + 70 + y_off)], fill=(255, 255, 255, int(70 * p_pt)), width=2)
+        draw.line([(MARGIN_X + 104, py + 30 + y_off), (MARGIN_X + 104, py + 76 + y_off)], fill=(255, 255, 255, int(70 * p_pt)), width=2)
 
-        # Bold Anchor Headline
-        draw.text((MARGIN_X + 126, py + 16 + y_off), anchor, font=f_anchor, fill=(255, 255, 255, int(255 * p_pt)))
+        # Bold Anchor Headline fitted to card width
+        f_anchor_fit, anchor_lines, _ = rt.fit_text_to_bounds(
+            draw, anchor, rt.FONT_SERIF_BOLD, initial_size=42, max_width=SAFE_WIDTH - 150, max_lines=1, min_size=26
+        )
+        draw.text(
+            (MARGIN_X + 122, py + 28 + y_off),
+            anchor_lines[0] if anchor_lines else anchor,
+            font=f_anchor_fit,
+            fill=(255, 255, 255, int(255 * p_pt)),
+        )
 
-        sub_y = py + 92 + y_off
+        # Concise 1-2 line body (no redundant per-card citation line)
+        sub_y = py + 98 + y_off
         if sub:
-            for line in rt.wrap_text(draw, sub, f_sub, SAFE_WIDTH - 50)[:2]:
-                draw.text((MARGIN_X + 28, sub_y), line, font=f_sub, fill=(225, 230, 240, int(255 * p_pt)))
-                sub_y += 38
-
-        cite_str = cite_text.strip().lstrip("<").rstrip(">")
-        draw.text((MARGIN_X + 28, sub_y + 8), cite_str, font=f_cite, fill=(180, 185, 200, int(255 * p_pt)))
-
-    archetype = rt.ARCHETYPE_CONFIG.get(spec.get("storyType", "council_decision"), rt.ARCHETYPE_CONFIG["council_decision"])
-    accent_rgb = archetype["accent"]
+            for line in rt.wrap_text(draw, sub, f_sub, SAFE_WIDTH - 60)[:2]:
+                draw.text((MARGIN_X + 30, sub_y), line, font=f_sub, fill=(225, 230, 240, int(255 * p_pt)))
+                sub_y += 36
 
     if spec.get("branding", {}).get("showCaptions", False):
         rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1540, accent_rgb=accent_rgb)
 
-    # Clean bottom public record attribution (crisp 21px bold sans at y=1615)
+    # Single clean bottom public record attribution
     f_bot = rt.get_font(rt.FONT_SANS_BOLD, 21)
     bot_txt = scene.get("sourceLabel", f"LONDON BOROUGH OF {spec.get('borough', 'Council').upper()} · VERIFIED PUBLIC RECORD")
     bw = draw.textlength(bot_txt, font=f_bot)
@@ -1022,28 +1051,57 @@ def render_template_scene3_key_points(spec, scene, t=10.0, total_dur=6.0):
 
 
 def render_template_scene4_facts_figures(spec, scene, t=10.0, total_dur=6.0):
-    """Renders the official Scene 4 Facts and figures frame from 5.png with animated London Borough Map."""
+    """
+    Renders a clean, phone-readable Scene 4 Comparison & Takeaway lockup:
+    - Top persistent 'London Local.' watermark
+    - Centred section heading
+    - Two large, vertically centred side-by-side comparison cards (no fake decorative progress bars,
+      no unreadable 17px subtext, and no redundant 33-borough map stacked underneath)
+    - One bold takeaway banner underneath
+    """
     overlay = Image.new("RGBA", (1080, 1920), (0, 0, 0, 0))
     draw = ImageDraw.Draw(overlay)
 
     archetype = rt.ARCHETYPE_CONFIG.get(spec.get("storyType", "council_decision"), rt.ARCHETYPE_CONFIG["council_decision"])
     accent_rgb = archetype["accent"]
 
-    # Top scrim for 'Facts and figures' contrast over moving 35mm B-roll
-    for y in range(0, 280):
-        a = int(210 * (1.0 - (y / 280.0)**1.4))
+    # Top scrim for watermark contrast over moving 35mm B-roll
+    for y in range(0, 260):
+        a = int(185 * (1.0 - (y / 260.0)**1.4))
         draw.line([(0, y), (1080, y)], fill=(8, 8, 12, a))
 
-    # Header from 5.png - Dynamic narrative title or fallback, centered within SAFE_WIDTH on 540px axis
-    heading = spec.get("factsFiguresHeading", scene.get("onScreenGraphic", {}).get("headline", "Facts and figures")).replace("\n", " ")
-    f_title, head_lines, _ = rt.fit_text_to_bounds(draw, heading, rt.FONT_SERIF_BOLD, initial_size=74, max_width=SAFE_WIDTH, max_lines=1, min_size=38)
-    title_txt = head_lines[0] if head_lines else "Facts and figures"
-    tw = draw.textlength(title_txt, font=f_title)
-    draw.text(((1080 - tw) // 2, 115), title_txt, font=f_title, fill=(255, 255, 255, 255))
+    rt.apply_persistent_watermark(overlay)
 
-    # Container frame from 5.png (bounded strictly within SAFE_X2 and ending at 1545)
-    bx1, by1, bx2, by2 = MARGIN_X, 260, SAFE_X2, 1545
-    draw.rounded_rectangle([(bx1, by1), (bx2, by2)], radius=20, fill=(22, 23, 31, 245), outline=(255, 255, 255, 45), width=2)
+    # Strong centre backdrop scrim with flat plateau so heading and cards pop over bright B-roll
+    for y in range(340, 1440):
+        if 480 <= y <= 1180:
+            a = 205
+        elif y < 480:
+            dist = (480 - y) / 140.0
+            a = int(205 * max(0.0, 1.0 - dist**1.6))
+        else:
+            dist = (y - 1180) / 260.0
+            a = int(205 * max(0.0, 1.0 - dist**1.6))
+        if a > 0:
+            draw.line([(0, y), (1080, y)], fill=(8, 8, 12, a))
+
+    # Centred Section Heading (prefer crisp 1-line fit down to 40px; fallback to 2 lines at y=445)
+    heading = spec.get("factsFiguresHeading", scene.get("onScreenGraphic", {}).get("headline", "Public Record & Timelines")).replace("\n", " ")
+    f_title, head_lines, head_spacing = rt.fit_text_to_bounds(
+        draw, heading, rt.FONT_SERIF_BOLD, initial_size=58, max_width=SAFE_WIDTH, max_lines=1, min_size=40
+    )
+    if len(head_lines) == 1 and not head_lines[0].endswith("…"):
+        tw = draw.textlength(head_lines[0], font=f_title)
+        draw.text(((1080 - tw) // 2, 525), head_lines[0], font=f_title, fill=(255, 255, 255, 255))
+    else:
+        f_title, head_lines, head_spacing = rt.fit_text_to_bounds(
+            draw, heading, rt.FONT_SERIF_BOLD, initial_size=50, max_width=SAFE_WIDTH, max_lines=2, min_size=34
+        )
+        head_y = 445
+        for hl in head_lines[:2]:
+            tw = draw.textlength(hl, font=f_title)
+            draw.text(((1080 - tw) // 2, head_y), hl, font=f_title, fill=(255, 255, 255, 255))
+            head_y += head_spacing
 
     fig = scene.get("figure", {})
     fig_type = fig.get("type", "")
@@ -1058,10 +1116,13 @@ def render_template_scene4_facts_figures(spec, scene, t=10.0, total_dur=6.0):
                 cards = s.get("figure", {}).get("data", {}).get("cards", [])
                 break
 
-    # Upper: Two Hero Stat Cards
-    cw = (bx2 - bx1 - 50) // 2
-    c1_x1, c1_x2 = bx1 + 20, bx1 + 20 + cw
-    c2_x1, c2_x2 = c1_x2 + 10, bx2 - 20
+    # Two clean side-by-side comparison cards (x: MARGIN_X..SAFE_X2, y: 630..910)
+    bx1, bx2 = MARGIN_X, SAFE_X2
+    gap = 24
+    cw = (bx2 - bx1 - gap) // 2
+    c1_x1, c1_x2 = bx1, bx1 + cw
+    c2_x1, c2_x2 = c1_x2 + gap, bx2
+    cy1, cy2 = 630, 910
 
     if len(cards) >= 2:
         for idx, (cx1, cx2, c) in enumerate([(c1_x1, c1_x2, cards[0]), (c2_x1, c2_x2, cards[1])]):
@@ -1071,105 +1132,79 @@ def render_template_scene4_facts_figures(spec, scene, t=10.0, total_dur=6.0):
                 continue
             card_inner_w = cx2 - cx1 - 48
             bar_col = tuple(c.get("barColor", list(accent_rgb))) + (255,)
-            draw.rounded_rectangle([(cx1, by1 + 24), (cx2, by1 + 335)], radius=16, fill=(16, 17, 24, 255), outline=(255, 255, 255, 60), width=1)
+            draw.rounded_rectangle(
+                [(cx1, cy1), (cx2, cy2)],
+                radius=18,
+                fill=(16, 18, 26, 242),
+                outline=(255, 255, 255, 65),
+                width=2,
+            )
+
+            # Top accent bar
+            draw.line([(cx1 + 24, cy1 + 26), (cx1 + 88, cy1 + 26)], fill=bar_col, width=4)
 
             # 1. Kicker
             kicker_str = str(c.get("kicker", ""))
-            f_kicker, k_lines, _ = rt.fit_text_to_bounds(draw, kicker_str, rt.FONT_SANS_BOLD, initial_size=17, max_width=card_inner_w, max_lines=1, min_size=12)
-            draw.text((cx1 + 24, by1 + 46), k_lines[0] if k_lines else kicker_str, font=f_kicker, fill=bar_col)
+            f_kicker, k_lines, _ = rt.fit_text_to_bounds(
+                draw, kicker_str, rt.FONT_SANS_BOLD, initial_size=18, max_width=card_inner_w, max_lines=1, min_size=12
+            )
+            draw.text((cx1 + 24, cy1 + 44), k_lines[0] if k_lines else kicker_str, font=f_kicker, fill=bar_col)
 
-            # 2. Hero Value (Dynamic font scaling strictly bounded within card_inner_w)
+            # 2. Hero Value / Standpoint
             val_str = str(c.get("value", ""))
-            f_val, val_lines, _ = rt.fit_text_to_bounds(draw, val_str, rt.FONT_SERIF_BOLD, initial_size=70, max_width=card_inner_w, max_lines=1, min_size=28)
-            val_size = getattr(f_val, "size", 70)
-            y_val_offset = (70 - val_size) // 2
-            draw.text((cx1 + 24, by1 + 80 + y_val_offset), val_lines[0] if val_lines else val_str, font=f_val, fill=(255, 255, 255, 255))
+            f_val, val_lines, _ = rt.fit_text_to_bounds(
+                draw, val_str, rt.FONT_SERIF_BOLD, initial_size=68, max_width=card_inner_w, max_lines=1, min_size=28
+            )
+            val_size = getattr(f_val, "size", 68)
+            y_val_offset = (68 - val_size) // 2
+            draw.text((cx1 + 24, cy1 + 88 + y_val_offset), val_lines[0] if val_lines else val_str, font=f_val, fill=(255, 255, 255, 255))
 
-            # 3. Label
-            f_lbl = rt.get_font(rt.FONT_SANS_BOLD, 20)
-            lbl_lines = rt.wrap_text(draw, c.get("label", ""), f_lbl, card_inner_w)
-            draw.text((cx1 + 24, by1 + 172), lbl_lines[0] if lbl_lines else "", font=f_lbl, fill=(230, 230, 235, 255))
+            # 3. Single readable summary label (24px sans bold, max 2 lines)
+            summary_txt = str(c.get("label", "")) or str(c.get("subtext", ""))
+            f_lbl = rt.get_font(rt.FONT_SANS_BOLD, 24)
+            lbl_lines = rt.wrap_text(draw, summary_txt, f_lbl, card_inner_w)
+            ly = cy1 + 196
+            for ll in lbl_lines[:2]:
+                draw.text((cx1 + 24, ly), ll, font=f_lbl, fill=(225, 230, 240, 255))
+                ly += 32
 
-            # 4. Progress bar
-            draw.rounded_rectangle([(cx1 + 24, by1 + 218), (cx2 - 24, by1 + 230)], radius=6, fill=(45, 45, 55, 255))
-            ratio = max(0.1, min(1.0, float(c.get("barRatio", 0.85)))) * p_c
-            fill_w = int(card_inner_w * ratio)
-            if fill_w > 4:
-                draw.rounded_rectangle([(cx1 + 24, by1 + 218), (cx1 + 24 + fill_w, by1 + 230)], radius=6, fill=bar_col)
-
-            # 5. Subtext
-            f_card_sub = rt.get_font(rt.FONT_SANS, 17)
-            sub_lines = rt.wrap_text(draw, c.get("subtext", ""), f_card_sub, card_inner_w)
-            sub_y = by1 + 246
-            for sl in sub_lines[:2]:
-                draw.text((cx1 + 24, sub_y), sl, font=f_card_sub, fill=(185, 185, 195, 255))
-                sub_y += 24
-
-    # Middle: Map Container with Calm, Stable London Borough Vector Map
-    map_y = by1 + 355
-    map_h = 720
-    draw.rounded_rectangle([(bx1 + 20, map_y), (bx2 - 20, map_y + map_h)], radius=18, fill=(16, 17, 24, 255), outline=(255, 255, 255, 60), width=1)
-
-    borough_name = spec.get("borough", "Camden")
-    # Keep map steady and stable to prevent disorientation
-    zoom_factor = 1.0
-    map_crop = rt.generate_borough_map_overlay(
-        borough_name,
-        width=bx2 - bx1 - 80,
-        height=map_h - 95,
-        zoom=zoom_factor,
-        accent_rgb=accent_rgb,
+    # Bottom Takeaway Card (x: MARGIN_X..SAFE_X2, y: 940..1170)
+    vy1, vy2 = 940, 1170
+    draw.rounded_rectangle(
+        [(bx1, vy1), (bx2, vy2)],
+        radius=18,
+        fill=(16, 18, 26, 242),
+        outline=accent_rgb + (180,),
+        width=2,
     )
-    if map_crop:
-        overlay.paste(map_crop, (bx1 + 40, map_y + 18), map_crop)
-
-    # Locator Pill (with crisp vector pin dot instead of Unicode emoji)
-    b_label = f"LONDON BOROUGH OF {borough_name.upper()}"
-    f_pill = rt.get_font(rt.FONT_SANS_BOLD, 20)
-    pw = draw.textlength(b_label, font=f_pill)
-    pill_w = int(pw + 68)
-    pill_x1 = (1080 - pill_w) // 2
-    pill_y1 = map_y + map_h - 66
-    draw.rounded_rectangle([(pill_x1, pill_y1), (pill_x1 + pill_w, map_y + map_h - 18)], radius=12, fill=(14, 14, 20, 245), outline=accent_rgb + (220,), width=1)
-    draw.ellipse([(pill_x1 + 20, pill_y1 + 17), (pill_x1 + 34, pill_y1 + 31)], fill=accent_rgb + (255,))
-    draw.text((pill_x1 + 44, pill_y1 + 12), b_label, font=f_pill, fill=accent_rgb + (255,))
-
-    # Bottom Takeaway Card (100% Data-Driven from spec["takeawayCard"])
-    vy1 = map_y + map_h + 20
-    draw.rounded_rectangle([(bx1 + 20, vy1), (bx2 - 20, vy1 + 165)], radius=16, fill=(16, 17, 24, 255), outline=(255, 255, 255, 60), width=1)
 
     takeaway = spec.get("takeawayCard", {})
     t_kicker = takeaway.get("kicker", "WHAT HAPPENS NEXT")
     t_title = takeaway.get("title", scene.get("onScreenGraphic", {}).get("headline", "Council Implementation").replace("\n", " "))
-    t_sub = takeaway.get("subtitle", scene.get("onScreenGraphic", {}).get("body", ""))
 
-    f_kicker = rt.get_font(rt.FONT_SANS_BOLD, 18)
+    f_kicker = rt.get_font(rt.FONT_SANS_BOLD, 20)
     kw = draw.textlength(t_kicker.upper(), font=f_kicker)
-    draw.text(((1080 - kw) // 2, vy1 + 22), t_kicker.upper(), font=f_kicker, fill=DOT_ORANGE + (255,))
+    draw.text(((1080 - kw) // 2, vy1 + 36), t_kicker.upper(), font=f_kicker, fill=DOT_ORANGE + (255,))
 
-    t_width = bx2 - bx1 - 80
-    f_ttitle, tt_lines, _ = rt.fit_text_to_bounds(draw, t_title, rt.FONT_SERIF_BOLD, initial_size=31, max_width=t_width, max_lines=1, min_size=20)
-    t_text = tt_lines[0] if tt_lines else t_title
-    tw = draw.textlength(t_text, font=f_ttitle)
-    draw.text(((1080 - tw) // 2, vy1 + 56), t_text, font=f_ttitle, fill=(255, 255, 255, 255))
+    t_width = bx2 - bx1 - 64
+    f_ttitle, tt_lines, tt_spacing = rt.fit_text_to_bounds(
+        draw, t_title, rt.FONT_SERIF_BOLD, initial_size=40, max_width=t_width, max_lines=2, min_size=24
+    )
+    ty = vy1 + 88
+    for ttl in tt_lines[:2]:
+        tw = draw.textlength(ttl, font=f_ttitle)
+        draw.text(((1080 - tw) // 2, ty), ttl, font=f_ttitle, fill=(255, 255, 255, 255))
+        ty += tt_spacing
 
-    f_sub = rt.get_font(rt.FONT_SANS, 20)
-    for sl in rt.wrap_text(draw, t_sub, f_sub, t_width)[:1]:
-        sw = draw.textlength(sl, font=f_sub)
-        draw.text(((1080 - sw) // 2, vy1 + 104), sl, font=f_sub, fill=(195, 200, 210, 255))
-
-    # Bottom scrim for caption, citation & AI-GENERATED MEDIA badge contrast over bright B-roll
+    # Bottom scrim for citation & AI-GENERATED MEDIA badge contrast
     for y in range(1545, 1920):
         a = int(195 * ((y - 1545) / 375.0)**0.9)
         draw.line([(0, y), (1080, y)], fill=(8, 8, 12, a))
 
-    archetype = rt.ARCHETYPE_CONFIG.get(spec.get("storyType", "council_decision"), rt.ARCHETYPE_CONFIG["council_decision"])
-    accent_rgb = archetype["accent"]
-
     if spec.get("branding", {}).get("showCaptions", False):
         rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1540, accent_rgb=accent_rgb)
 
-    # Bottom Citation (clamped cleanly at y=1615, well above 1640)
+    # Bottom Citation at y=1615
     cite = scene.get("citationFooter", spec.get("meetingDateDisplay", "Council Public Record"))
     cite_str = cite.strip().lstrip("<").rstrip(">")
     f_cite = rt.get_font(rt.FONT_SANS_BOLD, 21)

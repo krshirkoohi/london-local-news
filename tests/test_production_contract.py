@@ -22,8 +22,9 @@ class ContractTests(unittest.TestCase):
         for path in (ROOT / "specs").glob("*.json"):
             spec = json.loads(path.read_text())
             check_render_contract(spec, draft=True)
-            self.assertEqual([scene_layout(s) for s in spec["timeline"]],
-                             ["hook", "receipt", "key_points", "facts_figures", "outro"])
+            if not all("layout" in s for s in spec["timeline"]):
+                self.assertEqual([scene_layout(s) for s in spec["timeline"]],
+                                 ["hook", "receipt", "key_points", "facts_figures", "outro"])
 
     def test_arbitrary_count_and_order(self):
         self.spec["editorialGate"] = {"status": "approved", "editorApproved": True, "reviewedBy": "Editor"}

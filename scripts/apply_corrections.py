@@ -28,11 +28,14 @@ def apply_corrections_to_spec(spec_path: Path, findings_path: Path = None) -> Di
     spec = json.loads(spec_path.read_text(encoding="utf-8"))
     applied = []
 
-    # 1. Enable kinetic broadcast captions if disabled
+    # 1. Enforce captionless broadcast and British Gemini 3.8 TTS voice
     branding = spec.setdefault("branding", {})
-    if not branding.get("showCaptions", False):
-        branding["showCaptions"] = True
-        applied.append("Enabled kinetic word-level subtitles (branding.showCaptions = true)")
+    if branding.get("showCaptions", False):
+        branding["showCaptions"] = False
+        applied.append("Disabled burned-in subtitles (branding.showCaptions = false)")
+    if branding.get("voiceProfile") != "en-gb-advisor-1":
+        branding["voiceProfile"] = "en-gb-advisor-1"
+        applied.append("Set British TTS voice (branding.voiceProfile = 'en-gb-advisor-1')")
 
     # 2. Upgrade generic slide headings if defaults are present
     if "keyPointsHeading" not in spec or spec["keyPointsHeading"].strip().lower() == "key points":

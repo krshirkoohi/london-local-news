@@ -121,11 +121,16 @@ def audit_spec_and_video(spec: Dict[str, Any], video_meta: Dict[str, Any]) -> Di
         add_finding("global", "audio", "medium", "Mean audio volume out of broadcast loudness bounds (-24 to -14 dB)",
                     f"Measured mean volume: {video_meta['mean_volume_db']:.1f} dB", "Normalize audio gain in build_demo.py")
 
-    # 2. Subtitles & Kinetic Captions
+    # 2. Subtitles & British Voice Standards
     show_captions = branding.get("showCaptions", False)
-    if not show_captions:
-        add_finding("global", "subtitles", "high", "Dynamic subtitles are disabled in spec branding",
-                    "showCaptions: false in spec", "Set branding.showCaptions to true to boost mobile retention")
+    if show_captions:
+        add_finding("global", "subtitles", "high", "Burned-in subtitles are enabled in spec branding",
+                    "showCaptions: true in spec", "Set branding.showCaptions to false (platforms provide native captions)")
+
+    voice_profile = branding.get("voiceProfile", "")
+    if voice_profile != "en-gb-advisor-1":
+        add_finding("global", "audio", "medium", "Spec does not specify primary British Gemini 3.8 TTS voice (en-gb-advisor-1)",
+                    f"voiceProfile: {voice_profile!r}", "Set branding.voiceProfile to 'en-gb-advisor-1'")
 
     # 3. Typography & Section Headings
     for scene in timeline:
@@ -151,6 +156,11 @@ def audit_spec_and_video(spec: Dict[str, Any], video_meta: Dict[str, Any]) -> Di
 
         # 4. AI Disclosure & Illustrative B-Roll Safety
         vis = scene.get("visualAsset", {})
+        if sc_layout != "outro" and vis.get("type") != "video":
+            add_finding(sc_id, "visual_comprehension", "high",
+                        "Non-outro scene uses static image or solid instead of moving 9:16 video B-roll",
+                        f"Asset: {vis.get('source')} (type={vis.get('type')})",
+                        "Replace with 9:16 moving documentary clip generated via gemini-omni-1.1-flash")
         if vis.get("isIllustrative", False) and not vis.get("mandatoryDisclaimer"):
             add_finding(sc_id, "editorial_safety", "high",
                         "Illustrative synthetic asset missing mandatory AI disclaimer",
@@ -195,8 +205,8 @@ def audit_spec_and_video(spec: Dict[str, Any], video_meta: Dict[str, Any]) -> Di
         "opening_hook": 4 if has_hook else 2,
         "structure_payoff": 4 if len(timeline) >= 4 else 3,
         "retention_pacing": calc_score("retention"),
-        "visual_comprehension": 4 if tech_passed else 2,
-        "subtitles": 5 if show_captions else 2,
+        "visual_comprehension": calc_score("visual_comprehension") if tech_passed else 2,
+        "subtitles": 5 if not show_captions else 2,
         "audio_clarity": calc_score("audio"),
         "factual_accuracy": calc_score("factual_accuracy"),
         "editorial_safety": calc_score("editorial_safety"),

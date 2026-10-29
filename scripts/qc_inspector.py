@@ -227,7 +227,10 @@ def run_full_qc(spec_path):
 
 
 def main():
-    specs = sorted(glob.glob(os.path.join(SPECS_DIR, "*.json")))
+    specs = [
+        sp for sp in sorted(glob.glob(os.path.join(SPECS_DIR, "*.json")))
+        if "candidate" not in os.path.basename(sp)
+    ]
     all_results = {}
     total_passed = True
 

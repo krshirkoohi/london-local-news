@@ -245,8 +245,7 @@ def render_main_headline_card(headline, subtitle, bg_image=None, is_ai=True):
 def render_key_points_card(points, bg_image=None, is_ai=False):
     """
     Renders the official Key points broadsheet card from 4.png.
-    points: list of tuples [ (point_text, citation_text), ... ] (up to 3)
-    Each point is formatted with a bold subject anchor for instant TikTok scannability.
+    Vertically and horizontally centred with zero micro-citation clutter.
     """
     if bg_image:
         card = bg_image.convert("RGBA").resize((1080, 1920))
@@ -254,48 +253,38 @@ def render_key_points_card(points, bg_image=None, is_ai=False):
         card = Image.new("RGBA", (1080, 1920), (14, 14, 20, 255))
 
     draw = ImageDraw.Draw(card)
-    f_title = get_font(FONT_SERIF_BOLD, 92)
-    draw.text((109, 135), "Key points", font=f_title, fill=(255, 255, 255, 255))
+    apply_persistent_watermark(card)
 
-    f_anchor = get_font(FONT_SERIF_BOLD, 52)
-    f_sub = get_font(FONT_SERIF, 34)
-    f_cite = get_font(FONT_SERIF, 26)
+    f_title = get_font(FONT_SERIF_BOLD, 76)
+    title_txt = "Key points"
+    tw = draw.textlength(title_txt, font=f_title)
+    draw.text(((1080 - tw) // 2, 420), title_txt, font=f_title, fill=(255, 255, 255, 255))
 
-    start_y = 380
-    spacing = 380
+    f_anchor = get_font(FONT_SERIF_BOLD, 48)
+    f_sub = get_font(FONT_SANS, 30)
+
+    start_y = 575
+    spacing = 245
+    margin_x = 162
 
     for idx, pt in enumerate(points[:3]):
         py = start_y + idx * spacing
         if len(pt) == 3:
-            anchor, sub, cite_text = pt
+            anchor, sub, _ = pt
         elif len(pt) == 2:
-            pt_text, cite_text = pt
-            if " · " in pt_text:
-                anchor, sub = pt_text.split(" · ", 1)
-            else:
-                words = pt_text.split()
-                if len(words) > 4:
-                    anchor = " ".join(words[:4])
-                    sub = " ".join(words[4:])
-                else:
-                    anchor = pt_text
-                    sub = ""
+            anchor, sub = pt[0], ""
         else:
             anchor = str(pt[0])
             sub = ""
-            cite_text = "Council Public Record"
 
-        draw.line([(109, py + 8), (109, py + 52)], fill=(254, 107, 33, 240), width=4)
-        draw.text((128, py), anchor, font=f_anchor, fill=(255, 255, 255, 255))
+        draw.line([(margin_x, py + 8), (margin_x, py + 54)], fill=(254, 107, 33, 240), width=5)
+        draw.text((margin_x + 24, py), anchor, font=f_anchor, fill=(255, 255, 255, 255))
 
-        sub_y = py + 70
+        sub_y = py + 68
         if sub:
-            for line in wrap_text(draw, sub, f_sub, 760)[:2]:
-                draw.text((128, sub_y), line, font=f_sub, fill=(220, 225, 235, 255))
-                sub_y += 46
-
-        cite_str = cite_text.strip().lstrip("<").rstrip(">")
-        draw.text((128, sub_y + 10), cite_str, font=f_cite, fill=(155, 160, 170, 255))
+            for line in wrap_text(draw, sub, f_sub, 720)[:2]:
+                draw.text((margin_x + 24, sub_y), line, font=f_sub, fill=(220, 225, 235, 255))
+                sub_y += 40
 
     apply_ai_disclaimer(card, show=is_ai)
     return card
@@ -349,26 +338,50 @@ def render_facts_figures_card(inner_renderer_fn, citation_source, bg_image=None,
 def render_street_sign(story_id="4182", custom_text=None):
     """
     Renders an authentic isolated London enamel street sign (920x380) with 4 corner screws,
-    double black enamel border, and custom story ID or text.
+    double black enamel border, and symmetrically centred story ID or custom text.
     """
-    if custom_text:
-        base_path = os.path.join(TEMPLATES_DIR, "street_sign_blank.png")
-        sign = Image.open(base_path).convert("RGBA").copy()
-        draw = ImageDraw.Draw(sign)
-        f_top = get_font(FONT_SERIF_BOLD, 54)
-        f_sub = get_font(FONT_SERIF_BOLD, 64)
-        draw.text((60, 65), custom_text.get("top", "LONDONLOCAL.NEWS/").upper(), font=f_top, fill=(15, 15, 20, 255))
-        draw.text((60, 140), custom_text.get("title", "COUNCIL REPORT").upper(), font=f_sub, fill=(15, 15, 20, 255))
-        draw.line([(60, 245), (860, 245)], fill=(15, 15, 20, 255), width=4)
-        f_red = get_font(FONT_SERIF_BOLD, 38)
-        draw.text((60, 265), custom_text.get("footer", "londonlocal.news"), font=f_red, fill=(254, 107, 33, 255))
-        return sign
-
-    base_path = os.path.join(TEMPLATES_DIR, "street_sign_story_base.png")
+    base_path = os.path.join(TEMPLATES_DIR, "street_sign_blank.png")
     sign = Image.open(base_path).convert("RGBA").copy()
     draw = ImageDraw.Draw(sign)
-    f_num = get_font(FONT_SERIF, 108)
-    draw.text((465, 138), str(story_id), font=f_num, fill=(254, 107, 33, 255))
+
+    if custom_text:
+        f_top = get_font(FONT_SERIF_BOLD, 54)
+        f_sub = get_font(FONT_SERIF_BOLD, 64)
+        top_str = custom_text.get("top", "LONDONLOCAL.NEWS/").upper()
+        sub_str = custom_text.get("title", "COUNCIL REPORT").upper()
+        foot_str = custom_text.get("footer", "londonlocal.news")
+        tw = draw.textlength(top_str, font=f_top)
+        sw = draw.textlength(sub_str, font=f_sub)
+        draw.text(((920 - tw) // 2, 62), top_str, font=f_top, fill=(15, 15, 20, 255))
+        draw.text(((920 - sw) // 2, 142), sub_str, font=f_sub, fill=(15, 15, 20, 255))
+        draw.line([(68, 250), (852, 250)], fill=(15, 15, 20, 255), width=4)
+        f_red = get_font(FONT_SERIF_BOLD, 38)
+        fw = draw.textlength(foot_str, font=f_red)
+        draw.text(((920 - fw) // 2, 270), foot_str, font=f_red, fill=(254, 107, 33, 255))
+        return sign
+
+    f_top = get_font(FONT_SERIF_BOLD, 60)
+    top_str = "LONDONLOCAL.NEWS/"
+    tw = draw.textlength(top_str, font=f_top)
+    draw.text(((920 - tw) // 2, 56), top_str, font=f_top, fill=(15, 15, 20, 255))
+
+    f_sub = get_font(FONT_SERIF_BOLD, 74)
+    prefix_str = "STORIES/"
+    id_str = str(story_id).strip()
+    pw = draw.textlength(prefix_str, font=f_sub)
+    iw = draw.textlength(id_str, font=f_sub)
+    gap = 12
+    total_w = pw + gap + iw
+    start_x = (920 - total_w) // 2
+    draw.text((start_x, 146), prefix_str, font=f_sub, fill=(15, 15, 20, 255))
+    draw.text((start_x + pw + gap, 146), id_str, font=f_sub, fill=(254, 107, 33, 255))
+
+    draw.line([(68, 254), (852, 254)], fill=(15, 15, 20, 255), width=4)
+
+    f_foot = get_font(FONT_SERIF_BOLD, 40)
+    foot_str = "londonlocal.news"
+    fw = draw.textlength(foot_str, font=f_foot)
+    draw.text(((920 - fw) // 2, 274), foot_str, font=f_foot, fill=(205, 72, 58, 255))
     return sign
 
 
@@ -435,10 +448,9 @@ def render_outro_card(story_id="4182", bg_image=None, borough="Westminster", acc
     """
     Renders the official Scene 5 outro card over a textured dark London borough map:
     - Master persistent watermark London Local. at top
-    - Centered 'Read the full story' heading (y=460)
-    - Authentic London enamel street sign with dynamic story_id (y=640..1020)
-    - 'Direct from council agendas to your phone.' (y=1120)
-    - Clean 'londonlocal.news' at bottom (y=1720)
+    - Vertically and horizontally centred 'Read the full story' + authentic London enamel street sign
+    - Omit redundant 'Direct from council agendas to your phone.' subtitle (already shown on Phase 1 slide)
+    - Clean 'londonlocal.news' at bottom (y=1620)
     """
     if bg_image:
         card = bg_image.convert("RGBA").resize((1080, 1920)).copy()
@@ -448,21 +460,20 @@ def render_outro_card(story_id="4182", bg_image=None, borough="Westminster", acc
     draw = ImageDraw.Draw(card)
     apply_persistent_watermark(card)
 
-    f_title = get_font(FONT_SERIF_BOLD, 72)
-    txt = "Read the full story"
-    tw = draw.textlength(txt, font=f_title)
-    draw.text(((1080 - tw) // 2, 460), txt, font=f_title, fill=(255, 255, 255, 255))
-
     sign = render_street_sign(story_id=str(story_id))
     # Resize sign to fit safely within TikTok safe zones (max width 820px, centered horizontally on 1080px canvas)
     sign_w, sign_h = 820, int(380 * 820 / 920)
     sign_resized = sign.resize((sign_w, sign_h), Image.Resampling.LANCZOS)
-    card.paste(sign_resized, ((1080 - sign_w) // 2, 660), sign_resized)
 
-    f_sub = get_font(FONT_SERIF, 34)
-    sub_txt = "Direct from council agendas to your phone."
-    sw = draw.textlength(sub_txt, font=f_sub)
-    draw.text(((1080 - sw) // 2, 1100), sub_txt, font=f_sub, fill=(215, 220, 230, 255))
+    # Vertically centre the [Read the full story + Street Sign] lockup around y=910
+    f_title = get_font(FONT_SERIF_BOLD, 72)
+    txt = "Read the full story"
+    tw = draw.textlength(txt, font=f_title)
+    lockup_h = 72 + 48 + sign_h
+    start_y = 910 - (lockup_h // 2)
+
+    draw.text(((1080 - tw) // 2, start_y), txt, font=f_title, fill=(255, 255, 255, 255))
+    card.paste(sign_resized, ((1080 - sign_w) // 2, start_y + 120), sign_resized)
 
     f_bot = get_font(FONT_SERIF, 32)
     bot_txt = "londonlocal.news"
@@ -481,7 +492,7 @@ def render_selling_point_slide(custom_statement=None, bg_image=None, borough="We
     """
     Renders the official London Local value proposition slide from London Local.png:
     'Local news, from your council.'
-    Clean, bold brand payoff with single orange dot, 3 trust badges, and zero clutter over a textured borough map.
+    Symmetrically centred on the 540px vertical axis over a textured borough map.
     """
     if bg_image:
         card = bg_image.convert("RGBA").resize((1080, 1920)).copy()
@@ -495,17 +506,25 @@ def render_selling_point_slide(custom_statement=None, bg_image=None, borough="We
     line1 = custom_statement[0] if custom_statement else "Local news, from"
     line2 = custom_statement[1].rstrip(".") if custom_statement else "your council"
 
-    d.text((108, 800), line1, font=f_main, fill=(255, 255, 255, 255))
-    d.text((108, 910), line2, font=f_main, fill=(255, 255, 255, 255))
-    l_yc = d.textlength(line2, font=f_main)
-    # The iconic single dot in signature London Local dot orange
-    d.ellipse([(108 + l_yc + 8, 955), (108 + l_yc + 26, 973)], fill=DOT_ORANGE + (255,))
+    w1 = d.textlength(line1, font=f_main)
+    d.text(((1080 - w1) // 2, 780), line1, font=f_main, fill=(255, 255, 255, 255))
 
-    d.line([(108, 1060), (905, 1060)], fill=(255, 255, 255, 45), width=1)
+    l_yc = d.textlength(line2, font=f_main)
+    dot_d = 18
+    dot_gap = 8
+    total_w2 = l_yc + dot_gap + dot_d
+    x2 = int((1080 - total_w2) // 2)
+    d.text((x2, 890), line2, font=f_main, fill=(255, 255, 255, 255))
+    # The iconic single dot in signature London Local dot orange
+    d.ellipse([(x2 + int(l_yc) + dot_gap, 935), (x2 + int(l_yc) + dot_gap + dot_d, 935 + dot_d)], fill=DOT_ORANGE + (255,))
+
+    # Symmetrical centred horizontal divider rule (x=220..860)
+    d.line([(220, 1035), (860, 1035)], fill=(255, 255, 255, 55), width=1)
 
     f_sub = get_font(FONT_SERIF, 36)
     sub_txt = "Direct from council agendas to your phone."
-    d.text((108, 1100), sub_txt, font=f_sub, fill=(210, 215, 225, 255))
+    sw = d.textlength(sub_txt, font=f_sub)
+    d.text(((1080 - sw) // 2, 1075), sub_txt, font=f_sub, fill=(210, 215, 225, 255))
 
     f_bot = get_font(FONT_SERIF, 34)
     bot_txt = "londonlocal.news"
