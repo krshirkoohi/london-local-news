@@ -29,7 +29,7 @@
     "theme": "london-local-broadcast",
     "showWatermark": true,
     "showCaptions": false,
-    "voiceProfile": "en-GB-SoniaNeural"
+    "voiceProfile": "en-gb-advisor-1"
   },
   "claims": [
     {
@@ -323,7 +323,7 @@
         "headline": "Report incidents to local liaison officers",
         "body": "Read the full council motion."
       },
-      "voiceoverText": "Read the full council motion and report incidents to your local liaison officers at londonlocal.news.",
+      "voiceoverText": "Read the full council motion and report incidents at London Local dot news.",
       "citationFooter": "SOURCE: Westminster City Council Civic Archive"
     }
   ]

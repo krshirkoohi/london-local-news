@@ -30,7 +30,7 @@
     "theme": "london-local-broadcast",
     "showWatermark": true,
     "showCaptions": false,
-    "voiceProfile": "en-GB-SoniaNeural"
+    "voiceProfile": "en-gb-advisor-1"
   },
   "claims": [
     {
@@ -324,7 +324,7 @@
         "headline": "Log an emergency repair online",
         "body": "Read the full committee report."
       },
-      "voiceoverText": "Council tenants can log emergency repairs online. Read the full district committee report at londonlocal.news.",
+      "voiceoverText": "Council tenants can log emergency repairs online. Read the full committee report at London Local dot news.",
       "citationFooter": "SOURCE: Camden Council Housing Services"
     }
   ]

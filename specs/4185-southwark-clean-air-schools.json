@@ -30,7 +30,7 @@
     "theme": "london-local-broadcast",
     "showWatermark": true,
     "showCaptions": false,
-    "voiceProfile": "en-GB-SoniaNeural"
+    "voiceProfile": "en-gb-advisor-1"
   },
   "claims": [
     {
@@ -204,7 +204,7 @@
         "headline": "Primary and SEND pupils face highest risk",
         "body": "Low playground shade increases hazard."
       },
-      "voiceoverText": "Primary and SEND pupils face the highest risk due to low playground shade and urban heat islands.",
+      "voiceoverText": "Primary and special educational needs pupils face the highest risk due to low playground shade and urban heat islands.",
       "citationFooter": "SOURCE: Southwark Scrutiny Commission Report"
     },
     {
@@ -322,7 +322,7 @@
         "headline": "Check your local school on the report",
         "body": "Inspect the full council audit."
       },
-      "voiceoverText": "Inspect the full scrutiny report list to check your local school at londonlocal.news.",
+      "voiceoverText": "Inspect the full scrutiny report list to check your local school at London Local dot news.",
       "citationFooter": "SOURCE: Southwark Council Public Record"
     }
   ]

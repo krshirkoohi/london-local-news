@@ -787,8 +787,11 @@ def render_template_scene2_receipt(spec, scene, t=10.0, total_dur=6.0):
 
     # Subject Header
     mtitle = scene.get("onScreenGraphic", {}).get("headline", "Verified Council Record").replace("\n", " ")
-    for tl in rt.wrap_text(draw, mtitle, f_mtitle, card_w - 70)[:1]:
-        draw.text((ox + 35, curr_y), tl, font=f_mtitle, fill=ink_dark)
+    f_mtitle_fit, mtitle_lines, _ = rt.fit_text_to_bounds(
+        draw, mtitle, rt.FONT_SERIF_BOLD, initial_size=44, max_width=card_w - 70, max_lines=1, min_size=28
+    )
+    for tl in mtitle_lines[:1]:
+        draw.text((ox + 35, curr_y), tl, font=f_mtitle_fit, fill=ink_dark)
     curr_y += title_h
 
     # Signature Dot-Orange margin bracket & highlighted quote
@@ -831,13 +834,13 @@ def render_template_scene2_receipt(spec, scene, t=10.0, total_dur=6.0):
     archetype = rt.ARCHETYPE_CONFIG.get(spec.get("storyType", "council_decision"), rt.ARCHETYPE_CONFIG["council_decision"])
     accent_rgb = archetype["accent"]
 
+    # Bottom scrim for citation & AI-GENERATED MEDIA badge contrast (drawn before caption pill)
+    for y in range(1545, 1920):
+        a = int(175 * ((y - 1545) / 375.0)**1.2)
+        draw.line([(0, y), (1080, y)], fill=(8, 8, 12, a))
+
     if spec.get("branding", {}).get("showCaptions", False):
         rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1540, accent_rgb=accent_rgb)
-
-    # Bottom scrim for citation & AI-GENERATED MEDIA badge contrast
-    for y in range(1580, 1920):
-        a = int(175 * ((y - 1580) / 340.0)**1.2)
-        draw.line([(0, y), (1080, y)], fill=(8, 8, 12, a))
 
     # Clean verified source attribution line at bottom (safely at y=1615, well above 1640)
     cite = scene.get("citationFooter", spec.get("meetingDateDisplay", "Council Public Record"))
@@ -1418,9 +1421,18 @@ def draw_lower_third_footer_only(draw, citation_footer):
 
 def generate_story_audio(spec, story_audio_dir, force_refresh=False):
     os.makedirs(story_audio_dir, exist_ok=True)
-    voice = spec.get("branding", {}).get("voiceProfile", "en-GB-SoniaNeural")
-    if voice == "en-GB-Neural2-B":
-        voice = "en-GB-SoniaNeural"
+    voice = spec.get("branding", {}).get("voiceProfile", "en-gb-advisor-1")
+    if voice in ("en-GB-Neural2-B", "en-GB-SoniaNeural", "Aoede"):
+        voice = "en-gb-advisor-1"
+
+    has_gemini = bool(os.environ.get("GEMINI_API_KEY")) and "unittest" not in sys.modules
+    gemini_client = None
+    if has_gemini:
+        try:
+            from google import genai
+            gemini_client = genai.Client()
+        except Exception:
+            gemini_client = None
 
     timings = []
     for scene in spec.get("timeline", []):
@@ -1440,14 +1452,50 @@ def generate_story_audio(spec, story_audio_dir, force_refresh=False):
             success = True
         else:
             success = False
-            for attempt in range(3):
+            # 1. Primary: Gemini 3.8 Flash TTS with authentic British Voice (en-gb-advisor-1)
+            if gemini_client is not None:
                 try:
-                    cmd = ["edge-tts", "--voice", voice, "--rate=+18%", "--text", text, "--write-media", out_mp3]
-                    subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                    from google.genai import types
+                    res = gemini_client.models.generate_content(
+                        model="gemini-3.8-flash-tts",
+                        contents=text,
+                        config=types.GenerateContentConfig(
+                            response_modalities=["AUDIO"],
+                            speech_config=types.SpeechConfig(
+                                voice_config=types.VoiceConfig(
+                                    prebuilt_voice_config=types.PrebuiltVoiceConfig(
+                                        voice_name="en-gb-advisor-1"
+                                    )
+                                )
+                            )
+                        )
+                    )
+                    raw_wav = res.candidates[0].content.parts[0].inline_data.data
+                    wav_tmp = os.path.join(story_audio_dir, f"_temp_gemini_{num}.wav")
+                    with open(wav_tmp, "wb") as f_wav:
+                        f_wav.write(raw_wav)
+                    subprocess.run([
+                        "ffmpeg", "-y", "-i", wav_tmp,
+                        "-filter:a", "atempo=1.12",
+                        "-c:a", "libmp3lame", "-b:a", "192k",
+                        out_mp3
+                    ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                    if os.path.exists(wav_tmp):
+                        os.remove(wav_tmp)
                     success = True
-                    break
-                except Exception:
-                    time.sleep(1.2)
+                except Exception as e:
+                    print(f"  [Gemini British TTS error for scene {num}: {e}, falling back to edge-tts]")
+
+            # 2. Fallback: British edge-tts (en-GB-SoniaNeural)
+            if not success:
+                for attempt in range(3):
+                    try:
+                        cmd = ["edge-tts", "--voice", "en-GB-SoniaNeural", "--rate=+18%", "--text", text, "--write-media", out_mp3]
+                        subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                        success = True
+                        break
+                    except Exception:
+                        time.sleep(1.2)
 
             if not success:
                 try:

@@ -9,7 +9,7 @@
   "meetingDate": "2025-11-12",
   "meetingDateDisplay": "12 NOV 2025",
   "storyType": "council_decision",
-  "targetDurationSeconds": 38,
+  "targetDurationSeconds": 40,
   "targetPlatform": [
     "tiktok",
     "reels",
@@ -222,7 +222,7 @@
       },
       "onScreenGraphic": {
         "kicker": "VERBATIM RESOLUTION",
-        "headline": "Council Resolution (Item 13.2)",
+        "headline": "Resolution 6 · Item 13.2",
         "body": "Carried on a show of hands at Westminster Council House."
       },
       "voiceoverText": "Moved by Councillor Adam Hug and seconded by Councillor Ryan Jude, the motion was carried across a city of one hundred and eighty nationalities.",
@@ -334,7 +334,7 @@
         "headline": "Read the full story",
         "body": "Direct from council agendas to your phone."
       },
-      "voiceoverText": "Read the full dated report for story forty-one seventy-eight at londonlocal.news.",
+      "voiceoverText": "Local news, from your council. Read the full story—number forty-one seventy-eight—at londonlocal.news.",
       "citationFooter": "SOURCE: London Local Story #4178 (16 Nov 2025) & Council Minutes (12 Nov 2025)"
     }
   ]
