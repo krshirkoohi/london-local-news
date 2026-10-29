@@ -22,9 +22,9 @@
     "suitability": "approved_for_video"
   },
   "editorialGate": {
-    "status": "approved",
-    "editorApproved": true,
-    "reviewedBy": "Kavia Shirkoohi"
+    "status": "pending_review",
+    "editorApproved": false,
+    "reviewedBy": null
   },
   "branding": {
     "theme": "london-local-broadcast",
@@ -101,9 +101,9 @@
         "CAM-C2"
       ],
       "visualAsset": {
-        "type": "image",
-        "source": "assets/generative/camden_damp_flat.jpg",
-        "cropMode": "fast_push_in",
+        "type": "video",
+        "source": "assets/generative/camden_damp_flat_video.mp4",
+        "cropMode": "full",
         "trimStart": 0.0,
         "isIllustrative": true,
         "mandatoryDisclaimer": "AI-GENERATED MEDIA"

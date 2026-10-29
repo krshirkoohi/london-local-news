@@ -22,9 +22,9 @@
     "suitability": "approved_for_video"
   },
   "editorialGate": {
-    "status": "approved",
-    "editorApproved": true,
-    "reviewedBy": "Kavia Shirkoohi"
+    "status": "pending_review",
+    "editorApproved": false,
+    "reviewedBy": null
   },
   "branding": {
     "theme": "london-local-broadcast",

@@ -159,8 +159,8 @@
         "D7-C3"
       ],
       "visualAsset": {
-        "type": "image",
-        "source": "assets/generative/d7_bus_isle_of_dogs.png",
+        "type": "video",
+        "source": "assets/generative/d7_bus_isle_of_dogs_video.mp4",
         "cropMode": "full",
         "trimStart": 0.0,
         "isIllustrative": true,

@@ -21,9 +21,9 @@
     "suitability": "approved_for_video"
   },
   "editorialGate": {
-    "status": "approved",
-    "editorApproved": true,
-    "reviewedBy": "Kavia Shirkoohi"
+    "status": "pending_review",
+    "editorApproved": false,
+    "reviewedBy": null
   },
   "branding": {
     "theme": "london-local-broadcast",
@@ -100,8 +100,8 @@
         "WES-C3"
       ],
       "visualAsset": {
-        "type": "image",
-        "source": "assets/generative/westminster_street_bg.jpg",
+        "type": "video",
+        "source": "assets/generative/westminster_street_bg_video.mp4",
         "cropMode": "full",
         "trimStart": 0.0,
         "isIllustrative": true,
