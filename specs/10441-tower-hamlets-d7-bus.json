@@ -21,9 +21,9 @@
     "suitability": "approved_for_video"
   },
   "editorialGate": {
-    "status": "approved",
-    "editorApproved": true,
-    "reviewedBy": "Kavia Shirkoohi"
+    "status": "pending_review",
+    "editorApproved": false,
+    "reviewedBy": null
   },
   "branding": {
     "theme": "london-local-broadcast",
@@ -320,7 +320,7 @@
         "headline": "Public consultation closes 16 November",
         "body": "Submit your feedback online."
       },
-      "voiceoverText": "The public consultation closes on sixteen November. Submit your feedback at londonlocal.news.",
+      "voiceoverText": "The public consultation closes on sixteen November. Submit your feedback at haveyoursay.tfl.gov.uk.",
       "citationFooter": "SOURCE: TfL Consultation Closes 16 Nov 2026"
     }
   ]
