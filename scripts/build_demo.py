@@ -27,6 +27,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import reusable_templates as rt
+from production_contract import scene_layout, check_render_contract, audio_fingerprint
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_SPEC = os.path.join(BASE_DIR, "specs/4178-westminster-extremism.json")
@@ -697,7 +698,7 @@ def render_template_scene1_hook(spec, scene, t=10.0, total_dur=6.0):
         draw.line([(0, y), (1080, y)], fill=(8, 8, 12, a))
 
     # AI disclaimer cleanly anchored at bottom
-    rt.apply_ai_disclaimer(overlay, show=True)
+    rt.apply_ai_disclaimer(overlay, show=scene.get("visualAsset", {}).get("isIllustrative", False))
     return overlay
 
 
@@ -840,7 +841,7 @@ def render_template_scene2_receipt(spec, scene, t=10.0, total_dur=6.0):
         cw = draw.textlength(cl, font=f_cite)
         draw.text(((1080 - cw) // 2, 1615), cl, font=f_cite, fill=(225, 230, 240, 255))
 
-    rt.apply_ai_disclaimer(overlay, show=True)
+    rt.apply_ai_disclaimer(overlay, show=scene.get("visualAsset", {}).get("isIllustrative", False))
     return overlay
 
 
@@ -998,11 +999,11 @@ def render_template_scene3_key_points(spec, scene, t=10.0, total_dur=6.0):
 
     # Clean bottom public record attribution (crisp 21px bold sans at y=1615)
     f_bot = rt.get_font(rt.FONT_SANS_BOLD, 21)
-    bot_txt = f"LONDON BOROUGH OF {spec.get('borough', 'Council').upper()} · VERIFIED PUBLIC RECORD"
+    bot_txt = scene.get("sourceLabel", f"LONDON BOROUGH OF {spec.get('borough', 'Council').upper()} · VERIFIED PUBLIC RECORD")
     bw = draw.textlength(bot_txt, font=f_bot)
     draw.text(((1080 - bw) // 2, 1615), bot_txt, font=f_bot, fill=(205, 210, 225, 255))
 
-    rt.apply_ai_disclaimer(overlay, show=True)
+    rt.apply_ai_disclaimer(overlay, show=scene.get("visualAsset", {}).get("isIllustrative", False))
     return overlay
 
 
@@ -1158,24 +1159,23 @@ def render_template_scene4_facts_figures(spec, scene, t=10.0, total_dur=6.0):
         cw = draw.textlength(cl, font=f_cite)
         draw.text(((1080 - cw) // 2, 1615), cl, font=f_cite, fill=(225, 230, 240, 255))
 
-    rt.apply_ai_disclaimer(overlay, show=True)
+    rt.apply_ai_disclaimer(overlay, show=scene.get("visualAsset", {}).get("isIllustrative", False))
     return overlay
 
 
 def create_scene_overlay_image(spec, scene, total_scenes=5, show_logo=True, t=10.0, total_dur=6.0):
     """Generates the official template-based broadcast image for any scene at time t."""
-    scene_num = scene.get("sceneNumber", 1)
-
-    if scene_num == 1:
-        return render_template_scene1_hook(spec, scene, t=t, total_dur=total_dur)
-    elif scene_num == 2:
-        return render_template_scene2_receipt(spec, scene, t=t, total_dur=total_dur)
-    elif scene_num == 3:
-        return render_template_scene3_key_points(spec, scene, t=t, total_dur=total_dur)
-    elif scene_num == 4:
-        return render_template_scene4_facts_figures(spec, scene, t=t, total_dur=total_dur)
-    else:
+    layout = scene_layout(scene)
+    spec = {**spec, **{key: scene[key] for key in ("keyPoints", "keyPointsHeading", "takeawayCard") if key in scene}}
+    renderers = {
+        "hook": render_template_scene1_hook,
+        "receipt": render_template_scene2_receipt,
+        "key_points": render_template_scene3_key_points,
+        "facts_figures": render_template_scene4_facts_figures,
+    }
+    if layout == "outro":
         return create_outro_archive_card_image(spec, scene, total_scenes=total_scenes, show_logo=show_logo, t=t, total_dur=total_dur)
+    return renderers[layout](spec, scene, t=t, total_dur=total_dur)
 
 
 def create_scene_overlay(out_path, spec, scene, total_scenes=5, show_logo=True):
@@ -1408,7 +1408,15 @@ def generate_story_audio(spec, story_audio_dir, force_refresh=False):
         text = scene["voiceoverText"]
         out_mp3 = os.path.join(story_audio_dir, f"scene_{num}.mp3")
 
-        if not force_refresh and os.path.exists(out_mp3) and os.path.getsize(out_mp3) > 1000:
+        fingerprint = audio_fingerprint(text, voice)
+        stamp_path = out_mp3 + ".sha256"
+        try:
+            with open(stamp_path, encoding="utf-8") as stamp:
+                cache_matches = stamp.read().strip() == fingerprint
+        except FileNotFoundError:
+            cache_matches = False
+
+        if not force_refresh and cache_matches and os.path.exists(out_mp3) and os.path.getsize(out_mp3) > 1000:
             success = True
         else:
             success = False
@@ -1429,13 +1437,10 @@ def generate_story_audio(spec, story_audio_dir, force_refresh=False):
                 except Exception:
                     pass
 
-            if not success and (not os.path.exists(out_mp3) or os.path.getsize(out_mp3) < 1000):
-                dur_target = str(scene.get("durationSeconds", 7.0))
-                cmd = [
-                    "ffmpeg", "-y", "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono",
-                    "-t", dur_target, "-c:a", "libmp3lame", "-b:a", "48k", out_mp3,
-                ]
-                subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            if not success:
+                raise RuntimeError(f"TTS failed for scene {num}; no silent fallback is permitted")
+            with open(stamp_path, "w", encoding="utf-8") as stamp:
+                stamp.write(fingerprint + "\n")
 
         probe_cmd = [
             "ffprobe", "-v", "error", "-show_entries", "format=duration",
@@ -1453,22 +1458,26 @@ def generate_story_audio(spec, story_audio_dir, force_refresh=False):
 # ==============================================================================
 
 
-def render_story_from_spec(spec_path, show_logo=True, force_tts=False):
+def render_story_from_spec(spec_path, show_logo=True, force_tts=False, draft=False):
     with open(spec_path, "r", encoding="utf-8") as f:
         spec = json.load(f)
 
+    check_render_contract(spec, draft=draft)
+    output_dir = os.path.join(BUILD_DIR, "drafts") if draft else OUTPUT_DIR
     video_id = spec.get("videoId", "sample_video")
     story_id = str(spec.get("storyId", "4178"))
     borough = spec.get("borough", "Westminster")
     timeline = spec.get("timeline", [])
     total_scenes = len(timeline)
 
-    story_build_dir = os.path.join(BUILD_DIR, video_id)
+    story_build_dir = os.path.join(BUILD_DIR, "drafts", "work", video_id) if draft else os.path.join(BUILD_DIR, video_id)
     os.makedirs(story_build_dir, exist_ok=True)
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    os.makedirs(output_dir, exist_ok=True)
 
     # Maintain backward compatibility with root assets/audio for story 4178
-    if story_id == "4178":
+    if draft:
+        story_audio_dir = os.path.join(story_build_dir, "draft_audio")
+    elif story_id == "4178":
         story_audio_dir = AUDIO_BASE_DIR
     else:
         story_audio_dir = os.path.join(AUDIO_BASE_DIR, video_id)
@@ -1496,7 +1505,7 @@ def render_story_from_spec(spec_path, show_logo=True, force_tts=False):
         crop_mode = vis.get("cropMode", "full")
         trim_start = float(vis.get("trimStart", 0.0))
 
-        if scene.get("type") == "outro_archive" or scene.get("figure", {}).get("type") == "outro_archive":
+        if scene_layout(scene) == "outro":
             # Outro scene dynamically respects duration target (default 7.5s for 30s TikTok runtime)
             pad_dur = max(dur + 0.18, float(scene.get("durationSeconds", 7.5)))
             total_frames = int(pad_dur * 30)
@@ -1680,7 +1689,7 @@ def render_story_from_spec(spec_path, show_logo=True, force_tts=False):
         for seg in segment_files:
             f.write(f"file '{seg}'\n")
 
-    story_output = os.path.join(OUTPUT_DIR, f"{video_id}.mp4")
+    story_output = os.path.join(output_dir, f"{video_id}.mp4")
     concat_cmd = [
         "ffmpeg", "-y",
         "-f", "concat", "-safe", "0",
@@ -1691,7 +1700,7 @@ def render_story_from_spec(spec_path, show_logo=True, force_tts=False):
     subprocess.run(concat_cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     # If rendering flagship story 4178, also update canonical sample_video_4178_editorial.mp4
-    if story_id == "4178":
+    if not draft and story_id == "4178":
         canonical_out = os.path.join(OUTPUT_DIR, "sample_video_4178_editorial.mp4")
         subprocess.run(["cp", story_output, canonical_out], check=True)
         story_output = canonical_out
@@ -1701,7 +1710,7 @@ def render_story_from_spec(spec_path, show_logo=True, force_tts=False):
         "-of", "default=noprint_wrappers=1", story_output,
     ]
     res = subprocess.run(probe_cmd, capture_output=True, text=True, check=True)
-    print(f"✅ Master Rendered: {story_output}")
+    print(f"✅ {'Review Draft' if draft else 'Master'} Rendered: {story_output}")
     print(res.stdout.strip())
 
     # Automatically update stream-optimized faststart MP4 in demos/
@@ -1711,7 +1720,7 @@ def render_story_from_spec(spec_path, show_logo=True, force_tts=False):
         "4185": "southwark_4185_broadcast.mp4",
         "10441": "d7_bus_10441_broadcast.mp4",
     }
-    if story_id in demo_map:
+    if not draft and story_id in demo_map:
         demos_dir = os.path.join(BASE_DIR, "demos")
         os.makedirs(demos_dir, exist_ok=True)
         demo_target = os.path.join(demos_dir, demo_map[story_id])
@@ -1739,6 +1748,7 @@ def main():
     parser.add_argument("--batch", action="store_true", help="Render all story specs in specs/*.json")
     parser.add_argument("--show-authorised-logo", type=str, default="True", help="True for London Local logo, False for placeholder")
     parser.add_argument("--force-tts", action="store_true", help="Force re-synthesis of TTS audio")
+    parser.add_argument("--draft", action="store_true", help="Render for review under build/drafts; do not update output or demos")
     args = parser.parse_args()
 
     show_logo = str(args.show_authorised_logo).lower() not in ("false", "0", "no")
@@ -1748,7 +1758,7 @@ def main():
         print(f"🚀 Simultaneous Multi-Story Batch Mode: Found {len(spec_files)} story specs")
         outputs = []
         for sp in spec_files:
-            out = render_story_from_spec(sp, show_logo=show_logo, force_tts=args.force_tts)
+            out = render_story_from_spec(sp, show_logo=show_logo, force_tts=args.force_tts, draft=args.draft)
             outputs.append(out)
         print("\n==================================================================")
         print(f"🎉 BATCH COMPLETE: {len(outputs)} Broadcast Videos Rendered:")
@@ -1756,7 +1766,7 @@ def main():
             print(f"  • {o}")
         print("==================================================================")
     else:
-        render_story_from_spec(args.spec, show_logo=show_logo, force_tts=args.force_tts)
+        render_story_from_spec(args.spec, show_logo=show_logo, force_tts=args.force_tts, draft=args.draft)
 
 
 if __name__ == "__main__":
