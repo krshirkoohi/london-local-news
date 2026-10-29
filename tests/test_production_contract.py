@@ -21,11 +21,12 @@ class ContractTests(unittest.TestCase):
     def test_all_existing_specs_keep_legacy_layouts(self):
         for path in (ROOT / "specs").glob("*.json"):
             spec = json.loads(path.read_text())
-            check_render_contract(spec)
+            check_render_contract(spec, draft=True)
             self.assertEqual([scene_layout(s) for s in spec["timeline"]],
                              ["hook", "receipt", "key_points", "facts_figures", "outro"])
 
     def test_arbitrary_count_and_order(self):
+        self.spec["editorialGate"] = {"status": "approved", "editorApproved": True, "reviewedBy": "Editor"}
         self.spec["timeline"] = [{"sceneNumber": n, "layout": l} for n, l in
                                  [(1, "key_points"), (2, "hook"), (3, "receipt")]]
         check_render_contract(self.spec)

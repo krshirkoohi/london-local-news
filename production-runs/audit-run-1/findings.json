@@ -1,0 +1,54 @@
+{
+  "spec_id": "tower-hamlets-d7-bus-10441",
+  "borough": "Tower Hamlets",
+  "video_metrics": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30.0,
+    "codec": "h264",
+    "duration": 29.013,
+    "mean_volume_db": -19.5
+  },
+  "editorial_gate": {
+    "status": "pending_review",
+    "editor_approved": false,
+    "reviewed_by": null
+  },
+  "claims_audit": {
+    "total_registered_claims": 4,
+    "timeline_claims_used": 4,
+    "unmapped_claims": []
+  },
+  "rubric_scores": {
+    "local_relevance": 5,
+    "opening_hook": 2,
+    "structure_payoff": 4,
+    "retention_pacing": 5,
+    "visual_comprehension": 4,
+    "subtitles": 2,
+    "audio_clarity": 5,
+    "factual_accuracy": 5,
+    "editorial_safety": 5
+  },
+  "mean_rubric_score": 4.11,
+  "hard_release_gates_passed": false,
+  "findings": [
+    {
+      "id": "R001",
+      "scene_id": "global",
+      "category": "subtitles",
+      "severity": "high",
+      "observation": "Dynamic subtitles are disabled in spec branding",
+      "evidence": "showCaptions: false in spec",
+      "proposed_change": "Set branding.showCaptions to true to boost mobile retention",
+      "affected_files": [
+        "specs/tower-hamlets-d7-bus-10441.json"
+      ],
+      "requires_regeneration": false,
+      "confidence": 0.95
+    }
+  ],
+  "run_id": "audit-run-1",
+  "spec_file": "specs/10441-tower-hamlets-d7-bus.json",
+  "video_file": "demos/d7_bus_10441_broadcast.mp4"
+}

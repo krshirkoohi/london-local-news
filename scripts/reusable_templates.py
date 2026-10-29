@@ -605,10 +605,11 @@ def generate_borough_map_overlay(borough_name, width=820, height=540, zoom=1.0, 
     return cropped
 
 
-def render_phrase_caption_pill(image, voiceover_text, t=0.0, total_dur=6.0, y_top=1568):
+def render_phrase_caption_pill(image, voiceover_text, t=0.0, total_dur=6.0, y_top=1568, accent_rgb=DOT_ORANGE):
     """
-    Renders phrase-synchronized British-English broadcast captions inside the mobile safe zone
+    Renders word-synchronized kinetic British-English broadcast captions inside the mobile safe zone
     (y=1568..1636, cleanly above the AI disclaimer at y=1706 and below scene cards).
+    Highlights the currently spoken word in accent_rgb.
     """
     if not voiceover_text or total_dur <= 0:
         return image
@@ -617,29 +618,55 @@ def render_phrase_caption_pill(image, voiceover_text, t=0.0, total_dur=6.0, y_to
     if not words:
         return image
 
-    # Group into readable 5-word broadcast phrases
-    chunk_size = 5
-    chunks = [" ".join(words[i : i + chunk_size]) for i in range(0, len(words), chunk_size)]
-    progress = max(0.0, min(0.999, t / max(0.5, total_dur - 0.25)))
-    chunk_idx = min(len(chunks) - 1, int(progress * len(chunks)))
-    active_phrase = chunks[chunk_idx]
+    # Group into readable 4-word broadcast phrases
+    chunk_size = 4
+    chunks = [words[i : i + chunk_size] for i in range(0, len(words), chunk_size)]
+    num_chunks = len(chunks)
+
+    # Progress and active chunk
+    chunk_dur = max(0.4, total_dur / num_chunks)
+    chunk_idx = min(num_chunks - 1, max(0, int(t / chunk_dur)))
+    active_words = chunks[chunk_idx]
+
+    # Active word index within current chunk
+    t_in_chunk = t - (chunk_idx * chunk_dur)
+    word_dur = chunk_dur / max(1, len(active_words))
+    active_word_idx = min(len(active_words) - 1, max(0, int(t_in_chunk / word_dur)))
 
     draw = ImageDraw.Draw(image)
     f_cap = get_font(FONT_SANS_BOLD, 28)
-    tw = draw.textlength(active_phrase, font=f_cap)
+
+    space_w = draw.textlength(" ", font=f_cap)
+    word_widths = [draw.textlength(w, font=f_cap) for w in active_words]
+    total_text_w = sum(word_widths) + space_w * (len(active_words) - 1)
+
     pad_x = 28
-    pill_w = min(940, int(tw + pad_x * 2))
+    pill_w = min(940, int(total_text_w + pad_x * 2))
     px1 = (1080 - pill_w) // 2
     px2 = px1 + pill_w
     py1, py2 = y_top, y_top + 64
 
+    # Opaque dark backing for maximum contrast over any B-roll
     draw.rounded_rectangle(
         [(px1, py1), (px2, py2)],
         radius=16,
-        fill=(10, 10, 15, 228),
+        fill=(10, 10, 16, 235),
         outline=(255, 255, 255, 55),
         width=1,
     )
-    tx = (1080 - int(tw)) // 2
-    draw.text((tx, py1 + 15), active_phrase, font=f_cap, fill=(255, 255, 255, 255))
+
+    cur_x = (1080 - int(total_text_w)) // 2
+    for w_i, word in enumerate(active_words):
+        w_len = word_widths[w_i]
+        if w_i == active_word_idx:
+            # Active word: illuminated in accent colour with high contrast
+            draw.text((cur_x, py1 + 15), word, font=f_cap, fill=accent_rgb + (255,))
+        elif w_i < active_word_idx:
+            # Spoken words: clean bright white
+            draw.text((cur_x, py1 + 15), word, font=f_cap, fill=(255, 255, 255, 255))
+        else:
+            # Upcoming words: subdued legible grey
+            draw.text((cur_x, py1 + 15), word, font=f_cap, fill=(180, 185, 200, 200))
+        cur_x += int(w_len + space_w)
+
     return image

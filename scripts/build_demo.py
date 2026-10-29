@@ -689,8 +689,11 @@ def render_template_scene1_hook(spec, scene, t=10.0, total_dur=6.0):
         draw.text(((1080 - lw) // 2, hy), line, font=f_sub, fill=COLOR_LIGHT_GREY + (int(255 * p),))
         hy += b_spacing
 
+    archetype = rt.ARCHETYPE_CONFIG.get(spec.get("storyType", "council_decision"), rt.ARCHETYPE_CONFIG["council_decision"])
+    accent_rgb = archetype["accent"]
+
     if spec.get("branding", {}).get("showCaptions", False):
-        rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1540)
+        rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1540, accent_rgb=accent_rgb)
 
     # Bottom scrim for AI-GENERATED MEDIA badge contrast over bright streets
     for y in range(1650, 1920):
@@ -825,8 +828,11 @@ def render_template_scene2_receipt(spec, scene, t=10.0, total_dur=6.0):
     draw.rounded_rectangle([(st_x1, curr_y + 4), (st_x2, curr_y + 50)], radius=8, fill=(254, 242, 242, 245), outline=DOT_ORANGE + (240,), width=2)
     draw.text((st_x1 + 17, curr_y + 15), st_txt, font=f_stamp, fill=DOT_ORANGE + (255,))
 
+    archetype = rt.ARCHETYPE_CONFIG.get(spec.get("storyType", "council_decision"), rt.ARCHETYPE_CONFIG["council_decision"])
+    accent_rgb = archetype["accent"]
+
     if spec.get("branding", {}).get("showCaptions", False):
-        rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1540)
+        rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1540, accent_rgb=accent_rgb)
 
     # Bottom scrim for citation & AI-GENERATED MEDIA badge contrast
     for y in range(1580, 1920):
@@ -956,14 +962,16 @@ def render_template_scene3_key_points(spec, scene, t=10.0, total_dur=6.0):
             cite_text = "Council Public Record"
 
         act_val = tab_intensities[idx] * p_pt
-        if act_val > 0.02:
-            draw.rounded_rectangle(
-                [(MARGIN_X, py - 18 + y_off), (SAFE_X2, py + 235 + y_off)],
-                radius=18,
-                fill=(22, 24, 34, int(225 * act_val)),
-                outline=accent_rgb + (int(220 * act_val),),
-                width=2,
-            )
+        # Base card container: always draw a solid/dark card backdrop so text never floats over bright video
+        card_fill_a = int(195 + 45 * act_val)
+        card_outline = (accent_rgb + (int(220 * act_val),)) if act_val > 0.05 else (255, 255, 255, int(45 * p_pt))
+        draw.rounded_rectangle(
+            [(MARGIN_X, py - 18 + y_off), (SAFE_X2, py + 235 + y_off)],
+            radius=18,
+            fill=(18, 20, 28, int(card_fill_a * p_pt)),
+            outline=card_outline,
+            width=2,
+        )
 
         # Left vertical accent line on card (crossfades between muted grey and bright accent)
         r_bar = int(140 * (1.0 - act_val) + accent_rgb[0] * act_val)
@@ -994,8 +1002,11 @@ def render_template_scene3_key_points(spec, scene, t=10.0, total_dur=6.0):
         cite_str = cite_text.strip().lstrip("<").rstrip(">")
         draw.text((MARGIN_X + 28, sub_y + 8), cite_str, font=f_cite, fill=(180, 185, 200, int(255 * p_pt)))
 
+    archetype = rt.ARCHETYPE_CONFIG.get(spec.get("storyType", "council_decision"), rt.ARCHETYPE_CONFIG["council_decision"])
+    accent_rgb = archetype["accent"]
+
     if spec.get("branding", {}).get("showCaptions", False):
-        rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1540)
+        rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1540, accent_rgb=accent_rgb)
 
     # Clean bottom public record attribution (crisp 21px bold sans at y=1615)
     f_bot = rt.get_font(rt.FONT_SANS_BOLD, 21)
@@ -1020,8 +1031,9 @@ def render_template_scene4_facts_figures(spec, scene, t=10.0, total_dur=6.0):
         a = int(210 * (1.0 - (y / 280.0)**1.4))
         draw.line([(0, y), (1080, y)], fill=(8, 8, 12, a))
 
-    # Header from 5.png - Centered within SAFE_WIDTH on 540px axis
-    f_title, head_lines, _ = rt.fit_text_to_bounds(draw, "Facts and figures", rt.FONT_SERIF_BOLD, initial_size=82, max_width=SAFE_WIDTH, max_lines=1, min_size=56)
+    # Header from 5.png - Dynamic narrative title or fallback, centered within SAFE_WIDTH on 540px axis
+    heading = spec.get("factsFiguresHeading", scene.get("onScreenGraphic", {}).get("headline", "Facts and figures")).replace("\n", " ")
+    f_title, head_lines, _ = rt.fit_text_to_bounds(draw, heading, rt.FONT_SERIF_BOLD, initial_size=74, max_width=SAFE_WIDTH, max_lines=1, min_size=38)
     title_txt = head_lines[0] if head_lines else "Facts and figures"
     tw = draw.textlength(title_txt, font=f_title)
     draw.text(((1080 - tw) // 2, 115), title_txt, font=f_title, fill=(255, 255, 255, 255))
@@ -1148,8 +1160,11 @@ def render_template_scene4_facts_figures(spec, scene, t=10.0, total_dur=6.0):
         a = int(195 * ((y - 1545) / 375.0)**0.9)
         draw.line([(0, y), (1080, y)], fill=(8, 8, 12, a))
 
+    archetype = rt.ARCHETYPE_CONFIG.get(spec.get("storyType", "council_decision"), rt.ARCHETYPE_CONFIG["council_decision"])
+    accent_rgb = archetype["accent"]
+
     if spec.get("branding", {}).get("showCaptions", False):
-        rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1540)
+        rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1540, accent_rgb=accent_rgb)
 
     # Bottom Citation (clamped cleanly at y=1615, well above 1640)
     cite = scene.get("citationFooter", spec.get("meetingDateDisplay", "Council Public Record"))
