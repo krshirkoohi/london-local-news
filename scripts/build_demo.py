@@ -1787,6 +1787,7 @@ def render_story_from_spec(spec_path, show_logo=True, force_tts=False, draft=Fal
         "4182": "camden_4182_broadcast.mp4",
         "4185": "southwark_4185_broadcast.mp4",
         "10441": "d7_bus_10441_broadcast.mp4",
+        "10441_v2": "d7_bus_10441_v2_broadcast.mp4",
     }
     if not draft and story_id in demo_map:
         demos_dir = os.path.join(BASE_DIR, "demos")
@@ -1822,7 +1823,10 @@ def main():
     show_logo = str(args.show_authorised_logo).lower() not in ("false", "0", "no")
 
     if args.batch:
-        spec_files = sorted(glob.glob(os.path.join(BASE_DIR, "specs/*.json")))
+        spec_files = [
+            sp for sp in sorted(glob.glob(os.path.join(BASE_DIR, "specs/*.json")))
+            if args.draft or "candidate" not in os.path.basename(sp)
+        ]
         print(f"🚀 Simultaneous Multi-Story Batch Mode: Found {len(spec_files)} story specs")
         outputs = []
         for sp in spec_files:

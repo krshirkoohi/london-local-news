@@ -454,10 +454,10 @@ def render_outro_card(story_id="4182", bg_image=None, borough="Westminster", acc
     draw.text(((1080 - tw) // 2, 460), txt, font=f_title, fill=(255, 255, 255, 255))
 
     sign = render_street_sign(story_id=str(story_id))
-    # Resize sign to fit safely within TikTok safe zones (max width 820px, clear of right 15% margin)
+    # Resize sign to fit safely within TikTok safe zones (max width 820px, centered horizontally on 1080px canvas)
     sign_w, sign_h = 820, int(380 * 820 / 920)
     sign_resized = sign.resize((sign_w, sign_h), Image.Resampling.LANCZOS)
-    card.paste(sign_resized, (80, 660), sign_resized)
+    card.paste(sign_resized, ((1080 - sign_w) // 2, 660), sign_resized)
 
     f_sub = get_font(FONT_SERIF, 34)
     sub_txt = "Direct from council agendas to your phone."

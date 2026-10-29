@@ -28,8 +28,8 @@
   "branding": {
     "theme": "london-local-broadcast",
     "showWatermark": true,
-    "showCaptions": true,
-    "voiceProfile": "en-GB-SoniaNeural"
+    "showCaptions": false,
+    "voiceProfile": "en-gb-advisor-1"
   },
   "claims": [
     {
@@ -69,13 +69,13 @@
   "coordinates": "51.4984° N, 0.0162° W · ISLE OF DOGS & POPLAR",
   "takeawayCard": {
     "kicker": "COUNCIL OPPOSITION",
-    "title": "Councillors Fight Back Against Cuts",
-    "subtitle": "Opposing TfL claims of falling passenger demand across the island."
+    "title": "Councillors Oppose Route Withdrawal",
+    "subtitle": "Questioning TfL claims of falling passenger demand across the island."
   },
   "keyPoints": [
     [
       "120-Year Transport Link",
-      "Vital service connecting Blackwall, Cubitt Town, and Millwall.",
+      "Historic route connecting Blackwall, Cubitt Town, and Millwall.",
       "Tower Hamlets Emergency Motion · 7 Oct 2026"
     ],
     [
@@ -84,8 +84,8 @@
       "London Local Story #10441 · Para 3"
     ],
     [
-      "Community Lifeline",
-      "Essential connection for non-car owners accessing clinics and workplaces.",
+      "Essential Island Link",
+      "Direct connection for non-car owners accessing clinics and workplaces.",
       "Councillor Debate · Open Council Network"
     ]
   ],
@@ -258,7 +258,7 @@
         "headline": "Councillors oppose falling demand claims",
         "body": "Tower Hamlets unites against bus cut."
       },
-      "voiceoverText": "TfL claims passenger demand is falling, but local councillors are fighting back to protect the island's lifeline.",
+      "voiceoverText": "TfL states passenger demand has fallen, while Tower Hamlets councillors oppose withdrawing the island's direct bus link.",
       "citationFooter": "SOURCE: TfL Consultation & Tower Hamlets Motion"
     },
     {

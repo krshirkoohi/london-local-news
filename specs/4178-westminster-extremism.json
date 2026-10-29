@@ -75,18 +75,18 @@
   },
   "keyPoints": [
     [
-      "Unanimous Council Vote",
-      "Passed at Full Council on 12 November 2025 condemning all forms of hate.",
+      "Motion Carried",
+      "Carried on a show of hands at Full Council on 12 November 2025.",
       "Westminster Full Council · 12 Nov 2025"
     ],
     [
       "Cross-Community Group",
-      "Unites residents, youth voices, faith leaders, and police to support victims.",
+      "Commits to uniting residents, youth voices, faith leaders, and police.",
       "Approved Motion Commitments · Para 3"
     ],
     [
       "180+ Nationalities",
-      "Protecting communities speaking more than 150 languages across Westminster.",
+      "Supporting communities speaking more than 150 languages across Westminster.",
       "Westminster Council Motion · Para 4"
     ]
   ],
@@ -108,11 +108,11 @@
         "mandatoryDisclaimer": "AI-GENERATED MEDIA"
       },
       "onScreenGraphic": {
-        "kicker": "📍 SW1 & W1 · FULL COUNCIL VOTE",
-        "headline": "Westminster passes unanimous safety vote",
-        "body": "New strategy tackles hate crime."
+        "kicker": "📍 SW1 & W1 · FULL COUNCIL MOTION",
+        "headline": "Westminster carries anti-hate motion",
+        "body": "What did councillors actually commit to?"
       },
-      "voiceoverText": "Westminster passes unanimous safety vote.",
+      "voiceoverText": "Westminster Council has carried an anti-extremism motion. Here is what councillors actually committed to doing.",
       "citationFooter": "SOURCE: Westminster Full Council · 12 Nov 2025 · Story #4178"
     },
     {
@@ -136,22 +136,22 @@
         "type": "motion_document",
         "data": {
           "docHeaderLeft": "WESTMINSTER FULL COUNCIL · 12 NOV 2025",
-          "docHeaderRight": "UNANIMOUS MOTION",
-          "excerptPrefix": "\"The council passed a motion condemning hate and ",
-          "highlightPhrase": "pledging to deliver a new Community Equality Strategy",
-          "excerptSuffix": " while funding cross-community protection.\"",
+          "docHeaderRight": "MOTION CARRIED",
+          "excerptPrefix": "\"The council resolved to condemn hate and ",
+          "highlightPhrase": "refresh its Community Equality Strategy",
+          "excerptSuffix": " while establishing a cross-community hate crime group.\"",
           "mover": "Moved: Cllr Adam Hug (Leader of Council)",
           "seconder": "Seconded: Cllr Ryan Jude (Cabinet Member)",
-          "receiptStamp": "UNANIMOUS VOTE"
+          "receiptStamp": "CARRIED MOTION"
         }
       },
       "onScreenGraphic": {
         "kicker": "COUNCIL RESOLUTION",
-        "headline": "New equality strategy tackles hate crime",
-        "body": "Unanimous cross-party council approval."
+        "headline": "Council commits to equality strategy refresh",
+        "body": "Carried on a show of hands at Full Council."
       },
-      "voiceoverText": "The council has launched a new equality strategy to directly tackle hate incidents across the city.",
-      "citationFooter": "SOURCE: Westminster Council Agenda Frontsheet · 12 Nov 2025"
+      "voiceoverText": "Carried on a show of hands on twelve November, the motion commits the council to refreshing its Community Equality Strategy.",
+      "citationFooter": "SOURCE: Westminster Council Printed Minutes · 12 Nov 2025"
     },
     {
       "sceneNumber": 3,
@@ -242,10 +242,10 @@
             },
             {
               "kicker": "CIVIC RESPONSE",
-              "value": "Unanimous",
-              "label": "All 54 Councillors",
-              "subtext": "Cross-party consensus on safety",
-              "barRatio": 0.98,
+              "value": "Carried",
+              "label": "51 Present (Show of Hands)",
+              "subtext": "Full Council motion on 12 Nov 2025",
+              "barRatio": 0.94,
               "barColor": [
                 254,
                 107,
@@ -257,10 +257,10 @@
       },
       "onScreenGraphic": {
         "kicker": "ACTION PLAN",
-        "headline": "Joint taskforce unites youth, faith and police",
-        "body": "Protecting neighbourhoods and victims."
+        "headline": "Cross-community group with youth, faith and police",
+        "body": "Supporting victims and tackling hate crime."
       },
-      "voiceoverText": "A joint taskforce unites residents, youth groups, faith leaders, and police to support victims and keep streets safe.",
+      "voiceoverText": "The resolution also commits to forming a cross-community group with residents, youth voices, faith leaders, and police.",
       "citationFooter": "SOURCE: Approved Motion Commitments · Para 3"
     },
     {

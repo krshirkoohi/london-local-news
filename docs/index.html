@@ -459,29 +459,35 @@
 
     <!-- Interactive Story Switcher -->
     <div class="story-selector">
-      <!-- Tower Hamlets -->
+      <!-- Tower Hamlets V1 -->
       <div class="story-tab active" style="--tab-accent: var(--accent-tower-hamlets)" onclick="selectStory('tower_hamlets', this)">
-        <div class="tab-borough">📍 Tower Hamlets · Story #10441</div>
+        <div class="tab-borough">📍 Tower Hamlets · #10441 (V1)</div>
         <div class="tab-title">D7 Bus Withdrawal Threat</div>
-        <div class="tab-status">Consultation Closes 16 Nov</div>
+        <div class="tab-status">Route B-Roll · Closes 16 Nov</div>
+      </div>
+      <!-- Tower Hamlets V2 (Human Impact Fork) -->
+      <div class="story-tab" style="--tab-accent: var(--accent-tower-hamlets)" onclick="selectStory('tower_hamlets_v2', this)">
+        <div class="tab-borough">📍 Tower Hamlets · #10441 (V2 Fork)</div>
+        <div class="tab-title">D7 Bus: Human & School Impact</div>
+        <div class="tab-status">Commuter & Pupil B-Roll</div>
       </div>
       <!-- Westminster -->
       <div class="story-tab" style="--tab-accent: var(--accent-westminster)" onclick="selectStory('westminster', this)">
         <div class="tab-borough">📍 Westminster · Story #4178</div>
-        <div class="tab-title">Unanimous Vote on Hate Crime</div>
-        <div class="tab-status">Full Council Vote (54–0)</div>
+        <div class="tab-title">Anti-Extremism Motion Carried</div>
+        <div class="tab-status">Full Council Motion (Item 13)</div>
       </div>
       <!-- Camden -->
       <div class="story-tab" style="--tab-accent: var(--accent-camden)" onclick="selectStory('camden', this)">
-        <div class="tab-borough">📍 Camden · Story #4182</div>
-        <div class="tab-title">£4.2M Warm Homes Retrofit</div>
-        <div class="tab-status">Somers Town & Gospel Oak</div>
+        <div class="tab-borough">📍 Camden · Story #2576</div>
+        <div class="tab-title">Awaab's Law 24h Mould Deadlines</div>
+        <div class="tab-status">Hampstead DMC & M&E Retrofit</div>
       </div>
       <!-- Southwark -->
       <div class="story-tab" style="--tab-accent: var(--accent-southwark)" onclick="selectStory('southwark', this)">
-        <div class="tab-borough">📍 Southwark · Story #4185</div>
-        <div class="tab-title">School Streets Expansion</div>
-        <div class="tab-status">12 Primary Schools Approved</div>
+        <div class="tab-borough">📍 Southwark · Story #10631</div>
+        <div class="tab-title">61 Schools in High-Heat Tier</div>
+        <div class="tab-status">Environment Scrutiny Audit</div>
       </div>
     </div>
   </header>
@@ -572,24 +578,50 @@
         borough: "Tower Hamlets",
         accent: "#3b82f6",
         videoSrc: "./videos/d7_bus_10441_broadcast.mp4",
-        kicker: "📍 E14 · ISLE OF DOGS · PUBLIC CONSULTATION",
+        kicker: "📍 E14 · ISLE OF DOGS · PUBLIC CONSULTATION (V1)",
         title: "TfL Proposes Withdrawing D7 Bus Route Across Isle of Dogs",
-        desc: "Transport for London has launched a public consultation proposing the complete withdrawal of route D7, restructuring routes 135, 277, and D8 across Poplar, Canary Wharf, and Mile End.",
+        desc: "Transport for London has launched a public consultation proposing the complete withdrawal of route D7, restructuring routes 135, 277, and D6 across Blackwall, Cubitt Town, and Millwall.",
         stat1: { val: "16 NOV", lbl: "Consultation Deadline" },
-        stat2: { val: "3 ROUTES", lbl: "Proposed Restructuring (135, 277, D8)" },
-        sourceUrl: "https://haveyoursay.tfl.gov.uk/isle-of-dogs-bus-changes",
+        stat2: { val: "120 YRS", lbl: "Historic Island Bus Link" },
+        sourceUrl: "https://haveyoursay.tfl.gov.uk/isle-of-dogs-bus-restructure",
         claims: [
           {
-            statement: "TfL is consulting on withdrawing bus route D7 between Poplar All Saints and Mile End.",
-            cite: "TfL Have Your Say Consultation Document (Consultation Overview, Para 1)"
+            statement: "TfL is consulting on withdrawing bus route D7 entirely and restructuring routes 135, 277, and D6.",
+            cite: "TfL Isle of Dogs Bus Restructure Consultation Document"
           },
           {
-            statement: "Proposed alternatives rely on restructured routes 135, 277, and D8 with new links.",
-            cite: "TfL Route Modification Summary Map (Section 3 · Routing Impact)"
+            statement: "Tower Hamlets Council debated an emergency motion on 7 October 2026 opposing the D7 withdrawal.",
+            cite: "London Local Story #10441 · Para 1"
           },
           {
-            statement: "Public feedback is open until Monday, 16 November 2025; no final decision has been made.",
-            cite: "Statutory Public Notice (Consultation Deadline Clause)"
+            statement: "Councillors highlighted the D7's 120-year history and daily journeys for George Green's School pupils.",
+            cite: "London Local Story #10441 · Para 3"
+          }
+        ]
+      },
+      tower_hamlets_v2: {
+        id: "10441_v2",
+        borough: "Tower Hamlets",
+        accent: "#3b82f6",
+        videoSrc: "./videos/d7_bus_10441_v2_broadcast.mp4",
+        kicker: "📍 E14 · ISLE OF DOGS · HUMAN IMPACT FORK (V2)",
+        title: "D7 Bus Withdrawal: Resident, Commuter & School Pupil Impact",
+        desc: "Forked V2 edition pairing the verified Tower Hamlets emergency motion and TfL consultation with atmospheric 35mm documentary scenes of Isle of Dogs commuters, George Green's School pupils, and Town Hall.",
+        stat1: { val: "16 NOV", lbl: "Consultation Deadline" },
+        stat2: { val: "George Green's", lbl: "Pupil School Run Impact" },
+        sourceUrl: "https://haveyoursay.tfl.gov.uk/isle-of-dogs-bus-restructure",
+        claims: [
+          {
+            statement: "Scene 1 & 3 highlight human impact: commuters waiting at Isle of Dogs stops and pupils walking to George Green's School.",
+            cite: "Forked V2 Visual Storyboard · London Local Story #10441"
+          },
+          {
+            statement: "TfL proposes withdrawing route D7 and restructuring routes 135, 277, and D6 across the Isle of Dogs.",
+            cite: "TfL Isle of Dogs Bus Restructure Consultation Document"
+          },
+          {
+            statement: "Public feedback remains open until Monday, 16 November 2026 via TfL's Have Your Say portal.",
+            cite: "TfL Consultation Key Dates & Rationale"
           }
         ]
       },
@@ -599,75 +631,75 @@
         accent: "#d9483f",
         videoSrc: "./videos/westminster_4178_broadcast.mp4",
         kicker: "📍 SW1 · W1 · NW8 · FULL COUNCIL MOTION",
-        title: "Westminster Council Stands Unanimously Against Hate & Division",
-        desc: "Westminster City Council united 54–0 across party lines to condemn anti-migrant rhetoric and mandate a new Community Equality Strategy partnering youth voices, faith leaders, and police.",
-        stat1: { val: "54–0", lbl: "Unanimous Cross-Party Vote" },
+        title: "Westminster Council Carries Motion Against Far-Right Extremism",
+        desc: "Westminster City Council carried Item 13 on a show of hands on 12 November 2025 (51 members present), committing to refresh its Community Equality Strategy and establish a cross-community hate crime group.",
+        stat1: { val: "CARRIED", lbl: "Show of Hands (51 Present)" },
         stat2: { val: "180+", lbl: "Nationalities Represented" },
-        sourceUrl: "https://committees.westminster.gov.uk/documents/g6707/Agenda%20frontsheet%2012th-Nov-2025%2019.00%20Council.pdf?T=0",
+        sourceUrl: "https://opencouncil.network/document/1122130/pdf?v=1763145106",
         claims: [
           {
-            statement: "Westminster Full Council unanimously passed a motion on 12 November 2025 condemning hate.",
-            cite: "Westminster City Council Agenda Frontsheet, 12 Nov 2025 (g6707)"
+            statement: "Westminster Full Council debated Item 13 on 12 November 2025 and declared the motion carried on a show of hands.",
+            cite: "Westminster City Council Printed Minutes, 12 Nov 2025 (Item 13.2)"
           },
           {
             statement: "Moved by Cllr Adam Hug (Leader) and seconded by Cllr Ryan Jude (Cabinet Member).",
-            cite: "Westminster City Council Minutes, Motion 4"
+            cite: "Westminster City Council Printed Minutes, 12 Nov 2025 (Item 13.1)"
           },
           {
-            statement: "Mandates new Community Equality Strategy and cross-community victim support group.",
-            cite: "Adopted Motion Commitments (Para 3)"
+            statement: "Resolves to refresh the Community Equality Strategy and establish a cross-community group against hate crime.",
+            cite: "London Local Story #4178 · Paras 6-7"
           }
         ]
       },
       camden: {
-        id: "4182",
+        id: "2576",
         borough: "Camden",
         accent: "#f59e0b",
         videoSrc: "./videos/camden_4182_broadcast.mp4",
-        kicker: "📍 NW1 · NW5 · CABINET HOUSING ALLOCATION",
-        title: "Camden Approves £4.2M Warm Homes Capital Retrofit Programme",
-        desc: "Camden Cabinet voted unanimously to allocate £4.2M in ring-fenced capital funding to eliminate damp, mould, and cold-bridging across Somers Town and Gospel Oak estates.",
-        stat1: { val: "£4.2M", lbl: "Capital Funding Allocated" },
-        stat2: { val: "1,200+", lbl: "Council Homes Refurbished" },
-        sourceUrl: "https://democracy.camden.gov.uk/mgCommitteeDetails.aspx?ID=118",
+        kicker: "📍 NW3 · NW5 · NW1 · AWAAB'S LAW & M&E RETROFIT",
+        title: "Camden Council Prepares for 24-Hour Emergency Damp & Mould Deadlines",
+        desc: "Under Awaab's Law statutory repair rules, Camden Council (as social housing landlord) must attend and make Category 1 emergency damp and mould hazards safe within 24 hours, alongside rolling out smart humidity sensors.",
+        stat1: { val: "24 HOURS", lbl: "Landlord Emergency Make-Safe Limit" },
+        stat2: { val: "5 DAYS", lbl: "Statutory Safety Works Start" },
+        sourceUrl: "https://democracy.camden.gov.uk/documents/s127389/Preparation%20for%20Awaabs%20Law.pdf",
         claims: [
           {
-            statement: "Cabinet committed £4.2M capital funding for council estate energy efficiency and insulation.",
-            cite: "Camden Cabinet Housing Procurement Report (Item 7, Table 2.1)"
+            statement: "Emergency Category 1 damp and mould hazards must be attended and made safe by the council within 24 hours.",
+            cite: "Preparation for Awaab's Law Report (Hampstead DMC, 18 Sep 2025)"
           },
           {
-            statement: "Work targets post-war social housing in Somers Town, Gospel Oak, and Highgate Newtown.",
-            cite: "Camden Housing Directorate Strategic Asset Plan"
+            statement: "Significant hazards must be investigated within 10 working days, with safety works starting within 5 working days.",
+            cite: "Preparation for Awaab's Law Report · Statutory Timeframes"
           },
           {
-            statement: "Estimated 28% annual carbon reduction and average £340 annual energy savings per household.",
-            cite: "Environmental Impact Assessment & Energy Audit 2025"
+            statement: "Camden is installing humidity, temperature, and condensation monitors across void properties and M&E retrofit estates.",
+            cite: "Camden Damp & Mould Monitoring Strategy · Story #2576"
           }
         ]
       },
       southwark: {
-        id: "4185",
+        id: "10631",
         borough: "Southwark",
         accent: "#34d399",
         videoSrc: "./videos/southwark_4185_broadcast.mp4",
-        kicker: "📍 SE1 · SE15 · SE22 · ENVIRONMENT & TRANSPORT",
-        title: "Southwark Expands School Streets & Clean Air Zones to 12 Schools",
-        desc: "Southwark Council Cabinet approved extending timed pedestrian and cycle zones outside 12 primary schools to slash particulate emissions and protect pupil road safety.",
-        stat1: { val: "12 SCHOOLS", lbl: "Clean Air Zones Approved" },
-        stat2: { val: "-34%", lbl: "Average Drop in NO2 Levels" },
-        sourceUrl: "https://moderngov.southwark.gov.uk/mgCommitteeDetails.aspx?ID=113",
+        kicker: "📍 SE15 · SE5 · SE22 · ENVIRONMENT SCRUTINY AUDIT",
+        title: "61 of 116 Assessed Southwark Schools Fall into High Heat-Risk Tier",
+        desc: "A Southwark Environment Scrutiny Commission audit of 116 local schools found 61 in the higher vulnerability tier for urban heat and low playground shade, prompting ranked capital prioritisation for shading, tree planting, and ventilation.",
+        stat1: { val: "61 / 116", lbl: "Schools in Higher Heat-Risk Tier" },
+        stat2: { val: "40+", lbl: "Climate Action Network Schools" },
+        sourceUrl: "https://moderngov.southwark.gov.uk/documents/g8599/Public%20reports%20pack%20Wednesday%2014-Oct-2026%2019.00%20Environment%20Scrutiny%20Commission.pdf?T=10",
         claims: [
           {
-            statement: "Cabinet approved new timed restrictions on motor vehicles outside 12 primary schools.",
-            cite: "Southwark Cabinet Decision Notice (School Streets Phase 4)"
+            statement: "Of 116 Southwark schools assessed, 61 fall in the higher vulnerability tier, 37 moderate, and 18 lower.",
+            cite: "Southwark Environment Scrutiny Commission Report Pack (14 Oct 2026)"
           },
           {
-            statement: "Enforcement will use automated number plate recognition (ANPR) cameras with resident exemptions.",
-            cite: "Highways & Traffic Management Order Report 2025"
+            statement: "Over 40 schools have joined the council's Climate Action Schools Network for adaptation workshops.",
+            cite: "London Local Story #10631 · Para 6"
           },
           {
-            statement: "Pilot monitoring showed a 34% reduction in nitrogen dioxide during morning drop-off hours.",
-            cite: "Southwark Clean Air Monitoring Network Annual Report"
+            statement: "Ranked vulnerability data informs capital prioritisation for solar shading, tree planting, and cooling ventilation.",
+            cite: "London Local Story #10631 · Para 6"
           }
         ]
       }
