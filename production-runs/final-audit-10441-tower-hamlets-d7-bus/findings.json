@@ -1,0 +1,39 @@
+{
+  "spec_id": "tower-hamlets-d7-bus-10441",
+  "borough": "Tower Hamlets",
+  "video_metrics": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30.0,
+    "codec": "h264",
+    "duration": 33.176,
+    "mean_volume_db": -21.5
+  },
+  "editorial_gate": {
+    "status": "approved",
+    "editor_approved": true,
+    "reviewed_by": "London Local Editorial Review (Pre-release)"
+  },
+  "claims_audit": {
+    "total_registered_claims": 4,
+    "timeline_claims_used": 4,
+    "unmapped_claims": []
+  },
+  "rubric_scores": {
+    "local_relevance": 5,
+    "opening_hook": 4,
+    "structure_payoff": 4,
+    "retention_pacing": 5,
+    "visual_comprehension": 5,
+    "subtitles": 5,
+    "audio_clarity": 5,
+    "factual_accuracy": 5,
+    "editorial_safety": 5
+  },
+  "mean_rubric_score": 4.78,
+  "hard_release_gates_passed": true,
+  "findings": [],
+  "run_id": "final-audit-10441-tower-hamlets-d7-bus",
+  "spec_file": "specs/10441-tower-hamlets-d7-bus.json",
+  "video_file": "build/drafts/tower-hamlets-d7-bus-10441.mp4"
+}
