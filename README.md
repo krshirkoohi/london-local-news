@@ -141,21 +141,22 @@ london-local-news/
 
 ---
 
-## 🚀 Quickstart & CLI Usage
+## 🚀 Quickstart & Editorial CLI
 
-### 1. Prerequisites
-* Python 3.10+
-* `ffmpeg` and `ffprobe` (`brew install ffmpeg`)
-* `pip install pillow edge-tts`
-
-### 2. Render the Flagship Westminster Story (`#4178`)
+### 1. Interactive Editorial Terminal CLI (Recommended)
+Launch the guided prompt Q&A interface to ingest a council agenda, select an editorial angle, review verified claims, and render the master 9:16 broadcast video:
 ```bash
-python3 scripts/build_demo.py
+python3 scripts/cli.py
 ```
 
-### 3. Render Any Single Story Spec
+### 2. Prerequisites
+* Python 3.10+
+* `ffmpeg` and `ffprobe` (`brew install ffmpeg`)
+* `pip install -r requirements.txt rich questionary`
+
+### 3. Direct Story Spec Rendering
 ```bash
-python3 scripts/build_demo.py --spec specs/4182-camden-housing-retrofit.json
+python3 scripts/build_demo.py --spec specs/batch_30/01-10925-hillingdon-hillingdon-council-approves-15.json
 ```
 
 ### 4. Simultaneous Multi-Story Batch Deployment
