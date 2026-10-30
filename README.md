@@ -1,4 +1,8 @@
-# London Local: Modular Multi-Story News Video Pipeline (V9)
+# London Local: Automated Civic Broadcast Engine (V9)
+
+<p align="center">
+  <img src="assets/branding/civic_broadcast_engine_architecture.jpg" alt="Automated Civic Broadcast Engine Architecture" width="100%">
+</p>
 
 [![Build News Video Demo](https://github.com/krshirkoohi/london-local-news/actions/workflows/render.yml/badge.svg)](https://github.com/krshirkoohi/london-local-news/actions/workflows/render.yml)
 [![DAG Tracking](https://img.shields.io/badge/DAG_Board-Project_%2311-blue?logo=github)](https://github.com/users/krshirkoohi/projects/11)
