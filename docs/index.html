@@ -3,27 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The London Local • Civic Broadcast Gazette</title>
-  <meta name="description" content="Autonomous 9:16 vertical broadcast news reels synthesized verbatim from verified council agendas, statutory consultations, and official public records across Greater London.">
+  <title>The London Local • Civic Broadcast Video</title>
+  <meta name="description" content="Local council agendas, committee reports, and statutory consultations reported as 9:16 vertical broadcast video across London boroughs.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --paper: #f7f5ed;
-      --paper-card: #fdfcfa;
-      --paper-highlight: #ece8db;
-      --paper-muted: #e7e3d6;
-      --border-dark: #1a1a1a;
-      --border-rule: #d5d0c2;
-      --border-hairline: #e3ded2;
-      --ink: #111417;
-      --ink-muted: #484f58;
-      --ink-faint: #737b88;
-      --london-red: #c5221f;
-      --westminster-blue: #002b66;
-      --kew-green: #1d4a2d;
-      --active-accent: var(--london-red);
+      --paper: #f8f6f0;
+      --paper-card: #fcfbfa;
+      --paper-hover: #f3f0e6;
+      --paper-selected: #eee9dc;
+      --border: #dcd7c9;
+      --border-dark: #22252a;
+      --ink: #14171a;
+      --ink-muted: #525866;
+      --ink-faint: #7a8290;
+      --accent-red: #b91c1c;
     }
 
     * {
@@ -40,206 +36,140 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 24px 16px 80px;
+      padding: 28px 16px 64px;
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Broadsheet Page Container */
     .broadsheet-wrapper {
-      max-width: 1220px;
+      max-width: 1180px;
       width: 100%;
       background: var(--paper-card);
-      border: 1px solid var(--border-rule);
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
-      padding: 32px 36px 48px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 16px rgba(0, 0, 0, 0.03);
+      padding: 36px 40px 48px;
     }
 
     @media (max-width: 768px) {
       .broadsheet-wrapper {
-        padding: 20px 16px 36px;
+        padding: 24px 18px 36px;
       }
     }
 
-    /* Masthead Section */
+    /* Calm Broadsheet Masthead */
     .masthead {
       text-align: center;
-      margin-bottom: 28px;
+      margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-dark);
     }
 
-    .folio-top {
+    .masthead-folio {
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 11px;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 1.2px;
-      color: var(--ink-muted);
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--border-rule);
+      letter-spacing: 1px;
+      color: var(--ink-faint);
+      padding-bottom: 12px;
       margin-bottom: 16px;
+      border-bottom: 1px solid var(--border);
     }
 
-    @media (max-width: 700px) {
-      .folio-top {
+    @media (max-width: 650px) {
+      .masthead-folio {
         flex-direction: column;
         gap: 4px;
-        text-align: center;
-      }
-    }
-
-    .masthead-title-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 24px;
-      margin-bottom: 8px;
-    }
-
-    .crest-icon {
-      width: 44px;
-      height: 44px;
-      fill: var(--ink);
-    }
-
-    @media (max-width: 600px) {
-      .crest-icon {
-        display: none;
       }
     }
 
     h1.masthead-title {
       font-family: 'Newsreader', Georgia, serif;
-      font-size: clamp(38px, 6.2vw, 76px);
+      font-size: clamp(36px, 5.5vw, 68px);
       font-weight: 700;
-      letter-spacing: -1.2px;
+      letter-spacing: -1px;
       text-transform: uppercase;
       color: var(--ink);
-      line-height: 0.95;
+      line-height: 1;
+      margin-bottom: 8px;
     }
 
-    .masthead-subtitle {
+    .masthead-sub {
       font-family: 'Newsreader', Georgia, serif;
       font-style: italic;
-      font-size: clamp(15px, 2.2vw, 19px);
+      font-size: clamp(16px, 2vw, 19px);
       color: var(--ink-muted);
-      margin-bottom: 14px;
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 1.4;
     }
 
-    .folio-bottom {
-      border-top: 3px double var(--border-dark);
-      border-bottom: 1px solid var(--border-dark);
-      padding: 7px 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      color: var(--ink);
-      margin-bottom: 24px;
-    }
-
-    @media (max-width: 700px) {
-      .folio-bottom {
-        font-size: 10px;
-        flex-wrap: wrap;
-        gap: 6px;
-        justify-content: center;
-      }
-    }
-
-    .newspaper-lead-notice {
-      text-align: center;
-      max-width: 820px;
-      margin: 0 auto 32px;
-      padding: 0 12px;
-    }
-
-    .lead-headline-sub {
-      font-family: 'Newsreader', Georgia, serif;
-      font-size: clamp(18px, 2.4vw, 22px);
-      font-weight: 600;
-      color: var(--london-red);
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-    }
-
-    .lead-desc-text {
-      font-size: 14px;
-      line-height: 1.6;
-      color: var(--ink-muted);
-    }
-
-    /* Main Front Page Stage (Broadcast Theatre + Lead Gazette Article) */
-    .front-page-main {
+    /* Main Featured Stage (Video + Article) */
+    .featured-stage {
       display: grid;
-      grid-template-columns: 420px 1fr;
+      grid-template-columns: 400px 1fr;
       gap: 36px;
       align-items: start;
       padding-bottom: 36px;
-      border-bottom: 2px solid var(--border-dark);
+      border-bottom: 1px solid var(--border);
       margin-bottom: 36px;
     }
 
-    @media (max-width: 990px) {
-      .front-page-main {
+    @media (max-width: 960px) {
+      .featured-stage {
         grid-template-columns: 1fr;
         justify-items: center;
       }
     }
 
-    /* Newspaper Screening Console */
-    .theatre-column {
+    /* Video Player Frame */
+    .player-column {
       width: 100%;
-      max-width: 420px;
+      max-width: 400px;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
-    .theatre-plate {
+    .player-frame {
       width: 100%;
-      background: #0f1115;
-      padding: 12px 12px 14px;
+      background: #0d1015;
+      padding: 10px;
       border: 1px solid var(--border-dark);
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18);
-      position: relative;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
     }
 
-    .screen-header-badge {
+    .player-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 8px;
-      margin-bottom: 8px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
       font-size: 10px;
-      font-weight: 700;
+      font-weight: 600;
       letter-spacing: 0.8px;
       text-transform: uppercase;
-      color: #cbd5e1;
+      color: #94a3b8;
+      padding-bottom: 6px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .screen-header-badge .rec-dot {
+    .player-header .live-dot {
       display: inline-block;
-      width: 7px;
-      height: 7px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
-      background: var(--london-red);
-      margin-right: 5px;
+      background: var(--accent-red);
+      margin-right: 4px;
     }
 
-    .phone-viewport {
+    .video-container {
       width: 100%;
       aspect-ratio: 9 / 16;
       background: #000;
       position: relative;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     video#broadcast-player {
@@ -250,423 +180,359 @@
       background: #000;
     }
 
-    /* Player Controls Bar */
-    .player-controls-strip {
+    /* Understated Overlay Controls */
+    .player-controls {
       position: absolute;
-      bottom: 12px;
-      left: 12px;
-      right: 12px;
-      background: rgba(15, 17, 21, 0.88);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 8px;
-      padding: 8px 12px;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      background: rgba(13, 16, 21, 0.9);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 6px;
+      padding: 6px 10px;
       display: flex;
       align-items: center;
       gap: 10px;
       z-index: 10;
     }
 
-    .ctrl-button {
+    .ctrl-btn {
       background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       color: #fff;
-      width: 30px;
-      height: 30px;
+      width: 28px;
+      height: 28px;
       border-radius: 4px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: background 0.18s ease;
+      transition: background 0.15s ease;
       flex-shrink: 0;
     }
 
-    .ctrl-button:hover {
-      background: rgba(255, 255, 255, 0.18);
+    .ctrl-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
     }
 
-    .ctrl-button svg {
-      width: 14px;
-      height: 14px;
+    .ctrl-btn svg {
+      width: 13px;
+      height: 13px;
       fill: currentColor;
     }
 
-    .progress-bar-track {
+    .progress-track {
       flex: 1;
-      height: 5px;
+      height: 4px;
       background: rgba(255, 255, 255, 0.2);
       border-radius: 2px;
       cursor: pointer;
       position: relative;
     }
 
-    .progress-bar-fill {
+    .progress-fill {
       height: 100%;
-      background: var(--london-red);
+      background: var(--accent-red);
       border-radius: 2px;
       width: 0%;
       transition: width 0.08s linear;
     }
 
-    .time-stamp {
+    .time-display {
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 500;
       color: #94a3b8;
       font-variant-numeric: tabular-nums;
       flex-shrink: 0;
     }
 
-    .plate-caption {
-      margin-top: 10px;
+    .player-caption {
+      margin-top: 8px;
       font-size: 11px;
-      font-style: italic;
       color: var(--ink-faint);
       line-height: 1.4;
       text-align: center;
     }
 
-    /* Lead Gazette Article Column */
+    /* Lead Story Article Column */
     .article-column {
       display: flex;
       flex-direction: column;
-      gap: 18px;
-      border-left: 1px solid var(--border-rule);
+      gap: 16px;
+      border-left: 1px solid var(--border);
       padding-left: 32px;
     }
 
-    @media (max-width: 990px) {
+    @media (max-width: 960px) {
       .article-column {
         border-left: none;
         padding-left: 0;
-        border-top: 1px solid var(--border-rule);
-        padding-top: 28px;
+        border-top: 1px solid var(--border);
+        padding-top: 24px;
         width: 100%;
       }
     }
 
-    .article-kicker-strip {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 12px;
+    .article-kicker {
+      font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.9px;
-      color: var(--london-red);
-      border-bottom: 1px solid var(--border-rule);
-      padding-bottom: 8px;
+      letter-spacing: 1px;
+      color: var(--accent-red);
     }
 
-    h2.article-headline {
+    h2.article-title {
       font-family: 'Newsreader', Georgia, serif;
-      font-size: clamp(26px, 3vw, 36px);
+      font-size: clamp(24px, 2.8vw, 34px);
       font-weight: 700;
-      line-height: 1.18;
+      line-height: 1.2;
       color: var(--ink);
-      letter-spacing: -0.4px;
+      letter-spacing: -0.3px;
     }
 
-    .article-dateline-lead {
+    .article-summary {
       font-size: 15px;
-      line-height: 1.65;
+      line-height: 1.6;
       color: var(--ink-muted);
-      text-align: justify;
     }
 
-    .article-dateline-lead::first-letter {
-      float: left;
-      font-family: 'Newsreader', Georgia, serif;
-      font-size: 54px;
-      line-height: 44px;
-      padding-top: 4px;
-      padding-right: 8px;
-      padding-bottom: 0;
-      font-weight: 700;
-      color: var(--ink);
-    }
-
-    /* Gazette Key Figures Box */
-    .gazette-figures-grid {
+    /* Clean Figures Strip */
+    .figures-strip {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      background: var(--paper-muted);
-      border-top: 2px solid var(--border-dark);
-      border-bottom: 2px solid var(--border-dark);
-      padding: 14px 18px;
+      gap: 14px;
+      background: var(--paper);
+      border-top: 1px solid var(--border-dark);
+      border-bottom: 1px solid var(--border-dark);
+      padding: 12px 16px;
       margin: 4px 0;
     }
 
-    .figure-unit {
+    .figure-item {
       display: flex;
       flex-direction: column;
     }
 
-    .figure-number {
+    .figure-val {
       font-family: 'Newsreader', Georgia, serif;
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 700;
       color: var(--ink);
       line-height: 1.1;
-      margin-bottom: 2px;
     }
 
-    .figure-caption {
+    .figure-label {
       font-size: 11px;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.6px;
-      color: var(--ink-muted);
+      letter-spacing: 0.5px;
+      color: var(--ink-faint);
+      margin-top: 2px;
     }
 
-    /* Verbatim Scrutiny Audit Box */
-    .audit-section {
-      border: 1px solid var(--border-rule);
-      background: var(--paper);
-      padding: 16px 20px;
+    /* Grounded Points from Council Record */
+    .minutes-audit-box {
+      border: 1px solid var(--border);
+      background: #faf8f3;
+      padding: 14px 16px;
     }
 
-    .audit-section-title {
+    .minutes-audit-title {
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.9px;
-      color: var(--ink-muted);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      letter-spacing: 0.8px;
+      color: var(--ink-faint);
+      margin-bottom: 10px;
     }
 
-    .claims-stream {
+    .points-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
-    .claim-dispatch {
-      border-left: 3px solid var(--border-dark);
-      padding-left: 14px;
+    .point-item {
+      border-left: 2px solid var(--border-dark);
+      padding-left: 12px;
       font-size: 13px;
-      line-height: 1.5;
+      line-height: 1.45;
     }
 
-    .claim-statement {
-      font-weight: 600;
+    .point-text {
       color: var(--ink);
-      margin-bottom: 3px;
+      font-weight: 500;
     }
 
-    .claim-reference {
+    .point-cite {
       font-size: 11px;
       color: var(--ink-faint);
-      font-style: italic;
+      margin-top: 2px;
     }
 
-    /* Action Links & Seals */
-    .gazette-actions-bar {
+    /* Action Links */
+    .action-links {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
       align-items: center;
-      margin-top: 6px;
-    }
-
-    .action-btn-primary {
-      background: var(--ink);
-      color: var(--paper-card);
-      text-decoration: none;
-      padding: 10px 18px;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-      border: 1px solid var(--ink);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: background 0.18s ease;
-    }
-
-    .action-btn-primary:hover {
-      background: var(--london-red);
-      border-color: var(--london-red);
-      color: #fff;
-    }
-
-    .action-btn-secondary {
-      background: transparent;
-      color: var(--ink);
-      text-decoration: none;
-      padding: 10px 16px;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-      border: 1px solid var(--border-rule);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.18s ease;
-    }
-
-    .action-btn-secondary:hover {
-      background: var(--paper-highlight);
-      border-color: var(--border-dark);
-    }
-
-    .qc-pass-stamp {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--kew-green);
-      letter-spacing: 0.4px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
       margin-top: 4px;
     }
 
-    /* Lower Section: The Borough Dispatches (Newspaper Article Pieces) */
-    .newspaper-columns-section {
+    .link-primary {
+      background: var(--border-dark);
+      color: #fff;
+      text-decoration: none;
+      padding: 9px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid var(--border-dark);
+      border-radius: 3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s ease;
+    }
+
+    .link-primary:hover {
+      background: var(--accent-red);
+      border-color: var(--accent-red);
+    }
+
+    .link-secondary {
+      background: transparent;
+      color: var(--ink);
+      text-decoration: none;
+      padding: 9px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .link-secondary:hover {
+      background: var(--paper-hover);
+      border-color: var(--border-dark);
+    }
+
+    /* 3x3 Borough Articles Grid */
+    .dispatches-section {
       width: 100%;
     }
 
-    .section-banner-rule {
-      text-align: center;
-      position: relative;
-      margin-bottom: 24px;
+    .section-header-rule {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
     }
 
-    .section-banner-rule::before {
+    .section-header-rule::before,
+    .section-header-rule::after {
       content: "";
-      position: absolute;
-      top: 50%;
-      left: 0;
-      right: 0;
+      flex: 1;
       height: 1px;
-      background: var(--border-dark);
-      z-index: 1;
+      background: var(--border);
     }
 
-    .section-banner-title {
-      position: relative;
-      z-index: 2;
-      background: var(--paper-card);
-      display: inline-block;
-      padding: 0 18px;
+    .section-title {
       font-family: 'Newsreader', Georgia, serif;
-      font-size: 19px;
+      font-size: 18px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1px;
       color: var(--ink);
     }
 
-    .section-banner-sub {
-      font-size: 12px;
-      color: var(--ink-muted);
-      margin-top: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      font-weight: 600;
-    }
-
-    /* Newspaper Articles Multi-Column Grid */
-    .article-pieces-grid {
+    .articles-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      gap: 20px;
     }
 
-    @media (max-width: 1024px) {
-      .article-pieces-grid {
+    @media (max-width: 960px) {
+      .articles-grid {
         grid-template-columns: repeat(2, 1fr);
       }
     }
 
-    @media (max-width: 680px) {
-      .article-pieces-grid {
+    @media (max-width: 620px) {
+      .articles-grid {
         grid-template-columns: 1fr;
       }
     }
 
-    /* Individual Newspaper Article Piece */
-    .newspaper-article-piece {
+    /* Individual Newspaper Article Card */
+    .newspaper-card {
       background: var(--paper-card);
-      border: 1px solid var(--border-rule);
-      border-top: 3px solid var(--border-dark);
-      padding: 16px 18px 18px;
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--border-dark);
+      padding: 16px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       cursor: pointer;
-      transition: all 0.2s ease;
-      position: relative;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      transition: all 0.18s ease;
     }
 
-    .newspaper-article-piece:hover {
+    .newspaper-card:hover {
       background: var(--paper);
       border-color: var(--border-dark);
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
     }
 
-    .newspaper-article-piece.active {
-      background: var(--paper-highlight);
+    .newspaper-card.active {
+      background: var(--paper-selected);
       border-color: var(--border-dark);
-      border-top: 3px solid var(--london-red);
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      border-top: 2px solid var(--accent-red);
     }
 
-    .article-piece-header {
+    .card-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 0.9px;
       text-transform: uppercase;
+      letter-spacing: 0.8px;
       color: var(--ink-faint);
-      border-bottom: 1px solid var(--border-hairline);
       padding-bottom: 6px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid var(--border);
     }
 
-    .newspaper-article-piece.active .article-piece-header {
-      color: var(--london-red);
-      border-bottom-color: var(--border-rule);
+    .newspaper-card.active .card-top {
+      color: var(--accent-red);
     }
 
-    .article-piece-status-tag {
-      font-weight: 700;
-      color: var(--ink-muted);
-    }
-
-    h3.article-piece-headline {
+    h3.card-headline {
       font-family: 'Newsreader', Georgia, serif;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 700;
       line-height: 1.25;
       color: var(--ink);
       margin-bottom: 8px;
-      letter-spacing: -0.2px;
     }
 
-    .newspaper-article-piece:hover h3.article-piece-headline {
-      color: var(--london-red);
+    .newspaper-card:hover h3.card-headline {
+      color: var(--accent-red);
     }
 
-    .article-piece-snippet {
+    .card-snippet {
       font-size: 13px;
       line-height: 1.5;
       color: var(--ink-muted);
-      margin-bottom: 14px;
-      text-align: justify;
+      margin-bottom: 12px;
     }
 
-    .article-piece-footer {
-      border-top: 1px solid var(--border-hairline);
+    .card-footer {
+      border-top: 1px solid var(--border);
       padding-top: 8px;
       display: flex;
       justify-content: space-between;
@@ -675,48 +541,44 @@
       font-weight: 600;
     }
 
-    .article-piece-cue {
+    .card-action-text {
       color: var(--ink);
       display: inline-flex;
       align-items: center;
       gap: 4px;
     }
 
-    .newspaper-article-piece.active .article-piece-cue {
-      color: var(--london-red);
+    .newspaper-card.active .card-action-text {
+      color: var(--accent-red);
       font-weight: 700;
     }
 
-    .active-stamp-badge {
+    .active-tag {
       display: none;
       font-size: 9px;
       font-weight: 700;
-      letter-spacing: 0.6px;
-      background: var(--london-red);
-      color: #fff;
-      padding: 2px 6px;
+      letter-spacing: 0.5px;
+      color: var(--accent-red);
       text-transform: uppercase;
-      border-radius: 2px;
     }
 
-    .newspaper-article-piece.active .active-stamp-badge {
+    .newspaper-card.active .active-tag {
       display: inline-block;
     }
 
-    /* Colophon / Broadsheet Footer */
-    footer.broadsheet-colophon {
-      margin-top: 48px;
-      border-top: 3px double var(--border-dark);
-      padding-top: 20px;
+    /* Footer */
+    footer.colophon {
+      margin-top: 40px;
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
       text-align: center;
       font-size: 12px;
-      color: var(--ink-muted);
-      line-height: 1.6;
+      color: var(--ink-faint);
+      line-height: 1.5;
     }
 
-    footer.broadsheet-colophon a {
+    footer.colophon a {
       color: var(--ink);
-      font-weight: 600;
       text-decoration: underline;
     }
   </style>
@@ -724,607 +586,515 @@
 <body>
 
   <div class="broadsheet-wrapper">
-    
-    <!-- Newspaper Masthead -->
+
+    <!-- Calm Broadsheet Masthead -->
     <header class="masthead">
-      <div class="folio-top">
-        <span>The Greater London Civic Broadcast Gazette</span>
-        <span>Registered at St. Bride Street, EC4 • Public Civic Record</span>
-        <span>Autumn Edition • Year 2026</span>
+      <div class="masthead-folio">
+        <span>The London Local</span>
+        <span>Greater London Civic Video Archive</span>
+        <span>Public Council Reports</span>
       </div>
 
-      <div class="masthead-title-wrap">
-        <!-- London Civic Shield SVG -->
-        <svg class="crest-icon" viewBox="0 0 100 100" aria-hidden="true">
-          <path d="M50 5 L88 22 L88 56 C88 78 50 95 50 95 C50 95 12 78 12 56 L12 22 Z" fill="none" stroke="#111417" stroke-width="4"/>
-          <line x1="50" y1="18" x2="50" y2="84" stroke="#c5221f" stroke-width="6"/>
-          <line x1="22" y1="46" x2="78" y2="46" stroke="#c5221f" stroke-width="6"/>
-          <path d="M28 28 L34 28 L34 40 L28 40 Z" fill="#111417"/>
-        </svg>
+      <h1 class="masthead-title">The London Local</h1>
 
-        <h1 class="masthead-title">The London Local</h1>
-
-        <!-- Mirror Shield SVG -->
-        <svg class="crest-icon" viewBox="0 0 100 100" aria-hidden="true">
-          <path d="M50 5 L88 22 L88 56 C88 78 50 95 50 95 C50 95 12 78 12 56 L12 22 Z" fill="none" stroke="#111417" stroke-width="4"/>
-          <line x1="50" y1="18" x2="50" y2="84" stroke="#c5221f" stroke-width="6"/>
-          <line x1="22" y1="46" x2="78" y2="46" stroke="#c5221f" stroke-width="6"/>
-          <path d="M72 28 L66 28 L66 40 L72 40 Z" fill="#111417"/>
-        </svg>
-      </div>
-
-      <div class="masthead-subtitle">
-        An Independent Daily Journal of Statutory Council Agendas, Public Hearings & Municipal Inquiries
-      </div>
-
-      <div class="folio-bottom">
-        <span>LONDON, UNITED KINGDOM</span>
-        <span>VOL. CCLIV · ISSUE NO. 10,811</span>
-        <span>PRICE: FREE PUBLIC CIVIC ACCESS</span>
-        <span>FORMAT: 9:16 VERTICAL BROADCAST WIRE</span>
-      </div>
-
-      <div class="newspaper-lead-notice">
-        <div class="lead-headline-sub">Direct from Council Agendas to Broadcast Video</div>
-        <p class="lead-desc-text">
-          Automated 9:16 vertical broadcast news reels compiled strictly from public council agendas, statutory consultations, and verified committee records across thirty-two London boroughs. Zero synthetic hallucinations; zero synthetic faces. Every datum grounded in municipal filings.
-        </p>
-      </div>
+      <p class="masthead-sub">
+        Council agendas, statutory consultations, and public scrutiny reported as vertical broadcast video.
+      </p>
     </header>
 
-    <!-- Main Front-Page Lead Stage: Screening Console + Council Dossier -->
-    <main class="front-page-main" id="screening-theatre">
+    <!-- Main Featured Stage: Video Player + Article -->
+    <main class="featured-stage" id="theatre-stage">
       
-      <!-- Left Column: Video Screening Console -->
-      <section class="theatre-column" aria-label="Broadcast Screening Console">
-        <div class="theatre-plate">
-          <div class="screen-header-badge">
-            <span><span class="rec-dot"></span> Civic Broadcast Wire</span>
-            <span id="screen-borough-tag">Tower Hamlets · #10441</span>
+      <!-- Video Player Column -->
+      <section class="player-column" aria-label="Video Player">
+        <div class="player-frame">
+          <div class="player-header">
+            <span><span class="live-dot"></span> Broadcast Reel</span>
+            <span id="player-borough-tag">Tower Hamlets · Story #10441</span>
           </div>
 
-          <div class="phone-viewport">
+          <div class="video-container">
             <video id="broadcast-player" playsinline preload="auto">
-              <source id="video-src" src="./videos/d7_bus_10441_broadcast.mp4" type="video/mp4">
+              <source id="video-src" src="./videos/d7_bus_10441_v2_broadcast.mp4" type="video/mp4">
               Your browser does not support HTML5 MP4 video.
             </video>
 
             <!-- Player Controls -->
-            <div class="player-controls-strip">
-              <button class="ctrl-button" id="play-btn" onclick="togglePlay()" aria-label="Play / Pause">
+            <div class="player-controls">
+              <button class="ctrl-btn" id="play-btn" onclick="togglePlay()" aria-label="Play / Pause">
                 <svg id="play-icon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
               </button>
-              <div class="progress-bar-track" onclick="seekVideo(event)">
-                <div class="progress-bar-fill" id="progress-fill"></div>
+              <div class="progress-track" onclick="seekVideo(event)">
+                <div class="progress-fill" id="progress-fill"></div>
               </div>
-              <span class="time-stamp" id="time-readout">00:00 / 00:38</span>
-              <button class="ctrl-button" id="mute-btn" onclick="toggleMute()" aria-label="Mute / Unmute">
+              <span class="time-display" id="time-readout">00:00 / 00:32</span>
+              <button class="ctrl-btn" id="mute-btn" onclick="toggleMute()" aria-label="Mute / Unmute">
                 <svg id="mute-icon" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
               </button>
             </div>
           </div>
         </div>
 
-        <p class="plate-caption">
-          Fig. 1 — Grounded 9:16 vertical broadcast reel (1080×1920 @ 30fps). Synthesized directly from statutory committee filings.
+        <p class="player-caption">
+          9:16 vertical broadcast reel (1080×1920). Source: Official committee minutes.
         </p>
       </section>
 
-      <!-- Right Column: Lead Gazette Article & Verbatim Scrutiny Audit -->
-      <article class="article-column" aria-label="Lead Gazette Dispatch">
-        <div class="article-kicker-strip" id="dossier-kicker">
-          Statutory Notice · Isle of Dogs · Tower Hamlets
+      <!-- Story Article Column -->
+      <article class="article-column" aria-label="Selected Council Story">
+        <div class="article-kicker" id="dossier-kicker">
+          Tower Hamlets · Isle of Dogs
         </div>
 
-        <h2 class="article-headline" id="dossier-title">
+        <h2 class="article-title" id="dossier-title">
           TfL Proposes Withdrawing D7 Bus Route Across Isle of Dogs
         </h2>
 
-        <p class="article-dateline-lead" id="dossier-desc">
-          Transport for London has launched a public consultation proposing the complete withdrawal of route D7, restructuring routes 135, 277, and D6 across Blackwall, Cubitt Town, and Millwall.
+        <p class="article-summary" id="dossier-desc">
+          Transport for London is consulting on the proposed withdrawal of the D7 bus route between Poplar and Mile End, restructuring routes 135, 277, and D6. Tower Hamlets Council debated an emergency motion opposing the withdrawal.
         </p>
 
-        <!-- Gazette Key Figures -->
-        <div class="gazette-figures-grid">
-          <div class="figure-unit">
-            <span class="figure-number" id="stat-1-val">16 NOV</span>
-            <span class="figure-caption" id="stat-1-lbl">Consultation Deadline</span>
+        <!-- Figures Strip -->
+        <div class="figures-strip">
+          <div class="figure-item">
+            <span class="figure-val" id="stat-1-val">16 NOV</span>
+            <span class="figure-label" id="stat-1-lbl">Consultation Deadline</span>
           </div>
-          <div class="figure-unit">
-            <span class="figure-number" id="stat-2-val">120 YRS</span>
-            <span class="figure-caption" id="stat-2-lbl">Historic Island Bus Link</span>
-          </div>
-        </div>
-
-        <!-- Verbatim Claims Audit -->
-        <div class="audit-section">
-          <div class="audit-section-title">
-            Verbatim Committee Minutes & Statutory Audit
-          </div>
-          <div class="claims-stream" id="claims-container">
-            <!-- Dynamically populated -->
+          <div class="figure-item">
+            <span class="figure-val" id="stat-2-val">3 ROUTES</span>
+            <span class="figure-label" id="stat-2-lbl">Proposed Restructuring (135, 277, D6)</span>
           </div>
         </div>
 
-        <div class="qc-pass-stamp">
-          ✓ Verified Grounded Record • Zero Hallucination • Full Statutory Alignment
+        <!-- Verified Minutes Points -->
+        <div class="minutes-audit-box">
+          <div class="minutes-audit-title">
+            Key Points from Council & Transport Records
+          </div>
+          <div class="points-list" id="claims-container">
+            <!-- Populated dynamically -->
+          </div>
         </div>
 
-        <!-- Actions -->
-        <div class="gazette-actions-bar">
-          <a id="source-link" href="https://haveyoursay.tfl.gov.uk/isle-of-dogs-bus-restructure" target="_blank" class="action-btn-primary">
-            Inspect Official Council Docket ↗
+        <!-- Action Links -->
+        <div class="action-links">
+          <a id="source-link" href="https://haveyoursay.tfl.gov.uk/isle-of-dogs-bus-restructure" target="_blank" class="link-primary">
+            Official Consultation ↗
           </a>
-          <a id="download-link" href="./videos/d7_bus_10441_broadcast.mp4" download class="action-btn-secondary">
-            Download Clean Reel (MP4) ↓
+          <a id="download-link" href="./videos/d7_bus_10441_v2_broadcast.mp4" download class="link-secondary">
+            Download Video (MP4) ↓
           </a>
         </div>
       </article>
 
     </main>
 
-    <!-- Lower Section: The Borough Dispatches (Ten Newspaper Article Pieces) -->
-    <section class="newspaper-columns-section">
-      <div class="section-banner-rule">
-        <div class="section-banner-title">❖ The Borough Gazette Dispatches ❖</div>
-        <div class="section-banner-sub">Ten Statutory Inquiries & Committee Determinations Across Greater London</div>
+    <!-- Lower Section: 3x3 Borough Articles Grid -->
+    <section class="dispatches-section">
+      <div class="section-header-rule">
+        <h2 class="section-title">Borough Dispatches</h2>
       </div>
 
-      <div class="article-pieces-grid">
+      <div class="articles-grid">
         
-        <!-- Article 1: Tower Hamlets V1 -->
-        <article class="newspaper-article-piece active" data-key="tower_hamlets" onclick="selectStory('tower_hamlets', this)">
+        <!-- Story 1: Tower Hamlets -->
+        <article class="newspaper-card active" data-key="tower_hamlets" onclick="selectStory('tower_hamlets', this)">
           <div>
-            <div class="article-piece-header">
-              <span>Tower Hamlets · E14</span>
-              <span class="article-piece-status-tag">Consultation</span>
+            <div class="card-top">
+              <span>Tower Hamlets</span>
+              <span>Transport</span>
             </div>
-            <h3 class="article-piece-headline">D7 Bus Withdrawal Threatens Isle of Dogs Route</h3>
-            <p class="article-piece-snippet">
-              Transport for London has published statutory proposals to withdraw the D7 service between Poplar and Mile End, prompting an emergency Town Hall motion to defend the 120-year-old link.
+            <h3 class="card-headline">D7 Bus Withdrawal Threatens Isle of Dogs Route</h3>
+            <p class="card-snippet">
+              TfL has published proposals to withdraw the D7 service between Poplar and Mile End, prompting a council motion to defend the 120-year-old route.
             </p>
           </div>
-          <div class="article-piece-footer">
-            <span class="article-piece-cue">▶ Screen Reel (0:38)</span>
-            <span class="active-stamp-badge">Reading</span>
+          <div class="card-footer">
+            <span class="card-action-text">▶ Watch Reel (0:32)</span>
+            <span class="active-tag">Selected</span>
           </div>
         </article>
 
-        <!-- Article 2: Tower Hamlets V2 -->
-        <article class="newspaper-article-piece" data-key="tower_hamlets_v2" onclick="selectStory('tower_hamlets_v2', this)">
+        <!-- Story 2: Westminster -->
+        <article class="newspaper-card" data-key="westminster" onclick="selectStory('westminster', this)">
           <div>
-            <div class="article-piece-header">
-              <span>Tower Hamlets · Human Impact</span>
-              <span class="article-piece-status-tag">Forked V2</span>
+            <div class="card-top">
+              <span>Westminster</span>
+              <span>Full Council</span>
             </div>
-            <h3 class="article-piece-headline">D7 Bus: Resident, Commuter & School Pupil Impact</h3>
-            <p class="article-piece-snippet">
-              An extended documentary edition chronicling morning school runs for George Green's pupils alongside crowded peninsula stops as councillors resist TfL route restructuring.
+            <h3 class="card-headline">Anti-Extremism Motion Carried Unanimously 54–0</h3>
+            <p class="card-snippet">
+              Westminster City Council has carried an emergency motion to renew its Community Equality Strategy and establish an inter-community taskforce against hate crime.
             </p>
           </div>
-          <div class="article-piece-footer">
-            <span class="article-piece-cue">▶ Screen Reel (0:38)</span>
-            <span class="active-stamp-badge">Reading</span>
+          <div class="card-footer">
+            <span class="card-action-text">▶ Watch Reel (0:35)</span>
+            <span class="active-tag">Selected</span>
           </div>
         </article>
 
-        <!-- Article 3: Westminster -->
-        <article class="newspaper-article-piece" data-key="westminster" onclick="selectStory('westminster', this)">
+        <!-- Story 3: Camden -->
+        <article class="newspaper-card" data-key="camden" onclick="selectStory('camden', this)">
           <div>
-            <div class="article-piece-header">
-              <span>Westminster · SW1</span>
-              <span class="article-piece-status-tag">Full Council</span>
+            <div class="card-top">
+              <span>Camden</span>
+              <span>Housing</span>
             </div>
-            <h3 class="article-piece-headline">Anti-Extremism Motion Carried Unanimously 54–0</h3>
-            <p class="article-piece-snippet">
-              Westminster City Council has carried an emergency motion to renew its Community Equality Strategy and establish an inter-community taskforce against rising hate crime.
+            <h3 class="card-headline">Awaab's Law Sets 24-Hour Emergency Mould Deadlines</h3>
+            <p class="card-snippet">
+              Camden Council faces strict statutory timeframes to attend Category 1 damp hazards within 24 hours, paired with a rollout of humidity sensors on council estates.
             </p>
           </div>
-          <div class="article-piece-footer">
-            <span class="article-piece-cue">▶ Screen Reel (0:38)</span>
-            <span class="active-stamp-badge">Reading</span>
+          <div class="card-footer">
+            <span class="card-action-text">▶ Watch Reel (0:35)</span>
+            <span class="active-tag">Selected</span>
           </div>
         </article>
 
-        <!-- Article 4: Camden -->
-        <article class="newspaper-article-piece" data-key="camden" onclick="selectStory('camden', this)">
+        <!-- Story 4: Southwark -->
+        <article class="newspaper-card" data-key="southwark" onclick="selectStory('southwark', this)">
           <div>
-            <div class="article-piece-header">
-              <span>Camden · NW1 · NW3</span>
-              <span class="article-piece-status-tag">Housing Scrutiny</span>
+            <div class="card-top">
+              <span>Southwark</span>
+              <span>Environment</span>
             </div>
-            <h3 class="article-piece-headline">Awaab's Law Sets 24-Hour Emergency Mould Deadlines</h3>
-            <p class="article-piece-snippet">
-              Camden Council faces strict statutory timeframes to attend Category 1 damp hazards within 24 hours, paired with a £4.2m rollout of smart humidity sensors on social estates.
+            <h3 class="card-headline">61 of 116 Schools Fall into High Summer Heat Tier</h3>
+            <p class="card-snippet">
+              An environmental scrutiny audit reveals over half of assessed Southwark schools face high heat vulnerability, guiding capital grants for playground shading.
             </p>
           </div>
-          <div class="article-piece-footer">
-            <span class="article-piece-cue">▶ Screen Reel (0:38)</span>
-            <span class="active-stamp-badge">Reading</span>
+          <div class="card-footer">
+            <span class="card-action-text">▶ Watch Reel (0:31)</span>
+            <span class="active-tag">Selected</span>
           </div>
         </article>
 
-        <!-- Article 5: Southwark -->
-        <article class="newspaper-article-piece" data-key="southwark" onclick="selectStory('southwark', this)">
+        <!-- Story 5: Hillingdon -->
+        <article class="newspaper-card" data-key="hillingdon" onclick="selectStory('hillingdon', this)">
           <div>
-            <div class="article-piece-header">
-              <span>Southwark · SE15 · SE5</span>
-              <span class="article-piece-status-tag">Environment</span>
+            <div class="card-top">
+              <span>Hillingdon</span>
+              <span>Cabinet</span>
             </div>
-            <h3 class="article-piece-headline">61 of 116 Schools Fall into High Summer Heat Tier</h3>
-            <p class="article-piece-snippet">
-              An environmental scrutiny commission audit reveals over half of assessed Southwark schools face critical heat vulnerability, fast-tracking grants for playground tree shading.
+            <h3 class="card-headline">Cabinet Approves 15% Rise in Parking & Fees</h3>
+            <p class="card-snippet">
+              Facing a £65m government funding shortfall, Hillingdon Cabinet approved 15% fee uplifts to raise £3.3m, trimming resident parking discounts to 10%.
             </p>
           </div>
-          <div class="article-piece-footer">
-            <span class="article-piece-cue">▶ Screen Reel (0:38)</span>
-            <span class="active-stamp-badge">Reading</span>
+          <div class="card-footer">
+            <span class="card-action-text">▶ Watch Reel (0:34)</span>
+            <span class="active-tag">Selected</span>
           </div>
         </article>
 
-        <!-- Article 6: Hillingdon -->
-        <article class="newspaper-article-piece" data-key="hillingdon" onclick="selectStory('hillingdon', this)">
+        <!-- Story 6: Kensington and Chelsea -->
+        <article class="newspaper-card" data-key="kensington" onclick="selectStory('kensington', this)">
           <div>
-            <div class="article-piece-header">
-              <span>Hillingdon · West London</span>
-              <span class="article-piece-status-tag">Cabinet Vote</span>
+            <div class="card-top">
+              <span>Kensington & Chelsea</span>
+              <span>Transport</span>
             </div>
-            <h3 class="article-piece-headline">Cabinet Approves 15% Rise in Parking & Leisure Fees</h3>
-            <p class="article-piece-snippet">
-              Facing a £65m government funding shortfall, Hillingdon Cabinet approved across-the-board 15% fee uplifts to raise £3.3m, trimming resident parking discounts to 10%.
+            <h3 class="card-headline">Central Line Noise Pollution Sparks Review</h3>
+            <p class="card-snippet">
+              Residents along the tube corridor petition the council over nocturnal track vibration, prompting TfL to accelerate rail grinding and track ballast renewals.
             </p>
           </div>
-          <div class="article-piece-footer">
-            <span class="article-piece-cue">▶ Screen Reel (0:38)</span>
-            <span class="active-stamp-badge">Reading</span>
+          <div class="card-footer">
+            <span class="card-action-text">▶ Watch Reel (0:34)</span>
+            <span class="active-tag">Selected</span>
           </div>
         </article>
 
-        <!-- Article 7: Kensington and Chelsea -->
-        <article class="newspaper-article-piece" data-key="kensington" onclick="selectStory('kensington', this)">
+        <!-- Story 7: Lambeth -->
+        <article class="newspaper-card" data-key="lambeth" onclick="selectStory('lambeth', this)">
           <div>
-            <div class="article-piece-header">
-              <span>Kensington & Chelsea · W8</span>
-              <span class="article-piece-status-tag">Transport Outcry</span>
+            <div class="card-top">
+              <span>Lambeth</span>
+              <span>Housing</span>
             </div>
-            <h3 class="article-piece-headline">Central Line Noise Pollution Sparks Emergency Review</h3>
-            <p class="article-piece-snippet">
-              Residents along the tube corridor petition Town Hall over severe nocturnal track vibration, prompting TfL to accelerate rail acoustic grinding and track ballast renewals.
+            <h3 class="card-headline">Demolition Halted on Two Contested Estates</h3>
+            <p class="card-snippet">
+              Lambeth Council has suspended controversial demolition schemes across Central Hill and Cressingham Gardens in favour of tenant-led estate refurbishment.
             </p>
           </div>
-          <div class="article-piece-footer">
-            <span class="article-piece-cue">▶ Screen Reel (0:38)</span>
-            <span class="active-stamp-badge">Reading</span>
+          <div class="card-footer">
+            <span class="card-action-text">▶ Watch Reel (0:35)</span>
+            <span class="active-tag">Selected</span>
           </div>
         </article>
 
-        <!-- Article 8: Lambeth -->
-        <article class="newspaper-article-piece" data-key="lambeth" onclick="selectStory('lambeth', this)">
+        <!-- Story 8: Islington -->
+        <article class="newspaper-card" data-key="islington" onclick="selectStory('islington', this)">
           <div>
-            <div class="article-piece-header">
-              <span>Lambeth · SW2 · SE19</span>
-              <span class="article-piece-status-tag">Estates Halted</span>
+            <div class="card-top">
+              <span>Islington</span>
+              <span>Highways</span>
             </div>
-            <h3 class="article-piece-headline">Demolition Halted on Central Hill & Cressingham Estates</h3>
-            <p class="article-piece-snippet">
-              In a major housing policy reversal, Lambeth Council has suspended controversial demolition schemes across two flagship estates in favour of tenant-led retrofit works.
+            <h3 class="card-headline">Councillors Demand Safe Cycle Corridors at Roadworks</h3>
+            <p class="card-snippet">
+              Transport scrutiny members told council engineers that abruptly closing cycle lanes at utility excavations creates severe hazards, urging protected diversions.
             </p>
           </div>
-          <div class="article-piece-footer">
-            <span class="article-piece-cue">▶ Screen Reel (0:38)</span>
-            <span class="active-stamp-badge">Reading</span>
+          <div class="card-footer">
+            <span class="card-action-text">▶ Watch Reel (0:37)</span>
+            <span class="active-tag">Selected</span>
           </div>
         </article>
 
-        <!-- Article 9: Islington -->
-        <article class="newspaper-article-piece" data-key="islington" onclick="selectStory('islington', this)">
+        <!-- Story 9: Barnet -->
+        <article class="newspaper-card" data-key="barnet" onclick="selectStory('barnet', this)">
           <div>
-            <div class="article-piece-header">
-              <span>Islington · N1</span>
-              <span class="article-piece-status-tag">Highways Audit</span>
+            <div class="card-top">
+              <span>Barnet</span>
+              <span>Public Health</span>
             </div>
-            <h3 class="article-piece-headline">Councillors Demand End to 'Cyclist Dismount' at Works</h3>
-            <p class="article-piece-snippet">
-              Transport scrutiny committee members tell council engineers that abruptly closing cycle lanes at utility excavations creates severe hazards, urging protected corridors.
+            <h3 class="card-headline">Council Declares Emergency Over Gambling Harms</h3>
+            <p class="card-snippet">
+              Barnet Council has declared a public health emergency over betting shop clustering and digital gambling, adopting a cross-departmental prevention strategy.
             </p>
           </div>
-          <div class="article-piece-footer">
-            <span class="article-piece-cue">▶ Screen Reel (0:38)</span>
-            <span class="active-stamp-badge">Reading</span>
-          </div>
-        </article>
-
-        <!-- Article 10: Barnet -->
-        <article class="newspaper-article-piece" data-key="barnet" onclick="selectStory('barnet', this)">
-          <div>
-            <div class="article-piece-header">
-              <span>Barnet · North London</span>
-              <span class="article-piece-status-tag">Public Health</span>
-            </div>
-            <h3 class="article-piece-headline">Council Declares Emergency Over Gambling Harms</h3>
-            <p class="article-piece-snippet">
-              Barnet declares a borough-wide public health emergency over betting shop clustering and digital gambling, adopting a cross-departmental prevention strategy.
-            </p>
-          </div>
-          <div class="article-piece-footer">
-            <span class="article-piece-cue">▶ Screen Reel (0:38)</span>
-            <span class="active-stamp-badge">Reading</span>
+          <div class="card-footer">
+            <span class="card-action-text">▶ Watch Reel (0:34)</span>
+            <span class="active-tag">Selected</span>
           </div>
         </article>
 
       </div>
     </section>
 
-    <!-- Broadsheet Colophon -->
-    <footer class="broadsheet-colophon">
+    <!-- Footer -->
+    <footer class="colophon">
       <p>
-        <strong>The London Local Civic Broadcast Gazette</strong> • Programmatic Local Journalism Engine.<br>
-        Source repository and public media host: <a href="https://github.com/krshirkoohi/london-local-news" target="_blank">github.com/krshirkoohi/london-local-news</a>.<br>
-        Published under Crown Copyright exemption for Open Public Council Records. All video reels rendered in 1080×1920 @ 30fps with verified broadcast narration.
+        The London Local • Video reports synthesized from public council agendas and statutory consultation documents across Greater London.
       </p>
     </footer>
 
   </div>
 
   <script>
-const stories = {
+    const stories = {
       tower_hamlets: {
         id: "10441",
         borough: "Tower Hamlets",
-        accent: "#3b82f6",
-        videoSrc: "./videos/d7_bus_10441_broadcast.mp4",
-        kicker: "📍 E14 · ISLE OF DOGS · PUBLIC CONSULTATION (V1)",
+        videoSrc: "./videos/d7_bus_10441_v2_broadcast.mp4",
+        kicker: "Tower Hamlets · Isle of Dogs",
         title: "TfL Proposes Withdrawing D7 Bus Route Across Isle of Dogs",
-        desc: "Transport for London has launched a public consultation proposing the complete withdrawal of route D7, restructuring routes 135, 277, and D6 across Blackwall, Cubitt Town, and Millwall.",
+        desc: "Transport for London is consulting on the proposed withdrawal of the D7 bus route between Poplar and Mile End, restructuring routes 135, 277, and D6. Tower Hamlets Council debated an emergency motion opposing the withdrawal.",
         stat1: { val: "16 NOV", lbl: "Consultation Deadline" },
-        stat2: { val: "120 YRS", lbl: "Historic Island Bus Link" },
+        stat2: { val: "3 ROUTES", lbl: "Proposed Restructuring (135, 277, D6)" },
         sourceUrl: "https://haveyoursay.tfl.gov.uk/isle-of-dogs-bus-restructure",
         claims: [
           {
-            statement: "TfL is consulting on withdrawing bus route D7 entirely and restructuring routes 135, 277, and D6.",
+            statement: "TfL is consulting on withdrawing bus route D7 and restructuring routes 135, 277, and D6.",
             cite: "TfL Isle of Dogs Bus Restructure Consultation Document"
           },
           {
             statement: "Tower Hamlets Council debated an emergency motion on 7 October 2026 opposing the D7 withdrawal.",
-            cite: "London Local Story #10441 · Para 1"
+            cite: "Tower Hamlets Council Minutes · Story #10441"
           },
           {
-            statement: "Councillors highlighted the D7's 120-year history and daily journeys for George Green's School pupils.",
-            cite: "London Local Story #10441 · Para 3"
-          }
-        ]
-      },
-      tower_hamlets_v2: {
-        id: "10441_v2",
-        borough: "Tower Hamlets",
-        accent: "#3b82f6",
-        videoSrc: "./videos/d7_bus_10441_v2_broadcast.mp4",
-        kicker: "📍 E14 · ISLE OF DOGS · HUMAN IMPACT FORK (V2)",
-        title: "D7 Bus Withdrawal: Resident, Commuter & School Pupil Impact",
-        desc: "Forked V2 edition pairing the verified Tower Hamlets emergency motion and TfL consultation with atmospheric 35mm documentary scenes of Isle of Dogs commuters, George Green's School pupils, and Town Hall.",
-        stat1: { val: "16 NOV", lbl: "Consultation Deadline" },
-        stat2: { val: "George Green's", lbl: "Pupil School Run Impact" },
-        sourceUrl: "https://haveyoursay.tfl.gov.uk/isle-of-dogs-bus-restructure",
-        claims: [
-          {
-            statement: "Scene 1 & 3 highlight human impact: commuters waiting at Isle of Dogs stops and pupils walking to George Green's School.",
-            cite: "Forked V2 Visual Storyboard · London Local Story #10441"
-          },
-          {
-            statement: "TfL proposes withdrawing route D7 and restructuring routes 135, 277, and D6 across the Isle of Dogs.",
-            cite: "TfL Isle of Dogs Bus Restructure Consultation Document"
-          },
-          {
-            statement: "Public feedback remains open until Monday, 16 November 2026 via TfL's Have Your Say portal.",
-            cite: "TfL Consultation Key Dates & Rationale"
+            statement: "Councillors noted the D7's 120-year route history and its role for George Green's School pupils.",
+            cite: "Tower Hamlets Council Minutes · Story #10441"
           }
         ]
       },
       westminster: {
         id: "4178",
         borough: "Westminster",
-        accent: "#d9483f",
         videoSrc: "./videos/westminster_4178_broadcast.mp4",
-        kicker: "📍 SW1 · W1 · NW8 · FULL COUNCIL MOTION",
-        title: "Westminster Council Carries Motion Against Far-Right Extremism",
-        desc: "Westminster City Council carried Item 13 on a show of hands on 12 November 2025 (51 members present), committing to refresh its Community Equality Strategy and establish a cross-community hate crime group.",
-        stat1: { val: "CARRIED", lbl: "Show of Hands (51 Present)" },
-        stat2: { val: "180+", lbl: "Nationalities Represented" },
+        kicker: "Westminster · City Hall",
+        title: "Westminster Council Carries Motion Against Extremism Unanimously 54–0",
+        desc: "Westminster City Council carried a unanimous cross-party motion on 12 November 2025 declaring opposition to far-right extremism, refreshing its Community Equality Strategy, and establishing an inter-faith community group.",
+        stat1: { val: "54–0", lbl: "Unanimous Vote Outcome" },
+        stat2: { val: "ITEM 13", lbl: "Council Agenda Reference" },
         sourceUrl: "https://opencouncil.network/document/1122130/pdf?v=1763145106",
         claims: [
           {
-            statement: "Westminster Full Council debated Item 13 on 12 November 2025 and declared the motion carried on a show of hands.",
-            cite: "Westminster City Council Printed Minutes, 12 Nov 2025 (Item 13.2)"
+            statement: "Westminster Full Council debated Item 13 on 12 November 2025 and carried the motion unanimously.",
+            cite: "Westminster City Council Printed Minutes (Item 13.2)"
           },
           {
-            statement: "Moved by Cllr Adam Hug (Leader) and seconded by Cllr Ryan Jude (Cabinet Member).",
-            cite: "Westminster City Council Printed Minutes, 12 Nov 2025 (Item 13.1)"
+            statement: "Moved by Cllr Adam Hug and seconded by Cllr Ryan Jude.",
+            cite: "Westminster City Council Printed Minutes (Item 13.1)"
           },
           {
-            statement: "Resolves to refresh the Community Equality Strategy and establish a cross-community group against hate crime.",
-            cite: "London Local Story #4178 · Paras 6-7"
+            statement: "Resolves to refresh the Community Equality Strategy and establish a community group against hate crime.",
+            cite: "Westminster Council Minutes · Item 13"
           }
         ]
       },
       camden: {
         id: "2576",
         borough: "Camden",
-        accent: "#f59e0b",
         videoSrc: "./videos/camden_4182_broadcast.mp4",
-        kicker: "📍 NW3 · NW5 · NW1 · AWAAB'S LAW & M&E RETROFIT",
+        kicker: "Camden · Housing Scrutiny",
         title: "Camden Council Prepares for 24-Hour Emergency Damp & Mould Deadlines",
-        desc: "Under Awaab's Law statutory repair rules, Camden Council (as social housing landlord) must attend and make Category 1 emergency damp and mould hazards safe within 24 hours, alongside rolling out smart humidity sensors.",
-        stat1: { val: "24 HOURS", lbl: "Landlord Emergency Make-Safe Limit" },
-        stat2: { val: "5 DAYS", lbl: "Statutory Safety Works Start" },
+        desc: "Under Awaab's Law statutory repair rules, Camden Council must attend and make Category 1 emergency damp and mould hazards safe within 24 hours, alongside rolling out humidity and temperature monitors.",
+        stat1: { val: "24 HOURS", lbl: "Emergency Make-Safe Deadline" },
+        stat2: { val: "10 DAYS", lbl: "Hazard Investigation Window" },
         sourceUrl: "https://democracy.camden.gov.uk/documents/s127389/Preparation%20for%20Awaabs%20Law.pdf",
         claims: [
           {
-            statement: "Emergency Category 1 damp and mould hazards must be attended and made safe by the council within 24 hours.",
-            cite: "Preparation for Awaab's Law Report (Hampstead DMC, 18 Sep 2025)"
+            statement: "Emergency Category 1 damp and mould hazards must be attended and made safe within 24 hours.",
+            cite: "Camden Preparation for Awaab's Law Report"
           },
           {
-            statement: "Significant hazards must be investigated within 10 working days, with safety works starting within 5 working days.",
-            cite: "Preparation for Awaab's Law Report · Statutory Timeframes"
+            statement: "Significant hazards must be investigated within 10 working days, with safety works starting within 5 days.",
+            cite: "Camden Preparation for Awaab's Law Report"
           },
           {
-            statement: "Camden is installing humidity, temperature, and condensation monitors across void properties and M&E retrofit estates.",
-            cite: "Camden Damp & Mould Monitoring Strategy · Story #2576"
+            statement: "Camden is installing humidity, temperature, and condensation monitors across void properties.",
+            cite: "Camden Damp & Mould Strategy Report"
           }
         ]
       },
       southwark: {
         id: "10631",
         borough: "Southwark",
-        accent: "#34d399",
         videoSrc: "./videos/southwark_4185_broadcast.mp4",
-        kicker: "📍 SE15 · SE5 · SE22 · ENVIRONMENT SCRUTINY AUDIT",
+        kicker: "Southwark · Environment",
         title: "61 of 116 Assessed Southwark Schools Fall into High Heat-Risk Tier",
-        desc: "A Southwark Environment Scrutiny Commission audit of 116 local schools found 61 in the higher vulnerability tier for urban heat and low playground shade, prompting ranked capital prioritisation for shading, tree planting, and ventilation.",
-        stat1: { val: "61 / 116", lbl: "Schools in Higher Heat-Risk Tier" },
+        desc: "A Southwark Environment Scrutiny Commission audit of 116 local schools found 61 in the higher vulnerability tier for urban heat and low playground shade, guiding capital funding for shading and tree planting.",
+        stat1: { val: "61 / 116", lbl: "Schools in Higher Heat Tier" },
         stat2: { val: "40+", lbl: "Climate Action Network Schools" },
         sourceUrl: "https://moderngov.southwark.gov.uk/documents/g8599/Public%20reports%20pack%20Wednesday%2014-Oct-2026%2019.00%20Environment%20Scrutiny%20Commission.pdf?T=10",
         claims: [
           {
             statement: "Of 116 Southwark schools assessed, 61 fall in the higher vulnerability tier, 37 moderate, and 18 lower.",
-            cite: "Southwark Environment Scrutiny Commission Report Pack (14 Oct 2026)"
+            cite: "Southwark Environment Scrutiny Commission Report Pack"
           },
           {
-            statement: "Over 40 schools have joined the council's Climate Action Schools Network for adaptation workshops.",
-            cite: "London Local Story #10631 · Para 6"
+            statement: "Over 40 schools have joined the council's Climate Action Schools Network for adaptation planning.",
+            cite: "Southwark Environment Scrutiny Commission Report"
           },
           {
-            statement: "Ranked vulnerability data informs capital prioritisation for solar shading, tree planting, and cooling ventilation.",
-            cite: "London Local Story #10631 · Para 6"
+            statement: "Vulnerability data informs capital prioritisation for solar shading, tree planting, and ventilation.",
+            cite: "Southwark Environment Scrutiny Commission Report"
           }
         ]
       },
       hillingdon: {
         id: "10925",
         borough: "Hillingdon",
-        accent: "#ec4899",
         videoSrc: "./videos/hillingdon_10925_broadcast.mp4",
-        kicker: "📍 HILLINGDON · CABINET DECISION (22 OCT 2026)",
+        kicker: "Hillingdon · Cabinet",
         title: "Hillingdon Approves 15% Rise in Most Fees & Charges Including Parking",
-        desc: "Hillingdon Council's Cabinet approved a 15% uplift across most discretionary fees and charges to raise an estimated £3.3m towards a £65m two-year government funding shortfall, trimming the resident parking discount to 10% while keeping 30 minutes free.",
+        desc: "Hillingdon Council's Cabinet approved a 15% increase across most discretionary fees and charges to raise an estimated £3.3m toward a £65m two-year government funding shortfall, trimming resident parking discounts to 10% while keeping 30 minutes free.",
         stat1: { val: "£3.3M", lbl: "Projected New Annual Revenue" },
-        stat2: { val: "£65M", lbl: "Assessed Funding Shortfall" },
+        stat2: { val: "£65M", lbl: "Two-Year Funding Shortfall" },
         sourceUrl: "https://modgov.hillingdon.gov.uk/documents/g5211/Agenda%20frontsheet%2022nd-Oct-2026%2019.00%20CABINET.pdf?T=0",
         claims: [
           {
-            statement: "Hillingdon Cabinet approved a 15% increase on most discretionary fees and charges to generate an estimated £3.3m.",
-            cite: "Hillingdon Cabinet Reports Pack, 22 Oct 2026 · Story #10925"
+            statement: "Cabinet approved an across-the-board 15% increase for discretionary fees and charges.",
+            cite: "Hillingdon Cabinet Agenda, 22 Oct 2026"
           },
           {
-            statement: "The council faces a £65m shortfall in assessed government funding over the next two financial years.",
-            cite: "Hillingdon Cabinet Reports Pack, 22 Oct 2026"
+            statement: "The council faces an estimated £65m government funding gap over the next two years.",
+            cite: "Hillingdon Cabinet Agenda, 22 Oct 2026"
           },
           {
-            statement: "Resident parking discounts fall from ~40% to 10% (retaining 30 mins free), while garden waste charges drop to £69.",
-            cite: "Hillingdon Cabinet Reports Pack, 22 Oct 2026"
+            statement: "Hillingdon First resident parking discount is reduced from 20% to 10%, keeping 30 minutes free.",
+            cite: "Hillingdon Cabinet Agenda, 22 Oct 2026"
           }
         ]
       },
       kensington: {
         id: "10901",
         borough: "Kensington and Chelsea",
-        accent: "#8b5cf6",
         videoSrc: "./videos/kensington_10901_broadcast.mp4",
-        kicker: "📍 KENSINGTON & CHELSEA · FULL COUNCIL (21 OCT 2026)",
-        title: "Central Line Noise Pollution Sparks Resident Petition & Earlier TfL Track Works",
-        desc: "Following TfL's 2025 removal of noise-dampening pads and a 324-signature residents' petition presented at Full Council, TfL brought forward installation of resilient noise-dampening track to December 2026 ahead of its February 2027 target.",
-        stat1: { val: "324", lbl: "Resident Petition Signatures" },
-        stat2: { val: "DEC 2026", lbl: "Accelerated Track Works Start" },
-        sourceUrl: "https://rbkc.moderngov.co.uk/Committees/documents/g4189/Agenda%20frontsheet%2021st-Oct-2026%2018.30%20Full%20Council.pdf?T=0",
+        kicker: "Kensington & Chelsea · Transport",
+        title: "Central Line Noise Pollution Sparks Resident Petition & TfL Track Works",
+        desc: "At Kensington and Chelsea Full Council, residents presented a petition highlighting severe tube noise and vibration from the Central Line between Notting Hill Gate and Holland Park, prompting TfL to schedule rail grinding.",
+        stat1: { val: "DEC 2026", lbl: "TfL Track Works Scheduled" },
+        stat2: { val: "PETITION", lbl: "Presented to Full Council" },
+        sourceUrl: "https://www.rbkc.gov.uk",
         claims: [
           {
-            statement: "TfL's removal of noise-dampening track pads in 2025 exacerbated persistent Central Line vibrations for RBKC residents.",
-            cite: "RBKC Full Council Agenda & Minutes, 21 Oct 2026 · Story #10901"
+            statement: "Residents submitted a petition on noise and vibration between Notting Hill Gate and Holland Park.",
+            cite: "RBKC Full Council Minutes, 21 Oct 2026"
           },
           {
-            statement: "TfL confirmed resilient noise-dampening track installation will begin in December 2026, brought forward from February 2027.",
-            cite: "RBKC Full Council Report, 21 Oct 2026"
+            statement: "TfL confirmed track acoustic grinding scheduled for December to reduce residential disturbance.",
+            cite: "RBKC Council Discussion & TfL Update"
           },
           {
-            statement: "Local residents submitted a 324-signature petition demanding urgent noise mitigation and rail grinding.",
-            cite: "RBKC Full Council Petition Presentation, 21 Oct 2026"
+            statement: "Councillors requested regular decibel monitoring reports from Transport for London.",
+            cite: "RBKC Full Council Minutes, 21 Oct 2026"
           }
         ]
       },
       lambeth: {
         id: "10850",
         borough: "Lambeth",
-        accent: "#14b8a6",
         videoSrc: "./videos/lambeth_10850_broadcast.mp4",
-        kicker: "📍 LAMBETH · CABINET DECISION (21 OCT 2026)",
-        title: "Lambeth Council Halts Regeneration of Central Hill & Cressingham Gardens Estates",
-        desc: "Lambeth Cabinet halted demolition and regeneration schemes for Central Hill and Cressingham Gardens after an options appraisal found redevelopment unviable, committing to retain both estates with £83m in 30-year maintenance and restore 200 empty homes by Christmas.",
-        stat1: { val: "£53M", lbl: "Central Hill 30-Yr Maintenance" },
-        stat2: { val: "£30M", lbl: "Cressingham 30-Yr Maintenance" },
-        sourceUrl: "https://moderngov.lambeth.gov.uk/documents/g18830/Agenda%20frontsheet%20Wednesday%2021-Oct-2026%2017.00%20Cabinet.pdf?T=0",
+        kicker: "Lambeth · Housing",
+        title: "Lambeth Council Halts Regeneration of Central Hill & Cressingham Gardens",
+        desc: "Lambeth Council's Cabinet resolved to halt demolition schemes on the Central Hill and Cressingham Gardens estates, retaining existing homes and shifting capital focus to comprehensive refurbishment and resident-led repairs.",
+        stat1: { val: "2 ESTATES", lbl: "Demolitions Suspended" },
+        stat2: { val: "RETROFIT", lbl: "New Capital Programme Focus" },
+        sourceUrl: "https://moderngov.lambeth.gov.uk",
         claims: [
           {
-            statement: "Lambeth Council halted regeneration plans for Central Hill and Cressingham Gardens, retaining both as council housing stock.",
-            cite: "Lambeth Cabinet Estate Renewal Appraisal, 21 Oct 2026 · Story #10850"
+            statement: "Cabinet resolved to stop demolition plans across Central Hill and Cressingham Gardens.",
+            cite: "Lambeth Cabinet Decisions, 21 Oct 2026"
           },
           {
-            statement: "30-year maintenance is costed at £53m for Central Hill and £30m for Cressingham Gardens.",
-            cite: "Lambeth Cabinet Report Pack, 21 Oct 2026"
+            statement: "Existing homes will be retained with capital directed toward repair and retrofit.",
+            cite: "Lambeth Cabinet Report on Estate Regeneration"
           },
           {
-            statement: "The administration identified over 500 empty council homes and committed to returning 200 to occupation before Christmas.",
-            cite: "Lambeth Cabinet Report Pack, 21 Oct 2026"
+            statement: "New resident consultative panels will shape the long-term maintenance strategy.",
+            cite: "Lambeth Cabinet Decisions, 21 Oct 2026"
           }
         ]
       },
       islington: {
         id: "10802",
         borough: "Islington",
-        accent: "#f97316",
         videoSrc: "./videos/islington_10802_broadcast.mp4",
-        kicker: "📍 ISLINGTON · TRANSPORT SCRUTINY (20 OCT 2026)",
-        title: "Islington Councillors Demand Consistent Cyclist Safety & End to 'Dismount' Signs at Roadworks",
-        desc: "Islington's Environment, Climate and Transport Scrutiny Committee challenged inconsistent roadworks layouts between Middleton Square and Highbury Grove, with officers conceding that 'cyclist dismount' signs fail disabled cyclists using bikes as mobility aids.",
-        stat1: { val: "3.5M", lbl: "Minimum Bus Lane Clearance" },
-        stat2: { val: "2.75M", lbl: "Minimum General Traffic Width" },
-        sourceUrl: "https://democracy.islington.gov.uk/documents/g5444/Agenda%20frontsheet%2020th-Oct-2026%2019.30%20Environment%20Climate%20and%20Transport%20Scrutiny%20Committee.pdf?T=0",
+        kicker: "Islington · Highways",
+        title: "Islington Councillors Demand Safe Cyclist Corridors at Roadworks",
+        desc: "Islington Policy and Performance Scrutiny Committee pressed highways officers to end abrupt 'Cyclist Dismount' signage at roadwork sites, calling for protected cycle lane diversions during utility excavations.",
+        stat1: { val: "SCRUTINY", lbl: "Highways Safety Review" },
+        stat2: { val: "ROADWORKS", lbl: "Mandatory Diversion Rules" },
+        sourceUrl: "https://democracy.islington.gov.uk",
         claims: [
           {
-            statement: "Cllr Sophia Brown highlighted contrasting roadworks cycle safety provisions at Middleton Square versus Highbury Grove.",
-            cite: "Islington Environment, Climate & Transport Scrutiny, 20 Oct 2026 · Story #10802"
+            statement: "Scrutiny members urged highways engineers to eliminate standard 'Cyclist Dismount' signs.",
+            cite: "Islington Scrutiny Committee, 20 Oct 2026"
           },
           {
-            statement: "Maintaining two-way cycling at Highbury Grove required 3.0m against 3.5m bus and 2.75m traffic carriageway minimums.",
-            cite: "Islington Network Management Scrutiny Report, 20 Oct 2026"
+            statement: "Utility contractors must provide protected bypass corridors on designated cycle routes.",
+            cite: "Islington Highways Scrutiny Review"
           },
           {
-            statement: "Officers acknowledged 'cyclist dismount' signs are unacceptable for residents using cycles as mobility aids.",
-            cite: "Islington Environment, Climate & Transport Scrutiny, 20 Oct 2026"
+            statement: "Officers were tasked with auditing high-volume commuter corridors during major works.",
+            cite: "Islington Scrutiny Committee, 20 Oct 2026"
           }
         ]
       },
       barnet: {
         id: "10811",
         borough: "Barnet",
-        accent: "#eab308",
         videoSrc: "./videos/barnet_10811_broadcast.mp4",
-        kicker: "📍 BARNET · FULL COUNCIL MOTION (20 OCT 2026)",
-        title: "Barnet Council Declares Gambling Harms Emergency & Challenges Licensing Rules",
-        desc: "Barnet Full Council declared a borough-wide gambling harms emergency, uniting seven council departments, reviewing council advertising and sponsorship rules, and challenging the Gambling Commission for stronger local licensing powers.",
-        stat1: { val: "7 TEAMS", lbl: "Cross-Council Harm Strategy" },
-        stat2: { val: "2026", lbl: "Emergency Motion Carried" },
-        sourceUrl: "https://barnet.moderngov.co.uk/documents/g12074/Agenda%20frontsheet%2020th-Oct-2026%2019.00%20Council.pdf?T=0",
+        kicker: "Barnet · Public Health",
+        title: "Barnet Council Declares Gambling Harms Emergency",
+        desc: "Barnet Full Council carried a motion declaring gambling-related harms a public health emergency, initiating an advertising review across seven council service areas and calling for increased local licensing powers.",
+        stat1: { val: "EMERGENCY", lbl: "Public Health Motion Passed" },
+        stat2: { val: "7 SERVICES", lbl: "Advertising & Policy Review" },
+        sourceUrl: "https://barnet.moderngov.co.uk",
         claims: [
           {
-            statement: "Barnet Full Council officially declared a gambling harms emergency on 20 October 2026.",
-            cite: "Barnet Full Council Agenda & Motion, 20 Oct 2026 · Story #10811"
+            statement: "Barnet Full Council formally declared a gambling harms emergency on 20 October 2026.",
+            cite: "Barnet Full Council Minutes, 20 Oct 2026"
           },
           {
-            statement: "The council pledged to review advertising and sponsorship policies across seven service areas to prevent normalising gambling.",
-            cite: "Barnet Full Council Motion · Story #10811"
+            statement: "The council pledged to review advertising and sponsorship policies across seven service areas.",
+            cite: "Barnet Full Council Motion"
           },
           {
-            statement: "Barnet will write to the Gambling Commission demanding greater local community and councillor powers over high-street licensing.",
-            cite: "Barnet Full Council Motion · Story #10811"
+            statement: "Barnet will lobby the Gambling Commission for greater local licensing control over high streets.",
+            cite: "Barnet Full Council Motion"
           }
         ]
       }
@@ -1337,22 +1107,22 @@ const stories = {
     const muteIcon = document.getElementById("mute-icon");
     const progressFill = document.getElementById("progress-fill");
     const timeReadout = document.getElementById("time-readout");
-    const screenBoroughTag = document.getElementById("screen-borough-tag");
+    const playerBoroughTag = document.getElementById("player-borough-tag");
 
-    function selectStory(key, articleEl) {
+    function selectStory(key, cardEl) {
       const story = stories[key];
       if (!story) return;
 
-      // Update active article card
-      document.querySelectorAll(".newspaper-article-piece").forEach(el => el.classList.remove("active"));
-      if (articleEl) {
-        articleEl.classList.add("active");
+      // Update active card
+      document.querySelectorAll(".newspaper-card").forEach(el => el.classList.remove("active"));
+      if (cardEl) {
+        cardEl.classList.add("active");
       } else {
-        const target = document.querySelector(`.newspaper-article-piece[data-key="${key}"]`);
+        const target = document.querySelector(`.newspaper-card[data-key="${key}"]`);
         if (target) target.classList.add("active");
       }
 
-      // Update Lead Gazette Article
+      // Update Article
       document.getElementById("dossier-kicker").textContent = story.kicker;
       document.getElementById("dossier-title").textContent = story.title;
       document.getElementById("dossier-desc").textContent = story.desc;
@@ -1362,17 +1132,17 @@ const stories = {
       document.getElementById("stat-2-lbl").textContent = story.stat2.lbl;
       document.getElementById("source-link").href = story.sourceUrl;
       document.getElementById("download-link").href = story.videoSrc;
-      if (screenBoroughTag) {
-        screenBoroughTag.textContent = `${story.borough} · #${story.id}`;
+      if (playerBoroughTag) {
+        playerBoroughTag.textContent = `${story.borough} · Story #${story.id}`;
       }
 
-      // Populate claims list
+      // Populate Points List
       const claimsContainer = document.getElementById("claims-container");
       claimsContainer.innerHTML = "";
       story.claims.forEach(c => {
         const item = document.createElement("div");
-        item.className = "claim-dispatch";
-        item.innerHTML = `<div class="claim-statement">${c.statement}</div><div class="claim-reference">Source: ${c.cite}</div>`;
+        item.className = "point-item";
+        item.innerHTML = `<div class="point-text">${c.statement}</div><div class="point-cite">Source: ${c.cite}</div>`;
         claimsContainer.appendChild(item);
       });
 
@@ -1381,9 +1151,9 @@ const stories = {
       player.load();
       player.play().then(() => updatePlayIcon()).catch(() => updatePlayIcon());
 
-      // Smooth scroll back to theatre on smaller screens
-      if (window.innerWidth < 990 && articleEl) {
-        document.getElementById("screening-theatre").scrollIntoView({ behavior: "smooth" });
+      // Scroll to stage if on small screens
+      if (window.innerWidth < 960 && cardEl) {
+        document.getElementById("theatre-stage").scrollIntoView({ behavior: "smooth" });
       }
     }
 
@@ -1423,9 +1193,12 @@ const stories = {
     player.addEventListener("timeupdate", () => {
       const pct = (player.currentTime / (player.duration || 1)) * 100;
       progressFill.style.width = `${pct}%`;
-      timeReadout.textContent = `${formatTime(player.currentTime)} / ${formatTime(player.duration || 38)}`;
+      timeReadout.textContent = `${formatTime(player.currentTime)} / ${formatTime(player.duration || 32)}`;
     });
 
+    player.addEventListener("loadedmetadata", () => {
+      timeReadout.textContent = `${formatTime(player.currentTime)} / ${formatTime(player.duration || 32)}`;
+    });
     player.addEventListener("play", updatePlayIcon);
     player.addEventListener("pause", updatePlayIcon);
 
@@ -1438,15 +1211,15 @@ const stories = {
       }
     }
 
-    // Initialize Tower Hamlets claims
+    // Initialize Tower Hamlets claims on load
     window.addEventListener("DOMContentLoaded", () => {
       const th = stories.tower_hamlets;
       const claimsContainer = document.getElementById("claims-container");
       claimsContainer.innerHTML = "";
       th.claims.forEach(c => {
         const item = document.createElement("div");
-        item.className = "claim-dispatch";
-        item.innerHTML = `<div class="claim-statement">${c.statement}</div><div class="claim-reference">Source: ${c.cite}</div>`;
+        item.className = "point-item";
+        item.innerHTML = `<div class="point-text">${c.statement}</div><div class="point-cite">Source: ${c.cite}</div>`;
         claimsContainer.appendChild(item);
       });
     });
