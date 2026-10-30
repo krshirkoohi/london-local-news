@@ -159,7 +159,7 @@
         "trimStart": 0.0,
         "isIllustrative": true,
         "mandatoryDisclaimer": "AI-GENERATED MEDIA",
-        "cutawaySource": "assets/generative/london_active_bike_hangar_street_omni.mp4"
+        "cutawaySource": "assets/generative/london_transport_red_bus_rain_omni.mp4"
       },
       "figure": {
         "type": "stat_comparison",

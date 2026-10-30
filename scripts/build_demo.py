@@ -653,18 +653,26 @@ def render_template_scene1_hook(spec, scene, t=10.0, total_dur=6.0):
     archetype = rt.ARCHETYPE_CONFIG.get(spec.get("storyType", "council_decision"), rt.ARCHETYPE_CONFIG["council_decision"])
     accent_rgb = archetype["accent"]
 
-    # Optional Postcode / Area Kicker with high-contrast backing badge
-    pc = spec.get("postcodeTag", "")
+    # Contextual Borough / Committee Location Kicker Badge (always shown on Scene 1, stripped of non-BMP emoji so Arial Bold never renders a tofu box)
+    pc_raw = (
+        spec.get("postcodeTag")
+        or scene.get("onScreenGraphic", {}).get("kicker")
+        or f"{spec.get('borough', 'LONDON').upper()} · COUNCIL RECORD"
+    )
+    pc = "".join(ch for ch in str(pc_raw) if ord(ch) <= 0xFFFF).strip()
     if pc:
-        f_pc = rt.get_font(rt.FONT_SANS_BOLD, 20)
-        pw = draw.textlength(pc, font=f_pc)
-        pill_w = min(SAFE_WIDTH, int(pw + 36))
+        f_pc, pc_lines, _ = rt.fit_text_to_bounds(
+            draw, pc, rt.FONT_SANS_BOLD, initial_size=20, max_width=SAFE_WIDTH - 48, max_lines=1, min_size=14
+        )
+        pc_str = pc_lines[0] if pc_lines else pc
+        pw = draw.textlength(pc_str, font=f_pc)
+        pill_w = min(SAFE_WIDTH, int(pw + 38))
         px1 = (1080 - pill_w) // 2
         px2 = px1 + pill_w
-        py1 = 770
-        py2 = py1 + 42
-        draw.rounded_rectangle([(px1, py1), (px2, py2)], radius=10, fill=(14, 15, 22, 225), outline=DOT_ORANGE + (190,), width=1)
-        draw.text(((1080 - pw) // 2, py1 + 10), pc, font=f_pc, fill=DOT_ORANGE + (255,))
+        py1 = 760
+        py2 = py1 + 44
+        draw.rounded_rectangle([(px1, py1), (px2, py2)], radius=10, fill=(14, 15, 22, 232), outline=DOT_ORANGE + (200,), width=2)
+        draw.text(((1080 - pw) // 2, py1 + 11), pc_str, font=f_pc, fill=DOT_ORANGE + (255,))
 
     # Headline and Subtitle with dynamic bounds-checking and auto-fit
     h_txt = scene.get("onScreenGraphic", {}).get("headline", spec.get("headline", ""))
@@ -695,10 +703,20 @@ def render_template_scene1_hook(spec, scene, t=10.0, total_dur=6.0):
     if spec.get("branding", {}).get("showCaptions", False):
         rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1540, accent_rgb=accent_rgb)
 
-    # Bottom scrim for AI-GENERATED MEDIA badge contrast over bright streets
-    for y in range(1650, 1920):
-        a = int(165 * ((y - 1650) / 270.0)**1.2)
+    # Bottom scrim for citation & AI-GENERATED MEDIA badge contrast over bright streets
+    for y in range(1545, 1920):
+        a = int(175 * ((y - 1545) / 375.0)**1.2)
         draw.line([(0, y), (1080, y)], fill=(8, 8, 12, a))
+
+    # Verified source attribution line at bottom of Scene 1 (y=1615)
+    cite = scene.get("citationFooter", spec.get("meetingDateDisplay", "Council Public Record"))
+    cite_clean = cite.strip().lstrip("<").rstrip(">")
+    f_cite, cite_lines, _ = rt.fit_text_to_bounds(
+        draw, cite_clean, rt.FONT_SANS_BOLD, initial_size=21, max_width=SAFE_WIDTH, max_lines=1, min_size=14
+    )
+    for cl in cite_lines[:1]:
+        cw = draw.textlength(cl, font=f_cite)
+        draw.text(((1080 - cw) // 2, 1615), cl, font=f_cite, fill=(225, 230, 240, 255))
 
     # AI disclaimer cleanly anchored at bottom
     rt.apply_ai_disclaimer(overlay, show=scene.get("visualAsset", {}).get("isIllustrative", False))
@@ -789,10 +807,13 @@ def render_template_scene2_receipt(spec, scene, t=10.0, total_dur=6.0):
     draw.line([(ox + 35, curr_y), (ox + card_w - 35, curr_y)], fill=(40, 40, 45, 240), width=3)
     curr_y += 24
 
-    # Subject Header
-    mtitle = scene.get("onScreenGraphic", {}).get("headline", "Verified Council Record").replace("\n", " ")
+    # Subject Header (never truncates or drops words; uses docSubject or headline)
+    mtitle = (
+        fig_data.get("docSubject")
+        or scene.get("onScreenGraphic", {}).get("headline", "Verified Council Record")
+    ).replace("\n", " ").strip()
     f_mtitle_fit, mtitle_lines, _ = rt.fit_text_to_bounds(
-        draw, mtitle, rt.FONT_SERIF_BOLD, initial_size=44, max_width=card_w - 70, max_lines=1, min_size=26
+        draw, mtitle, rt.FONT_SERIF_BOLD, initial_size=38, max_width=card_w - 70, max_lines=1, min_size=18
     )
     for tl in mtitle_lines[:1]:
         draw.text((ox + 35, curr_y), tl, font=f_mtitle_fit, fill=ink_dark)
@@ -860,11 +881,13 @@ def render_template_scene2_receipt(spec, scene, t=10.0, total_dur=6.0):
     if spec.get("branding", {}).get("showCaptions", False):
         rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1540, accent_rgb=accent_rgb)
 
-    # Clean verified source attribution line at bottom (safely at y=1615, well above 1640)
+    # Clean verified source attribution line at bottom (safely at y=1615, auto-fitted to 1 line without dropping words)
     cite = scene.get("citationFooter", spec.get("meetingDateDisplay", "Council Public Record"))
     cite_clean = cite.strip().lstrip("<").rstrip(">")
-    f_cite = rt.get_font(rt.FONT_SANS_BOLD, 21)
-    for cl in rt.wrap_text(draw, cite_clean, f_cite, SAFE_WIDTH)[:1]:
+    f_cite, cite_lines, _ = rt.fit_text_to_bounds(
+        draw, cite_clean, rt.FONT_SANS_BOLD, initial_size=21, max_width=SAFE_WIDTH, max_lines=1, min_size=12
+    )
+    for cl in cite_lines[:1]:
         cw = draw.textlength(cl, font=f_cite)
         draw.text(((1080 - cw) // 2, 1615), cl, font=f_cite, fill=(225, 230, 240, 255))
 
@@ -915,136 +938,137 @@ def render_selling_point_slide_card(spec, t=10.0):
 
 def render_template_scene3_key_points(spec, scene, t=10.0, total_dur=6.0):
     """
-    Renders the Scene 3 Key Points slide over darkened 35mm footage:
-    - Top persistent 'London Local.' watermark
-    - Symmetrically centred heading & 3-card stack (x: MARGIN_X..SAFE_X2, vertically centred around y=890)
-    - Decluttered cards (number + bold anchor + 1-2 short body lines; no per-card micro-citations)
+    Renders the Scene 3 Broadcast B-Roll Cutaway Lower-Third sequence:
+    - Full-screen unobstructed 35mm documentary B-roll in the upper & middle frame (y=220..1040)
+      that cuts between distinct B-roll shots as the points progress.
+    - No 3-box moving menu covering the video.
+    - One clean editorial lower-third strap at a time (Finding 01 -> Finding 02 -> Finding 03)
+      paired with the section question kicker pill above it.
     """
-    overlay = Image.new("RGBA", (1080, 1920), (12, 12, 18, 222))
+    overlay = Image.new("RGBA", (1080, 1920), (0, 0, 0, 0))
     draw = ImageDraw.Draw(overlay)
 
+    # Top scrim for watermark contrast over bright B-roll (leaves y=250..1000 100% open for B-roll)
+    for y in range(0, 250):
+        a = int(185 * (1.0 - (y / 250.0)**1.4))
+        draw.line([(0, y), (1080, y)], fill=(8, 8, 12, a))
+
     rt.apply_persistent_watermark(overlay)
+
+    # Lower-third broadcast scrim (y=980..1920) so the single active finding strap pops cleanly
+    for y in range(980, 1920):
+        progress = min(1.0, (y - 980) / 320.0)
+        a = int(215 * (progress ** 1.15))
+        draw.line([(0, y), (1080, y)], fill=(8, 8, 12, a))
 
     archetype = rt.ARCHETYPE_CONFIG.get(spec.get("storyType", "council_decision"), rt.ARCHETYPE_CONFIG["council_decision"])
     accent_rgb = archetype["accent"]
 
-    heading = spec.get("keyPointsHeading", scene.get("onScreenGraphic", {}).get("headline", "Key points")).replace("\n", " ")
-    f_title, head_lines, head_spacing = rt.fit_text_to_bounds(
-        draw, heading, rt.FONT_SERIF_BOLD, initial_size=68, max_width=SAFE_WIDTH, max_lines=2, min_size=44
-    )
-
     points = spec.get("keyPoints", [])[:3]
     num_pts = max(1, len(points))
-    card_h = 186
-    card_gap = 28
-    cards_total_h = num_pts * card_h + (num_pts - 1) * card_gap
-    head_total_h = len(head_lines) * head_spacing
-    block_total_h = head_total_h + 44 + cards_total_h
 
-    # Vertically centre the entire [Heading + 3 Cards] lockup around y=895
-    hy = max(280, 895 - (block_total_h // 2))
-    for hl in head_lines:
-        lw = draw.textlength(hl, font=f_title)
-        draw.text(((1080 - lw) // 2, hy), hl, font=f_title, fill=(255, 255, 255, 255))
-        hy += head_spacing
-
-    start_y = hy + 44
-    spacing = card_h + card_gap
-
-    f_sub = rt.get_font(rt.FONT_SANS, 27)
-    f_step = rt.get_font(rt.FONT_SERIF_BOLD, 48)
-
-    # Smooth progressive step illumination across scene duration
-    t1 = total_dur * 0.42
-    t2 = total_dur * 0.76
-    fade_half = 0.18
-
-    tab_intensities = [0.0, 0.0, 0.0]
-    if t < t1 - fade_half:
-        tab_intensities[0] = 1.0
-    elif t < t1 + fade_half:
-        p = (t - (t1 - fade_half)) / (2 * fade_half)
-        tab_intensities[0] = 1.0 - p
-        tab_intensities[1] = p
-    elif t < t2 - fade_half:
-        tab_intensities[1] = 1.0
-    elif t < t2 + fade_half:
-        p = (t - (t2 - fade_half)) / (2 * fade_half)
-        tab_intensities[1] = 1.0 - p
-        tab_intensities[2] = p
+    # Determine which single point is on screen at time t (synchronised with the B-roll cutaway at 0.38 * total_dur)
+    t1 = total_dur * 0.38
+    t2 = total_dur * 0.70
+    if t > total_dur or num_pts == 1:
+        active_idx = 0
+        local_t = 0.5
+    elif t < t1:
+        active_idx = 0
+        local_t = t
+    elif t < t2 or num_pts == 2:
+        active_idx = min(1, num_pts - 1)
+        local_t = t - t1
     else:
-        tab_intensities[2] = 1.0
+        active_idx = min(2, num_pts - 1)
+        local_t = t - t2
 
-    for idx, pt in enumerate(points):
-        t_start = 0.10 + idx * 0.22
-        p_pt = ease_out_cubic(min(1.0, max(0.0, (t - t_start) / 0.3))) if t >= t_start else 0.0
-        if p_pt <= 0.01:
-            continue
+    p_in = ease_out_cubic(min(1.0, max(0.0, local_t / 0.22)))
+    y_off = int((1.0 - p_in) * 14)
 
-        py = start_y + idx * spacing
-        y_off = int((1.0 - p_pt) * 15)
+    # Section Question Kicker Pill above the lower-third card (y=1082)
+    heading = spec.get("keyPointsHeading", scene.get("onScreenGraphic", {}).get("headline", "What did the report find?")).replace("\n", " ").strip()
+    f_head, head_lines, _ = rt.fit_text_to_bounds(
+        draw, heading.upper(), rt.FONT_SANS_BOLD, initial_size=21, max_width=SAFE_WIDTH - 48, max_lines=1, min_size=14
+    )
+    h_str = head_lines[0] if head_lines else heading.upper()
+    hw = draw.textlength(h_str, font=f_head)
+    pill_w = min(SAFE_WIDTH, int(hw + 44))
+    px1 = MARGIN_X
+    px2 = px1 + pill_w
+    py1 = 1082
+    py2 = py1 + 44
+    draw.rounded_rectangle([(px1, py1), (px2, py2)], radius=10, fill=(14, 16, 24, 238), outline=accent_rgb + (210,), width=2)
+    draw.text((px1 + 22, py1 + 11), h_str, font=f_head, fill=DOT_ORANGE + (255,))
 
-        if len(pt) >= 2:
-            anchor = str(pt[0])
-            sub = str(pt[1]) if len(pt) == 3 else ""
-        else:
-            anchor = str(pt[0])
-            sub = ""
+    # Single Active Broadcast Lower-Third Card (y=1144..1454)
+    if points:
+        pt = points[active_idx]
+        anchor = str(pt[0]) if len(pt) >= 1 else ""
+        sub = str(pt[1]) if len(pt) >= 2 else ""
 
-        act_val = tab_intensities[idx] * p_pt
-        card_fill_a = int(198 + 45 * act_val)
-        card_outline = (accent_rgb + (int(225 * act_val),)) if act_val > 0.05 else (255, 255, 255, int(50 * p_pt))
+        cy1 = 1144 + y_off
+        cy2 = 1448 + y_off
         draw.rounded_rectangle(
-            [(MARGIN_X, py + y_off), (SAFE_X2, py + card_h + y_off)],
+            [(MARGIN_X, cy1), (SAFE_X2, cy2)],
             radius=18,
-            fill=(18, 20, 28, int(card_fill_a * p_pt)),
-            outline=card_outline,
+            fill=(16, 18, 26, int(242 * p_in)),
+            outline=accent_rgb + (int(220 * p_in),),
             width=2,
         )
 
-        # Left vertical accent line on card
-        r_bar = int(140 * (1.0 - act_val) + accent_rgb[0] * act_val)
-        g_bar = int(145 * (1.0 - act_val) + accent_rgb[1] * act_val)
-        b_bar = int(160 * (1.0 - act_val) + accent_rgb[2] * act_val)
-        a_bar = int(180 * (1.0 - act_val) + 255 * act_val)
-        draw.line([(MARGIN_X + 12, py + 24 + y_off), (MARGIN_X + 12, py + 80 + y_off)], fill=(r_bar, g_bar, b_bar, int(a_bar * p_pt)), width=5)
+        # Left vertical broadcast accent bar
+        draw.rounded_rectangle(
+            [(MARGIN_X + 18, cy1 + 24), (MARGIN_X + 26, cy2 - 24)],
+            radius=4,
+            fill=accent_rgb + (int(255 * p_in),),
+        )
 
-        # Prominent Hero Step Number
-        step_txt = f"0{idx + 1}"
-        r_step = int(180 * (1.0 - act_val) + accent_rgb[0] * act_val)
-        g_step = int(185 * (1.0 - act_val) + accent_rgb[1] * act_val)
-        b_step = int(200 * (1.0 - act_val) + accent_rgb[2] * act_val)
-        draw.text((MARGIN_X + 30, py + 26 + y_off), step_txt, font=f_step, fill=(r_step, g_step, b_step, int(255 * p_pt)))
+        # Finding counter & dot indicator (e.g. "FINDING 01 OF 03")
+        f_badge = rt.get_font(rt.FONT_SANS_BOLD, 19)
+        badge_txt = f"FINDING 0{active_idx + 1} OF 0{num_pts}"
+        draw.text((MARGIN_X + 46, cy1 + 26), badge_txt, font=f_badge, fill=DOT_ORANGE + (int(255 * p_in),))
 
-        # Vertical Divider
-        draw.line([(MARGIN_X + 104, py + 30 + y_off), (MARGIN_X + 104, py + 76 + y_off)], fill=(255, 255, 255, int(70 * p_pt)), width=2)
+        # Subtle progress dots on top-right of lower-third card
+        for d_i in range(num_pts):
+            dx = SAFE_X2 - 36 - (num_pts - 1 - d_i) * 22
+            dy = cy1 + 32
+            d_col = DOT_ORANGE + (int(255 * p_in),) if d_i == active_idx else (255, 255, 255, int(75 * p_in))
+            draw.ellipse([(dx - 5, dy - 5), (dx + 5, dy + 5)], fill=d_col)
 
         # Bold Anchor Headline fitted to card width
         f_anchor_fit, anchor_lines, _ = rt.fit_text_to_bounds(
-            draw, anchor, rt.FONT_SERIF_BOLD, initial_size=42, max_width=SAFE_WIDTH - 150, max_lines=1, min_size=26
+            draw, anchor, rt.FONT_SERIF_BOLD, initial_size=44, max_width=SAFE_WIDTH - 80, max_lines=1, min_size=24
         )
         draw.text(
-            (MARGIN_X + 122, py + 28 + y_off),
+            (MARGIN_X + 46, cy1 + 64),
             anchor_lines[0] if anchor_lines else anchor,
             font=f_anchor_fit,
-            fill=(255, 255, 255, int(255 * p_pt)),
+            fill=(255, 255, 255, int(255 * p_in)),
         )
 
-        # Concise 1-2 line body (no redundant per-card citation line)
-        sub_y = py + 98 + y_off
+        # Complete 1-2 line body explanation
         if sub:
-            for line in rt.wrap_text(draw, sub, f_sub, SAFE_WIDTH - 60)[:2]:
-                draw.text((MARGIN_X + 30, sub_y), line, font=f_sub, fill=(225, 230, 240, int(255 * p_pt)))
-                sub_y += 36
+            f_sub_fit, sub_lines, sub_sp = rt.fit_text_to_bounds(
+                draw, sub, rt.FONT_SANS, initial_size=28, max_width=SAFE_WIDTH - 80, max_lines=2, min_size=18
+            )
+            sub_y = cy1 + 132
+            for line in sub_lines[:2]:
+                draw.text((MARGIN_X + 46, sub_y), line, font=f_sub_fit, fill=(225, 230, 240, int(255 * p_in)))
+                sub_y += sub_sp
 
     if spec.get("branding", {}).get("showCaptions", False):
         rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1540, accent_rgb=accent_rgb)
 
-    # Single clean bottom public record attribution
-    f_bot = rt.get_font(rt.FONT_SANS_BOLD, 21)
-    bot_txt = scene.get("sourceLabel", f"LONDON BOROUGH OF {spec.get('borough', 'Council').upper()} · VERIFIED PUBLIC RECORD")
-    bw = draw.textlength(bot_txt, font=f_bot)
-    draw.text(((1080 - bw) // 2, 1615), bot_txt, font=f_bot, fill=(205, 210, 225, 255))
+    # Single clean bottom public record attribution (auto-fitted to 1 line)
+    bot_txt = scene.get("sourceLabel") or scene.get("citationFooter") or f"LONDON BOROUGH OF {spec.get('borough', 'Council').upper()} · VERIFIED PUBLIC RECORD"
+    bot_clean = bot_txt.strip().lstrip("<").rstrip(">")
+    f_bot, bot_lines, _ = rt.fit_text_to_bounds(
+        draw, bot_clean, rt.FONT_SANS_BOLD, initial_size=21, max_width=SAFE_WIDTH, max_lines=1, min_size=12
+    )
+    for bl in bot_lines[:1]:
+        bw = draw.textlength(bl, font=f_bot)
+        draw.text(((1080 - bw) // 2, 1615), bl, font=f_bot, fill=(205, 210, 225, 255))
 
     rt.apply_ai_disclaimer(overlay, show=scene.get("visualAsset", {}).get("isIllustrative", False))
     return overlay
@@ -1159,14 +1183,15 @@ def render_template_scene4_facts_figures(spec, scene, t=10.0, total_dur=6.0):
             y_val_offset = (68 - val_size) // 2
             draw.text((cx1 + 24, cy1 + 88 + y_val_offset), val_lines[0] if val_lines else val_str, font=f_val, fill=(255, 255, 255, 255))
 
-            # 3. Single readable summary label (24px sans bold, max 2 lines)
+            # 3. Single readable summary label (auto-fitted to max 2 lines without dropping words)
             summary_txt = str(c.get("label", "")) or str(c.get("subtext", ""))
-            f_lbl = rt.get_font(rt.FONT_SANS_BOLD, 24)
-            lbl_lines = rt.wrap_text(draw, summary_txt, f_lbl, card_inner_w)
+            f_lbl, lbl_lines, lbl_sp = rt.fit_text_to_bounds(
+                draw, summary_txt, rt.FONT_SANS_BOLD, initial_size=24, max_width=card_inner_w, max_lines=2, min_size=16
+            )
             ly = cy1 + 196
             for ll in lbl_lines[:2]:
                 draw.text((cx1 + 24, ly), ll, font=f_lbl, fill=(225, 230, 240, 255))
-                ly += 32
+                ly += lbl_sp
 
     # Bottom Takeaway Card (x: MARGIN_X..SAFE_X2, y: 940..1170)
     vy1, vy2 = 940, 1170
@@ -1204,11 +1229,13 @@ def render_template_scene4_facts_figures(spec, scene, t=10.0, total_dur=6.0):
     if spec.get("branding", {}).get("showCaptions", False):
         rt.render_phrase_caption_pill(overlay, scene.get("voiceoverText", ""), t=t, total_dur=total_dur, y_top=1540, accent_rgb=accent_rgb)
 
-    # Bottom Citation at y=1615
+    # Bottom Citation at y=1615 (auto-fitted to 1 line without dropping words)
     cite = scene.get("citationFooter", spec.get("meetingDateDisplay", "Council Public Record"))
     cite_str = cite.strip().lstrip("<").rstrip(">")
-    f_cite = rt.get_font(rt.FONT_SANS_BOLD, 21)
-    for cl in rt.wrap_text(draw, cite_str, f_cite, SAFE_WIDTH)[:1]:
+    f_cite, cite_lines, _ = rt.fit_text_to_bounds(
+        draw, cite_str, rt.FONT_SANS_BOLD, initial_size=21, max_width=SAFE_WIDTH, max_lines=1, min_size=12
+    )
+    for cl in cite_lines[:1]:
         cw = draw.textlength(cl, font=f_cite)
         draw.text(((1080 - cw) // 2, 1615), cl, font=f_cite, fill=(225, 230, 240, 255))
 
@@ -1460,6 +1487,15 @@ def generate_story_audio(spec, story_audio_dir, force_refresh=False):
     if voice in ("en-GB-Neural2-B", "en-GB-SoniaNeural", "Aoede"):
         voice = "en-gb-advisor-1"
 
+    if not os.environ.get("GEMINI_API_KEY"):
+        secrets_path = os.path.expanduser("~/.gemini/secrets.env")
+        if os.path.exists(secrets_path):
+            with open(secrets_path, encoding="utf-8") as sf:
+                for line in sf:
+                    if line.startswith("GEMINI_API_KEY="):
+                        os.environ["GEMINI_API_KEY"] = line.strip().split("=", 1)[1].strip("\"'")
+                        break
+
     has_gemini = bool(os.environ.get("GEMINI_API_KEY")) and "unittest" not in sys.modules
     gemini_client = None
     if has_gemini:
@@ -1561,12 +1597,15 @@ def generate_story_audio(spec, story_audio_dir, force_refresh=False):
 # ==============================================================================
 
 
-def render_story_from_spec(spec_path, show_logo=True, force_tts=False, draft=False):
+def render_story_from_spec(spec_path, show_logo=True, force_tts=False, draft=False, output_dir_override=None):
     with open(spec_path, "r", encoding="utf-8") as f:
         spec = json.load(f)
 
     check_render_contract(spec, draft=draft)
-    output_dir = os.path.join(BUILD_DIR, "drafts") if draft else OUTPUT_DIR
+    if output_dir_override:
+        output_dir = os.path.abspath(output_dir_override)
+    else:
+        output_dir = os.path.join(BUILD_DIR, "drafts") if draft else OUTPUT_DIR
     video_id = spec.get("videoId", "sample_video")
     story_id = str(spec.get("storyId", "4178"))
     borough = spec.get("borough", "Westminster")
@@ -1636,6 +1675,104 @@ def render_story_from_spec(spec_path, show_logo=True, force_tts=False, draft=Fal
             continue
 
         if vis_type == "video" and os.path.exists(vis_src):
+            # Broadcast B-Roll Cutaway for Scene 3 (`key_points`):
+            # Cut from Shot A (Point 1 subject, 0..38%) to Shot B (Points 2-3 subject, 38..100%)
+            cutaway_rel = vis.get("cutawaySource", "")
+            cutaway2_rel = vis.get("cutawaySource2", "")
+            if scene_layout(scene) == "key_points" and not cutaway_rel:
+                try:
+                    import broll_matcher as bm
+                    shot_a_rel, shot_b_rel = bm.select_scene3_cutaway_pair(spec)
+                    if shot_a_rel and os.path.exists(os.path.join(BASE_DIR, shot_a_rel)):
+                        vis_src = os.path.join(BASE_DIR, shot_a_rel)
+                    cutaway_rel = shot_b_rel
+                except Exception:
+                    cutaway_rel = ""
+
+            cutaway_src = os.path.join(BASE_DIR, cutaway_rel) if cutaway_rel else ""
+            cutaway2_src = os.path.join(BASE_DIR, cutaway2_rel) if cutaway2_rel else ""
+            if scene_layout(scene) == "key_points" and cutaway_src and os.path.exists(cutaway_src) and os.path.abspath(cutaway_src) != os.path.abspath(vis_src):
+                t1 = max(1.2, round(pad_dur * 0.38, 3))
+                if cutaway2_src and os.path.exists(cutaway2_src):
+                    t2 = max(t1 + 1.0, round(pad_dur * 0.70, 3))
+                    dur_b = round(t2 - t1, 3)
+                    dur_c = max(0.8, round(pad_dur - t2 + 0.15, 3))
+                    vf_chain = (
+                        f"[0:v]trim=duration={t1:.3f},setpts=PTS-STARTPTS,"
+                        "scale=1080:1920:force_original_aspect_ratio=increase,"
+                        "crop=1080:1920,setsar=1,format=yuv420p,"
+                        "eq=contrast=1.06:brightness=-0.04:saturation=0.94,fps=30[v0];"
+                        f"[1:v]trim=duration={dur_b:.3f},setpts=PTS-STARTPTS,"
+                        "scale=1080:1920:force_original_aspect_ratio=increase,"
+                        "crop=1080:1920,setsar=1,format=yuv420p,"
+                        "eq=contrast=1.06:brightness=-0.04:saturation=0.94,fps=30[v1];"
+                        f"[2:v]trim=duration={dur_c:.3f},setpts=PTS-STARTPTS,"
+                        "scale=1080:1920:force_original_aspect_ratio=increase,"
+                        "crop=1080:1920,setsar=1,format=yuv420p,"
+                        "eq=contrast=1.06:brightness=-0.04:saturation=0.94,fps=30[v2];"
+                        "[v0][v1][v2]concat=n=3:v=1:a=0[vid];"
+                        "[vid][3:v]overlay=0:0[outv]"
+                    )
+                    cmd = [
+                        "ffmpeg", "-y",
+                        "-i", vis_src,
+                        "-i", cutaway_src,
+                        "-i", cutaway2_src,
+                        "-f", "rawvideo", "-pix_fmt", "rgba", "-s", "1080x1920", "-r", "30", "-i", "-",
+                        "-i", mp3_path,
+                        "-filter_complex", vf_chain,
+                        "-map", "[outv]", "-map", "4:a",
+                        "-r", "30",
+                        "-c:v", "libx264", "-t", f"{pad_dur:.3f}",
+                        "-pix_fmt", "yuv420p",
+                        "-c:a", "aac", "-ar", "24000", "-ac", "1", "-b:a", "192k",
+                        seg_out,
+                    ]
+                    cut_desc = f"{os.path.basename(vis_src)} -> {os.path.basename(cutaway_src)} -> {os.path.basename(cutaway2_src)}"
+                else:
+                    rem_t = max(0.8, round(pad_dur - t1 + 0.15, 3))
+                    vf_chain = (
+                        f"[0:v]trim=duration={t1:.3f},setpts=PTS-STARTPTS,"
+                        "scale=1080:1920:force_original_aspect_ratio=increase,"
+                        "crop=1080:1920,setsar=1,format=yuv420p,"
+                        "eq=contrast=1.06:brightness=-0.04:saturation=0.94,fps=30[v0];"
+                        f"[1:v]trim=duration={rem_t:.3f},setpts=PTS-STARTPTS,"
+                        "scale=1080:1920:force_original_aspect_ratio=increase,"
+                        "crop=1080:1920,setsar=1,format=yuv420p,"
+                        "eq=contrast=1.06:brightness=-0.04:saturation=0.94,fps=30[v1];"
+                        "[v0][v1]concat=n=2:v=1:a=0[vid];"
+                        "[vid][2:v]overlay=0:0[outv]"
+                    )
+                    cmd = [
+                        "ffmpeg", "-y",
+                        "-i", vis_src,
+                        "-i", cutaway_src,
+                        "-f", "rawvideo", "-pix_fmt", "rgba", "-s", "1080x1920", "-r", "30", "-i", "-",
+                        "-i", mp3_path,
+                        "-filter_complex", vf_chain,
+                        "-map", "[outv]", "-map", "3:a",
+                        "-r", "30",
+                        "-c:v", "libx264", "-t", f"{pad_dur:.3f}",
+                        "-pix_fmt", "yuv420p",
+                        "-c:a", "aac", "-ar", "24000", "-ac", "1", "-b:a", "192k",
+                        seg_out,
+                    ]
+                    cut_desc = f"{os.path.basename(vis_src)} -> {os.path.basename(cutaway_src)}"
+                total_frames = int(pad_dur * 30)
+                proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                for f_idx in range(total_frames):
+                    t_sec = f_idx / 30.0
+                    frame_img = create_scene_overlay_image(spec, scene, total_scenes=total_scenes, show_logo=show_logo, t=t_sec, total_dur=pad_dur)
+                    proc.stdin.write(frame_img.tobytes())
+                proc.stdin.close()
+                proc.wait()
+                segment_files.append(seg_out)
+                print(
+                    f"  ✓ Scene {num} [Broadcast B-Roll Cutaway: {cut_desc}] "
+                    f"encoded ({pad_dur:.2f}s @ 30fps)"
+                )
+                continue
+
             # Probe source duration to prevent abrupt EOF looping or snapping
             try:
                 probe_cmd = ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", vis_src]
@@ -1850,6 +1987,9 @@ def main():
     parser = argparse.ArgumentParser(description="London Local Modular Broadcast Video Engine (V9)")
     parser.add_argument("--spec", type=str, default=DEFAULT_SPEC, help="Path to story JSON specification")
     parser.add_argument("--batch", action="store_true", help="Render all story specs in specs/*.json")
+    parser.add_argument("--spec-dir", type=str, default=None, help="Directory of story specs to render in batch")
+    parser.add_argument("--output-dir", type=str, default=None, help="Custom output directory for rendered MP4s")
+    parser.add_argument("--workers", type=int, default=1, help="Number of parallel story render workers")
     parser.add_argument("--show-authorised-logo", type=str, default="True", help="True for London Local logo, False for placeholder")
     parser.add_argument("--force-tts", action="store_true", help="Force re-synthesis of TTS audio")
     parser.add_argument("--draft", action="store_true", help="Render for review under build/drafts; do not update output or demos")
@@ -1857,23 +1997,56 @@ def main():
 
     show_logo = str(args.show_authorised_logo).lower() not in ("false", "0", "no")
 
-    if args.batch:
+    if args.spec_dir or args.batch:
+        target_spec_dir = os.path.abspath(args.spec_dir) if args.spec_dir else os.path.join(BASE_DIR, "specs")
         spec_files = [
-            sp for sp in sorted(glob.glob(os.path.join(BASE_DIR, "specs/*.json")))
+            sp for sp in sorted(glob.glob(os.path.join(target_spec_dir, "*.json")))
             if args.draft or "candidate" not in os.path.basename(sp)
         ]
-        print(f"🚀 Simultaneous Multi-Story Batch Mode: Found {len(spec_files)} story specs")
+        print(f"🚀 Simultaneous Multi-Story Batch Mode: Found {len(spec_files)} story specs in {target_spec_dir} (workers={args.workers})")
         outputs = []
-        for sp in spec_files:
-            out = render_story_from_spec(sp, show_logo=show_logo, force_tts=args.force_tts, draft=args.draft)
-            outputs.append(out)
+        if args.workers > 1:
+            from concurrent.futures import ProcessPoolExecutor, as_completed
+            with ProcessPoolExecutor(max_workers=args.workers) as pool:
+                futs = {
+                    pool.submit(
+                        render_story_from_spec,
+                        sp,
+                        show_logo,
+                        args.force_tts,
+                        args.draft,
+                        args.output_dir,
+                    ): sp
+                    for sp in spec_files
+                }
+                for fut in as_completed(futs):
+                    sp = futs[fut]
+                    out = fut.result()
+                    outputs.append(out)
+            outputs.sort()
+        else:
+            for sp in spec_files:
+                out = render_story_from_spec(
+                    sp,
+                    show_logo=show_logo,
+                    force_tts=args.force_tts,
+                    draft=args.draft,
+                    output_dir_override=args.output_dir,
+                )
+                outputs.append(out)
         print("\n==================================================================")
         print(f"🎉 BATCH COMPLETE: {len(outputs)} Broadcast Videos Rendered:")
         for o in outputs:
             print(f"  • {o}")
         print("==================================================================")
     else:
-        render_story_from_spec(args.spec, show_logo=show_logo, force_tts=args.force_tts, draft=args.draft)
+        render_story_from_spec(
+            args.spec,
+            show_logo=show_logo,
+            force_tts=args.force_tts,
+            draft=args.draft,
+            output_dir_override=args.output_dir,
+        )
 
 
 if __name__ == "__main__":

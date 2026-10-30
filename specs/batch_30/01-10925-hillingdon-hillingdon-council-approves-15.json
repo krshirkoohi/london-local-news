@@ -72,13 +72,13 @@
       "Cabinet Report · 22 Oct 2026"
     ],
     [
-      "Garden Waste Cut",
-      "Annual garden waste charges drop to £69, saving £800,000 yearly.",
+      "Leisure & Pitch Fees",
+      "Leisure centre charges rise 4% alongside higher adult pitch rates.",
       "Cabinet Report · 22 Oct 2026"
     ],
     [
-      "Leisure & Pitch Fees",
-      "Leisure centre charges rise 4% alongside higher adult pitch rates.",
+      "Garden Waste Cut",
+      "Annual garden waste charges drop to £69, saving £800,000 yearly.",
       "Cabinet Report · 22 Oct 2026"
     ]
   ],
@@ -159,7 +159,8 @@
         "trimStart": 0.0,
         "isIllustrative": true,
         "mandatoryDisclaimer": "AI-GENERATED MEDIA",
-        "cutawaySource": "assets/generative/london_planning_leisure_centre_pool_omni.mp4"
+        "cutawaySource": "assets/generative/london_planning_leisure_centre_pool_omni.mp4",
+        "cutawaySource2": "assets/generative/london_env_food_waste_caddy_kerb_omni.mp4"
       },
       "figure": {
         "type": "stat_comparison",
