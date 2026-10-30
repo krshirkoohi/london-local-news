@@ -1,7 +1,7 @@
 # London Local: Civic Broadcast Showcase
 
 <p align="center">
-  <img src="assets/branding/civic_broadcast_engine_architecture.jpg" alt="Automated Civic Broadcast Engine Architecture" width="100%">
+  <img src="docs/civic_broadcast_engine_architecture.jpg" alt="Automated Civic Broadcast Engine Architecture" width="100%">
 </p>
 
 [![Broadcast Showcase](https://img.shields.io/badge/Live_Showcase-GitHub_Pages-brightgreen)](https://krshirkoohi.github.io/london-local-news/)
