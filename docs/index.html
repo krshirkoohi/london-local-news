@@ -10,18 +10,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #090a0f;
-      --card-bg: #12141d;
-      --card-hover: #171a26;
-      --border: rgba(255, 255, 255, 0.08);
-      --border-focus: rgba(255, 255, 255, 0.22);
-      --text: #f4f4f7;
-      --text-muted: #9297a5;
-      --accent-westminster: #d9483f;
-      --accent-tower-hamlets: #3b82f6;
-      --accent-camden: #f59e0b;
-      --accent-southwark: #34d399;
-      --active-accent: var(--accent-tower-hamlets);
+      --bg: #0c0f17;
+      --card-bg: #141824;
+      --card-hover: #1b2132;
+      --border: rgba(255, 255, 255, 0.09);
+      --border-focus: rgba(255, 255, 255, 0.24);
+      --text: #fbfbfe;
+      --text-muted: #9ba3b5;
+      --london-red: #d93829;
+      --johnston-blue: #003688;
+      --accent-westminster: #d93829;
+      --accent-tower-hamlets: #2563eb;
+      --accent-camden: #d97706;
+      --accent-southwark: #059669;
+      --active-accent: var(--london-red);
     }
     * {
       box-sizing: border-box;
@@ -449,10 +451,10 @@
 
   <header>
     <div class="header-badge">
-      <span class="dot"></span>
-      London Local • Civic News Engine
+      <span class="dot" style="background: var(--london-red); box-shadow: 0 0 10px rgba(217, 56, 41, 0.6);"></span>
+      London Local • Independent Civic Broadcast Gazette
     </div>
-    <h1>Direct from Council Agendas to Video</h1>
+    <h1 style="font-family: 'Newsreader', Georgia, serif; font-size: clamp(34px, 4.5vw, 48px); font-weight: 700; letter-spacing: -0.5px;">Direct from Council Agendas to Video</h1>
     <p class="subtitle">
       Automated 9:16 vertical broadcast news reels produced strictly from public council agendas, statutory consultations, and verified civic records.
     </p>
