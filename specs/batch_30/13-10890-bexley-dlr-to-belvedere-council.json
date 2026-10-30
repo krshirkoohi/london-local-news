@@ -1,0 +1,288 @@
+{
+  "videoId": "10890-bexley-dlr-to-belvedere-council",
+  "storyId": "10890",
+  "displayStoryId": "10890",
+  "sourceArticleUrl": "https://londonlocal.news/stories/10890",
+  "articleUrl": "https://londonlocal.news/stories/10890",
+  "sourceUrl": "http://democracy.bexley.gov.uk/documents/g30930/Agenda%20frontsheet%2021st-Oct-2026%2019.30%20Public%20Cabinet.pdf?T=0",
+  "storyTitle": "DLR to Belvedere: Council lobbying efforts continue",
+  "headline": "Bexley pushes for DLR extension to Belvedere",
+  "borough": "Bexley",
+  "postcodeTag": "📍 BEXLEY · TRANSPORT LOBBYING",
+  "committee": "Public Cabinet Bexley, 21 October 2026",
+  "meetingDate": "21 OCT 2026",
+  "meetingDateDisplay": "Bexley · 21 OCT 2026",
+  "storyType": "transport",
+  "targetDurationSeconds": 30,
+  "keyPointsHeading": "How will Bexley secure the DLR?",
+  "factsFiguresHeading": "Regional Alliance & Plan",
+  "watchability": {
+    "targetAudience": "Bexley residents and local taxpayers",
+    "hook": "Bexley pushes for DLR extension to Belvedere",
+    "hookStyle": "Immediate factual council decision and resident impact",
+    "localRelevance": "Directly affects Bexley residents and council services",
+    "suitability": "approved_for_video"
+  },
+  "editorialGate": {
+    "status": "approved",
+    "editorApproved": true,
+    "reviewedBy": "London Local Editorial Review (Batch 30)"
+  },
+  "branding": {
+    "theme": "london-local-broadcast",
+    "showWatermark": true,
+    "showCaptions": false,
+    "voiceProfile": "en-gb-advisor-1"
+  },
+  "claims": [
+    {
+      "claimId": "C10890-1",
+      "statement": "Bexley Council is actively lobbying through Local London, a partnership of nine boroughs.",
+      "sourceQuote": "He stated that discussions are being held with Greenwich Council, London Councils, and Local London, a sub-regional grouping of nine boroughs.",
+      "sourceDocument": "Public Cabinet Bexley, 21 October 2026",
+      "sourceDocumentUrl": "http://democracy.bexley.gov.uk/documents/g30930/Agenda%20frontsheet%2021st-Oct-2026%2019.30%20Public%20Cabinet.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10890-2",
+      "statement": "The DLR extension to Belvedere is designated as a top priority for Bexley Council.",
+      "sourceQuote": "Councillor Smith confirmed that the DLR extension to Belvedere remains a top priority and that he would be discussing it with the Leader of Greenwich Council on Friday.",
+      "sourceDocument": "Public Cabinet Bexley, 21 October 2026",
+      "sourceDocumentUrl": "http://democracy.bexley.gov.uk/documents/g30930/Agenda%20frontsheet%2021st-Oct-2026%2019.30%20Public%20Cabinet.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10890-3",
+      "statement": "The financing package to extend the DLR into Thamesmead is currently being concluded.",
+      "sourceQuote": "He also noted that the financing package for the DLR extension into Thamesmead is still being finalised.",
+      "sourceDocument": "Public Cabinet Bexley, 21 October 2026",
+      "sourceDocumentUrl": "http://democracy.bexley.gov.uk/documents/g30930/Agenda%20frontsheet%2021st-Oct-2026%2019.30%20Public%20Cabinet.pdf?T=0",
+      "verified": true
+    }
+  ],
+  "takeawayCard": {
+    "kicker": "THAMESMEAD FINANCING",
+    "title": "Funding Package Finalisation Underway",
+    "subtitle": "Thamesmead funding is currently being finalised."
+  },
+  "keyPoints": [
+    [
+      "Cross-Borough Alliance",
+      "Bexley is partnering with 9 east London boroughs to demand infrastructure.",
+      "Public Cabinet · 21 Oct 2026"
+    ],
+    [
+      "Greenwich Leadership Talks",
+      "Cabinet leaders will meet Greenwich Council on Friday to advance delivery talks.",
+      "Public Cabinet · 21 Oct 2026"
+    ],
+    [
+      "Corporate Plan Priority",
+      "The Corporate Plan 2026-2030 formally prioritises lobbying for the Belvedere extension.",
+      "Public Cabinet · 21 Oct 2026"
+    ]
+  ],
+  "timeline": [
+    {
+      "sceneNumber": 1,
+      "type": "video_with_figure",
+      "durationSeconds": 3.2,
+      "claimIds": [
+        "C10890-1"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/story_10890_s1.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "onScreenGraphic": {
+        "kicker": "📍 BEXLEY · TRANSPORT LOBBYING",
+        "headline": "Bexley pushes for DLR extension to Belvedere",
+        "body": "Cabinet confirms joint lobbying for rail extension."
+      },
+      "voiceoverText": "Bexley Council is ramping up lobbying to bring the DLR extension to Belvedere.",
+      "citationFooter": "SOURCE: Public Cabinet Bexley, 21 October 2026 · Story #10890"
+    },
+    {
+      "sceneNumber": 2,
+      "type": "document_highlight",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10890-1",
+        "C10890-2"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/civic_bexley.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "motion_document",
+        "data": {
+          "docHeaderLeft": "BEXLEY · OCT 2026",
+          "docHeaderRight": "CABINET REPORT",
+          "docSubject": "DLR Belvedere Extension Lobbying",
+          "excerptPrefix": "\"Councillor Smith confirmed that ",
+          "highlightPhrase": "the DLR extension to Belvedere remains a top priority",
+          "excerptSuffix": " in infrastructure discussions.\"",
+          "mover": "Cllr Cameron Smith, Deputy Leader",
+          "seconder": "Public Cabinet Bexley",
+          "receiptStamp": "CABINET UPDATE"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "VERIFIED COUNCIL RECORD",
+        "headline": "DLR Belvedere Extension Lobbying",
+        "body": "Bexley · 21 OCT 2026"
+      },
+      "voiceoverText": "Cabinet confirmed ongoing talks with Greenwich and regional partners to secure vital infrastructure investment unlocking new housing and jobs.",
+      "citationFooter": "SOURCE: Public Cabinet Bexley, 21 October 2026 Public Reports Pack"
+    },
+    {
+      "sceneNumber": 3,
+      "type": "generative_broll",
+      "durationSeconds": 6.0,
+      "claimIds": [
+        "C10890-2",
+        "C10890-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/london_env_district_heating_network_omni.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA",
+        "cutawaySource": "assets/generative/london_transport_dlr_viaduct_omni.mp4"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "LOCAL LONDON",
+              "value": "9",
+              "label": "Boroughs in sub-region",
+              "subtext": "Boroughs in sub-region",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "CORPORATE PLAN",
+              "value": "2026-30",
+              "label": "Infrastructure focus term",
+              "subtext": "Infrastructure focus term",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "KEY IMPACTS",
+        "headline": "How will Bexley secure the DLR?",
+        "body": "Key findings from Bexley Council."
+      },
+      "voiceoverText": "Cross-borough lobbying unites nine authorities, bilateral Greenwich talks are scheduled, and the Belvedere extension anchors the Corporate Plan.",
+      "citationFooter": "SOURCE: Bexley Council · 21 OCT 2026"
+    },
+    {
+      "sceneNumber": 4,
+      "type": "broadsheet_split",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10890-1",
+        "C10890-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/civic_bexley.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 2.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "LOCAL LONDON",
+              "value": "9",
+              "label": "Boroughs in sub-region",
+              "subtext": "Boroughs in sub-region",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "CORPORATE PLAN",
+              "value": "2026-30",
+              "label": "Infrastructure focus term",
+              "subtext": "Infrastructure focus term",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "FACTS & FIGURES",
+        "headline": "Regional Alliance & Plan",
+        "body": "Funding Package Finalisation Underway"
+      },
+      "voiceoverText": "Nine boroughs back the sub-regional push through 2030, while funding packages for the Thamesmead section are being finalised.",
+      "citationFooter": "SOURCE: Public Cabinet Bexley, 21 October 2026 · Verified Record"
+    },
+    {
+      "sceneNumber": 5,
+      "type": "outro_archive",
+      "durationSeconds": 6.5,
+      "claimIds": [
+        "C10890-1"
+      ],
+      "visualAsset": {
+        "type": "solid",
+        "source": "assets/branding/london-local-wordmark.png",
+        "isIllustrative": false,
+        "mandatoryDisclaimer": null
+      },
+      "figure": {
+        "type": "outro_archive",
+        "data": {
+          "tagline": "Independent civic intelligence across London's 33 councils.",
+          "ctaKicker": "READ THE FULL VERIFIED STORY",
+          "ctaUrl": "londonlocal.news/stories/10890"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "READ FULL STORY",
+        "headline": "Read Story #10890 online",
+        "body": "Direct from council agendas to your phone."
+      },
+      "voiceoverText": "Track London transport infrastructure developments closely. Read the full report at London Local dot news.",
+      "citationFooter": "SOURCE: londonlocal.news/stories/10890"
+    }
+  ]
+}

@@ -1,0 +1,288 @@
+{
+  "videoId": "10818-richmond-upon-thames-ai-driven",
+  "storyId": "10818",
+  "displayStoryId": "10818",
+  "sourceArticleUrl": "https://londonlocal.news/stories/10818",
+  "articleUrl": "https://londonlocal.news/stories/10818",
+  "sourceUrl": "https://cabnet.richmond.gov.uk/documents/g500000790/Agenda%20frontsheet%20Tuesday%2020-Oct-2026%2019.00%20Audit%20Standards%20and%20Statutory%20Accounts%20Committee.pdf?T=0",
+  "storyTitle": "AI-driven fraud poses growing threat to council services",
+  "headline": "AI fraud poses escalating threat to Richmond Council",
+  "borough": "Richmond upon Thames",
+  "postcodeTag": "📍 RICHMOND · AUDIT COMMITTEE",
+  "committee": "Audit, Standards and Statutory Accounts Committee Richmond upon Thames, 20 October 2026",
+  "meetingDate": "20 OCT 2026",
+  "meetingDateDisplay": "Richmond upon Thames · 20 OCT 2026",
+  "storyType": "council_decision",
+  "targetDurationSeconds": 30,
+  "keyPointsHeading": "What did the fraud audit uncover?",
+  "factsFiguresHeading": "Fraud Savings & Casework",
+  "watchability": {
+    "targetAudience": "Richmond upon Thames residents and local taxpayers",
+    "hook": "AI fraud poses escalating threat to Richmond Council",
+    "hookStyle": "Immediate factual council decision and resident impact",
+    "localRelevance": "Directly affects Richmond upon Thames residents and council services",
+    "suitability": "approved_for_video"
+  },
+  "editorialGate": {
+    "status": "approved",
+    "editorApproved": true,
+    "reviewedBy": "London Local Editorial Review (Batch 30)"
+  },
+  "branding": {
+    "theme": "london-local-broadcast",
+    "showWatermark": true,
+    "showCaptions": false,
+    "voiceProfile": "en-gb-advisor-1"
+  },
+  "claims": [
+    {
+      "claimId": "C10818-1",
+      "statement": "Criminals are using artificial intelligence to fabricate transactional data and fake documents for Richmond Council services.",
+      "sourceQuote": "Criminals are leveraging AI to generate realistic-looking fake documents and transactional data to support fraudulent applications for Council services, and are also using it to assist with false digital identity fabrications.",
+      "sourceDocument": "Audit, Standards and Statutory Accounts Committee Richmond upon Thames, 20 October 2026",
+      "sourceDocumentUrl": "https://cabnet.richmond.gov.uk/documents/g500000790/Agenda%20frontsheet%20Tuesday%2020-Oct-2026%2019.00%20Audit%20Standards%20and%20Statutory%20Accounts%20Committee.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10818-2",
+      "statement": "The South West London Fraud Partnership has stopped or identified more than £651,000 in fraudulent overpayments.",
+      "sourceQuote": "The partnership has identified or prevented overpayments and achieved notional savings totaling £651,287.",
+      "sourceDocument": "Audit, Standards and Statutory Accounts Committee Richmond upon Thames, 20 October 2026",
+      "sourceDocumentUrl": "https://cabnet.richmond.gov.uk/documents/g500000790/Agenda%20frontsheet%20Tuesday%2020-Oct-2026%2019.00%20Audit%20Standards%20and%20Statutory%20Accounts%20Committee.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10818-3",
+      "statement": "Three temporary accommodation placements were ended following verification visits by anti-fraud teams.",
+      "sourceQuote": "Verification visits are being carried out, and three placements have already been terminated due to issues with their validity.",
+      "sourceDocument": "Audit, Standards and Statutory Accounts Committee Richmond upon Thames, 20 October 2026",
+      "sourceDocumentUrl": "https://cabnet.richmond.gov.uk/documents/g500000790/Agenda%20frontsheet%20Tuesday%2020-Oct-2026%2019.00%20Audit%20Standards%20and%20Statutory%20Accounts%20Committee.pdf?T=0",
+      "verified": true
+    }
+  ],
+  "takeawayCard": {
+    "kicker": "FRAUD PLAN PROGRESS",
+    "title": "Council Targets Evolving Scams",
+    "subtitle": "Teams use data analytics to prevent criminal scams."
+  },
+  "keyPoints": [
+    [
+      "AI Document Forgery",
+      "Criminals are generating realistic fake documents to claim council services fraudulently.",
+      "Audit Committee · 20 Oct 2026"
+    ],
+    [
+      "Housing Fraud Terminations",
+      "Three temporary accommodation placements were terminated following targeted verification visits.",
+      "Audit Committee · 20 Oct 2026"
+    ],
+    [
+      "Partnership Detection Work",
+      "The regional partnership investigated 141 fraud cases with thirty-five sanctions secured.",
+      "Audit Committee · 20 Oct 2026"
+    ]
+  ],
+  "timeline": [
+    {
+      "sceneNumber": 1,
+      "type": "video_with_figure",
+      "durationSeconds": 3.2,
+      "claimIds": [
+        "C10818-1"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/story_10818_s1.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "onScreenGraphic": {
+        "kicker": "📍 RICHMOND · AUDIT COMMITTEE",
+        "headline": "AI fraud poses escalating threat to Richmond Council",
+        "body": "AI scams target housing benefits and council services."
+      },
+      "voiceoverText": "Artificial intelligence is driving an escalating wave of sophisticated fraud against Richmond Council.",
+      "citationFooter": "SOURCE: Audit, Standards and Statutory Accounts Committee Richmond upon Thames, 20 October 2026 · Story #10818"
+    },
+    {
+      "sceneNumber": 2,
+      "type": "document_highlight",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10818-1",
+        "C10818-2"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/civic_richmond-upon-thames.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "motion_document",
+        "data": {
+          "docHeaderLeft": "RICHMOND COUNCIL · OCT 2026",
+          "docHeaderRight": "AUDIT REPORT",
+          "docSubject": "Fraud Risk & Strategy Update",
+          "excerptPrefix": "\"Criminals are leveraging AI to ",
+          "highlightPhrase": "generate realistic-looking fake documents and transactional data",
+          "excerptSuffix": " to support fraudulent applications.\"",
+          "mover": "Kevin Holland, Assistant Director",
+          "seconder": "Audit and Standards Committee",
+          "receiptStamp": "FRAUD AUDIT"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "VERIFIED COUNCIL RECORD",
+        "headline": "Fraud Risk & Strategy Update",
+        "body": "Richmond upon Thames · 20 OCT 2026"
+      },
+      "voiceoverText": "Audit chiefs report criminals are using artificial intelligence to forge documents and fabricate digital identities to access services.",
+      "citationFooter": "SOURCE: Audit, Standards and Statutory Accounts Committee Richmond upon Thames, 20 October 2026 Public Reports Pack"
+    },
+    {
+      "sceneNumber": 3,
+      "type": "generative_broll",
+      "durationSeconds": 6.0,
+      "claimIds": [
+        "C10818-2",
+        "C10818-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/london_finance_cyber_fraud_workstation_omni.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA",
+        "cutawaySource": "assets/generative/london_terraced_houses_omni.mp4"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "SAVINGS ACHIEVED",
+              "value": "£651,287",
+              "label": "Saved in prevented fraud",
+              "subtext": "Saved in prevented fraud",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "CASES INVESTIGATED",
+              "value": "141",
+              "label": "Fraud cases investigated",
+              "subtext": "Fraud cases investigated",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "KEY IMPACTS",
+        "headline": "What did the fraud audit uncover?",
+        "body": "Key findings from Richmond upon Thames Council."
+      },
+      "voiceoverText": "Investigators have probed one hundred and forty-one cases, tackling illegal subletting and terminating fraudulent housing placements across the borough.",
+      "citationFooter": "SOURCE: Richmond upon Thames Council · 20 OCT 2026"
+    },
+    {
+      "sceneNumber": 4,
+      "type": "broadsheet_split",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10818-1",
+        "C10818-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/civic_richmond-upon-thames.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 2.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "SAVINGS ACHIEVED",
+              "value": "£651,287",
+              "label": "Saved in prevented fraud",
+              "subtext": "Saved in prevented fraud",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "CASES INVESTIGATED",
+              "value": "141",
+              "label": "Fraud cases investigated",
+              "subtext": "Fraud cases investigated",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "FACTS & FIGURES",
+        "headline": "Fraud Savings & Casework",
+        "body": "Council Targets Evolving Scams"
+      },
+      "voiceoverText": "The regional partnership has prevented over six hundred and fifty thousand pounds in fraudulent claims using updated data analytics.",
+      "citationFooter": "SOURCE: Audit, Standards and Statutory Accounts Committee Richmond upon Thames, 20 October 2026 · Verified Record"
+    },
+    {
+      "sceneNumber": 5,
+      "type": "outro_archive",
+      "durationSeconds": 6.5,
+      "claimIds": [
+        "C10818-1"
+      ],
+      "visualAsset": {
+        "type": "solid",
+        "source": "assets/branding/london-local-wordmark.png",
+        "isIllustrative": false,
+        "mandatoryDisclaimer": null
+      },
+      "figure": {
+        "type": "outro_archive",
+        "data": {
+          "tagline": "Independent civic intelligence across London's 33 councils.",
+          "ctaKicker": "READ THE FULL VERIFIED STORY",
+          "ctaUrl": "londonlocal.news/stories/10818"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "READ FULL STORY",
+        "headline": "Read Story #10818 online",
+        "body": "Direct from council agendas to your phone."
+      },
+      "voiceoverText": "Richmond is now deploying counter-fraud artificial intelligence tools. Read the full report at London Local dot news.",
+      "citationFooter": "SOURCE: londonlocal.news/stories/10818"
+    }
+  ]
+}

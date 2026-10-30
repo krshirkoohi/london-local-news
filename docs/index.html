@@ -489,6 +489,36 @@
         <div class="tab-title">61 Schools in High-Heat Tier</div>
         <div class="tab-status">Environment Scrutiny Audit</div>
       </div>
+      <!-- Hillingdon -->
+      <div class="story-tab" style="--tab-accent: #ec4899" onclick="selectStory('hillingdon', this)">
+        <div class="tab-borough">📍 Hillingdon · Story #10925</div>
+        <div class="tab-title">15% Rise in Parking & Council Fees</div>
+        <div class="tab-status">Cabinet Decision · £65m Shortfall</div>
+      </div>
+      <!-- Kensington and Chelsea -->
+      <div class="story-tab" style="--tab-accent: #8b5cf6" onclick="selectStory('kensington', this)">
+        <div class="tab-borough">📍 Kensington & Chelsea · #10901</div>
+        <div class="tab-title">Central Line Tube Noise Outcry</div>
+        <div class="tab-status">Full Council · Dec Track Works</div>
+      </div>
+      <!-- Lambeth -->
+      <div class="story-tab" style="--tab-accent: #14b8a6" onclick="selectStory('lambeth', this)">
+        <div class="tab-borough">📍 Lambeth · Story #10850</div>
+        <div class="tab-title">Council Halts 2 Estate Demolitions</div>
+        <div class="tab-status">Central Hill & Cressingham Retained</div>
+      </div>
+      <!-- Islington -->
+      <div class="story-tab" style="--tab-accent: #f97316" onclick="selectStory('islington', this)">
+        <div class="tab-borough">📍 Islington · Story #10802</div>
+        <div class="tab-title">Safer Cycle Lanes at Roadworks</div>
+        <div class="tab-status">Transport Scrutiny · Dismount Review</div>
+      </div>
+      <!-- Barnet -->
+      <div class="story-tab" style="--tab-accent: #eab308" onclick="selectStory('barnet', this)">
+        <div class="tab-borough">📍 Barnet · Story #10811</div>
+        <div class="tab-title">Gambling Harms Emergency Declared</div>
+        <div class="tab-status">Full Council · 7-Service Strategy</div>
+      </div>
     </div>
   </header>
 
@@ -700,6 +730,136 @@
           {
             statement: "Ranked vulnerability data informs capital prioritisation for solar shading, tree planting, and cooling ventilation.",
             cite: "London Local Story #10631 · Para 6"
+          }
+        ]
+      },
+      hillingdon: {
+        id: "10925",
+        borough: "Hillingdon",
+        accent: "#ec4899",
+        videoSrc: "./videos/hillingdon_10925_broadcast.mp4",
+        kicker: "📍 HILLINGDON · CABINET DECISION (22 OCT 2026)",
+        title: "Hillingdon Approves 15% Rise in Most Fees & Charges Including Parking",
+        desc: "Hillingdon Council's Cabinet approved a 15% uplift across most discretionary fees and charges to raise an estimated £3.3m towards a £65m two-year government funding shortfall, trimming the resident parking discount to 10% while keeping 30 minutes free.",
+        stat1: { val: "£3.3M", lbl: "Projected New Annual Revenue" },
+        stat2: { val: "£65M", lbl: "Assessed Funding Shortfall" },
+        sourceUrl: "https://modgov.hillingdon.gov.uk/documents/g5211/Agenda%20frontsheet%2022nd-Oct-2026%2019.00%20CABINET.pdf?T=0",
+        claims: [
+          {
+            statement: "Hillingdon Cabinet approved a 15% increase on most discretionary fees and charges to generate an estimated £3.3m.",
+            cite: "Hillingdon Cabinet Reports Pack, 22 Oct 2026 · Story #10925"
+          },
+          {
+            statement: "The council faces a £65m shortfall in assessed government funding over the next two financial years.",
+            cite: "Hillingdon Cabinet Reports Pack, 22 Oct 2026"
+          },
+          {
+            statement: "Resident parking discounts fall from ~40% to 10% (retaining 30 mins free), while garden waste charges drop to £69.",
+            cite: "Hillingdon Cabinet Reports Pack, 22 Oct 2026"
+          }
+        ]
+      },
+      kensington: {
+        id: "10901",
+        borough: "Kensington and Chelsea",
+        accent: "#8b5cf6",
+        videoSrc: "./videos/kensington_10901_broadcast.mp4",
+        kicker: "📍 KENSINGTON & CHELSEA · FULL COUNCIL (21 OCT 2026)",
+        title: "Central Line Noise Pollution Sparks Resident Petition & Earlier TfL Track Works",
+        desc: "Following TfL's 2025 removal of noise-dampening pads and a 324-signature residents' petition presented at Full Council, TfL brought forward installation of resilient noise-dampening track to December 2026 ahead of its February 2027 target.",
+        stat1: { val: "324", lbl: "Resident Petition Signatures" },
+        stat2: { val: "DEC 2026", lbl: "Accelerated Track Works Start" },
+        sourceUrl: "https://rbkc.moderngov.co.uk/Committees/documents/g4189/Agenda%20frontsheet%2021st-Oct-2026%2018.30%20Full%20Council.pdf?T=0",
+        claims: [
+          {
+            statement: "TfL's removal of noise-dampening track pads in 2025 exacerbated persistent Central Line vibrations for RBKC residents.",
+            cite: "RBKC Full Council Agenda & Minutes, 21 Oct 2026 · Story #10901"
+          },
+          {
+            statement: "TfL confirmed resilient noise-dampening track installation will begin in December 2026, brought forward from February 2027.",
+            cite: "RBKC Full Council Report, 21 Oct 2026"
+          },
+          {
+            statement: "Local residents submitted a 324-signature petition demanding urgent noise mitigation and rail grinding.",
+            cite: "RBKC Full Council Petition Presentation, 21 Oct 2026"
+          }
+        ]
+      },
+      lambeth: {
+        id: "10850",
+        borough: "Lambeth",
+        accent: "#14b8a6",
+        videoSrc: "./videos/lambeth_10850_broadcast.mp4",
+        kicker: "📍 LAMBETH · CABINET DECISION (21 OCT 2026)",
+        title: "Lambeth Council Halts Regeneration of Central Hill & Cressingham Gardens Estates",
+        desc: "Lambeth Cabinet halted demolition and regeneration schemes for Central Hill and Cressingham Gardens after an options appraisal found redevelopment unviable, committing to retain both estates with £83m in 30-year maintenance and restore 200 empty homes by Christmas.",
+        stat1: { val: "£53M", lbl: "Central Hill 30-Yr Maintenance" },
+        stat2: { val: "£30M", lbl: "Cressingham 30-Yr Maintenance" },
+        sourceUrl: "https://moderngov.lambeth.gov.uk/documents/g18830/Agenda%20frontsheet%20Wednesday%2021-Oct-2026%2017.00%20Cabinet.pdf?T=0",
+        claims: [
+          {
+            statement: "Lambeth Council halted regeneration plans for Central Hill and Cressingham Gardens, retaining both as council housing stock.",
+            cite: "Lambeth Cabinet Estate Renewal Appraisal, 21 Oct 2026 · Story #10850"
+          },
+          {
+            statement: "30-year maintenance is costed at £53m for Central Hill and £30m for Cressingham Gardens.",
+            cite: "Lambeth Cabinet Report Pack, 21 Oct 2026"
+          },
+          {
+            statement: "The administration identified over 500 empty council homes and committed to returning 200 to occupation before Christmas.",
+            cite: "Lambeth Cabinet Report Pack, 21 Oct 2026"
+          }
+        ]
+      },
+      islington: {
+        id: "10802",
+        borough: "Islington",
+        accent: "#f97316",
+        videoSrc: "./videos/islington_10802_broadcast.mp4",
+        kicker: "📍 ISLINGTON · TRANSPORT SCRUTINY (20 OCT 2026)",
+        title: "Islington Councillors Demand Consistent Cyclist Safety & End to 'Dismount' Signs at Roadworks",
+        desc: "Islington's Environment, Climate and Transport Scrutiny Committee challenged inconsistent roadworks layouts between Middleton Square and Highbury Grove, with officers conceding that 'cyclist dismount' signs fail disabled cyclists using bikes as mobility aids.",
+        stat1: { val: "3.5M", lbl: "Minimum Bus Lane Clearance" },
+        stat2: { val: "2.75M", lbl: "Minimum General Traffic Width" },
+        sourceUrl: "https://democracy.islington.gov.uk/documents/g5444/Agenda%20frontsheet%2020th-Oct-2026%2019.30%20Environment%20Climate%20and%20Transport%20Scrutiny%20Committee.pdf?T=0",
+        claims: [
+          {
+            statement: "Cllr Sophia Brown highlighted contrasting roadworks cycle safety provisions at Middleton Square versus Highbury Grove.",
+            cite: "Islington Environment, Climate & Transport Scrutiny, 20 Oct 2026 · Story #10802"
+          },
+          {
+            statement: "Maintaining two-way cycling at Highbury Grove required 3.0m against 3.5m bus and 2.75m traffic carriageway minimums.",
+            cite: "Islington Network Management Scrutiny Report, 20 Oct 2026"
+          },
+          {
+            statement: "Officers acknowledged 'cyclist dismount' signs are unacceptable for residents using cycles as mobility aids.",
+            cite: "Islington Environment, Climate & Transport Scrutiny, 20 Oct 2026"
+          }
+        ]
+      },
+      barnet: {
+        id: "10811",
+        borough: "Barnet",
+        accent: "#eab308",
+        videoSrc: "./videos/barnet_10811_broadcast.mp4",
+        kicker: "📍 BARNET · FULL COUNCIL MOTION (20 OCT 2026)",
+        title: "Barnet Council Declares Gambling Harms Emergency & Challenges Licensing Rules",
+        desc: "Barnet Full Council declared a borough-wide gambling harms emergency, uniting seven council departments, reviewing council advertising and sponsorship rules, and challenging the Gambling Commission for stronger local licensing powers.",
+        stat1: { val: "7 TEAMS", lbl: "Cross-Council Harm Strategy" },
+        stat2: { val: "2026", lbl: "Emergency Motion Carried" },
+        sourceUrl: "https://barnet.moderngov.co.uk/documents/g12074/Agenda%20frontsheet%2020th-Oct-2026%2019.00%20Council.pdf?T=0",
+        claims: [
+          {
+            statement: "Barnet Full Council officially declared a gambling harms emergency on 20 October 2026.",
+            cite: "Barnet Full Council Agenda & Motion, 20 Oct 2026 · Story #10811"
+          },
+          {
+            statement: "The council pledged to review advertising and sponsorship policies across seven service areas to prevent normalising gambling.",
+            cite: "Barnet Full Council Motion · Story #10811"
+          },
+          {
+            statement: "Barnet will write to the Gambling Commission demanding greater local community and councillor powers over high-street licensing.",
+            cite: "Barnet Full Council Motion · Story #10811"
           }
         ]
       }

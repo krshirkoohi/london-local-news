@@ -1,0 +1,288 @@
+{
+  "videoId": "10850-lambeth-lambeth-council-halts-regeneration",
+  "storyId": "10850",
+  "displayStoryId": "10850",
+  "sourceArticleUrl": "https://londonlocal.news/stories/10850",
+  "articleUrl": "https://londonlocal.news/stories/10850",
+  "sourceUrl": "https://moderngov.lambeth.gov.uk/documents/g18830/Agenda%20frontsheet%20Wednesday%2021-Oct-2026%2017.00%20Cabinet.pdf?T=0",
+  "storyTitle": "Lambeth Council halts regeneration plans for Central Hill and Cressingham Gardens estates",
+  "headline": "Lambeth halts regeneration of two major housing estates",
+  "borough": "Lambeth",
+  "postcodeTag": "📍 LAMBETH · CABINET DECISION",
+  "committee": "Cabinet Lambeth, 21 October 2026",
+  "meetingDate": "21 OCT 2026",
+  "meetingDateDisplay": "Lambeth · 21 OCT 2026",
+  "storyType": "housing",
+  "targetDurationSeconds": 30,
+  "keyPointsHeading": "What does the decision mean?",
+  "factsFiguresHeading": "Estate Maintenance Costs",
+  "watchability": {
+    "targetAudience": "Lambeth residents and local taxpayers",
+    "hook": "Lambeth halts regeneration of two major housing estates",
+    "hookStyle": "Immediate factual council decision and resident impact",
+    "localRelevance": "Directly affects Lambeth residents and council services",
+    "suitability": "approved_for_video"
+  },
+  "editorialGate": {
+    "status": "approved",
+    "editorApproved": true,
+    "reviewedBy": "London Local Editorial Review (Batch 30)"
+  },
+  "branding": {
+    "theme": "london-local-broadcast",
+    "showWatermark": true,
+    "showCaptions": false,
+    "voiceProfile": "en-gb-advisor-1"
+  },
+  "claims": [
+    {
+      "claimId": "C10850-1",
+      "statement": "Lambeth Council has halted regeneration plans for Central Hill and Cressingham Gardens.",
+      "sourceQuote": "Lambeth Council has decided to halt regeneration plans for the Central Hill and Cressingham Gardens estates, opting instead to retain them as council housing stock.",
+      "sourceDocument": "Cabinet Lambeth, 21 October 2026",
+      "sourceDocumentUrl": "https://moderngov.lambeth.gov.uk/documents/g18830/Agenda%20frontsheet%20Wednesday%2021-Oct-2026%2017.00%20Cabinet.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10850-2",
+      "statement": "Maintenance over 30 years is estimated at £53 million for Central Hill and £30 million for Cressingham Gardens.",
+      "sourceQuote": "An estimated £53 million will be required over 30 years for maintenance at Central Hill, and approximately £30 million for Cressingham Gardens over the same period.",
+      "sourceDocument": "Cabinet Lambeth, 21 October 2026",
+      "sourceDocumentUrl": "https://moderngov.lambeth.gov.uk/documents/g18830/Agenda%20frontsheet%20Wednesday%2021-Oct-2026%2017.00%20Cabinet.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10850-3",
+      "statement": "The council identified over 500 empty homes and plans to bring 200 back into use before Christmas.",
+      "sourceQuote": "The council identified over 500 empty council homes upon taking control and committed to bringing 200 of those back into use before Christmas.",
+      "sourceDocument": "Cabinet Lambeth, 21 October 2026",
+      "sourceDocumentUrl": "https://moderngov.lambeth.gov.uk/documents/g18830/Agenda%20frontsheet%20Wednesday%2021-Oct-2026%2017.00%20Cabinet.pdf?T=0",
+      "verified": true
+    }
+  ],
+  "takeawayCard": {
+    "kicker": "STRATEGIC SHIFT",
+    "title": "Focus turns to refurbishment",
+    "subtitle": "The council prioritises occupying existing vacant homes."
+  },
+  "keyPoints": [
+    [
+      "Estate Demolition Halted",
+      "Lambeth will retain both estates rather than proceeding with proposed regeneration schemes.",
+      "Cabinet Lambeth · 21 Oct 2026"
+    ],
+    [
+      "Thirty-Year Maintenance Costs",
+      "Essential upkeep requires £53 million at Central Hill and £30 million at Cressingham.",
+      "Cabinet Lambeth · 21 Oct 2026"
+    ],
+    [
+      "Tackling Empty Homes",
+      "The council aims to return 200 vacant council homes before Christmas.",
+      "Cabinet Lambeth · 21 Oct 2026"
+    ]
+  ],
+  "timeline": [
+    {
+      "sceneNumber": 1,
+      "type": "video_with_figure",
+      "durationSeconds": 3.2,
+      "claimIds": [
+        "C10850-1"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/london_housing_lowrise_garden_estate_omni.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "onScreenGraphic": {
+        "kicker": "📍 LAMBETH · CABINET DECISION",
+        "headline": "Lambeth halts regeneration of two major housing estates",
+        "body": "Cabinet halts demolition to retain two key estates."
+      },
+      "voiceoverText": "Lambeth Council has officially halted regeneration plans for two major housing estates.",
+      "citationFooter": "SOURCE: Cabinet Lambeth, 21 October 2026 · Story #10850"
+    },
+    {
+      "sceneNumber": 2,
+      "type": "document_highlight",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10850-1",
+        "C10850-2"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/london_civic_edwardian_brick_omni.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "motion_document",
+        "data": {
+          "docHeaderLeft": "LAMBETH · 21 OCT 2026",
+          "docHeaderRight": "CABINET REPORT",
+          "docSubject": "Estate Renewal Options Appraisal Report",
+          "excerptPrefix": "\"An options appraisal found that ",
+          "highlightPhrase": "no estate renewal options were financially viable or affordable",
+          "excerptSuffix": " beyond basic maintenance works.\"",
+          "mover": "Cllr Scott Ainslie",
+          "seconder": "Lambeth Council Cabinet",
+          "receiptStamp": "CABINET DECISION"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "VERIFIED COUNCIL RECORD",
+        "headline": "Estate Renewal Options Appraisal Report",
+        "body": "Lambeth · 21 OCT 2026"
+      },
+      "voiceoverText": "Cabinet approved retaining the estates after an appraisal found proposed renewal options were not financially viable or affordable.",
+      "citationFooter": "SOURCE: Cabinet Lambeth, 21 October 2026 Public Reports Pack"
+    },
+    {
+      "sceneNumber": 3,
+      "type": "generative_broll",
+      "durationSeconds": 6.0,
+      "claimIds": [
+        "C10850-2",
+        "C10850-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/london_housing_redbrick_estate_omni.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA",
+        "cutawaySource": "assets/generative/london_housing_empty_boarded_terrace_omni.mp4"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "CENTRAL HILL",
+              "value": "£53m",
+              "label": "Thirty-year repair cost",
+              "subtext": "Thirty-year repair cost",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "CRESSINGHAM GARDENS",
+              "value": "£30m",
+              "label": "Thirty-year repair cost",
+              "subtext": "Thirty-year repair cost",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "KEY IMPACTS",
+        "headline": "What does the decision mean?",
+        "body": "Key findings from Lambeth Council."
+      },
+      "voiceoverText": "Demolition plans have ended, thirty-year maintenance programmes are funded, and two hundred empty homes will be restored.",
+      "citationFooter": "SOURCE: Lambeth Council · 21 OCT 2026"
+    },
+    {
+      "sceneNumber": 4,
+      "type": "broadsheet_split",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10850-1",
+        "C10850-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/london_housing_scaffolding_retrofit_omni.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 2.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "CENTRAL HILL",
+              "value": "£53m",
+              "label": "Thirty-year repair cost",
+              "subtext": "Thirty-year repair cost",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "CRESSINGHAM GARDENS",
+              "value": "£30m",
+              "label": "Thirty-year repair cost",
+              "subtext": "Thirty-year repair cost",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "FACTS & FIGURES",
+        "headline": "Estate Maintenance Costs",
+        "body": "Focus turns to refurbishment"
+      },
+      "voiceoverText": "Upkeep will cost fifty-three million pounds at Central Hill and thirty million pounds at Cressingham Gardens.",
+      "citationFooter": "SOURCE: Cabinet Lambeth, 21 October 2026 · Verified Record"
+    },
+    {
+      "sceneNumber": 5,
+      "type": "outro_archive",
+      "durationSeconds": 6.5,
+      "claimIds": [
+        "C10850-1"
+      ],
+      "visualAsset": {
+        "type": "solid",
+        "source": "assets/branding/london-local-wordmark.png",
+        "isIllustrative": false,
+        "mandatoryDisclaimer": null
+      },
+      "figure": {
+        "type": "outro_archive",
+        "data": {
+          "tagline": "Independent civic intelligence across London's 33 councils.",
+          "ctaKicker": "READ THE FULL VERIFIED STORY",
+          "ctaUrl": "londonlocal.news/stories/10850"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "READ FULL STORY",
+        "headline": "Read Story #10850 online",
+        "body": "Direct from council agendas to your phone."
+      },
+      "voiceoverText": "The council is now prioritising refurbishment. Read the full report at London Local dot news.",
+      "citationFooter": "SOURCE: londonlocal.news/stories/10850"
+    }
+  ]
+}

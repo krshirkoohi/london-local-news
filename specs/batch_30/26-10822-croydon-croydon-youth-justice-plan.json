@@ -1,0 +1,288 @@
+{
+  "videoId": "10822-croydon-croydon-youth-justice-plan",
+  "storyId": "10822",
+  "displayStoryId": "10822",
+  "sourceArticleUrl": "https://londonlocal.news/stories/10822",
+  "articleUrl": "https://londonlocal.news/stories/10822",
+  "sourceUrl": "https://democracy.croydon.gov.uk/documents/g4499/Agenda%20frontsheet%2020th-Oct-2026%2018.30%20Scrutiny%20Children%20Young%20People%20Sub-Committee.pdf?T=0",
+  "storyTitle": "Croydon Youth Justice Plan lacks detailed Stop and Search data for children",
+  "headline": "Croydon challenges missing child stop and search figures",
+  "borough": "Croydon",
+  "postcodeTag": "📍 CROYDON · YOUTH JUSTICE",
+  "committee": "Scrutiny Children & Young People Sub-Committee Croydon, 20 October 2026",
+  "meetingDate": "20 OCT 2026",
+  "meetingDateDisplay": "Croydon · 20 OCT 2026",
+  "storyType": "council_decision",
+  "targetDurationSeconds": 30,
+  "keyPointsHeading": "What did the scrutiny review reveal?",
+  "factsFiguresHeading": "Stop & Search Surge",
+  "watchability": {
+    "targetAudience": "Croydon residents and local taxpayers",
+    "hook": "Croydon challenges missing child stop and search figures",
+    "hookStyle": "Immediate factual council decision and resident impact",
+    "localRelevance": "Directly affects Croydon residents and council services",
+    "suitability": "approved_for_video"
+  },
+  "editorialGate": {
+    "status": "approved",
+    "editorApproved": true,
+    "reviewedBy": "London Local Editorial Review (Batch 30)"
+  },
+  "branding": {
+    "theme": "london-local-broadcast",
+    "showWatermark": true,
+    "showCaptions": false,
+    "voiceProfile": "en-gb-advisor-1"
+  },
+  "claims": [
+    {
+      "claimId": "C10822-1",
+      "statement": "Child stop and searches in Croydon increased by thirty-six per cent to 1,262 incidents.",
+      "sourceQuote": "The plan acknowledges an increase in stop and searches of children by 36%, rising from approximately 930 to 1,262 incidents.",
+      "sourceDocument": "Scrutiny Children & Young People Sub-Committee Croydon, 20 October 2026",
+      "sourceDocumentUrl": "https://democracy.croydon.gov.uk/documents/g4499/Agenda%20frontsheet%2020th-Oct-2026%2018.30%20Scrutiny%20Children%20Young%20People%20Sub-Committee.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10822-2",
+      "statement": "Councillors highlighted the absence of data detailing ethnicity, age, and outcomes for child searches.",
+      "sourceQuote": "Councillor Daoud asked if the board could share the figures by ethnicity, age, and outcome, arrest, charge, or no further action. Mr Collins responded that that information is held by the police.",
+      "sourceDocument": "Scrutiny Children & Young People Sub-Committee Croydon, 20 October 2026",
+      "sourceDocumentUrl": "https://democracy.croydon.gov.uk/documents/g4499/Agenda%20frontsheet%2020th-Oct-2026%2018.30%20Scrutiny%20Children%20Young%20People%20Sub-Committee.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10822-3",
+      "statement": "Only two children were on remand, reflecting lower custody usage across the borough.",
+      "sourceQuote": "The Youth Justice Plan outlines progress in reducing the use of custody, with only two children currently on remand.",
+      "sourceDocument": "Scrutiny Children & Young People Sub-Committee Croydon, 20 October 2026",
+      "sourceDocumentUrl": "https://democracy.croydon.gov.uk/documents/g4499/Agenda%20frontsheet%2020th-Oct-2026%2018.30%20Scrutiny%20Children%20Young%20People%20Sub-Committee.pdf?T=0",
+      "verified": true
+    }
+  ],
+  "takeawayCard": {
+    "kicker": "POLICE ACCOUNTABILITY",
+    "title": "Councillors demand complete racial data",
+    "subtitle": "Officers promise ongoing discussions over stark ethnic disproportionality."
+  },
+  "keyPoints": [
+    [
+      "Searches Rise Sharply",
+      "Child stop and search incidents rose thirty-six per cent across Croydon.",
+      "Scrutiny Children Sub-Committee · 20 Oct 2026"
+    ],
+    [
+      "Missing Demographic Breakdown",
+      "The plan lacked detailed data on ethnic background, age, and outcomes.",
+      "Scrutiny Children Sub-Committee · 20 Oct 2026"
+    ],
+    [
+      "Lower Custody Figures",
+      "Only two children are currently held on remand across the borough.",
+      "Scrutiny Children Sub-Committee · 20 Oct 2026"
+    ]
+  ],
+  "timeline": [
+    {
+      "sceneNumber": 1,
+      "type": "video_with_figure",
+      "durationSeconds": 3.2,
+      "claimIds": [
+        "C10822-1"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/story_10822_s1.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "onScreenGraphic": {
+        "kicker": "📍 CROYDON · YOUTH JUSTICE",
+        "headline": "Croydon challenges missing child stop and search figures",
+        "body": "Scrutiny committee demands police ethnic breakdown data."
+      },
+      "voiceoverText": "Croydon scrutiny councillors demand answers over missing child stop and search figures.",
+      "citationFooter": "SOURCE: Scrutiny Children & Young People Sub-Committee Croydon, 20 October 2026 · Story #10822"
+    },
+    {
+      "sceneNumber": 2,
+      "type": "document_highlight",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10822-1",
+        "C10822-2"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/civic_croydon.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "motion_document",
+        "data": {
+          "docHeaderLeft": "CROYDON · OCT 2026",
+          "docHeaderRight": "SCRUTINY REPORT",
+          "docSubject": "Youth Justice Plan Scrutiny Review",
+          "excerptPrefix": "\"The plan acknowledges an ",
+          "highlightPhrase": "increase in stop and searches of children by 36%",
+          "excerptSuffix": " rising from approximately 930 to 1,262 incidents.\"",
+          "mover": "Emma Carter, Youth Justice Service",
+          "seconder": "Children & Young People Sub-Committee",
+          "receiptStamp": "SCRUTINY AUDIT"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "VERIFIED COUNCIL RECORD",
+        "headline": "Youth Justice Plan Scrutiny Review",
+        "body": "Croydon · 20 OCT 2026"
+      },
+      "voiceoverText": "The committee examined the youth justice plan after child searches surged thirty-six per cent without ethnic breakdowns.",
+      "citationFooter": "SOURCE: Scrutiny Children & Young People Sub-Committee Croydon, 20 October 2026 Public Reports Pack"
+    },
+    {
+      "sceneNumber": 3,
+      "type": "generative_broll",
+      "durationSeconds": 6.0,
+      "claimIds": [
+        "C10822-2",
+        "C10822-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/london_safety_police_foot_patrol_omni.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA",
+        "cutawaySource": "assets/generative/london_planning_children_playground_park_omni.mp4"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "INCIDENTS UP",
+              "value": "+36%",
+              "label": "Rise in child stops",
+              "subtext": "Rise in child stops",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "TOTAL INCIDENTS",
+              "value": "1,262",
+              "label": "Child searches recorded",
+              "subtext": "Child searches recorded",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "KEY IMPACTS",
+        "headline": "What did the scrutiny review reveal?",
+        "body": "Key findings from Croydon Council."
+      },
+      "voiceoverText": "Incidents reached over twelve hundred, while councillors pressed officials on disproportionate policing and low remand rates.",
+      "citationFooter": "SOURCE: Croydon Council · 20 OCT 2026"
+    },
+    {
+      "sceneNumber": 4,
+      "type": "broadsheet_split",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10822-1",
+        "C10822-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/civic_croydon.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 2.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "INCIDENTS UP",
+              "value": "+36%",
+              "label": "Rise in child stops",
+              "subtext": "Rise in child stops",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "TOTAL INCIDENTS",
+              "value": "1,262",
+              "label": "Child searches recorded",
+              "subtext": "Child searches recorded",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "FACTS & FIGURES",
+        "headline": "Stop & Search Surge",
+        "body": "Councillors demand complete racial data"
+      },
+      "voiceoverText": "Child searches surged past twelve hundred, prompting demands for police data on age and race.",
+      "citationFooter": "SOURCE: Scrutiny Children & Young People Sub-Committee Croydon, 20 October 2026 · Verified Record"
+    },
+    {
+      "sceneNumber": 5,
+      "type": "outro_archive",
+      "durationSeconds": 6.5,
+      "claimIds": [
+        "C10822-1"
+      ],
+      "visualAsset": {
+        "type": "solid",
+        "source": "assets/branding/london-local-wordmark.png",
+        "isIllustrative": false,
+        "mandatoryDisclaimer": null
+      },
+      "figure": {
+        "type": "outro_archive",
+        "data": {
+          "tagline": "Independent civic intelligence across London's 33 councils.",
+          "ctaKicker": "READ THE FULL VERIFIED STORY",
+          "ctaUrl": "londonlocal.news/stories/10822"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "READ FULL STORY",
+        "headline": "Read Story #10822 online",
+        "body": "Direct from council agendas to your phone."
+      },
+      "voiceoverText": "Follow Croydon Council scrutiny updates. Read the full report at London Local dot news.",
+      "citationFooter": "SOURCE: londonlocal.news/stories/10822"
+    }
+  ]
+}

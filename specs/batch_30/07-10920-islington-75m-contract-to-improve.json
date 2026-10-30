@@ -1,0 +1,288 @@
+{
+  "videoId": "10920-islington-75m-contract-to-improve",
+  "storyId": "10920",
+  "displayStoryId": "10920",
+  "sourceArticleUrl": "https://londonlocal.news/stories/10920",
+  "articleUrl": "https://londonlocal.news/stories/10920",
+  "sourceUrl": "https://democracy.islington.gov.uk/documents/g5434/Agenda%20frontsheet%2022nd-Oct-2026%2017.00%20Executive.pdf?T=0",
+  "storyTitle": "£75m contract to improve traffic, highways and lighting services",
+  "headline": "Islington approves £75m highways and streetlighting deal",
+  "borough": "Islington",
+  "postcodeTag": "📍 ISLINGTON · HIGHWAYS DEAL",
+  "committee": "Executive Islington, 22 October 2026",
+  "meetingDate": "22 OCT 2026",
+  "meetingDateDisplay": "Islington · 22 OCT 2026",
+  "storyType": "transport",
+  "targetDurationSeconds": 30,
+  "keyPointsHeading": "What does the contract cover?",
+  "factsFiguresHeading": "Contract Value and Term",
+  "watchability": {
+    "targetAudience": "Islington residents and local taxpayers",
+    "hook": "Islington approves £75m highways and streetlighting deal",
+    "hookStyle": "Immediate factual council decision and resident impact",
+    "localRelevance": "Directly affects Islington residents and council services",
+    "suitability": "approved_for_video"
+  },
+  "editorialGate": {
+    "status": "approved",
+    "editorApproved": true,
+    "reviewedBy": "London Local Editorial Review (Batch 30)"
+  },
+  "branding": {
+    "theme": "london-local-broadcast",
+    "showWatermark": true,
+    "showCaptions": false,
+    "voiceProfile": "en-gb-advisor-1"
+  },
+  "claims": [
+    {
+      "claimId": "C10920-1",
+      "statement": "The Executive committee approved a highways and lighting contract worth up to £75 million.",
+      "sourceQuote": "The contract, estimated to be worth up to £75 million over its maximum ten-year term, will be divided into two lots: Traffic and Highways, and Lighting.",
+      "sourceDocument": "Executive Islington, 22 October 2026",
+      "sourceDocumentUrl": "https://democracy.islington.gov.uk/documents/g5434/Agenda%20frontsheet%2022nd-Oct-2026%2017.00%20Executive.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10920-2",
+      "statement": "Islington will continue to handle minor repairs such as potholes using internal teams.",
+      "sourceQuote": "While the contract has not yet been awarded, the council will retain some minor highway maintenance works to be delivered by its in-house team. This includes minor reactive highway maintenance such as carriageway and footway repairs, pothole repairs, small patching, and replacing broken gully grates.",
+      "sourceDocument": "Executive Islington, 22 October 2026",
+      "sourceDocumentUrl": "https://democracy.islington.gov.uk/documents/g5434/Agenda%20frontsheet%2022nd-Oct-2026%2017.00%20Executive.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10920-3",
+      "statement": "Contractors are required to pay the London Living Wage and avoid zero-hours contracts.",
+      "sourceQuote": "Fair employment practices such as payment of the London Living Wage, prohibition of zero-hours contracts, clear terms and conditions, access to trade unions, and training opportunities are also included.",
+      "sourceDocument": "Executive Islington, 22 October 2026",
+      "sourceDocumentUrl": "https://democracy.islington.gov.uk/documents/g5434/Agenda%20frontsheet%2022nd-Oct-2026%2017.00%20Executive.pdf?T=0",
+      "verified": true
+    }
+  ],
+  "takeawayCard": {
+    "kicker": "SOCIAL VALUE FOCUS",
+    "title": "Living Wage and Net-Zero Goals",
+    "subtitle": "Suppliers must support apprenticeships and avoid zero-hours contracts."
+  },
+  "keyPoints": [
+    [
+      "Highways and Lighting",
+      "A £75 million contract covers major road renewal and street lighting.",
+      "Executive Islington · 22 Oct 2026"
+    ],
+    [
+      "In-House Repairs",
+      "Council teams will retain pothole repairs, gully maintenance, and minor patching.",
+      "Executive Islington · 22 Oct 2026"
+    ],
+    [
+      "Worker Protections",
+      "Contractors must guarantee London Living Wage rates and ban zero-hours contracts.",
+      "Executive Islington · 22 Oct 2026"
+    ]
+  ],
+  "timeline": [
+    {
+      "sceneNumber": 1,
+      "type": "video_with_figure",
+      "durationSeconds": 3.2,
+      "claimIds": [
+        "C10920-1"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/story_10920_s1.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "onScreenGraphic": {
+        "kicker": "📍 ISLINGTON · HIGHWAYS DEAL",
+        "headline": "Islington approves £75m highways and streetlighting deal",
+        "body": "A ten-year strategy replaces expiring road contracts."
+      },
+      "voiceoverText": "Islington Council has approved a £75 million highways and streetlighting deal.",
+      "citationFooter": "SOURCE: Executive Islington, 22 October 2026 · Story #10920"
+    },
+    {
+      "sceneNumber": 2,
+      "type": "document_highlight",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10920-1",
+        "C10920-2"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/civic_islington.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "motion_document",
+        "data": {
+          "docHeaderLeft": "ISLINGTON · OCT 2026",
+          "docHeaderRight": "EXECUTIVE REPORT",
+          "docSubject": "Highways Procurement Strategy",
+          "excerptPrefix": "\"The contract is estimated to be ",
+          "highlightPhrase": "worth up to £75 million over its maximum ten-year term",
+          "excerptSuffix": " across two lots.\"",
+          "mover": "Cllr Rowena Champion",
+          "seconder": "Executive Committee",
+          "receiptStamp": "EXECUTIVE DECISION"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "VERIFIED COUNCIL RECORD",
+        "headline": "Highways Procurement Strategy",
+        "body": "Islington · 22 OCT 2026"
+      },
+      "voiceoverText": "The Executive committee agreed a ten-year procurement strategy to manage road renewals and streetlights ahead of 2028 contract expiries.",
+      "citationFooter": "SOURCE: Executive Islington, 22 October 2026 Public Reports Pack"
+    },
+    {
+      "sceneNumber": 3,
+      "type": "generative_broll",
+      "durationSeconds": 6.0,
+      "claimIds": [
+        "C10920-2",
+        "C10920-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/london_highways_lighting_omni.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA",
+        "cutawaySource": "assets/generative/london_housing_scaffolding_retrofit_omni.mp4"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "MAXIMUM VALUE",
+              "value": "£75m",
+              "label": "Ten-year maintenance spend",
+              "subtext": "Ten-year maintenance spend",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "CONTRACT LENGTH",
+              "value": "10 yrs",
+              "label": "Full term with extensions",
+              "subtext": "Full term with extensions",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "KEY IMPACTS",
+        "headline": "What does the contract cover?",
+        "body": "Key findings from Islington Council."
+      },
+      "voiceoverText": "External contractors will handle major works, while the council keeps potholes and minor repairs in-house with guaranteed living wage standards.",
+      "citationFooter": "SOURCE: Islington Council · 22 OCT 2026"
+    },
+    {
+      "sceneNumber": 4,
+      "type": "broadsheet_split",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10920-1",
+        "C10920-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/civic_islington.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 2.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "MAXIMUM VALUE",
+              "value": "£75m",
+              "label": "Ten-year maintenance spend",
+              "subtext": "Ten-year maintenance spend",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "CONTRACT LENGTH",
+              "value": "10 yrs",
+              "label": "Full term with extensions",
+              "subtext": "Full term with extensions",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "FACTS & FIGURES",
+        "headline": "Contract Value and Term",
+        "body": "Living Wage and Net-Zero Goals"
+      },
+      "voiceoverText": "The deal spans up to ten years and seventy-five million pounds, requiring suppliers to cut carbon emissions and deliver apprenticeships.",
+      "citationFooter": "SOURCE: Executive Islington, 22 October 2026 · Verified Record"
+    },
+    {
+      "sceneNumber": 5,
+      "type": "outro_archive",
+      "durationSeconds": 6.5,
+      "claimIds": [
+        "C10920-1"
+      ],
+      "visualAsset": {
+        "type": "solid",
+        "source": "assets/branding/london-local-wordmark.png",
+        "isIllustrative": false,
+        "mandatoryDisclaimer": null
+      },
+      "figure": {
+        "type": "outro_archive",
+        "data": {
+          "tagline": "Independent civic intelligence across London's 33 councils.",
+          "ctaKicker": "READ THE FULL VERIFIED STORY",
+          "ctaUrl": "londonlocal.news/stories/10920"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "READ FULL STORY",
+        "headline": "Read Story #10920 online",
+        "body": "Direct from council agendas to your phone."
+      },
+      "voiceoverText": "Track Islington council road spending and contract details. Read the full report at London Local dot news.",
+      "citationFooter": "SOURCE: londonlocal.news/stories/10920"
+    }
+  ]
+}

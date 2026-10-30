@@ -1,0 +1,288 @@
+{
+  "videoId": "10845-hammersmith-and-fulham-hammersmith-and",
+  "storyId": "10845",
+  "displayStoryId": "10845",
+  "sourceArticleUrl": "https://londonlocal.news/stories/10845",
+  "articleUrl": "https://londonlocal.news/stories/10845",
+  "sourceUrl": "https://democracy.lbhf.gov.uk/documents/g8060/Agenda%20frontsheet%2021st-Oct-2026%2019.00%20Full%20Council.pdf?T=0",
+  "storyTitle": "Hammersmith and Fulham Council faces £160m budget gap by 2030 due to funding cuts",
+  "headline": "Hammersmith faces £160m budget gap by 2030",
+  "borough": "Hammersmith and Fulham",
+  "postcodeTag": "📍 HAMMERSMITH · FULL COUNCIL",
+  "committee": "Full Council Hammersmith and Fulham, 21 October 2026",
+  "meetingDate": "21 OCT 2026",
+  "meetingDateDisplay": "Hammersmith and Fulham · 21 OCT 2026",
+  "storyType": "council_decision",
+  "targetDurationSeconds": 30,
+  "keyPointsHeading": "How will the council respond?",
+  "factsFiguresHeading": "Budget Gap & Outreach",
+  "watchability": {
+    "targetAudience": "Hammersmith and Fulham residents and local taxpayers",
+    "hook": "Hammersmith faces £160m budget gap by 2030",
+    "hookStyle": "Immediate factual council decision and resident impact",
+    "localRelevance": "Directly affects Hammersmith and Fulham residents and council services",
+    "suitability": "approved_for_video"
+  },
+  "editorialGate": {
+    "status": "approved",
+    "editorApproved": true,
+    "reviewedBy": "London Local Editorial Review (Batch 30)"
+  },
+  "branding": {
+    "theme": "london-local-broadcast",
+    "showWatermark": true,
+    "showCaptions": false,
+    "voiceProfile": "en-gb-advisor-1"
+  },
+  "claims": [
+    {
+      "claimId": "C10845-1",
+      "statement": "Hammersmith and Fulham Council projects a £160 million budget gap by the 2030-31 financial year.",
+      "sourceQuote": "Hammersmith and Fulham Council faces a projected £160 million budget deficit by 2030-31, driven by significant reductions in central government funding.",
+      "sourceDocument": "Full Council Hammersmith and Fulham, 21 October 2026",
+      "sourceDocumentUrl": "https://democracy.lbhf.gov.uk/documents/g8060/Agenda%20frontsheet%2021st-Oct-2026%2019.00%20Full%20Council.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10845-2",
+      "statement": "Relying purely on council tax increases to close the deficit would necessitate a 150% rise.",
+      "sourceQuote": "He revealed that if the council were to rely solely on council tax rises to bridge the gap, it would require an increase of 150%.",
+      "sourceDocument": "Full Council Hammersmith and Fulham, 21 October 2026",
+      "sourceDocumentUrl": "https://democracy.lbhf.gov.uk/documents/g8060/Agenda%20frontsheet%2021st-Oct-2026%2019.00%20Full%20Council.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10845-3",
+      "statement": "The council shared details on the financial situation with 94,000 local households.",
+      "sourceQuote": "Councillor Stephen Cowan, Leader of the Council, emphasised the council's commitment to financial efficiency and transparency, noting that detailed information had been communicated to 94,000 households.",
+      "sourceDocument": "Full Council Hammersmith and Fulham, 21 October 2026",
+      "sourceDocumentUrl": "https://democracy.lbhf.gov.uk/documents/g8060/Agenda%20frontsheet%2021st-Oct-2026%2019.00%20Full%20Council.pdf?T=0",
+      "verified": true
+    }
+  ],
+  "takeawayCard": {
+    "kicker": "FINANCIAL REFORM",
+    "title": "Council cuts back office costs",
+    "subtitle": "Services will be protected alongside green investment."
+  },
+  "keyPoints": [
+    [
+      "Massive Deficit Forecast",
+      "The council projects a £160 million shortfall by 2030 due to grant reductions.",
+      "Full Council · 21 Oct 2026"
+    ],
+    [
+      "Tax Rise Ruled Out",
+      "Covering the deficit solely through council tax would require a 150% rise.",
+      "Full Council · 21 Oct 2026"
+    ],
+    [
+      "Back Office Reductions",
+      "Leaders will cut back office functions while expanding a £5m green scheme.",
+      "Full Council · 21 Oct 2026"
+    ]
+  ],
+  "timeline": [
+    {
+      "sceneNumber": 1,
+      "type": "video_with_figure",
+      "durationSeconds": 3.2,
+      "claimIds": [
+        "C10845-1"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/story_10845_s1.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "onScreenGraphic": {
+        "kicker": "📍 HAMMERSMITH · FULL COUNCIL",
+        "headline": "Hammersmith faces £160m budget gap by 2030",
+        "body": "Deep funding cuts prompt dramatic back office savings."
+      },
+      "voiceoverText": "Hammersmith and Fulham faces a staggering one hundred and sixty million pound budget deficit.",
+      "citationFooter": "SOURCE: Full Council Hammersmith and Fulham, 21 October 2026 · Story #10845"
+    },
+    {
+      "sceneNumber": 2,
+      "type": "document_highlight",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10845-1",
+        "C10845-2"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/civic_hammersmith-and-fulham.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "motion_document",
+        "data": {
+          "docHeaderLeft": "HAMMERSMITH · OCT 2026",
+          "docHeaderRight": "FULL COUNCIL",
+          "docSubject": "Medium Term Financial Strategy Report",
+          "excerptPrefix": "\"Changes to funding allocations mean that ",
+          "highlightPhrase": "Hammersmith and Fulham loses over half of our grant",
+          "excerptSuffix": " from central government.\"",
+          "mover": "Cllr Rowan Ree, Finance Member",
+          "seconder": "Full Council Hammersmith & Fulham",
+          "receiptStamp": "COUNCIL REPORT"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "VERIFIED COUNCIL RECORD",
+        "headline": "Medium Term Financial Strategy Report",
+        "body": "Hammersmith and Fulham · 21 OCT 2026"
+      },
+      "voiceoverText": "Finance chiefs revealed that central government changes mean the borough loses over half its main funding grant.",
+      "citationFooter": "SOURCE: Full Council Hammersmith and Fulham, 21 October 2026 Public Reports Pack"
+    },
+    {
+      "sceneNumber": 3,
+      "type": "generative_broll",
+      "durationSeconds": 6.0,
+      "claimIds": [
+        "C10845-2",
+        "C10845-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/london_finance_audit_ledgers_desk_omni.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA",
+        "cutawaySource": "assets/generative/london_civic_dusk_lit_windows_omni.mp4"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "PROJECTED DEFICIT",
+              "value": "£160m",
+              "label": "Funding gap by 2030",
+              "subtext": "Funding gap by 2030",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "HOUSEHOLDS CONTACTED",
+              "value": "94,000",
+              "label": "Informed of funding cuts",
+              "subtext": "Informed of funding cuts",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "KEY IMPACTS",
+        "headline": "How will the council respond?",
+        "body": "Key findings from Hammersmith and Fulham Council."
+      },
+      "voiceoverText": "A theoretical council tax rise of one hundred and fifty per cent was rejected in favour of restructuring.",
+      "citationFooter": "SOURCE: Hammersmith and Fulham Council · 21 OCT 2026"
+    },
+    {
+      "sceneNumber": 4,
+      "type": "broadsheet_split",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10845-1",
+        "C10845-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/civic_hammersmith-and-fulham.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 2.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "PROJECTED DEFICIT",
+              "value": "£160m",
+              "label": "Funding gap by 2030",
+              "subtext": "Funding gap by 2030",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "HOUSEHOLDS CONTACTED",
+              "value": "94,000",
+              "label": "Informed of funding cuts",
+              "subtext": "Informed of funding cuts",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "FACTS & FIGURES",
+        "headline": "Budget Gap & Outreach",
+        "body": "Council cuts back office costs"
+      },
+      "voiceoverText": "With ninety-four thousand households contacted, ministers are being lobbied while internal back-office functions face major cutbacks.",
+      "citationFooter": "SOURCE: Full Council Hammersmith and Fulham, 21 October 2026 · Verified Record"
+    },
+    {
+      "sceneNumber": 5,
+      "type": "outro_archive",
+      "durationSeconds": 6.5,
+      "claimIds": [
+        "C10845-1"
+      ],
+      "visualAsset": {
+        "type": "solid",
+        "source": "assets/branding/london-local-wordmark.png",
+        "isIllustrative": false,
+        "mandatoryDisclaimer": null
+      },
+      "figure": {
+        "type": "outro_archive",
+        "data": {
+          "tagline": "Independent civic intelligence across London's 33 councils.",
+          "ctaKicker": "READ THE FULL VERIFIED STORY",
+          "ctaUrl": "londonlocal.news/stories/10845"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "READ FULL STORY",
+        "headline": "Read Story #10845 online",
+        "body": "Direct from council agendas to your phone."
+      },
+      "voiceoverText": "Public consultations are now open to shape local services. Read the full report at London Local dot news.",
+      "citationFooter": "SOURCE: londonlocal.news/stories/10845"
+    }
+  ]
+}

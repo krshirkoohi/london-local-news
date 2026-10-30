@@ -1,0 +1,288 @@
+{
+  "videoId": "10917-islington-council-to-sell-off",
+  "storyId": "10917",
+  "displayStoryId": "10917",
+  "sourceArticleUrl": "https://londonlocal.news/stories/10917",
+  "articleUrl": "https://londonlocal.news/stories/10917",
+  "sourceUrl": "https://democracy.islington.gov.uk/documents/g5434/Agenda%20frontsheet%2022nd-Oct-2026%2017.00%20Executive.pdf?T=0",
+  "storyTitle": "Council to sell off 14 surplus assets to fund services",
+  "headline": "Islington to sell 14 surplus council properties",
+  "borough": "Islington",
+  "postcodeTag": "📍 ISLINGTON · EXECUTIVE DECISION",
+  "committee": "Executive Islington, 22 October 2026",
+  "meetingDate": "22 OCT 2026",
+  "meetingDateDisplay": "Islington · 22 OCT 2026",
+  "storyType": "council_decision",
+  "targetDurationSeconds": 30,
+  "keyPointsHeading": "Where will sales receipts go?",
+  "factsFiguresHeading": "Asset Portfolio & Sales",
+  "watchability": {
+    "targetAudience": "Islington residents and local taxpayers",
+    "hook": "Islington to sell 14 surplus council properties",
+    "hookStyle": "Immediate factual council decision and resident impact",
+    "localRelevance": "Directly affects Islington residents and council services",
+    "suitability": "approved_for_video"
+  },
+  "editorialGate": {
+    "status": "approved",
+    "editorApproved": true,
+    "reviewedBy": "London Local Editorial Review (Batch 30)"
+  },
+  "branding": {
+    "theme": "london-local-broadcast",
+    "showWatermark": true,
+    "showCaptions": false,
+    "voiceProfile": "en-gb-advisor-1"
+  },
+  "claims": [
+    {
+      "claimId": "C10917-1",
+      "statement": "Islington Council agreed to sell fourteen surplus council-owned assets.",
+      "sourceQuote": "Islington Council's Executive has agreed to sell off 14 council-owned assets deemed surplus to requirements, generating capital receipts to help fund services and acquire new homes.",
+      "sourceDocument": "Executive Islington, 22 October 2026",
+      "sourceDocumentUrl": "https://democracy.islington.gov.uk/documents/g5434/Agenda%20frontsheet%2022nd-Oct-2026%2017.00%20Executive.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10917-2",
+      "statement": "The council owns 922 non-residential assets valued at approximately £1.3 billion.",
+      "sourceQuote": "Councillor Convery stated that the council owns 922 non-residential assets, including operational buildings, schools, nurseries, community buildings, and plots of land, with an asset value of approximately £1.3 billion.",
+      "sourceDocument": "Executive Islington, 22 October 2026",
+      "sourceDocumentUrl": "https://democracy.islington.gov.uk/documents/g5434/Agenda%20frontsheet%2022nd-Oct-2026%2017.00%20Executive.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10917-3",
+      "statement": "Sale conditions for 7 Newington Barrow Way will protect on-site NHS facilities.",
+      "sourceQuote": "The sale terms for Newton Barrow Way will protect NHS uses on that site.",
+      "sourceDocument": "Executive Islington, 22 October 2026",
+      "sourceDocumentUrl": "https://democracy.islington.gov.uk/documents/g5434/Agenda%20frontsheet%2022nd-Oct-2026%2017.00%20Executive.pdf?T=0",
+      "verified": true
+    }
+  ],
+  "takeawayCard": {
+    "kicker": "TARGETED REINVESTMENT",
+    "title": "Funds Targeted For Priority Services",
+    "subtitle": "Receipts will fund services and new family housing."
+  },
+  "keyPoints": [
+    [
+      "Surplus Property Disposals",
+      "Council executive approves disposing of fourteen non-residential property assets.",
+      "Executive Islington · 22 Oct 2026"
+    ],
+    [
+      "Reinvesting Capital Receipts",
+      "Proceeds will support general services and acquire family temporary homes.",
+      "Executive Islington · 22 Oct 2026"
+    ],
+    [
+      "Protecting Community Uses",
+      "Sale terms safeguard an NHS surgery while alternative space is sought.",
+      "Executive Islington · 22 Oct 2026"
+    ]
+  ],
+  "timeline": [
+    {
+      "sceneNumber": 1,
+      "type": "video_with_figure",
+      "durationSeconds": 3.2,
+      "claimIds": [
+        "C10917-1"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/story_10917_s1.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "onScreenGraphic": {
+        "kicker": "📍 ISLINGTON · EXECUTIVE DECISION",
+        "headline": "Islington to sell 14 surplus council properties",
+        "body": "Receipts will fund local services and family homes."
+      },
+      "voiceoverText": "Islington Council has approved the sale of fourteen surplus properties to fund essential services.",
+      "citationFooter": "SOURCE: Executive Islington, 22 October 2026 · Story #10917"
+    },
+    {
+      "sceneNumber": 2,
+      "type": "document_highlight",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10917-1",
+        "C10917-2"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/civic_islington.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "motion_document",
+        "data": {
+          "docHeaderLeft": "ISLINGTON · OCT 2026",
+          "docHeaderRight": "EXECUTIVE REPORT",
+          "docSubject": "Strategic Asset Management Plan Review",
+          "excerptPrefix": "\"The capital receipts generated from ",
+          "highlightPhrase": "these disposals will be used to make revenue savings",
+          "excerptSuffix": " to support financial pressures.\"",
+          "mover": "Cllr Paul Convery, Finance Lead",
+          "seconder": "Executive Islington",
+          "receiptStamp": "ASSET DISPOSAL"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "VERIFIED COUNCIL RECORD",
+        "headline": "Strategic Asset Management Plan Review",
+        "body": "Islington · 22 OCT 2026"
+      },
+      "voiceoverText": "The executive agreed the disposals to alleviate financial pressures and generate capital receipts for new family housing.",
+      "citationFooter": "SOURCE: Executive Islington, 22 October 2026 Public Reports Pack"
+    },
+    {
+      "sceneNumber": 3,
+      "type": "generative_broll",
+      "durationSeconds": 6.0,
+      "claimIds": [
+        "C10917-2",
+        "C10917-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/london_housing_surplus_depot_site_omni.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA",
+        "cutawaySource": "assets/generative/london_planning_victorian_park_avenue_omni.mp4"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "PROPERTIES TO SELL",
+              "value": "14",
+              "label": "Surplus assets approved",
+              "subtext": "Surplus assets approved",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "PORTFOLIO VALUE",
+              "value": "£1.3bn",
+              "label": "Total council asset value",
+              "subtext": "Total council asset value",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "KEY IMPACTS",
+        "headline": "Where will sales receipts go?",
+        "body": "Key findings from Islington Council."
+      },
+      "voiceoverText": "Twelve sites are vacant, while terms protect an existing GP surgery and support a meanwhile-use kitchen.",
+      "citationFooter": "SOURCE: Islington Council · 22 OCT 2026"
+    },
+    {
+      "sceneNumber": 4,
+      "type": "broadsheet_split",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10917-1",
+        "C10917-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/civic_islington.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 2.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "PROPERTIES TO SELL",
+              "value": "14",
+              "label": "Surplus assets approved",
+              "subtext": "Surplus assets approved",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "PORTFOLIO VALUE",
+              "value": "£1.3bn",
+              "label": "Total council asset value",
+              "subtext": "Total council asset value",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "FACTS & FIGURES",
+        "headline": "Asset Portfolio & Sales",
+        "body": "Funds Targeted For Priority Services"
+      },
+      "voiceoverText": "From a portfolio worth over one billion pounds, these fourteen sales will help secure council finances.",
+      "citationFooter": "SOURCE: Executive Islington, 22 October 2026 · Verified Record"
+    },
+    {
+      "sceneNumber": 5,
+      "type": "outro_archive",
+      "durationSeconds": 6.5,
+      "claimIds": [
+        "C10917-1"
+      ],
+      "visualAsset": {
+        "type": "solid",
+        "source": "assets/branding/london-local-wordmark.png",
+        "isIllustrative": false,
+        "mandatoryDisclaimer": null
+      },
+      "figure": {
+        "type": "outro_archive",
+        "data": {
+          "tagline": "Independent civic intelligence across London's 33 councils.",
+          "ctaKicker": "READ THE FULL VERIFIED STORY",
+          "ctaUrl": "londonlocal.news/stories/10917"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "READ FULL STORY",
+        "headline": "Read Story #10917 online",
+        "body": "Direct from council agendas to your phone."
+      },
+      "voiceoverText": "Follow every Islington Council property and spending decision. Read the full report at London Local dot news.",
+      "citationFooter": "SOURCE: londonlocal.news/stories/10917"
+    }
+  ]
+}

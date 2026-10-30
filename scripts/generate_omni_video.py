@@ -61,8 +61,16 @@ def generate_video(prompt: str, output_path: str, ref_image_path: str = None, ap
 
     raw_bytes = base64.b64decode(video_data.data)
     os.makedirs(os.path.dirname(os.path.abspath(output_path)), exist_ok=True)
-    with open(output_path, "wb") as f:
+    raw_tmp = output_path + ".raw.mp4"
+    with open(raw_tmp, "wb") as f:
         f.write(raw_bytes)
+    import subprocess
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-i", raw_tmp, "-c:v", "copy", "-an", output_path],
+        check=True,
+    )
+    if os.path.exists(raw_tmp):
+        os.remove(raw_tmp)
 
     print(f"✅ Video generated ({len(raw_bytes):,} bytes): {output_path}")
 

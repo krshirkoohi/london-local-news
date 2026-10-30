@@ -1,0 +1,288 @@
+{
+  "videoId": "10897-kensington-and-chelsea-kensington-and",
+  "storyId": "10897",
+  "displayStoryId": "10897",
+  "sourceArticleUrl": "https://londonlocal.news/stories/10897",
+  "articleUrl": "https://londonlocal.news/stories/10897",
+  "sourceUrl": "https://rbkc.moderngov.co.uk/Committees/documents/g4189/Agenda%20frontsheet%2021st-Oct-2026%2018.30%20Full%20Council.pdf?T=0",
+  "storyTitle": "Kensington and Chelsea Council faces £127m funding gap, warns of potential tax hikes",
+  "headline": "Kensington faces huge £127m budget funding gap",
+  "borough": "Kensington and Chelsea",
+  "postcodeTag": "📍 KENSINGTON · BUDGET DEFICIT",
+  "committee": "Full Council Kensington and Chelsea, 21 October 2026",
+  "meetingDate": "21 OCT 2026",
+  "meetingDateDisplay": "Kensington and Chelsea · 21 OCT 2026",
+  "storyType": "council_decision",
+  "targetDurationSeconds": 30,
+  "keyPointsHeading": "How will the council respond?",
+  "factsFiguresHeading": "Four-Year Budget Deficit",
+  "watchability": {
+    "targetAudience": "Kensington and Chelsea residents and local taxpayers",
+    "hook": "Kensington faces huge £127m budget funding gap",
+    "hookStyle": "Immediate factual council decision and resident impact",
+    "localRelevance": "Directly affects Kensington and Chelsea residents and council services",
+    "suitability": "approved_for_video"
+  },
+  "editorialGate": {
+    "status": "approved",
+    "editorApproved": true,
+    "reviewedBy": "London Local Editorial Review (Batch 30)"
+  },
+  "branding": {
+    "theme": "london-local-broadcast",
+    "showWatermark": true,
+    "showCaptions": false,
+    "voiceProfile": "en-gb-advisor-1"
+  },
+  "claims": [
+    {
+      "claimId": "C10897-1",
+      "statement": "Kensington and Chelsea Council faces a projected £127 million funding gap over the next four years.",
+      "sourceQuote": "Kensington and Chelsea Council is facing a projected £127 million funding gap over the next four years, prompting warnings of potential council tax hikes.",
+      "sourceDocument": "Full Council Kensington and Chelsea, 21 October 2026",
+      "sourceDocumentUrl": "https://rbkc.moderngov.co.uk/Committees/documents/g4189/Agenda%20frontsheet%2021st-Oct-2026%2018.30%20Full%20Council.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10897-2",
+      "statement": "The council is submitting a cross-party proposal to the Treasury backed by 1,500 residents.",
+      "sourceQuote": "Tomorrow morning, together with other leaders from across London, we're taking that submission to the Treasury. She emphasised that this is not a party political fight, with the council's case supported by Liberal Democrats, Conservatives, and Greens, as well as 1,500 residents and thousands of businesses.",
+      "sourceDocument": "Full Council Kensington and Chelsea, 21 October 2026",
+      "sourceDocumentUrl": "https://rbkc.moderngov.co.uk/Committees/documents/g4189/Agenda%20frontsheet%2021st-Oct-2026%2018.30%20Full%20Council.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10897-3",
+      "statement": "Labour councillors advocate retaining up to 50% of the new high-value council tax surcharge.",
+      "sourceQuote": "Instead, their approach is to advocating, along with London councils and our local MPs, that the transition be softened and lengthened by allowing inner London boroughs to retain up to 50% of the new high-value council tax surcharge and a larger percentage of our business rates during this transition period.",
+      "sourceDocument": "Full Council Kensington and Chelsea, 21 October 2026",
+      "sourceDocumentUrl": "https://rbkc.moderngov.co.uk/Committees/documents/g4189/Agenda%20frontsheet%2021st-Oct-2026%2018.30%20Full%20Council.pdf?T=0",
+      "verified": true
+    }
+  ],
+  "takeawayCard": {
+    "kicker": "TREASURY LOBBYING",
+    "title": "Council fights government cuts",
+    "subtitle": "Cross-party coalition petitions Treasury for relief."
+  },
+  "keyPoints": [
+    [
+      "Four-Year Deficit",
+      "Kensington faces a projected £127 million budget gap over four years.",
+      "Full Council · 21 Oct 2026"
+    ],
+    [
+      "Treasury Challenge",
+      "Leaders take a joint submission directly to the Treasury.",
+      "Full Council · 21 Oct 2026"
+    ],
+    [
+      "Alternative Proposal",
+      "Labour councillors suggest retaining half of high-value council tax surcharges.",
+      "Full Council · 21 Oct 2026"
+    ]
+  ],
+  "timeline": [
+    {
+      "sceneNumber": 1,
+      "type": "video_with_figure",
+      "durationSeconds": 3.2,
+      "claimIds": [
+        "C10897-1"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/story_10897_s1.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "onScreenGraphic": {
+        "kicker": "📍 KENSINGTON · BUDGET DEFICIT",
+        "headline": "Kensington faces huge £127m budget funding gap",
+        "body": "Council warns of potential tax hikes after cuts."
+      },
+      "voiceoverText": "Kensington and Chelsea faces a staggering one hundred and twenty-seven million pound funding gap.",
+      "citationFooter": "SOURCE: Full Council Kensington and Chelsea, 21 October 2026 · Story #10897"
+    },
+    {
+      "sceneNumber": 2,
+      "type": "document_highlight",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10897-1",
+        "C10897-2"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/civic_kensington-and-chelsea.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "motion_document",
+        "data": {
+          "docHeaderLeft": "KENSINGTON · 21 OCT 2026",
+          "docHeaderRight": "COUNCIL REPORT",
+          "docSubject": "Medium Term Financial Strategy",
+          "excerptPrefix": "\"Council leader Elizabeth Campbell warned that ",
+          "highlightPhrase": "the council faces a projected £127 million funding gap",
+          "excerptSuffix": " over the next four years.\"",
+          "mover": "Cllr Elizabeth Campbell",
+          "seconder": "Full Council Kensington & Chelsea",
+          "receiptStamp": "COUNCIL DEBATE"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "VERIFIED COUNCIL RECORD",
+        "headline": "Medium Term Financial Strategy",
+        "body": "Kensington and Chelsea · 21 OCT 2026"
+      },
+      "voiceoverText": "Full Council papers reveal the four-year shortfall caused by government funding cuts, prompting warnings of potential council tax increases.",
+      "citationFooter": "SOURCE: Full Council Kensington and Chelsea, 21 October 2026 Public Reports Pack"
+    },
+    {
+      "sceneNumber": 3,
+      "type": "generative_broll",
+      "durationSeconds": 6.0,
+      "claimIds": [
+        "C10897-2",
+        "C10897-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/london_finance_audit_ledgers_desk_omni.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA",
+        "cutawaySource": "assets/generative/london_finance_council_tax_terrace_post_omni.mp4"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "PROJECTED GAP",
+              "value": "£127m",
+              "label": "Four-year budget shortfall",
+              "subtext": "Four-year budget shortfall",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "LOCAL BACKING",
+              "value": "1,500",
+              "label": "Residents backing plea",
+              "subtext": "Residents backing plea",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "KEY IMPACTS",
+        "headline": "How will the council respond?",
+        "body": "Key findings from Kensington and Chelsea Council."
+      },
+      "voiceoverText": "The leader is taking a cross-party plea to the Treasury, while Labour urges retaining fifty per cent of tax surcharges.",
+      "citationFooter": "SOURCE: Kensington and Chelsea Council · 21 OCT 2026"
+    },
+    {
+      "sceneNumber": 4,
+      "type": "broadsheet_split",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10897-1",
+        "C10897-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/civic_kensington-and-chelsea.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 2.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "PROJECTED GAP",
+              "value": "£127m",
+              "label": "Four-year budget shortfall",
+              "subtext": "Four-year budget shortfall",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "LOCAL BACKING",
+              "value": "1,500",
+              "label": "Residents backing plea",
+              "subtext": "Residents backing plea",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "FACTS & FIGURES",
+        "headline": "Four-Year Budget Deficit",
+        "body": "Council fights government cuts"
+      },
+      "voiceoverText": "With one hundred and twenty-seven million pounds at risk, fifteen hundred residents have joined the cross-party petition against funding cuts.",
+      "citationFooter": "SOURCE: Full Council Kensington and Chelsea, 21 October 2026 · Verified Record"
+    },
+    {
+      "sceneNumber": 5,
+      "type": "outro_archive",
+      "durationSeconds": 6.5,
+      "claimIds": [
+        "C10897-1"
+      ],
+      "visualAsset": {
+        "type": "solid",
+        "source": "assets/branding/london-local-wordmark.png",
+        "isIllustrative": false,
+        "mandatoryDisclaimer": null
+      },
+      "figure": {
+        "type": "outro_archive",
+        "data": {
+          "tagline": "Independent civic intelligence across London's 33 councils.",
+          "ctaKicker": "READ THE FULL VERIFIED STORY",
+          "ctaUrl": "londonlocal.news/stories/10897"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "READ FULL STORY",
+        "headline": "Read Story #10897 online",
+        "body": "Direct from council agendas to your phone."
+      },
+      "voiceoverText": "Track Kensington and Chelsea council budgets closely. Read the full report at London Local dot news.",
+      "citationFooter": "SOURCE: londonlocal.news/stories/10897"
+    }
+  ]
+}

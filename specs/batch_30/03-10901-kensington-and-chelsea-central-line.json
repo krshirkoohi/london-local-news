@@ -1,0 +1,288 @@
+{
+  "videoId": "10901-kensington-and-chelsea-central-line",
+  "storyId": "10901",
+  "displayStoryId": "10901",
+  "sourceArticleUrl": "https://londonlocal.news/stories/10901",
+  "articleUrl": "https://londonlocal.news/stories/10901",
+  "sourceUrl": "https://rbkc.moderngov.co.uk/Committees/documents/g4189/Agenda%20frontsheet%2021st-Oct-2026%2018.30%20Full%20Council.pdf?T=0",
+  "storyTitle": "Central Line noise pollution angers Kensington and Chelsea residents",
+  "headline": "Central Line noise sparks anger in Kensington",
+  "borough": "Kensington and Chelsea",
+  "postcodeTag": "📍 KENSINGTON · TUBE NOISE",
+  "committee": "Full Council Kensington and Chelsea, 21 October 2026",
+  "meetingDate": "21 OCT 2026",
+  "meetingDateDisplay": "Kensington and Chelsea · 21 OCT 2026",
+  "storyType": "transport",
+  "targetDurationSeconds": 30,
+  "keyPointsHeading": "How will TfL tackle Tube noise?",
+  "factsFiguresHeading": "Petition & Delivery Dates",
+  "watchability": {
+    "targetAudience": "Kensington and Chelsea residents and local taxpayers",
+    "hook": "Central Line noise sparks anger in Kensington",
+    "hookStyle": "Immediate factual council decision and resident impact",
+    "localRelevance": "Directly affects Kensington and Chelsea residents and council services",
+    "suitability": "approved_for_video"
+  },
+  "editorialGate": {
+    "status": "approved",
+    "editorApproved": true,
+    "reviewedBy": "London Local Editorial Review (Batch 30)"
+  },
+  "branding": {
+    "theme": "london-local-broadcast",
+    "showWatermark": true,
+    "showCaptions": false,
+    "voiceProfile": "en-gb-advisor-1"
+  },
+  "claims": [
+    {
+      "claimId": "C10901-1",
+      "statement": "TfL removed noise-dampening pads from the Central Line in 2025.",
+      "sourceQuote": "This has been exacerbated by TfL's removal of noise-dampening pads in 2025, which were intended to mitigate persistent Central Line noise affecting residents .",
+      "sourceDocument": "Full Council Kensington and Chelsea, 21 October 2026",
+      "sourceDocumentUrl": "https://rbkc.moderngov.co.uk/Committees/documents/g4189/Agenda%20frontsheet%2021st-Oct-2026%2018.30%20Full%20Council.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10901-2",
+      "statement": "TfL moved its track replacement start date forward to December.",
+      "sourceQuote": "TfL has confirmed that the installation of its long-term solution, a resilient noise dampening track system , is expected to begin in December, brought forward from its original February 2027 timeline.",
+      "sourceDocument": "Full Council Kensington and Chelsea, 21 October 2026",
+      "sourceDocumentUrl": "https://rbkc.moderngov.co.uk/Committees/documents/g4189/Agenda%20frontsheet%2021st-Oct-2026%2018.30%20Full%20Council.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10901-3",
+      "statement": "A residents' petition collected 324 signatures over the noise issue.",
+      "sourceQuote": "Residents have repeatedly pressed TfL for action and launched a petition with 324 signatures, indicating a history of complaints and pressure for TfL to address the noise pollution.",
+      "sourceDocument": "Full Council Kensington and Chelsea, 21 October 2026",
+      "sourceDocumentUrl": "https://rbkc.moderngov.co.uk/Committees/documents/g4189/Agenda%20frontsheet%2021st-Oct-2026%2018.30%20Full%20Council.pdf?T=0",
+      "verified": true
+    }
+  ],
+  "takeawayCard": {
+    "kicker": "COMMUNITY ACTION",
+    "title": "TfL Accelerates Tube Track Works",
+    "subtitle": "Interim rail grinding brings relief before track works."
+  },
+  "keyPoints": [
+    [
+      "Pad Removal",
+      "TfL removed noise-dampening track pads during 2025, worsening vibrations for neighbouring residents.",
+      "Full Council RBKC · 21 Oct 2026"
+    ],
+    [
+      "December Track Work",
+      "Resilient track installation begins in December 2026, ahead of February 2027.",
+      "Full Council RBKC · 21 Oct 2026"
+    ],
+    [
+      "Petition Backing",
+      "A community petition gathered 324 signatures demanding urgent action from TfL operators.",
+      "Full Council RBKC · 21 Oct 2026"
+    ]
+  ],
+  "timeline": [
+    {
+      "sceneNumber": 1,
+      "type": "video_with_figure",
+      "durationSeconds": 3.2,
+      "claimIds": [
+        "C10901-1"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/london_transport_tube_open_cutting_omni.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "onScreenGraphic": {
+        "kicker": "📍 KENSINGTON · TUBE NOISE",
+        "headline": "Central Line noise sparks anger in Kensington",
+        "body": "Residents endure sleepless nights from Tube vibrations."
+      },
+      "voiceoverText": "Central Line noise pollution has sparked anger across Kensington and Chelsea.",
+      "citationFooter": "SOURCE: Full Council Kensington and Chelsea, 21 October 2026 · Story #10901"
+    },
+    {
+      "sceneNumber": 2,
+      "type": "document_highlight",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10901-1",
+        "C10901-2"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/london_civic_portland_steps_omni.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "motion_document",
+        "data": {
+          "docHeaderLeft": "RBKC · OCT 2026",
+          "docHeaderRight": "COUNCIL REPORT",
+          "docSubject": "Central Line Noise Pollution Review",
+          "excerptPrefix": "\"Installation of its long-term ",
+          "highlightPhrase": "resilient noise dampening track system is expected",
+          "excerptSuffix": " to begin in December.\"",
+          "mover": "Cllr Georgia Hardisty",
+          "seconder": "Full Council",
+          "receiptStamp": "COUNCIL HEARING"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "VERIFIED COUNCIL RECORD",
+        "headline": "Central Line Noise Pollution Review",
+        "body": "Kensington and Chelsea · 21 OCT 2026"
+      },
+      "voiceoverText": "Councillor Georgia Hardisty told the full council that removing dampening pads has caused vibrations and sleepless nights.",
+      "citationFooter": "SOURCE: Full Council Kensington and Chelsea, 21 October 2026 Public Reports Pack"
+    },
+    {
+      "sceneNumber": 3,
+      "type": "generative_broll",
+      "durationSeconds": 6.0,
+      "claimIds": [
+        "C10901-2",
+        "C10901-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/london_housing_victorian_mansion_block_omni.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA",
+        "cutawaySource": "assets/generative/london_rail_tracks_omni.mp4"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "PETITION BACKING",
+              "value": "324",
+              "label": "Local residents signed",
+              "subtext": "Local residents signed",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "ORIGINAL TARGET",
+              "value": "Feb 2027",
+              "label": "Initial track works date",
+              "subtext": "Initial track works date",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "KEY IMPACTS",
+        "headline": "How will TfL tackle Tube noise?",
+        "body": "Key findings from Kensington and Chelsea Council."
+      },
+      "voiceoverText": "Transport for London has accelerated track replacement to December, alongside interim rail grinding across the affected tube line.",
+      "citationFooter": "SOURCE: Kensington and Chelsea Council · 21 OCT 2026"
+    },
+    {
+      "sceneNumber": 4,
+      "type": "broadsheet_split",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10901-1",
+        "C10901-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/london_transport_escalator_underground_shaft_omni.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 2.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "PETITION BACKING",
+              "value": "324",
+              "label": "Local residents signed",
+              "subtext": "Local residents signed",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "ORIGINAL TARGET",
+              "value": "Feb 2027",
+              "label": "Initial track works date",
+              "subtext": "Initial track works date",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "FACTS & FIGURES",
+        "headline": "Petition & Delivery Dates",
+        "body": "TfL Accelerates Tube Track Works"
+      },
+      "voiceoverText": "With over three hundred residents signing a petition, track repairs were brought forward from February twenty twenty-seven.",
+      "citationFooter": "SOURCE: Full Council Kensington and Chelsea, 21 October 2026 · Verified Record"
+    },
+    {
+      "sceneNumber": 5,
+      "type": "outro_archive",
+      "durationSeconds": 6.5,
+      "claimIds": [
+        "C10901-1"
+      ],
+      "visualAsset": {
+        "type": "solid",
+        "source": "assets/branding/london-local-wordmark.png",
+        "isIllustrative": false,
+        "mandatoryDisclaimer": null
+      },
+      "figure": {
+        "type": "outro_archive",
+        "data": {
+          "tagline": "Independent civic intelligence across London's 33 councils.",
+          "ctaKicker": "READ THE FULL VERIFIED STORY",
+          "ctaUrl": "londonlocal.news/stories/10901"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "READ FULL STORY",
+        "headline": "Read Story #10901 online",
+        "body": "Direct from council agendas to your phone."
+      },
+      "voiceoverText": "Follow this story for further transport updates. Read the full report at London Local dot news.",
+      "citationFooter": "SOURCE: londonlocal.news/stories/10901"
+    }
+  ]
+}

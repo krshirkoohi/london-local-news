@@ -1,0 +1,288 @@
+{
+  "videoId": "10925-hillingdon-hillingdon-council-approves-15",
+  "storyId": "10925",
+  "displayStoryId": "10925",
+  "sourceArticleUrl": "https://londonlocal.news/stories/10925",
+  "articleUrl": "https://londonlocal.news/stories/10925",
+  "sourceUrl": "https://modgov.hillingdon.gov.uk/documents/g5211/Agenda%20frontsheet%2022nd-Oct-2026%2019.00%20CABINET.pdf?T=0",
+  "storyTitle": "Hillingdon Council approves 15% rise in most fees and charges, including parking",
+  "headline": "Hillingdon approves 15% rise in parking and fees",
+  "borough": "Hillingdon",
+  "postcodeTag": "📍 HILLINGDON · CABINET DECISION",
+  "committee": "CABINET Hillingdon, 22 October 2026",
+  "meetingDate": "22 OCT 2026",
+  "meetingDateDisplay": "Hillingdon · 22 OCT 2026",
+  "storyType": "council_decision",
+  "targetDurationSeconds": 30,
+  "keyPointsHeading": "How will residents be affected?",
+  "factsFiguresHeading": "Fee Hikes & Shortfall",
+  "watchability": {
+    "targetAudience": "Hillingdon residents and local taxpayers",
+    "hook": "Hillingdon approves 15% rise in parking and fees",
+    "hookStyle": "Immediate factual council decision and resident impact",
+    "localRelevance": "Directly affects Hillingdon residents and council services",
+    "suitability": "approved_for_video"
+  },
+  "editorialGate": {
+    "status": "approved",
+    "editorApproved": true,
+    "reviewedBy": "London Local Editorial Review (Batch 30)"
+  },
+  "branding": {
+    "theme": "london-local-broadcast",
+    "showWatermark": true,
+    "showCaptions": false,
+    "voiceProfile": "en-gb-advisor-1"
+  },
+  "claims": [
+    {
+      "claimId": "C10925-1",
+      "statement": "Hillingdon Council has approved a 15% increase on most discretionary fees and charges to raise an estimated £3.3 million.",
+      "sourceQuote": "Hillingdon Council's Cabinet has approved a 15% increase on most discretionary fees and charges for the upcoming financial year, aiming to address a significant shortfall in government funding. The proposed increases have the potential to increase the Council's income by an estimated £3.3 million.",
+      "sourceDocument": "CABINET Hillingdon, 22 October 2026",
+      "sourceDocumentUrl": "https://modgov.hillingdon.gov.uk/documents/g5211/Agenda%20frontsheet%2022nd-Oct-2026%2019.00%20CABINET.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10925-2",
+      "statement": "The borough faces a £65 million government funding shortfall over the next two years.",
+      "sourceQuote": "This shortfall is attributed to the government's revised funding formula, which will result in Hillingdon not receiving £65 million of assessed government funding over the next two years.",
+      "sourceDocument": "CABINET Hillingdon, 22 October 2026",
+      "sourceDocumentUrl": "https://modgov.hillingdon.gov.uk/documents/g5211/Agenda%20frontsheet%2022nd-Oct-2026%2019.00%20CABINET.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10925-3",
+      "statement": "Resident parking discounts will be reduced from roughly 40% to 10%, though 30 minutes free parking is preserved.",
+      "sourceQuote": "The resident discount will be reduced from approximately 40% to 10%. This change aims to move the cost closer to outer London averages while still providing a discount and retaining free parking entitlements for residents. Crucially, 30 minutes of free parking for residents will be retained",
+      "sourceDocument": "CABINET Hillingdon, 22 October 2026",
+      "sourceDocumentUrl": "https://modgov.hillingdon.gov.uk/documents/g5211/Agenda%20frontsheet%2022nd-Oct-2026%2019.00%20CABINET.pdf?T=0",
+      "verified": true
+    }
+  ],
+  "takeawayCard": {
+    "kicker": "FINANCIAL STABILITY",
+    "title": "Higher Fees To Secure Stability",
+    "subtitle": "Most rises take effect across 2027."
+  },
+  "keyPoints": [
+    [
+      "Parking Discount Reduced",
+      "Resident parking discount falls to 10% while 30 minutes free remains.",
+      "Cabinet Report · 22 Oct 2026"
+    ],
+    [
+      "Garden Waste Cut",
+      "Annual garden waste charges drop to £69, saving £800,000 yearly.",
+      "Cabinet Report · 22 Oct 2026"
+    ],
+    [
+      "Leisure & Pitch Fees",
+      "Leisure centre charges rise 4% alongside higher adult pitch rates.",
+      "Cabinet Report · 22 Oct 2026"
+    ]
+  ],
+  "timeline": [
+    {
+      "sceneNumber": 1,
+      "type": "video_with_figure",
+      "durationSeconds": 3.2,
+      "claimIds": [
+        "C10925-1"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/london_highways_cpz_parked_cars_omni.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "onScreenGraphic": {
+        "kicker": "📍 HILLINGDON · CABINET DECISION",
+        "headline": "Hillingdon approves 15% rise in parking and fees",
+        "body": "Cabinet acts to bridge severe funding shortfall."
+      },
+      "voiceoverText": "Hillingdon Council has approved a 15% increase across most fees and charges.",
+      "citationFooter": "SOURCE: CABINET Hillingdon, 22 October 2026 · Story #10925"
+    },
+    {
+      "sceneNumber": 2,
+      "type": "document_highlight",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10925-1",
+        "C10925-2"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/london_civic_modern_glass_plaza_omni.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "motion_document",
+        "data": {
+          "docHeaderLeft": "HILLINGDON · OCT 2026",
+          "docHeaderRight": "CABINET REPORT",
+          "docSubject": "Review of Discretionary Fees and Charges",
+          "excerptPrefix": "\"The 15% uplift reflects ",
+          "highlightPhrase": "historic low charges compared to other authorities",
+          "excerptSuffix": " and urgent income needs.\"",
+          "mover": "Cllr Eddie Lavery, Cabinet Member",
+          "seconder": "Cabinet Hillingdon",
+          "receiptStamp": "CABINET DECISION"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "VERIFIED COUNCIL RECORD",
+        "headline": "Review of Discretionary Fees and Charges",
+        "body": "Hillingdon · 22 OCT 2026"
+      },
+      "voiceoverText": "Cabinet backed the measures to bridge an income gap caused by a £65 million government funding withdrawal.",
+      "citationFooter": "SOURCE: CABINET Hillingdon, 22 October 2026 Public Reports Pack"
+    },
+    {
+      "sceneNumber": 3,
+      "type": "generative_broll",
+      "durationSeconds": 6.0,
+      "claimIds": [
+        "C10925-2",
+        "C10925-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/london_parking_street_omni.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA",
+        "cutawaySource": "assets/generative/london_planning_leisure_centre_pool_omni.mp4"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "NEW REVENUE",
+              "value": "£3.3m",
+              "label": "projected income boost",
+              "subtext": "projected income boost",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "LOST FUNDING",
+              "value": "£65m",
+              "label": "assessed funding loss",
+              "subtext": "assessed funding loss",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "KEY IMPACTS",
+        "headline": "How will residents be affected?",
+        "body": "Key findings from Hillingdon Council."
+      },
+      "voiceoverText": "Resident parking discounts drop to 10%, leisure fees rise 4%, while garden waste charges are cut to £69.",
+      "citationFooter": "SOURCE: Hillingdon Council · 22 OCT 2026"
+    },
+    {
+      "sceneNumber": 4,
+      "type": "broadsheet_split",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10925-1",
+        "C10925-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/london_finance_council_tax_terrace_post_omni.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 2.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "NEW REVENUE",
+              "value": "£3.3m",
+              "label": "projected income boost",
+              "subtext": "projected income boost",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "LOST FUNDING",
+              "value": "£65m",
+              "label": "assessed funding loss",
+              "subtext": "assessed funding loss",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "FACTS & FIGURES",
+        "headline": "Fee Hikes & Shortfall",
+        "body": "Higher Fees To Secure Stability"
+      },
+      "voiceoverText": "The changes aim to raise £3.3 million to offset the £65 million loss and stabilise council finances.",
+      "citationFooter": "SOURCE: CABINET Hillingdon, 22 October 2026 · Verified Record"
+    },
+    {
+      "sceneNumber": 5,
+      "type": "outro_archive",
+      "durationSeconds": 6.5,
+      "claimIds": [
+        "C10925-1"
+      ],
+      "visualAsset": {
+        "type": "solid",
+        "source": "assets/branding/london-local-wordmark.png",
+        "isIllustrative": false,
+        "mandatoryDisclaimer": null
+      },
+      "figure": {
+        "type": "outro_archive",
+        "data": {
+          "tagline": "Independent civic intelligence across London's 33 councils.",
+          "ctaKicker": "READ THE FULL VERIFIED STORY",
+          "ctaUrl": "londonlocal.news/stories/10925"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "READ FULL STORY",
+        "headline": "Read Story #10925 online",
+        "body": "Direct from council agendas to your phone."
+      },
+      "voiceoverText": "Detailed fee changes begin rolling out this December. Read the full report at London Local dot news.",
+      "citationFooter": "SOURCE: londonlocal.news/stories/10925"
+    }
+  ]
+}

@@ -1,0 +1,288 @@
+{
+  "videoId": "10858-greenwich-greenwich-council-faces-118m",
+  "storyId": "10858",
+  "displayStoryId": "10858",
+  "sourceArticleUrl": "https://londonlocal.news/stories/10858",
+  "articleUrl": "https://londonlocal.news/stories/10858",
+  "sourceUrl": "https://greenwich.moderngov.co.uk/documents/g2807/Agenda%20frontsheet%2021st-Oct-2026%2019.00%20Council.pdf?T=0",
+  "storyTitle": "Greenwich Council faces £118m budget gap by 2030",
+  "headline": "Greenwich faces £118m budget deficit by 2030",
+  "borough": "Greenwich",
+  "postcodeTag": "📍 GREENWICH · BUDGET STRATEGY",
+  "committee": "Council Greenwich, 21 October 2026",
+  "meetingDate": "21 OCT 2026",
+  "meetingDateDisplay": "Greenwich · 21 OCT 2026",
+  "storyType": "council_decision",
+  "targetDurationSeconds": 30,
+  "keyPointsHeading": "What is driving the deficit?",
+  "factsFiguresHeading": "Deficit & Care Costs",
+  "watchability": {
+    "targetAudience": "Greenwich residents and local taxpayers",
+    "hook": "Greenwich faces £118m budget deficit by 2030",
+    "hookStyle": "Immediate factual council decision and resident impact",
+    "localRelevance": "Directly affects Greenwich residents and council services",
+    "suitability": "approved_for_video"
+  },
+  "editorialGate": {
+    "status": "approved",
+    "editorApproved": true,
+    "reviewedBy": "London Local Editorial Review (Batch 30)"
+  },
+  "branding": {
+    "theme": "london-local-broadcast",
+    "showWatermark": true,
+    "showCaptions": false,
+    "voiceProfile": "en-gb-advisor-1"
+  },
+  "claims": [
+    {
+      "claimId": "C10858-1",
+      "statement": "Greenwich Council projects a £118.9 million budget deficit by 2030/31.",
+      "sourceQuote": "Greenwich Council faces a projected budget gap of £30.9 million in 2027/28, which is forecast to rise to £118.9 million by 2030/31.",
+      "sourceDocument": "Council Greenwich, 21 October 2026",
+      "sourceDocumentUrl": "https://greenwich.moderngov.co.uk/documents/g2807/Agenda%20frontsheet%2021st-Oct-2026%2019.00%20Council.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10858-2",
+      "statement": "Pressures in children's and adult social care are projected to rise to £115.3 million by 2030/31.",
+      "sourceQuote": "These are projected to rise from £30.8m in 2027/28 to £115.3m by 2030/31.",
+      "sourceDocument": "Council Greenwich, 21 October 2026",
+      "sourceDocumentUrl": "https://greenwich.moderngov.co.uk/documents/g2807/Agenda%20frontsheet%2021st-Oct-2026%2019.00%20Council.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10858-3",
+      "statement": "The council will deploy £18 million of one-off resources to mitigate the immediate 2027/28 gap.",
+      "sourceQuote": "While the immediate gap for 2027/28 is to be mitigated by the use of £18 million in one-off resources, this does not address the underlying structural deficit.",
+      "sourceDocument": "Council Greenwich, 21 October 2026",
+      "sourceDocumentUrl": "https://greenwich.moderngov.co.uk/documents/g2807/Agenda%20frontsheet%2021st-Oct-2026%2019.00%20Council.pdf?T=0",
+      "verified": true
+    }
+  ],
+  "takeawayCard": {
+    "kicker": "REVENUE STRATEGY",
+    "title": "Flexible capital funding under review",
+    "subtitle": "Council reviews developer funds to bridge deficits."
+  },
+  "keyPoints": [
+    [
+      "Social Care Surges",
+      "Care pressures are forecast to reach £115.3 million by 2030.",
+      "Council Greenwich · 21 Oct 2026"
+    ],
+    [
+      "One-Off Reserves Used",
+      "The council will use £18 million in reserves to balance 2027.",
+      "Council Greenwich · 21 Oct 2026"
+    ],
+    [
+      "Corporate Plan Concerns",
+      "Opposition councillors question delivering extensive pledges alongside huge funding gaps.",
+      "Council Greenwich · 21 Oct 2026"
+    ]
+  ],
+  "timeline": [
+    {
+      "sceneNumber": 1,
+      "type": "video_with_figure",
+      "durationSeconds": 3.2,
+      "claimIds": [
+        "C10858-1"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/story_10858_s1.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "onScreenGraphic": {
+        "kicker": "📍 GREENWICH · BUDGET STRATEGY",
+        "headline": "Greenwich faces £118m budget deficit by 2030",
+        "body": "Social care pressures drive severe funding shortfalls."
+      },
+      "voiceoverText": "Greenwich Council faces a staggering £118 million budget deficit by 2030.",
+      "citationFooter": "SOURCE: Council Greenwich, 21 October 2026 · Story #10858"
+    },
+    {
+      "sceneNumber": 2,
+      "type": "document_highlight",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10858-1",
+        "C10858-2"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/civic_greenwich.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "motion_document",
+        "data": {
+          "docHeaderLeft": "GREENWICH · OCT 2026",
+          "docHeaderRight": "COUNCIL REPORT",
+          "docSubject": "Medium-Term Financial Strategy Report",
+          "excerptPrefix": "\"The council faces a projected ",
+          "highlightPhrase": "budget gap of £30.9 million rising to £118.9 million",
+          "excerptSuffix": " by 2030/31.\"",
+          "mover": "Cllr Rachel Taggart-Ryan",
+          "seconder": "Council Greenwich",
+          "receiptStamp": "FINANCE REPORT"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "VERIFIED COUNCIL RECORD",
+        "headline": "Medium-Term Financial Strategy Report",
+        "body": "Greenwich · 21 OCT 2026"
+      },
+      "voiceoverText": "The Medium-Term Financial Strategy reveals immediate gaps will be cushioned by £18 million in one-off reserves.",
+      "citationFooter": "SOURCE: Council Greenwich, 21 October 2026 Public Reports Pack"
+    },
+    {
+      "sceneNumber": 3,
+      "type": "generative_broll",
+      "durationSeconds": 6.0,
+      "claimIds": [
+        "C10858-2",
+        "C10858-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/london_env_solar_roof_municipal_omni.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA",
+        "cutawaySource": "assets/generative/london_transport_overground_station_build_omni.mp4"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "DEFICIT BY 2030",
+              "value": "£118.9m",
+              "label": "projected budget shortfall",
+              "subtext": "projected budget shortfall",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "INTERIM RESERVES",
+              "value": "£18m",
+              "label": "one-off funding used",
+              "subtext": "one-off funding used",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "KEY IMPACTS",
+        "headline": "What is driving the deficit?",
+        "body": "Key findings from Greenwich Council."
+      },
+      "voiceoverText": "Spiralling social care costs drive the gap, sparking opposition concerns over delivery of major corporate plan promises.",
+      "citationFooter": "SOURCE: Greenwich Council · 21 OCT 2026"
+    },
+    {
+      "sceneNumber": 4,
+      "type": "broadsheet_split",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10858-1",
+        "C10858-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/civic_greenwich.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 2.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "DEFICIT BY 2030",
+              "value": "£118.9m",
+              "label": "projected budget shortfall",
+              "subtext": "projected budget shortfall",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "INTERIM RESERVES",
+              "value": "£18m",
+              "label": "one-off funding used",
+              "subtext": "one-off funding used",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "FACTS & FIGURES",
+        "headline": "Deficit & Care Costs",
+        "body": "Flexible capital funding under review"
+      },
+      "voiceoverText": "With care costs climbing and reserves running low, chiefs are exploring flexible capital receipts and developer contributions.",
+      "citationFooter": "SOURCE: Council Greenwich, 21 October 2026 · Verified Record"
+    },
+    {
+      "sceneNumber": 5,
+      "type": "outro_archive",
+      "durationSeconds": 6.5,
+      "claimIds": [
+        "C10858-1"
+      ],
+      "visualAsset": {
+        "type": "solid",
+        "source": "assets/branding/london-local-wordmark.png",
+        "isIllustrative": false,
+        "mandatoryDisclaimer": null
+      },
+      "figure": {
+        "type": "outro_archive",
+        "data": {
+          "tagline": "Independent civic intelligence across London's 33 councils.",
+          "ctaKicker": "READ THE FULL VERIFIED STORY",
+          "ctaUrl": "londonlocal.news/stories/10858"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "READ FULL STORY",
+        "headline": "Read Story #10858 online",
+        "body": "Direct from council agendas to your phone."
+      },
+      "voiceoverText": "Follow Greenwich's unfolding financial strategy. Read the full report at London Local dot news.",
+      "citationFooter": "SOURCE: londonlocal.news/stories/10858"
+    }
+  ]
+}

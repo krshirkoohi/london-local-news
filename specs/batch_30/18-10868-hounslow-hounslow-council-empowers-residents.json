@@ -1,0 +1,288 @@
+{
+  "videoId": "10868-hounslow-hounslow-council-empowers-residents",
+  "storyId": "10868",
+  "displayStoryId": "10868",
+  "sourceArticleUrl": "https://londonlocal.news/stories/10868",
+  "articleUrl": "https://londonlocal.news/stories/10868",
+  "sourceUrl": "https://democraticservices.hounslow.gov.uk/documents/g14018/Agenda%20frontsheet%20Thursday%2015-Oct-2026%2019.30%20Hanworth%20Area%20Forum.pdf?T=0",
+  "storyTitle": "Hounslow Council empowers residents to combat fly-tipping with new action groups",
+  "headline": "Hounslow backs community groups tackling fly-tipping",
+  "borough": "Hounslow",
+  "postcodeTag": "📍 HOUNSLOW · AREA FORUM",
+  "committee": "Hanworth Area Forum Hounslow, 15 October 2026",
+  "meetingDate": "15 OCT 2026",
+  "meetingDateDisplay": "Hounslow · 15 OCT 2026",
+  "storyType": "environment_schools",
+  "targetDurationSeconds": 30,
+  "keyPointsHeading": "How will action groups work?",
+  "factsFiguresHeading": "Community Action Plan",
+  "watchability": {
+    "targetAudience": "Hounslow residents and local taxpayers",
+    "hook": "Hounslow backs community groups tackling fly-tipping",
+    "hookStyle": "Immediate factual council decision and resident impact",
+    "localRelevance": "Directly affects Hounslow residents and council services",
+    "suitability": "approved_for_video"
+  },
+  "editorialGate": {
+    "status": "approved",
+    "editorApproved": true,
+    "reviewedBy": "London Local Editorial Review (Batch 30)"
+  },
+  "branding": {
+    "theme": "london-local-broadcast",
+    "showWatermark": true,
+    "showCaptions": false,
+    "voiceProfile": "en-gb-advisor-1"
+  },
+  "claims": [
+    {
+      "claimId": "C10868-1",
+      "statement": "Hounslow Council is supporting the formation of local action groups to tackle fly-tipping.",
+      "sourceQuote": "Hounslow Council is empowering residents to combat fly-tipping by supporting the establishment of local action groups.",
+      "sourceDocument": "Hanworth Area Forum Hounslow, 15 October 2026",
+      "sourceDocumentUrl": "https://democraticservices.hounslow.gov.uk/documents/g14018/Agenda%20frontsheet%20Thursday%2015-Oct-2026%2019.30%20Hanworth%20Area%20Forum.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10868-2",
+      "statement": "Multiple landowners at fly-tipping sites present a barrier that slows down clearance operations.",
+      "sourceQuote": "A potential challenge the council anticipates is the issue of multiple landowners at some fly-tipping locations, where responsibility can be unclear and clean-up efforts can take longer.",
+      "sourceDocument": "Hanworth Area Forum Hounslow, 15 October 2026",
+      "sourceDocumentUrl": "https://democraticservices.hounslow.gov.uk/documents/g14018/Agenda%20frontsheet%20Thursday%2015-Oct-2026%2019.30%20Hanworth%20Area%20Forum.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10868-3",
+      "statement": "The council is directing residents to report dumped waste via three specific routes including Fix My Street.",
+      "sourceQuote": "residents are encouraged to continue reporting issues through Fix My Street, their local councillors, or the council's customer service team",
+      "sourceDocument": "Hanworth Area Forum Hounslow, 15 October 2026",
+      "sourceDocumentUrl": "https://democraticservices.hounslow.gov.uk/documents/g14018/Agenda%20frontsheet%20Thursday%2015-Oct-2026%2019.30%20Hanworth%20Area%20Forum.pdf?T=0",
+      "verified": true
+    }
+  ],
+  "takeawayCard": {
+    "kicker": "COLLECTIVE ACTION",
+    "title": "Residents unite to tackle dumping",
+    "subtitle": "Groups will clarify site ownership and clean-ups."
+  },
+  "keyPoints": [
+    [
+      "Hanworth Hotspots",
+      "Councillors and officers are supporting residents across ongoing fly-tipping hotspots.",
+      "Hanworth Area Forum · 15 Oct 2026"
+    ],
+    [
+      "Land Ownership",
+      "Unclear ownership across multiple private plots currently delays rubbish clearance.",
+      "Hanworth Area Forum · 15 Oct 2026"
+    ],
+    [
+      "Reporting Channels",
+      "Residents must keep logging dumped waste using the Fix My Street portal.",
+      "Hanworth Area Forum · 15 Oct 2026"
+    ]
+  ],
+  "timeline": [
+    {
+      "sceneNumber": 1,
+      "type": "video_with_figure",
+      "durationSeconds": 3.2,
+      "claimIds": [
+        "C10868-1"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/story_10868_s1.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "onScreenGraphic": {
+        "kicker": "📍 HOUNSLOW · AREA FORUM",
+        "headline": "Hounslow backs community groups tackling fly-tipping",
+        "body": "New groups will coordinate local waste clean-ups."
+      },
+      "voiceoverText": "Hounslow Council is backing new resident action groups to tackle local fly-tipping hotspots.",
+      "citationFooter": "SOURCE: Hanworth Area Forum Hounslow, 15 October 2026 · Story #10868"
+    },
+    {
+      "sceneNumber": 2,
+      "type": "document_highlight",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10868-1",
+        "C10868-2"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/civic_hounslow.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "motion_document",
+        "data": {
+          "docHeaderLeft": "HOUNSLOW · OCT 2026",
+          "docHeaderRight": "AREA FORUM",
+          "docSubject": "Fly-Tipping and Litter Action Group",
+          "excerptPrefix": "\"Councillors and officers are working with ",
+          "highlightPhrase": "residents who have raised concerns about ongoing fly-tipping",
+          "excerptSuffix": " and litter hotspots in Hanworth Village.\"",
+          "mover": "Councillor Conrad Brown",
+          "seconder": "Hanworth Area Forum",
+          "receiptStamp": "COMMUNITY FORUM"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "VERIFIED COUNCIL RECORD",
+        "headline": "Fly-Tipping and Litter Action Group",
+        "body": "Hounslow · 15 OCT 2026"
+      },
+      "voiceoverText": "Councillor Conrad Brown presented plans to Hanworth Area Forum to coordinate community clearances and identify private land ownership.",
+      "citationFooter": "SOURCE: Hanworth Area Forum Hounslow, 15 October 2026 Public Reports Pack"
+    },
+    {
+      "sceneNumber": 3,
+      "type": "generative_broll",
+      "durationSeconds": 6.0,
+      "claimIds": [
+        "C10868-2",
+        "C10868-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/london_env_community_litter_pick_omni.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA",
+        "cutawaySource": "assets/generative/london_env_flytipping_alleyway_omni.mp4"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "REPORTING ROUTES",
+              "value": "3",
+              "label": "Clear reporting channels",
+              "subtext": "Clear reporting channels",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "FORUM WORKSHOP",
+              "value": "1",
+              "label": "Planned community session",
+              "subtext": "Planned community session",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "KEY IMPACTS",
+        "headline": "How will action groups work?",
+        "body": "Key findings from Hounslow Council."
+      },
+      "voiceoverText": "Residents will tackle fly-tipping hotspots, untangle complex land ownership barriers, and log issues through three council reporting routes.",
+      "citationFooter": "SOURCE: Hounslow Council · 15 OCT 2026"
+    },
+    {
+      "sceneNumber": 4,
+      "type": "broadsheet_split",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10868-1",
+        "C10868-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/civic_hounslow.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 2.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "REPORTING ROUTES",
+              "value": "3",
+              "label": "Clear reporting channels",
+              "subtext": "Clear reporting channels",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "FORUM WORKSHOP",
+              "value": "1",
+              "label": "Planned community session",
+              "subtext": "Planned community session",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "FACTS & FIGURES",
+        "headline": "Community Action Plan",
+        "body": "Residents unite to tackle dumping"
+      },
+      "voiceoverText": "With three direct reporting channels and a planned workshop, the council hopes community collaboration speeds up waste clearances.",
+      "citationFooter": "SOURCE: Hanworth Area Forum Hounslow, 15 October 2026 · Verified Record"
+    },
+    {
+      "sceneNumber": 5,
+      "type": "outro_archive",
+      "durationSeconds": 6.5,
+      "claimIds": [
+        "C10868-1"
+      ],
+      "visualAsset": {
+        "type": "solid",
+        "source": "assets/branding/london-local-wordmark.png",
+        "isIllustrative": false,
+        "mandatoryDisclaimer": null
+      },
+      "figure": {
+        "type": "outro_archive",
+        "data": {
+          "tagline": "Independent civic intelligence across London's 33 councils.",
+          "ctaKicker": "READ THE FULL VERIFIED STORY",
+          "ctaUrl": "londonlocal.news/stories/10868"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "READ FULL STORY",
+        "headline": "Read Story #10868 online",
+        "body": "Direct from council agendas to your phone."
+      },
+      "voiceoverText": "Hanworth residents can join the upcoming forum workshop. Read the full report at London Local dot news.",
+      "citationFooter": "SOURCE: londonlocal.news/stories/10868"
+    }
+  ]
+}

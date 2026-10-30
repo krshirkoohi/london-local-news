@@ -1,0 +1,288 @@
+{
+  "videoId": "10902-tower-hamlets-tower-hamlets-council",
+  "storyId": "10902",
+  "displayStoryId": "10902",
+  "sourceArticleUrl": "https://londonlocal.news/stories/10902",
+  "articleUrl": "https://londonlocal.news/stories/10902",
+  "sourceUrl": "https://democracy.towerhamlets.gov.uk/documents/g17293/Agenda%20frontsheet%2021st-Oct-2026%2015.00%20Cabinet.pdf?T=0",
+  "storyTitle": "Tower Hamlets Council to acquire Marsh Wall properties for 180 new temporary homes",
+  "headline": "Tower Hamlets approves 180 homes at Marsh Wall",
+  "borough": "Tower Hamlets",
+  "postcodeTag": "📍 TOWER HAMLETS · CABINET",
+  "committee": "Cabinet Tower Hamlets, 21 October 2026",
+  "meetingDate": "21 OCT 2026",
+  "meetingDateDisplay": "Tower Hamlets · 21 OCT 2026",
+  "storyType": "housing",
+  "targetDurationSeconds": 30,
+  "keyPointsHeading": "What does this plan deliver?",
+  "factsFiguresHeading": "Temporary Housing Supply",
+  "watchability": {
+    "targetAudience": "Tower Hamlets residents and local taxpayers",
+    "hook": "Tower Hamlets approves 180 homes at Marsh Wall",
+    "hookStyle": "Immediate factual council decision and resident impact",
+    "localRelevance": "Directly affects Tower Hamlets residents and council services",
+    "suitability": "approved_for_video"
+  },
+  "editorialGate": {
+    "status": "approved",
+    "editorApproved": true,
+    "reviewedBy": "London Local Editorial Review (Batch 30)"
+  },
+  "branding": {
+    "theme": "london-local-broadcast",
+    "showWatermark": true,
+    "showCaptions": false,
+    "voiceProfile": "en-gb-advisor-1"
+  },
+  "claims": [
+    {
+      "claimId": "C10902-1",
+      "statement": "Tower Hamlets Council approved leasing four office buildings on Marsh Wall for conversion into temporary housing.",
+      "sourceQuote": "Tower Hamlets Council's Cabinet has approved plans to acquire four commercial office buildings in Marsh Wall for conversion into approximately 180 new homes for temporary accommodation.",
+      "sourceDocument": "Cabinet Tower Hamlets, 21 October 2026",
+      "sourceDocumentUrl": "https://democracy.towerhamlets.gov.uk/documents/g17293/Agenda%20frontsheet%2021st-Oct-2026%2015.00%20Cabinet.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10902-2",
+      "statement": "The converted properties will provide 167 two-bedroom and 13 three-bedroom self-contained family units.",
+      "sourceQuote": "The conversion of these buildings is anticipated to provide 167 two-bedroom and 13 three-bedroom self-contained family units.",
+      "sourceDocument": "Cabinet Tower Hamlets, 21 October 2026",
+      "sourceDocumentUrl": "https://democracy.towerhamlets.gov.uk/documents/g17293/Agenda%20frontsheet%2021st-Oct-2026%2015.00%20Cabinet.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10902-3",
+      "statement": "The scheme will be funded through General Fund borrowing while facing construction and lease risks.",
+      "sourceQuote": "The scheme is proposed to be funded through General Fund borrowing, and further detailed design, planning, and financial assessments will be required before the lease is finalised.",
+      "sourceDocument": "Cabinet Tower Hamlets, 21 October 2026",
+      "sourceDocumentUrl": "https://democracy.towerhamlets.gov.uk/documents/g17293/Agenda%20frontsheet%2021st-Oct-2026%2015.00%20Cabinet.pdf?T=0",
+      "verified": true
+    }
+  ],
+  "takeawayCard": {
+    "kicker": "BOROUGH IMPACT",
+    "title": "Ending Out-of-Borough Moves",
+    "subtitle": "Homeless families remain near local schools and jobs."
+  },
+  "keyPoints": [
+    [
+      "Commercial Office Conversion",
+      "Four office buildings will be converted into approximately 180 temporary family homes.",
+      "Cabinet Report · 21 Oct 2026"
+    ],
+    [
+      "Family Housing Mix",
+      "The scheme creates 167 two-bedroom and 13 three-bedroom self-contained family units locally.",
+      "Cabinet Report · 21 Oct 2026"
+    ],
+    [
+      "General Fund Borrowing",
+      "General Fund borrowing will finance the acquisition despite identified construction cost risks.",
+      "Cabinet Report · 21 Oct 2026"
+    ]
+  ],
+  "timeline": [
+    {
+      "sceneNumber": 1,
+      "type": "video_with_figure",
+      "durationSeconds": 3.2,
+      "claimIds": [
+        "C10902-1"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/story_10902_s1.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "onScreenGraphic": {
+        "kicker": "📍 TOWER HAMLETS · CABINET",
+        "headline": "Tower Hamlets approves 180 homes at Marsh Wall",
+        "body": "Four office blocks will become temporary housing."
+      },
+      "voiceoverText": "Tower Hamlets has approved converting four Marsh Wall office blocks into temporary homes.",
+      "citationFooter": "SOURCE: Cabinet Tower Hamlets, 21 October 2026 · Story #10902"
+    },
+    {
+      "sceneNumber": 2,
+      "type": "document_highlight",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10902-1",
+        "C10902-2"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/civic_tower-hamlets.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "motion_document",
+        "data": {
+          "docHeaderLeft": "TOWER HAMLETS · OCT 2026",
+          "docHeaderRight": "CABINET REPORT",
+          "docSubject": "Marsh Wall Temporary Housing Acquisition",
+          "excerptPrefix": "\"The director stated it is a ",
+          "highlightPhrase": "really significant opportunity that does not come along often",
+          "excerptSuffix": " and one we should not miss.\"",
+          "mover": "David Joyce, Housing Director",
+          "seconder": "Tower Hamlets Cabinet",
+          "receiptStamp": "CABINET DECISION"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "VERIFIED COUNCIL RECORD",
+        "headline": "Marsh Wall Temporary Housing Acquisition",
+        "body": "Tower Hamlets · 21 OCT 2026"
+      },
+      "voiceoverText": "Cabinet members agreed to lease the commercial properties to provide secure accommodation and reduce costly out-of-borough placements.",
+      "citationFooter": "SOURCE: Cabinet Tower Hamlets, 21 October 2026 Public Reports Pack"
+    },
+    {
+      "sceneNumber": 3,
+      "type": "generative_broll",
+      "durationSeconds": 6.0,
+      "claimIds": [
+        "C10902-2",
+        "C10902-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/london_terraced_houses_omni.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA",
+        "cutawaySource": "assets/generative/london_housing_docklands_office_conversion_omni.mp4"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "NEW HOMES",
+              "value": "180",
+              "label": "Total temporary homes",
+              "subtext": "Total temporary homes",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "FAMILY FLATS",
+              "value": "167",
+              "label": "Two-bedroom family units",
+              "subtext": "Two-bedroom family units",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "KEY IMPACTS",
+        "headline": "What does this plan deliver?",
+        "body": "Key findings from Tower Hamlets Council."
+      },
+      "voiceoverText": "The conversion creates one hundred and eighty family homes, funded by council borrowing despite potential construction cost risks.",
+      "citationFooter": "SOURCE: Tower Hamlets Council · 21 OCT 2026"
+    },
+    {
+      "sceneNumber": 4,
+      "type": "broadsheet_split",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10902-1",
+        "C10902-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/civic_tower-hamlets.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 2.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "NEW HOMES",
+              "value": "180",
+              "label": "Total temporary homes",
+              "subtext": "Total temporary homes",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "FAMILY FLATS",
+              "value": "167",
+              "label": "Two-bedroom family units",
+              "subtext": "Two-bedroom family units",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "FACTS & FIGURES",
+        "headline": "Temporary Housing Supply",
+        "body": "Ending Out-of-Borough Moves"
+      },
+      "voiceoverText": "Providing one hundred and sixty-seven two-bed units keeps vulnerable homeless families close to their schools and local jobs.",
+      "citationFooter": "SOURCE: Cabinet Tower Hamlets, 21 October 2026 · Verified Record"
+    },
+    {
+      "sceneNumber": 5,
+      "type": "outro_archive",
+      "durationSeconds": 6.5,
+      "claimIds": [
+        "C10902-1"
+      ],
+      "visualAsset": {
+        "type": "solid",
+        "source": "assets/branding/london-local-wordmark.png",
+        "isIllustrative": false,
+        "mandatoryDisclaimer": null
+      },
+      "figure": {
+        "type": "outro_archive",
+        "data": {
+          "tagline": "Independent civic intelligence across London's 33 councils.",
+          "ctaKicker": "READ THE FULL VERIFIED STORY",
+          "ctaUrl": "londonlocal.news/stories/10902"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "READ FULL STORY",
+        "headline": "Read Story #10902 online",
+        "body": "Direct from council agendas to your phone."
+      },
+      "voiceoverText": "Stay updated on East London housing decisions. Read the full report at London Local dot news.",
+      "citationFooter": "SOURCE: londonlocal.news/stories/10902"
+    }
+  ]
+}

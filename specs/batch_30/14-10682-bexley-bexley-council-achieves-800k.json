@@ -1,0 +1,288 @@
+{
+  "videoId": "10682-bexley-bexley-council-achieves-800k",
+  "storyId": "10682",
+  "displayStoryId": "10682",
+  "sourceArticleUrl": "https://londonlocal.news/stories/10682",
+  "articleUrl": "https://londonlocal.news/stories/10682",
+  "sourceUrl": "http://democracy.bexley.gov.uk/documents/g30966/Agenda%20frontsheet%2014th-Oct-2026%2019.30%20Finance%20Corporate%20Services%20Overview%20and%20Scrutiny%20Committee.pdf?T=0",
+  "storyTitle": "Bexley Council Achieves £800k Savings Through Digital Transformation and Cybersecurity Upgrades",
+  "headline": "Bexley saves £800k through cybersecurity upgrades",
+  "borough": "Bexley",
+  "postcodeTag": "📍 BEXLEY · SCRUTINY COMMITTEE",
+  "committee": "Finance & Corporate Services Overview and Scrutiny Committee Bexley, 14 October 2026",
+  "meetingDate": "14 OCT 2026",
+  "meetingDateDisplay": "Bexley · 14 OCT 2026",
+  "storyType": "council_decision",
+  "targetDurationSeconds": 30,
+  "keyPointsHeading": "How does Bexley cut IT costs?",
+  "factsFiguresHeading": "Capital Savings & Reserves",
+  "watchability": {
+    "targetAudience": "Bexley residents and local taxpayers",
+    "hook": "Bexley saves £800k through cybersecurity upgrades",
+    "hookStyle": "Immediate factual council decision and resident impact",
+    "localRelevance": "Directly affects Bexley residents and council services",
+    "suitability": "approved_for_video"
+  },
+  "editorialGate": {
+    "status": "approved",
+    "editorApproved": true,
+    "reviewedBy": "London Local Editorial Review (Batch 30)"
+  },
+  "branding": {
+    "theme": "london-local-broadcast",
+    "showWatermark": true,
+    "showCaptions": false,
+    "voiceProfile": "en-gb-advisor-1"
+  },
+  "claims": [
+    {
+      "claimId": "C10682-1",
+      "statement": "Bexley Council expects to save £800,000 in capital expenditure by shifting to a Zero Trust security framework.",
+      "sourceQuote": "This saving is primarily driven by the adoption of a new 'Zero Trust' network security model, which is expected to Reduce the requirement of circa 800k capital to meet cyber compliance .",
+      "sourceDocument": "Finance & Corporate Services Overview and Scrutiny Committee Bexley, 14 October 2026",
+      "sourceDocumentUrl": "http://democracy.bexley.gov.uk/documents/g30966/Agenda%20frontsheet%2014th-Oct-2026%2019.30%20Finance%20Corporate%20Services%20Overview%20and%20Scrutiny%20Committee.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10682-2",
+      "statement": "An audit found council software was previously run without proper ownership or resilience plans.",
+      "sourceQuote": "The application audit revealed inconsistencies in application ownership, support and management arrangements , with many applications managed on a 'best endeavours' basis",
+      "sourceDocument": "Finance & Corporate Services Overview and Scrutiny Committee Bexley, 14 October 2026",
+      "sourceDocumentUrl": "http://democracy.bexley.gov.uk/documents/g30966/Agenda%20frontsheet%2014th-Oct-2026%2019.30%20Finance%20Corporate%20Services%20Overview%20and%20Scrutiny%20Committee.pdf?T=0",
+      "verified": true
+    },
+    {
+      "claimId": "C10682-3",
+      "statement": "The full £195,000 reserve for Microsoft E5 licensing will be exhausted within the current financial year.",
+      "sourceQuote": "The transition from E3 to E5 had a revenue reserve... of £0.195m to fund the transition from E5, in the P4 forecast it is estimated that the entirety of the reserve will be required to be drawn down this financial year.",
+      "sourceDocument": "Finance & Corporate Services Overview and Scrutiny Committee Bexley, 14 October 2026",
+      "sourceDocumentUrl": "http://democracy.bexley.gov.uk/documents/g30966/Agenda%20frontsheet%2014th-Oct-2026%2019.30%20Finance%20Corporate%20Services%20Overview%20and%20Scrutiny%20Committee.pdf?T=0",
+      "verified": true
+    }
+  ],
+  "takeawayCard": {
+    "kicker": "FUTURE BEXLEY",
+    "title": "Zero Trust Cuts Cyber Risks",
+    "subtitle": "Cloud migration will lower long term operating costs."
+  },
+  "keyPoints": [
+    [
+      "Capital Savings",
+      "Zero Trust security cuts circa £800,000 in capital spending for cyber compliance.",
+      "Scrutiny Committee · 14 Oct 2026"
+    ],
+    [
+      "Software Consolidation",
+      "Switching to Microsoft E5 draws down a £0.195m reserve across this year.",
+      "Scrutiny Committee · 14 Oct 2026"
+    ],
+    [
+      "Application Audits",
+      "Audits revealed legacy systems were managed on a risky best endeavours basis.",
+      "Scrutiny Committee · 14 Oct 2026"
+    ]
+  ],
+  "timeline": [
+    {
+      "sceneNumber": 1,
+      "type": "video_with_figure",
+      "durationSeconds": 3.2,
+      "claimIds": [
+        "C10682-1"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/story_10682_s1.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "onScreenGraphic": {
+        "kicker": "📍 BEXLEY · SCRUTINY COMMITTEE",
+        "headline": "Bexley saves £800k through cybersecurity upgrades",
+        "body": "New security strategy cuts £800k in capital spending."
+      },
+      "voiceoverText": "Bexley Council has secured eight hundred thousand pounds in capital savings through digital upgrades.",
+      "citationFooter": "SOURCE: Finance & Corporate Services Overview and Scrutiny Committee Bexley, 14 October 2026 · Story #10682"
+    },
+    {
+      "sceneNumber": 2,
+      "type": "document_highlight",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10682-1",
+        "C10682-2"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/civic_bexley.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "motion_document",
+        "data": {
+          "docHeaderLeft": "BEXLEY · OCT 2026",
+          "docHeaderRight": "SCRUTINY REPORT",
+          "docSubject": "Digital Transformation And Cyber Strategy",
+          "excerptPrefix": "\"The new security model will ",
+          "highlightPhrase": "Reduce the requirement of circa 800k capital to meet cyber compliance",
+          "excerptSuffix": " across future council programmes.\"",
+          "mover": "Chief Executive, Bexley Council",
+          "seconder": "Finance & Corporate Services Committee",
+          "receiptStamp": "SCRUTINY AUDIT"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "VERIFIED COUNCIL RECORD",
+        "headline": "Digital Transformation And Cyber Strategy",
+        "body": "Bexley · 14 OCT 2026"
+      },
+      "voiceoverText": "Scrutiny councillors reviewed reports showing a new Zero Trust network reduces capital requirements while overhauling outdated council systems.",
+      "citationFooter": "SOURCE: Finance & Corporate Services Overview and Scrutiny Committee Bexley, 14 October 2026 Public Reports Pack"
+    },
+    {
+      "sceneNumber": 3,
+      "type": "generative_broll",
+      "durationSeconds": 6.0,
+      "claimIds": [
+        "C10682-2",
+        "C10682-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/london_finance_cyber_fraud_workstation_omni.mp4",
+        "cropMode": "full",
+        "trimStart": 0.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA",
+        "cutawaySource": "assets/generative/london_finance_audit_ledgers_desk_omni.mp4"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "CAPITAL SAVINGS",
+              "value": "£800k",
+              "label": "Saved on cyber compliance",
+              "subtext": "Saved on cyber compliance",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "TRANSITION RESERVE",
+              "value": "£0.195m",
+              "label": "Drawn down this year",
+              "subtext": "Drawn down this year",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "KEY IMPACTS",
+        "headline": "How does Bexley cut IT costs?",
+        "body": "Key findings from Bexley Council."
+      },
+      "voiceoverText": "The programme cuts eight hundred thousand pounds in capital, funds software transitions, and fixes unmanaged legacy applications.",
+      "citationFooter": "SOURCE: Bexley Council · 14 OCT 2026"
+    },
+    {
+      "sceneNumber": 4,
+      "type": "broadsheet_split",
+      "durationSeconds": 6.2,
+      "claimIds": [
+        "C10682-1",
+        "C10682-3"
+      ],
+      "visualAsset": {
+        "type": "video",
+        "source": "assets/generative/batch_30/civic_bexley.mp4",
+        "cropMode": "architectural_upper",
+        "trimStart": 2.0,
+        "isIllustrative": true,
+        "mandatoryDisclaimer": "AI-GENERATED MEDIA"
+      },
+      "figure": {
+        "type": "stat_comparison",
+        "data": {
+          "cards": [
+            {
+              "kicker": "CAPITAL SAVINGS",
+              "value": "£800k",
+              "label": "Saved on cyber compliance",
+              "subtext": "Saved on cyber compliance",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            },
+            {
+              "kicker": "TRANSITION RESERVE",
+              "value": "£0.195m",
+              "label": "Drawn down this year",
+              "subtext": "Drawn down this year",
+              "barRatio": 0.9,
+              "barColor": [
+                254,
+                107,
+                33
+              ]
+            }
+          ]
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "FACTS & FIGURES",
+        "headline": "Capital Savings & Reserves",
+        "body": "Zero Trust Cuts Cyber Risks"
+      },
+      "voiceoverText": "With eight hundred thousand pounds saved and reserves drawn down, Bexley expects fully cost-neutral software by twenty-twenty-seven.",
+      "citationFooter": "SOURCE: Finance & Corporate Services Overview and Scrutiny Committee Bexley, 14 October 2026 · Verified Record"
+    },
+    {
+      "sceneNumber": 5,
+      "type": "outro_archive",
+      "durationSeconds": 6.5,
+      "claimIds": [
+        "C10682-1"
+      ],
+      "visualAsset": {
+        "type": "solid",
+        "source": "assets/branding/london-local-wordmark.png",
+        "isIllustrative": false,
+        "mandatoryDisclaimer": null
+      },
+      "figure": {
+        "type": "outro_archive",
+        "data": {
+          "tagline": "Independent civic intelligence across London's 33 councils.",
+          "ctaKicker": "READ THE FULL VERIFIED STORY",
+          "ctaUrl": "londonlocal.news/stories/10682"
+        }
+      },
+      "onScreenGraphic": {
+        "kicker": "READ FULL STORY",
+        "headline": "Read Story #10682 online",
+        "body": "Direct from council agendas to your phone."
+      },
+      "voiceoverText": "Track how Bexley modernises its digital services. Read the full report at London Local dot news.",
+      "citationFooter": "SOURCE: londonlocal.news/stories/10682"
+    }
+  ]
+}
